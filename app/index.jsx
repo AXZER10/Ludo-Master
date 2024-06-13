@@ -4,28 +4,27 @@ import CustomButton from "../components/CustomButton";
 
 export default function Index() {
   return (
-    <SafeAreaView className='h-full bg-black'>
+    <SafeAreaView className='h-full bg-primary'>
       <View className=' items-center w-full px-4'>
         <Image source={require('./assets/Logo.jpeg')} 
         className='w-40 h-40 justify-center'
         resizeMode="contain"
         />
-        <Text className="text-white text-3xl font-psemibold">
+        <Text className="text-white text-3xl font-pblack mb-10">
           Ludo Master
         </Text>
       </View>
     <View className="flex-column mt-20 items-center px-4 justify-center">
-      <Link href='/Ludo'>
-      <Text className="text-3xl text-white">Go To Game</Text>
-      </Link>
+      <Text className="text-3xl text-white font-psemibold">Go To Game</Text>
       <View>
 
       </View>
       <View className=' w-full my-8 items-center'>
         <CustomButton 
         title={'Play'} 
-        ContainerStyles={'w-40'}
-        handlePress={() => router.push("/Ludo")}
+        ContainerStyles={'w-full'}
+        handlePress={() => router.push("/(tabs)/Home")}
+        textStyles={'text-3xl font-pbold'}
         />
       </View>
     </View>
