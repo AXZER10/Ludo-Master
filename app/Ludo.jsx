@@ -1142,9 +1142,9 @@ export default class App extends React.Component {
     }
   render(){
     return (
-        <SafeAreaView style={styles.container}>
-        <View>
-        <Text style={{color : "red",fontSize : 30,alignItems:'center', justifyContent:'center', marginTop : 20}}> Ludo Master </Text>
+        <SafeAreaView className="flex-1 bg-primary">
+        <View className="mt-10 items-center">
+        <Text className='text-2xl text-green-300 font-psemibold'> Welcome to Ludo Master </Text>
         
         
         <View style={styles.wholeSetup}>
@@ -1154,7 +1154,6 @@ export default class App extends React.Component {
         <View style={row.Style}>
           <View>
     <Animatable.View
-      className="mr-5"
       animation={this.state.turn1 ? zoomIn : zoomOut}
       duration={500}
     >
@@ -1314,7 +1313,6 @@ export default class App extends React.Component {
               
           </View>
           <Animatable.View
-      className="mr-5"
       animation={this.state.turn2 ? zoomIn : zoomOut}
       duration={500}
     >
@@ -1615,7 +1613,6 @@ export default class App extends React.Component {
         <View style={row.Style}>
           <View>
           <Animatable.View
-      className="mr-5"
       animation={this.state.turn4 ? zoomIn : zoomOut}
       duration={500}
     >
@@ -1773,7 +1770,6 @@ export default class App extends React.Component {
               </View>
           </View>
           <Animatable.View
-      className="mr-5"
       //animation={this.state.turn3 ? zoomIn : (c?zoomIn:zoomOut)}
       animation={this.state.turn3 || this.state.whoseTurnToMove==3? zoomIn:zoomOut}
       duration={500}
@@ -1831,10 +1827,6 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#161622',
-  },
   red : {
     backgroundColor : "#fa9daa"
   },  
