@@ -18,6 +18,7 @@ module.exports = {
         100: "#CDCDE0",
       },
       blue: {
+        DEFAULT:"#03adfc",
         100: "#CDCDE0",
       },
     },
