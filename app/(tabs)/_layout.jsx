@@ -51,6 +51,21 @@ const TabsLayout = () => {
             ),
           }}
         />
+         <Tabs.Screen
+          name="friend"
+          options={{
+            title: "Friends",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.friend}
+                color={color}
+                name="friend"
+                focused={focused}              
+                />
+            ),
+          }}
+        />
    <Tabs.Screen
           name="Home"
           options={{

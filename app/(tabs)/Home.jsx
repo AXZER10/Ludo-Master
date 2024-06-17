@@ -10,13 +10,13 @@ const Home = () => {
       <View className=" flex-row h-12 w-full mt-8 "  >
             <TouchableOpacity onPress={() => router.push("./Profile")} className="ml-2 h-12 w-12 ">
            
-              <Image  className="h-10 w-10 " source={require("../assets/icons/profile.png") } />
+              <Image  className="h-8 w-8 " source={require("../assets/icons/profile.png") } />
               </TouchableOpacity>
               <TouchableOpacity  className="ml-2 h-11 w-11 " >
-              <Image  className=" h-10 w-9 " source={require("../assets/Settings-L-icon.png")  } />
+              <Image  className=" h-8 w-8 " source={require("../assets/Settings-L-icon.png")  } />
               </TouchableOpacity>
               <TouchableOpacity className="ml-2 h-11 w-11 ">
-              <Image   className=" h-10 w-10 " source={require("../assets/msg.jpg")  } />
+              <Image   className=" h-8 w-8 " source={require("../assets/msg.jpg")  } />
               </TouchableOpacity>
               <View className="ml-5 h-7 w-20 ">
                 <Text className="text-blue-400">💎50</Text>
