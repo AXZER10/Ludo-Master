@@ -51,9 +51,9 @@ const TabsLayout = () => {
           }}
         />
          <Tabs.Screen
-          name="Friend"
+          name="friend"
           options={{
-            title: "Friends",
+            title: "friends",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
