@@ -5,7 +5,7 @@ const friend = () => {
   return (
     <SafeAreaView>
     <View className ="px-4">
-      <Text>friend</Text>
+      <Text>Friend</Text>
     </View>
     </SafeAreaView>
   )
