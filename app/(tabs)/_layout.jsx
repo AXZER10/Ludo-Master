@@ -1,7 +1,6 @@
 import { View, Text ,Image } from 'react-native'
 import React from 'react'
-import { Tabs,Redirect } from 'expo-router'
-import iconSet from '@expo/vector-icons/build/Fontisto'
+import { Tabs} from 'expo-router'
 import {icons} from '../../constants';
 
 const TabIcon = ({icon,color,name,focused}) => {
@@ -30,7 +29,7 @@ const TabsLayout = () => {
     tabBarActiveTintColor:'#03adfc',
     tabBarInactiveTintColor:'#CDCDE0',
     tabBarStyle:{
-      backgroundColor:'#161622',
+      backgroundColor:'#161632',
       borderTopWidth:1,
       borderTopColor:'#232533',
       height:100,

@@ -1,10 +1,9 @@
-import { View, Text, SafeAreaView,Image, ScrollView } from 'react-native'
+import { View, Text, Image, ScrollView } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react'
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
-import { TouchableHighlight } from 'react-native';
-
 const Home = () => {
   return (
     <SafeAreaView className="bg-primary h-full items-center justify-center " >
