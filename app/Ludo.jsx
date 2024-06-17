@@ -1144,7 +1144,7 @@ export default class App extends React.Component {
     return (
         <SafeAreaView className="flex-1 bg-primary">
         <View className="mt-10 items-center">
-        <Text className='text-2xl text-green-300 font-psemibold'> Welcome to Ludo Master </Text>
+        <Text className='text-2xl text-blue-400 font-psemibold'> Welcome to Ludo Master </Text>
         
         
         <View style={styles.wholeSetup}>
@@ -1841,7 +1841,7 @@ const styles = StyleSheet.create({
   },
   item : {
     alignItems:'center',
-    borderWidth : 1,borderColor : "#FF9C01",width : Dimensions.get("window").width*6.4/100,height : Dimensions.get("window").width*6.4/100
+    borderWidth : 1,borderColor : "#03adfc",width : Dimensions.get("window").width*6.4/100,height : Dimensions.get("window").width*6.4/100
   },
   First : {
     flexDirection : "column",marginLeft : Dimensions.get("window").width/50, 
