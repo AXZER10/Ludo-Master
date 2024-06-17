@@ -7,7 +7,7 @@ import { TouchableHighlight } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 const Home = () => {
   return (
-    <SafeAreaView className="bg-primary  h-full items-center  justify-center " >
+    <SafeAreaView className="bg-primary h-full justify-center px-2" >
        <ScrollView>
          
       <View className=" flex-row-reverse items-center px-2 space-x-2">
@@ -47,7 +47,7 @@ const Home = () => {
             />
         </View>
         <View className="items-center justify-center min-h-[30vh]">
-            <View className="flex-row items-center justify-center my-2 px-4">
+            <View className="flex-row items-center justify-center my-2">
                 <View className="flex-col w-40 mx-2">
                     <CustomButton 
                     title={'Single Player'} 
