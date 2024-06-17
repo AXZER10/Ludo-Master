@@ -1,32 +1,52 @@
-import { View, Text, SafeAreaView,Image } from 'react-native'
+import { View, Text, SafeAreaView,Image, ScrollView } from 'react-native'
 import React from 'react'
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
+import { TouchableHighlight } from 'react-native';
 
 const Home = () => {
   return (
-    <SafeAreaView className="bg-primary h-full " >
-      <View className=" flex-row h-12 w-full mt-8 "  >
-            <TouchableOpacity onPress={() => router.push("./Profile")} className="ml-2 h-12 w-12 ">
-           
-              <Image  className="h-8 w-8 " source={require("../assets/icons/profile.png") } />
-              </TouchableOpacity>
-              <TouchableOpacity  className="ml-2 h-11 w-11 " >
-              <Image  className=" h-8 w-8 " source={require("../assets/Settings-L-icon.png")  } />
-              </TouchableOpacity>
-              <TouchableOpacity className="ml-2 h-11 w-11 ">
-              <Image   className=" h-8 w-8 " source={require("../assets/msg.jpg")  } />
-              </TouchableOpacity>
-              <View className="ml-5 h-7 w-20 ">
-                <Text className="text-blue-400">💎50</Text>
+    <SafeAreaView className="bg-primary h-full items-center justify-center " >
+       <ScrollView>
+         
+      <View className=" flex-row-reverse items-center px-2 space-x-2">
+            <TouchableOpacity onPress={() => router.push("./Profile")}
+            activeOpacity={0.7}
+            >
+              <Image  className="h-8 w-8 mx-2" source={require("../assets/icons/profile.png") } 
+              resizeMode='contain'
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => router.push("./Menu")}
+            activeOpacity={0.7}
+            >
+              <Image  className=" h-8 w-8 mr-2" source={require("../assets/Settings-L-icon.png")  } 
+              resizeMode='contain'
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+            activeOpacity={0.7}
+            >
+              <Image   className=" h-8 w-8 mr-2" source={require("../assets/msg.jpg")  } 
+              resizeMode='contain'
+              />
+            </TouchableOpacity>
+              <Text className="text-blue-400 font-pbold text-lg mr-2">💎50</Text>
+                <Text className="text-blue-400 font-pbold text-lg mr-2">🪙 5000➕</Text>
               </View>
-              <View className=" ml-5 h-7 w-20 ">
-                <Text className="text-blue-400">🪙 5000➕</Text>
-              </View>
-              </View>
-              
-        <View className="items-center justify-center min-h-[80vh]">
+        <View className='items-center m-5 justify-center'>
+            <Image source={require('../assets/Title.png')} 
+            className='h-[50px] mt-2 justify-center'
+            resizeMode="contain"
+            />
+            <Image source={require('../assets/Logo.jpeg')} 
+            className=' grow justify-center mt-2'
+            resizeMode="contain"
+            />
+        </View>
+        <View className="items-center justify-center min-h-[30vh]">
             <View className="flex-row items-center justify-center my-2 px-4">
                 <View className="flex-col w-40 mx-2">
                     <CustomButton 
@@ -72,6 +92,7 @@ const Home = () => {
                     />
             </View>
         </View>
+       </ScrollView>
     </SafeAreaView>
   )
 }
