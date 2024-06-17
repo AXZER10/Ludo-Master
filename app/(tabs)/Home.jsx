@@ -1,11 +1,31 @@
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView,Image } from 'react-native'
 import React from 'react'
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
+import { TouchableOpacity } from 'react-native';
 
 const Home = () => {
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-primary h-full " >
+      <View className=" flex-row h-12 w-full mt-8 "  >
+            <TouchableOpacity onPress={() => router.push("./Profile")} className="ml-2 h-12 w-12 ">
+           
+              <Image  className="h-10 w-10 " source={require("../assets/icons/profile.png") } />
+              </TouchableOpacity>
+              <TouchableOpacity  className="ml-2 h-11 w-11 " >
+              <Image  className=" h-10 w-9 " source={require("../assets/Settings-L-icon.png")  } />
+              </TouchableOpacity>
+              <TouchableOpacity className="ml-2 h-11 w-11 ">
+              <Image   className=" h-10 w-10 " source={require("../assets/msg.jpg")  } />
+              </TouchableOpacity>
+              <View className="ml-5 h-7 w-20 ">
+                <Text className="text-blue-400">💎50</Text>
+              </View>
+              <View className=" ml-5 h-7 w-20 ">
+                <Text className="text-blue-400">🪙 5000➕</Text>
+              </View>
+              </View>
+              
         <View className="items-center justify-center min-h-[80vh]">
             <View className="flex-row items-center justify-center my-2 px-4">
                 <View className="flex-col w-40 mx-2">

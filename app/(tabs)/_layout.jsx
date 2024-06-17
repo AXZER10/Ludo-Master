@@ -2,11 +2,17 @@ import { View, Text ,Image } from 'react-native'
 import React from 'react'
 import { Tabs,Redirect } from 'expo-router'
 import iconSet from '@expo/vector-icons/build/Fontisto'
-//import {icons} from '../../constants';
+import {icons} from '../../constants';
 
 const TabIcon = ({icon,color,name,focused}) => {
     return (
         <View className="items-center justify-center gap-2">
+            <Image
+            source={icon}
+            resizeMode='contain'
+            tintColor={color}
+            className="w-6 h-6"
+            />
           <Text className= {`${focused ? 'font-psemibold' : 'font-pregular'}text-xs`}
           style={{color:color}}
           >
@@ -37,11 +43,11 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                //icon={icons.bookmark}
+                icon={icons.menu}
                 color={color}
                 name="Menu"
-                focused={focused}
-              />
+                focused={focused}              
+                />
             ),
           }}
         />
@@ -52,11 +58,11 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                //icon={icons.home}
+                icon={icons.home}
                 color={color}
                 name="Home"
-                focused={focused}
-              />
+                focused={focused}             
+                 />
             ),
           }}
         />
@@ -67,11 +73,11 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                //icon={icons.bookmark}
+                icon={icons.profile}
                 color={color}
                 name="Profile"
-                focused={focused}
-              />
+                focused={focused}          
+                   />
             ),
           }}
         />
