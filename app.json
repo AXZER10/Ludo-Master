@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Ludo_Master",
-    "slug": "Ludo_Master",
+    "slug": "ludo-master",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -31,6 +31,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "e139ba41-99fd-4909-8b29-cdff110358dc"
+      }
+    },
+    "owner": "axzer0"
   }
 }

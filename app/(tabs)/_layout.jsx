@@ -1,6 +1,7 @@
 import { View, Text ,Image } from 'react-native'
 import React from 'react'
-import { Tabs} from 'expo-router'
+import { Tabs,Redirect } from 'expo-router'
+import iconSet from '@expo/vector-icons/build/Fontisto'
 import {icons} from '../../constants';
 
 const TabIcon = ({icon,color,name,focused}) => {
@@ -53,13 +54,13 @@ const TabsLayout = () => {
          <Tabs.Screen
           name="friend"
           options={{
-            title: "friends",
+            title: "Friends",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.friend}
                 color={color}
-                name="Friend"
+                name="friend"
                 focused={focused}              
                 />
             ),
