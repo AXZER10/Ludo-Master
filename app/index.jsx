@@ -23,7 +23,7 @@ export default function Index() {
         <CustomButton 
         title={'Play'} 
         ContainerStyles={'w-full'}
-        handlePress={() => router.push("/(tabs)/Home")}
+        handlePress={() => router.push("/(auth)/EmailSignIn")}
         textStyles={'text-3xl font-pbold'}
         />
       </View>
