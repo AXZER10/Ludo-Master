@@ -1,14 +1,18 @@
-import { View, Text, Image, ScrollView } from 'react-native'
+import { View, Text, Image, ScrollView,Button } from 'react-native'
 import React from 'react'
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
 import { TouchableHighlight } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import SplashScreen from '../Ads';
 const Home = () => {
+
+    
   return (
     <SafeAreaView className="bg-primary h-full justify-center px-2" >
        <ScrollView>
+      
        <View className="my-2 w-full items-center justify-center flex-row">
             <TouchableOpacity onPress={() => router.push("../Referral")}
             activeOpacity={0.7}>
@@ -105,10 +109,11 @@ const Home = () => {
             </TouchableOpacity>
             </View>
          </View>
+       
           
        </ScrollView>
     </SafeAreaView>
   )
 }
-
+  
 export default Home

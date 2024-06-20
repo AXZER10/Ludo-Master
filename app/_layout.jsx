@@ -28,6 +28,8 @@ export default function RootLayout() {
       <Stack.Screen name="Ludo" options={{headerShown:false}}/>
       <Stack.Screen name="(tabs)" options={{headerShown:false}}/>
       <Stack.Screen name="Referral" options={{headerShown:false}}/>
+      
+        <Stack.Screen name="Ads" options={{headerShown:false }} />
     </Stack>
   );
 }
