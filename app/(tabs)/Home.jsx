@@ -1,10 +1,11 @@
-import { View, Text, Image, ScrollView } from 'react-native'
+import { View, Text, Image, ScrollView, Button } from 'react-native'
 import React from 'react'
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
-import { TouchableHighlight } from 'react-native';
+//import { TouchableHighlight } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { handleLogout } from '../../FirebaseConfig';
 const Home = () => {
   return (
     <SafeAreaView className="bg-primary h-full justify-center px-2" >
@@ -90,6 +91,9 @@ const Home = () => {
                     handlePress={() => router.push("/Ludo")}
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
+            </View>
+            <View className="items-center justify-center">
+                <Button title="Logout" onPress={handleLogout} color="#e74c3c" />
             </View>
         </View>
        </ScrollView>

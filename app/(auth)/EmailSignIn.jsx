@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
-import FormField from '../../components/FormField'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
+import FormField from '../../components/FormFieldcred'
 import CustomButton from '../../components/CustomButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyD-Wo-ZTOF2AEJ0RK__zXs6MFMVM-1wqqU",
-  authDomain: "ludomaster-4cb3b.firebaseapp.com",
-  projectId: "ludomaster-4cb3b",
-  storageBucket: "ludomaster-4cb3b.appspot.com",
-  messagingSenderId: "806020108210",
-  appId: "1:806020108210:web:fe70d01092d9b41a3c5eab",
-  measurementId: "G-ZK520JWVPD"
-};
-
-// Initialize Firebase app
-export const app = initializeApp(firebaseConfig);
+import { router } from 'expo-router';
+import { Alert } from 'react-native';
+import { app } from '../../FirebaseConfig';
+import { auth } from '../../FirebaseConfig';
+//import { handleA } from '../../FirebaseConfig';
 
 const EmailSignIn = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
   return (
@@ -26,23 +16,25 @@ const EmailSignIn = ({ email, setEmail, password, setPassword, isLogin, setIsLog
     <View className="justify-center items-center w-full mb-2">
       <Text className="text-2xl font-psemibold text-slate-300">{isLogin ? 'Sign In' : 'Sign Up'}</Text>
       <FormField
+        title={"Email"}
         value={email}
         handleChangeText={setEmail}
         placeholder="Email"
         autoCapitalize="none"
       />
       <FormField
+        title={"Password"}
         value={password}
         handleChangeText={setPassword}
         placeholder="Password"
-        secureTextEntry
+        //secureTextEntry
       />
       <View className="justify-center items-center w-full">
         <CustomButton 
         title={isLogin ? 'Sign In' : 'Sign Up'} 
         handlePress={handleAuthentication} 
         ContainerStyles={"mt-5 w-full"} 
-        //isLoading="false"
+        //setIsLoading(false)
         />
         
       </View>
@@ -56,16 +48,9 @@ const EmailSignIn = ({ email, setEmail, password, setPassword, isLogin, setIsLog
   );
 }
 
-// AuthenticatedScreen Component
-const AuthenticatedScreen = ({ user, handleLogout }) => {
-  return (
-    <SafeAreaView className="items-center justify-center mt-[30vh]">
-      <Text style={styles.title}>Welcome</Text>
-      <Text style={styles.emailText}>{user.email}</Text>
-      <Button title="Logout" onPress={handleLogout} color="#e74c3c" />
-    </SafeAreaView>
-  );
-};
+//const auth = getAuth(app);
+
+
 
 // Main App Component
 const App = () => {
@@ -74,7 +59,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [isLogin, setIsLogin] = useState(true);
 
-  const auth = getAuth(app);
+  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -88,30 +73,26 @@ const App = () => {
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
-
+        router.push("./Home")
         console.log('User signed in successfully!');
+        setEmail("")
+        setPassword("")
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
+        router.push("./Home")
         console.log('User created successfully!');
       }
     } catch (error) {
-      console.error('Authentication error:', error.message);
+      Alert.alert('Authentication error:', error.message);
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      console.log('User logged out successfully!');
-    } catch (error) {
-      console.error('Logout error:', error.message);
-    }
-  };
+  
 
   return (
     <View>
       {user ? (
-        <AuthenticatedScreen user={user} handleLogout={handleLogout} />
+        router.push("../(tabs)/Home")
       ) : (
         <EmailSignIn
           email={email}
@@ -126,6 +107,8 @@ const App = () => {
     </View>
   );
 }
+
+
 
 // Styles
 const styles = StyleSheet.create({
