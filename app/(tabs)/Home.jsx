@@ -10,15 +10,9 @@ import { handleLogout } from '../../FirebaseConfig';
 import SplashScreen from '../Ads';
 import ReferralComponent from '../Referral'
 const Home = () => {
-
-    
-
-    
   return (
     <SafeAreaView className="bg-primary h-full justify-center px-2 position-relative" >
        <ScrollView>
-      
-      
        <View className="my-2 w-full items-center justify-center flex-row">
             <TouchableOpacity onPress={() => router.push("../Referral")}
             activeOpacity={0.7}>
@@ -153,13 +147,12 @@ const Home = () => {
             </View>
          </View>
        
-          
-       
        
           
        </ScrollView>
     </SafeAreaView>
   )
 }
-
+  
+  
 export default Home
