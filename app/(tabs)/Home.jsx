@@ -5,14 +5,16 @@ import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
 //import { TouchableHighlight } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { handleLogout } from '../../FirebaseConfig';
 import SplashScreen from '../Ads';
 const Home = () => {
+
+    
 
     
   return (
     <SafeAreaView className="bg-primary h-full justify-center px-2" >
        <ScrollView>
+      
       
        <View className="my-2 w-full items-center justify-center flex-row">
             <TouchableOpacity onPress={() => router.push("../Referral")}
@@ -122,10 +124,12 @@ const Home = () => {
             </View>
          </View>
        
+       
           
        </ScrollView>
     </SafeAreaView>
   )
 }
+  
   
 export default Home
