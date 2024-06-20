@@ -101,6 +101,13 @@ const Home = () => {
                     handlePress={() => router.push("/Ludo")}
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
+           
+        </View>
+        <View className="my-2 w-full items-center justify-center flex-row">
+            <TouchableOpacity onPress={() => router.push("../Ads")}
+            activeOpacity={0.7}>
+                <Text> Ads</Text>
+            </TouchableOpacity>
             </View>
             <View className="items-center justify-center">
                 <Button title="Logout" onPress={handleLogout} color="#e74c3c" />
