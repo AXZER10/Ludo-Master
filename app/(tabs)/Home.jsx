@@ -10,6 +10,12 @@ const Home = () => {
   return (
     <SafeAreaView className="bg-primary h-full justify-center px-2" >
        <ScrollView>
+       <View className="my-2 w-full items-center justify-center flex-row">
+            <TouchableOpacity onPress={() => router.push("../Referral")}
+            activeOpacity={0.7}>
+                <Text> Referral Code</Text>
+            </TouchableOpacity>
+            </View>
          
       <View className=" flex-row-reverse items-center px-2 space-x-2">
             <TouchableOpacity onPress={() => router.push("./Profile")}
@@ -95,7 +101,16 @@ const Home = () => {
             <View className="items-center justify-center">
                 <Button title="Logout" onPress={handleLogout} color="#e74c3c" />
             </View>
-        </View>
+           
+       
+        <View className="my-2 w-full items-center justify-center flex-row">
+            <TouchableOpacity onPress={() => router.push("../Ads")}
+            activeOpacity={0.7}>
+                <Text> Ads</Text>
+            </TouchableOpacity>
+            </View>
+         </View>
+          
        </ScrollView>
     </SafeAreaView>
   )
