@@ -81,14 +81,14 @@ const App = () => {
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
-        router.push("/Home")
+        router.replace("/Home")
         console.log('User signed in successfully!');
         setEmail("")
         setPassword("")
         //console.log(user.email)
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
-        router.push("/Home")
+        router.replace("/Home")
         console.log('User created successfully!');
       }
     } catch (error) {
