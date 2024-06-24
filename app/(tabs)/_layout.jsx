@@ -3,6 +3,7 @@ import React from 'react'
 import { Tabs,Redirect } from 'expo-router'
 import iconSet from '@expo/vector-icons/build/Fontisto'
 import {icons} from '../../constants';
+import { AntDesign } from '@expo/vector-icons';
 
 const TabIcon = ({icon,color,name,focused}) => {
     return (
@@ -58,9 +59,9 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.friend}
+                icon={icons.friends}
                 color={color}
-                name="friend"
+                name="friends"
                 focused={focused}              
                 />
             ),

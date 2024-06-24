@@ -92,9 +92,6 @@ const Home = () => {
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
             </View>
-            <View className="items-center justify-center">
-                <Button title="Logout" onPress={handleLogout} color="#e74c3c" />
-            </View>
         </View>
        </ScrollView>
     </SafeAreaView>

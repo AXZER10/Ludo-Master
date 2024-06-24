@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import FormField from '../../components/FormFieldcred'
@@ -8,7 +8,10 @@ import { router } from 'expo-router';
 import { Alert } from 'react-native';
 import { app } from '../../FirebaseConfig';
 import { auth } from '../../FirebaseConfig';
+import { UserContext, UserProvider } from '../../components/UserContext';
+
 //import { handleA } from '../../FirebaseConfig';
+
 
 const EmailSignIn = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
   return (
@@ -59,8 +62,6 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [isLogin, setIsLogin] = useState(true);
 
-  
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -73,25 +74,29 @@ const App = () => {
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
-        router.push("./Home")
+        router.push("/Home")
         console.log('User signed in successfully!');
         setEmail("")
         setPassword("")
+        //console.log(user.email)
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
-        router.push("./Home")
+        router.push("/Home")
         console.log('User created successfully!');
       }
     } catch (error) {
       Alert.alert('Authentication error:', error.message);
     }
+
   };
 
   
 
   return (
-    <View>
-      {user ? (
+    <UserProvider>
+      <View>
+      {
+      user ? (
         router.push("../(tabs)/Home")
       ) : (
         <EmailSignIn
@@ -105,6 +110,9 @@ const App = () => {
         />
       )}
     </View>
+
+    </UserProvider>
+    
   );
 }
 
