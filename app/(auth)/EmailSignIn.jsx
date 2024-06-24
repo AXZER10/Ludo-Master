@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import FormField from '../../components/FormFieldcred'
 import CustomButton from '../../components/CustomButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { Alert } from 'react-native';
 import { app } from '../../FirebaseConfig';
 import { auth } from '../../FirebaseConfig';
@@ -45,6 +45,13 @@ const EmailSignIn = ({ email, setEmail, password, setPassword, isLogin, setIsLog
         <Text style={styles.toggleText} onPress={() => setIsLogin(!isLogin)}>
           {isLogin ? 'Need an account? Sign Up' : 'Already have an account? Sign In'}
         </Text>
+      </View>
+      <View style={styles.bottomContainer}>
+        <Link href={"AuthScreen"}>
+        <Text style={styles.toggleText}>
+          Login with OTP
+        </Text>
+        </Link>
       </View>
     </View>
     </SafeAreaView>

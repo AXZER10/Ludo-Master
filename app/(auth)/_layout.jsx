@@ -13,6 +13,12 @@ const AuthLayout = () => {
             headerShown:false
           }}
         />
+        <Stack.Screen
+          name='AuthScreen'
+          options={{
+            headerShown:false
+          }}
+        />
       </Stack>
       <StatusBar backgroundColor='#1611622'
       style='dark'
