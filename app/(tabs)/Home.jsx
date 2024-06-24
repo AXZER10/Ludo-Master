@@ -5,7 +5,6 @@ import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
 //import { TouchableHighlight } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import SplashScreen from '../Ads';
 import { handleLogout } from '../../FirebaseConfig';
 import SplashScreen from '../Ads';
 import ReferralComponent from '../Referral'
@@ -16,12 +15,7 @@ const Home = () => {
     <SafeAreaView className="bg-primary h-full justify-center px-2 position-relative" >
        <ScrollView>
       
-       <View className="my-2 w-full items-center justify-center flex-row">
-            <TouchableOpacity onPress={() => router.push("../Referral")}
-            activeOpacity={0.7}>
-                <Text> Referral Code</Text>
-            </TouchableOpacity>
-            </View>
+      
 
        {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <ReferralComponent userUid={userUid} />
@@ -128,12 +122,7 @@ const Home = () => {
                     />
            
         </View>
-        <View className="my-2 w-full items-center justify-center flex-row">
-            <TouchableOpacity onPress={() => router.push("../Ads")}
-            activeOpacity={0.7}>
-                <Text> Ads</Text>
-            </TouchableOpacity>
-            </View>
+       
             <View className="items-center justify-center">
                 <Button title="Logout" onPress={handleLogout} color="#e74c3c" />
             </View>
@@ -142,12 +131,7 @@ const Home = () => {
         
             
        
-        <View className="my-2 w-full items-center justify-center flex-row">
-            <TouchableOpacity onPress={() => router.push("../Ads")}
-            activeOpacity={0.7}>
-                <Text> Ads</Text>
-            </TouchableOpacity>
-            </View>
+       
          </View>
           
        </ScrollView>

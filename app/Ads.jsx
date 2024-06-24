@@ -10,21 +10,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const PopupScreen = ({ userUid }) => {
     
   return (
-    <SafeAreaView className=" w-full h-full  jsutify-center items-center flex-1 bg-blue-400">
-    <TouchableOpacity onPress={() => router.push("../Home")}
+  <SafeAreaView className="bg-primary items-center h-full">
+    <View className="flex-row-reverse w-full">
+     <TouchableOpacity onPress={() => router.push("../Home")}
     activeOpacity={0.7}>
-        <View className=" ml-80 w-full  w-flex-row-reverse">
-        <Image className="w-8  h-8 mr-5 mt-10  " source={require("../app/assets/cross.png")}/>
-        </View>
-       
-        <View className=" justify-center items-center mt -10 " >
-        <Image className="w-full  h-80 mt-10 "  source={require("../app/assets/ads.jpg")}/>
+        <Image className="mt-4 w-10 h-8 mx-4" source={require("../app/assets/cross.png")}/>
+      </TouchableOpacity>
+    </View>
+        <View className="w-full justify-center items-center border-2 border-white h-full" >
+        <Image className="w-[300px] h-[300px]"
+        resizeMode='contain' source={require("../app/assets/ads.jpg")}/>
             </View >
-            
-      
-    </TouchableOpacity>
-   
-    </SafeAreaView>
+  </SafeAreaView>
+    
   )
 };
 
