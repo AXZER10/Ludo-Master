@@ -14,14 +14,15 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.NotioMindz.LudoMaster"
+      "bundleIdentifier": "com.NotionMindz.LudoMaster"
     },
     "android": {
+      "googleServicesFile": "./googleServicesFile.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.NotioMindz.LudoMaster"
+      "package": "com.NotionMindz.LudoMaster"
     },
     "web": {
       "bundler": "metro",
