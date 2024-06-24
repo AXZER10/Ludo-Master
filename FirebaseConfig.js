@@ -8,7 +8,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, on
 import { router } from 'expo-router';
 import { Alert } from 'react-native';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -23,12 +23,11 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig)
 
-/*const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage)
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
 });
-*/
 
-export const auth = getAuth(app);
+//export const auth = getAuth(app);
 
 export const handleLogout = async () => {
   try {
