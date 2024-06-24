@@ -17,7 +17,6 @@
       "bundleIdentifier": "com.NotionMindz.LudoMaster"
     },
     "android": {
-      "googleServicesFile": "./googleServicesFile.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
