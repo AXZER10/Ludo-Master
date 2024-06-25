@@ -5,9 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useRouter } from 'expo-router';
 import FormField from '../../components/FormFieldcred';
 import CustomButton from '../../components/CustomButton';
-import { auth } from '../../FirebaseConfig';
+import { auth, firestore } from '../../FirebaseConfig';
 import { UserProvider } from '../../components/UserContext';
 import Profile from '../(tabs)/Profile';
+import { collection, addDoc } from 'firebase/firestore';
 
 const EmailSignIn = ({ username, setUsername, email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
   return (
@@ -88,6 +89,16 @@ const App = () => {
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCredential.user, { displayName: username });
+
+        const userRef = collection(firestore, 'users'); // Reference to users collection
+        const docRef = await addDoc(userRef, {
+          uid: userCredential.user.uid,
+          username: username,
+          email: email,
+          createdAt: new Date(),
+        });
+        console.log('User created successfully and data stored in Firestore!', docRef.id);
+
         router.replace("/Home");
         console.log('User created successfully!');
       }
@@ -138,6 +149,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
 
 export default App;

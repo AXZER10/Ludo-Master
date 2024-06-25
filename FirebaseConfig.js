@@ -9,6 +9,7 @@ import { router } from 'expo-router';
 import { Alert } from 'react-native';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getFirestore } from 'firebase/firestore';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -27,17 +28,20 @@ export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
 
+const firestore = getFirestore(app);
+
+
 //export const auth = getAuth(app);
 
 export const handleLogout = async () => {
   try {
     await signOut(auth);
     console.log('User logged out successfully!');
-    router.navigate("/EmailSignIn")
+    router.replace("/EmailSignIn")
   } catch (error) {
     console.error('Logout error:', error.message);
   }
 };
 
 
-export default app
+export default {app, firestore}
