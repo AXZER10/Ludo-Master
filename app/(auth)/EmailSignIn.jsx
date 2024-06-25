@@ -7,6 +7,7 @@ import FormField from '../../components/FormFieldcred';
 import CustomButton from '../../components/CustomButton';
 import { auth } from '../../FirebaseConfig';
 import { UserProvider } from '../../components/UserContext';
+import Profile from '../(tabs)/Profile';
 
 const EmailSignIn = ({ username, setUsername, email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
   return (
@@ -72,7 +73,6 @@ const App = () => {
       setUser(user);
       if (user) {
         router.replace("/Home");
-        console.log(user.displayName);
       }
     });
 
@@ -103,7 +103,11 @@ const App = () => {
     <UserProvider>
       <View>
         {user ? (
+          <>
+          <Profile user={user} setUser={setUser}/>
           <Text>Loading...</Text>
+          </>
+          
         ) : (
           <EmailSignIn
             username={username}
@@ -115,9 +119,12 @@ const App = () => {
             isLogin={isLogin}
             setIsLogin={setIsLogin}
             handleAuthentication={handleAuthentication}
+            user={user}
+            setUser={setUser}
           />
-        )}
+        )} 
       </View>
+      <Profile user={user} setUser={setUser}/>
     </UserProvider>
   );
 }
@@ -131,5 +138,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
 
 export default App;

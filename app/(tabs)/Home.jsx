@@ -25,7 +25,7 @@ const Home = () => {
        
          
       <View className=" flex-row-reverse items-center px-2 space-x-2">
-            <TouchableOpacity onPress={() => router.push("./Profile")}
+            <TouchableOpacity onPress={() => router.replace("./Profile")}
             activeOpacity={0.7}
             >
               <Image  className="h-8 w-8 mx-2" source={require("../assets/icons/profile.png") } 
@@ -33,7 +33,7 @@ const Home = () => {
               />
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={() => router.push("./Menu")}
+            onPress={() => router.replace("./Menu")}
             activeOpacity={0.7}
             >
               <Image  className=" h-8 w-8 mr-2" source={require("../assets/Settings-L-icon.png")  } 
@@ -56,7 +56,7 @@ const Home = () => {
             activeOpacity={0.7}>
               <View className=" h-10 w-full  flex-row-reverse">
               <Text className="text-blue-400 ml-60 px-7 "> Referral </Text>
-              <TouchableOpacity onPress={() => router.push("../Ads")}
+              <TouchableOpacity onPress={() => router.replace("../Ads")}
             activeOpacity={0.7}>
               <Text className="text-blue-400  px-7 "> Ads</Text>
               </TouchableOpacity>

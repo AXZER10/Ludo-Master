@@ -12,7 +12,7 @@ const PopupScreen = ({ userUid }) => {
   return (
   <SafeAreaView className="bg-primary items-center h-full">
     <View className="flex-row-reverse w-full">
-     <TouchableOpacity onPress={() => router.push("../Home")}
+     <TouchableOpacity onPress={() => router.replace("../Home")}
     activeOpacity={0.7}>
         <Image className="mt-4 w-10 h-8 mx-4" source={require("../app/assets/cross.png")}/>
       </TouchableOpacity>
