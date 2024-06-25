@@ -19,8 +19,10 @@ const FormField = ({title,value,placeholder,handleChangeText,otherStyles,...prop
             autoCapitalize='none'
             secureTextEntry={title==='Password'&&!showPass}
         />
-        {title==='Password' && (<TouchableOpacity onPress={()=> setShowPass(!showPass)}>
-        <Image source={!showPass ? icons.eye : icons.eyeHide} className='w-6 h-6'
+        {title==='Password' && (<TouchableOpacity onPress={()=> setShowPass(!showPass)}
+          activeOpacity={0.7}
+          >
+        <Image source={!showPass ? icons.eye : icons.eyehide} className='w-6 h-6'
         resizeMode='contain'
         />
         </TouchableOpacity>
