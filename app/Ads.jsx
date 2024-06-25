@@ -17,9 +17,9 @@ const PopupScreen = ({ userUid }) => {
         <Image className="mt-4 w-10 h-8 mx-4" source={require("../app/assets/cross.png")}/>
       </TouchableOpacity>
     </View>
-        <View className="w-full justify-center items-center border-2 border-white h-full" >
-        <Image className="w-[300px] h-[300px]"
-        resizeMode='contain' source={require("../app/assets/ads.jpg")}/>
+        <View className="w-full justify-center items-center   h-full" >
+        <Image className="w-[400px] h-[800px]"
+        resizeMode='contain' source={require("../app/assets/ads2.png")}/>
             </View >
   </SafeAreaView>
     
