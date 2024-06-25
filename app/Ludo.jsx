@@ -4,7 +4,6 @@ import {FontAwesome} from '@expo/vector-icons'
 import {Players,row} from './styles/forPlayers'
 import {Audio} from 'expo-av'
 import * as Animatable from "react-native-animatable";
-import { ZoomIn } from 'react-native-reanimated';
 soundObject = new Audio.Sound()
 
 const zoomIn = {
