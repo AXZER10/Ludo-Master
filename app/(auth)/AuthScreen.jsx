@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
 export default AuthScreen;
 */
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { PhoneAuthProvider, signInWithCredential, verifyPhoneNumber, RecaptchaVerifier, setPersistence, browserLocalPersistence, onAuthStateChanged, getReactNativePersistence } from 'firebase/auth';
 import { auth } from "../../FirebaseConfig"; // Import from firebase.config.js
 
