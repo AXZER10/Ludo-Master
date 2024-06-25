@@ -19,7 +19,7 @@ const Profile = () => {
   if (currentUser !== null) 
     Username = currentUser.displayName;
   else
-    userName = "";
+    UserName = "";
   return (
     <SafeAreaView className="h-full justify-center items-center bg-primary">
       <View className="flex-column justify-center space-y-2 items-center">
