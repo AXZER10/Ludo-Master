@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.NotionMindz.LudoMaster"
+      "package": "com.NotionMindz.LudoMaster",
+      "googleServicesFile": "./app/google-services.json"
     },
     "web": {
       "bundler": "metro",
