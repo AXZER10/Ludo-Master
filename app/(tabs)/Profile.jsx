@@ -15,11 +15,13 @@ const Profile = () => {
     });
     return () => unsubscribe();
   }, []);
-
-  if (currentUser !== null) 
-    Username = currentUser.displayName;
-  else
-    UserName = "";
+  
+  const [Username, setUserName] = useState("")
+  useEffect(() => {
+    if (currentUser) {
+      setUserName(currentUser.displayName);
+    }
+  }, [currentUser]);
   return (
     <SafeAreaView className="h-full justify-center items-center bg-primary">
       <View className="flex-column justify-center space-y-2 items-center">
