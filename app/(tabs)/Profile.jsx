@@ -30,8 +30,8 @@ const Profile = () => {
         <Image className="w-24 h-24 mb-5" source={require("../assets/profile.png")} />
         <Text className="items-center font-psemibold justify-center text-2xl text-blue-400 "> {Username}</Text>
         <Image className="w-14 h-14" source={require("../assets/india.png")} />
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400">Main Balance: {mainBalance} </Text>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Bonus Balance: {bonusBalance} </Text>
+        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400">Main Balance: ₹{mainBalance} </Text>
+        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Bonus Balance: ₹{bonusBalance} </Text>
       </View>
       <View className="items-center justify-center">
         <Button title="Logout" onPress={() => handleLogout(setCurrentUser)} color="#e74c3c" />
