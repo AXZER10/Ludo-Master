@@ -8,7 +8,7 @@ import CustomButton from '../../components/CustomButton';
 import { auth, firestore } from '../../FirebaseConfig';
 import { UserProvider } from '../../components/UserContext';
 import Profile from '../(tabs)/Profile';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getFirestore } from 'firebase/firestore';
 
 const EmailSignIn = ({ username, setUsername, email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
   return (
@@ -74,6 +74,7 @@ const App = () => {
       setUser(user);
       if (user) {
         router.replace("/Home");
+        const db = getFirestore();
       }
     });
 
@@ -90,14 +91,28 @@ const App = () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCredential.user, { displayName: username });
 
-        const userRef = collection(firestore, 'users'); // Reference to users collection
-        const docRef = await addDoc(userRef, {
+        const db = getFirestore();
+
+        const userRef = collection(db, 'users'); // Reference to users collection
+        const signupRef = await addDoc(userRef, {
           uid: userCredential.user.uid,
           username: username,
           email: email,
           createdAt: new Date(),
         });
-        console.log('User created successfully and data stored in Firestore!', docRef.id);
+        
+        //WalletSignUpBonus
+        const walletRef = collection(db, 'wallet'); // Reference to wallet collection
+        const signupbonusref = await addDoc(walletRef, {
+          uid: userCredential.user.uid,
+          mainbalance: 0,
+          bonusbalance: 5,
+          createdAt: new Date(),
+        });
+
+        console.log('User created successfully and data stored in Firestore!', signupRef.id);
+        console.log('Bonus Added successfully and wallet created in Firestore!', signupbonusref.id);
+
 
         router.replace("/Home");
         console.log('User created successfully!');
