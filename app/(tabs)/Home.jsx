@@ -65,6 +65,14 @@ const Home = () => {
             </TouchableOpacity>
             </View>
            
+            <View className="  w-full    justify-center ">
+            <TouchableOpacity onPress={() => router.push("../HowToPlay")}
+            activeOpacity={0.7}>
+              <View className=" h-10 w-full  flex-row-reverse">
+              <Text className="text-blue-400 text-2xl  ">❔</Text>
+              </View>
+              </TouchableOpacity>
+              </View>
 
         <View className='items-center m-5 justify-center'>
             <Image source={require('../assets/Title.png')} 

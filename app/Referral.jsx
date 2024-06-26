@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Clipboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import auth from '../FirebaseConfig';
+import firestore from '../FirebaseConfig';
 import CustomButton from '../components/CustomButton';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -76,7 +76,7 @@ const ReferralComponent = () => {
 
       {/* Input to redeem another person's referral code */}
       <View >
-        <Text className="items-center text-blue-100 font-psemibold justify-center text-xl text-blue-400 ">Enter Referral Code to Redeem:</Text>
+        <Text className="items-center font-psemibold justify-center text-xl text-blue-400 ">Enter Referral Code to Redeem:</Text>
         <TextInput 
          className="h-12 border-slate-700  text-white-100 font-psemibold text-base rounded-[60px] w-full border-2 px-8 mb-4"
           value={inputReferralCode}
