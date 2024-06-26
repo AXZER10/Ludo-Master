@@ -75,7 +75,6 @@ const App = () => {
       if (user) {
         router.replace("/Home");
         const db = getFirestore();
-        console.log(db);
       }
     });
 
@@ -93,7 +92,6 @@ const App = () => {
         await updateProfile(userCredential.user, { displayName: username });
 
         const db = getFirestore();
-        console.log(db);
 
         const userRef = collection(db, 'users'); // Reference to users collection
         const signupRef = await addDoc(userRef, {
