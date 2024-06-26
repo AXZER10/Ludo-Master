@@ -38,8 +38,10 @@ const Profile = () => {
           <>
             <View className="flex-column justify-center space-y-2 items-center">
         <Image className="w-24 h-24 mb-5" source={require("../assets/profile.png")} />
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400 "> {Username}</Text>
-        <Image className="w-14 h-14" source={require("../assets/india.png")} />
+        <View className="flex-row">
+          <Text className="items-center font-psemibold justify-center text-2xl text-blue-400 mx-2"> {Username}</Text>
+          <Image className="w-[50] h-[30]" source={require("../assets/india.png")} />
+        </View>
         <Text className="items-center font-psemibold justify-center text-2xl text-blue-400">Main Balance: ₹{mainBalance} </Text>
         <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Bonus Balance: ₹{bonusBalance} </Text>
       </View>
