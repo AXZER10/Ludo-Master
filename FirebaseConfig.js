@@ -51,27 +51,34 @@ export const UserBalances = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchBalances = async () => {
-      const user = auth.currentUser;
-      const db = getFirestore();
-      const walletRef = collection(db, 'wallet');
+  const fetchBalances = async () => {
+    const user = auth.currentUser;
+    const db = getFirestore();
+    const walletRef = collection(db, 'wallet');
 
+        if(user){
           const q = query(walletRef, where("uid", "==", user.uid))
-          
-          const querySnapshot = await getDocs(q);
-          querySnapshot.forEach((doc) => {
-              const walletbalance = doc.data().mainbalance;
-              const BonusBalance = doc.data().bonusbalance;
-              setBonusBalance(BonusBalance);
-              setMainBalance(walletbalance);
-          })
+        
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            const walletbalance = doc.data().mainbalance;
+            const BonusBalance = doc.data().bonusbalance;
+            setBonusBalance(BonusBalance);
+            setMainBalance(walletbalance);
+        })
+        }
     };
+    useEffect(() => {
+    
     fetchBalances();
   }, []);
+
+  const refetch = () => fetchBalances();
+
   return{
       bonusBalance,
-      mainBalance
+      mainBalance,
+      refetch
   }
 
 };

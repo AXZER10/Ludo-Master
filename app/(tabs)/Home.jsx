@@ -57,10 +57,10 @@ const Home = () => {
               </View>
                
             
-            </View>
+          </View>
            
 
-        <View className='items-center m-5 justify-center'>
+          <View className='items-center m-5 justify-center'>
             <Image source={require('../assets/Title.png')} 
             className='h-[50px] mt-2 justify-center'
             resizeMode="contain"
@@ -69,8 +69,8 @@ const Home = () => {
             className=' grow justify-center mt-2'
             resizeMode="contain"
             />
-        </View>
-        <View className="items-center justify-center min-h-[30vh]">
+          </View>
+          <View className="items-center justify-center min-h-[30vh]">
             <View className="flex-row items-center justify-center my-2">
                 <View className="flex-col w-40 mx-2">
                     <CustomButton 
@@ -88,8 +88,8 @@ const Home = () => {
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
                 </View>
-            </View>
-            <View className="flex-row items-center justify-center my-2 px-4">
+              </View>
+              <View className="flex-row items-center justify-center my-2 px-4">
                 <View className="flex-col w-40 mx-2">
                     <CustomButton 
                     title={'3 Players'} 
@@ -106,28 +106,22 @@ const Home = () => {
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
                 </View>
-            </View>
+              </View>
             <View className="my-2 w-full items-center justify-center flex-row">
-            <CustomButton 
-                    title={'Online play'} 
-                    ContainerStyles={'w-40 bg-black'}
-                    handlePress={() => router.push("/Ludo")}
-                    textStyles={'text-lg font-pbold text-blue-400'}
-                    />
-           
-        </View>
-       
-            <View className="items-center justify-center">
-                <Button title="Logout" onPress={handleLogout} color="#e74c3c" />
+              <CustomButton 
+                title={'Online play'} 
+                ContainerStyles={'w-40 bg-black'}
+                handlePress={() => router.push("/Ludo")}
+                textStyles={'text-lg font-pbold text-blue-400'}
+              />
             </View>
-           
-       
-        
-            
-       
-       
-         </View>
-          
+            <CustomButton 
+                title={'kyc verifications'} 
+                ContainerStyles={'w-40 bg-black'}
+                handlePress={() => router.push("/KYC")}
+                textStyles={'text-lg font-pbold text-blue-400'}
+              />
+          </View>
        </ScrollView>
     </SafeAreaView>
   )
