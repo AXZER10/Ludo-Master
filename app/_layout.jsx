@@ -35,6 +35,10 @@ export default function RootLayout() {
         <Stack.Screen name="Menu/privacy" options={{headerShown:false }} />
         <Stack.Screen name="Menu/Refund" options={{headerShown:false }} />
         <Stack.Screen name="Menu/Terms" options={{headerShown:false }} />
-    </Stack>
+        <Stack.Screen name="HowToPlay" options={{headerShown:false }} />
+        
+    
+    
+  </Stack>
   );
 }
