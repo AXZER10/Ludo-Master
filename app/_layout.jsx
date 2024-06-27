@@ -23,6 +23,10 @@ export default function RootLayout() {
   },[fontsLoaded, error])
   if(!fontsLoaded && !error) return null;
   return (
+    <>
+    <StatusBar
+      style='light'
+      />
     <Stack>
       <Stack.Screen name="index" options={{headerShown:false}}/>
       <Stack.Screen name="Ludo" options={{headerShown:false}}/>
@@ -36,9 +40,8 @@ export default function RootLayout() {
         <Stack.Screen name="Menu/Refund" options={{headerShown:false }} />
         <Stack.Screen name="Menu/Terms" options={{headerShown:false }} />
         <Stack.Screen name="HowToPlay" options={{headerShown:false }} />
-        
-    
-    
-  </Stack>
+        <Stack.Screen name="KYC" options={{headerShown:false }} />
+    </Stack>
+    </>
   );
 }
