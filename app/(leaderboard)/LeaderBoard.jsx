@@ -3,6 +3,8 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
+import TopBar from '../../components/TopBar';
+
 const LeaderboardScreen = ({ route }) => {
   //const { period } = route.params;
 
@@ -36,6 +38,7 @@ const LeaderboardScreen = ({ route }) => {
 
   return (
     <SafeAreaView className="bg-primary w-full h-full px-4 justify-center">
+      <TopBar/>
       <FlatList
       ListHeaderComponent={() => (
         <>
