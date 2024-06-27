@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Alert, StyleSheet } from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useRouter } from 'expo-router';
 import FormField from '../../components/FormFieldcred';
 import CustomButton from '../../components/CustomButton';
-import { auth, firestore } from '../../FirebaseConfig';
+import { auth } from '../../FirebaseConfig';
 import { UserProvider } from '../../components/UserContext';
 import Profile from '../(tabs)/Profile';
 import { collection, addDoc, getFirestore } from 'firebase/firestore';

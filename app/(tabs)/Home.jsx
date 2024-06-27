@@ -5,10 +5,6 @@ import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
 //import { TouchableHighlight } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { handleLogout } from '../../FirebaseConfig';
-import SplashScreen from '../Ads';
-import ReferralComponent from '../Referral'
-import { UserBalances } from '../../FirebaseConfig';
 import TopBar from '../../components/TopBar';
 
 const Home = () => {

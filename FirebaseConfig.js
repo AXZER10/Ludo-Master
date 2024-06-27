@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 //import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 //import FormField from '../../components/FormField'
 //import CustomButton from '../../components/CustomButton';
 //import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { Alert } from 'react-native';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getFirestore,doc, getDocs, query, collection, where } from 'firebase/firestore';
+import { getFirestore, getDocs, query, collection, where } from 'firebase/firestore';
 
 
 // Firebase configuration
