@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import { Stack } from "expo-router";
 import { useFonts } from 'expo-font';
 import { SplashScreen} from 'expo-router';
-import { StatusBar } from 'expo-status-bar'
-
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -41,6 +39,7 @@ export default function RootLayout() {
         <Stack.Screen name="Menu/privacy" options={{headerShown:false }} />
         <Stack.Screen name="Menu/Refund" options={{headerShown:false }} />
         <Stack.Screen name="Menu/Terms" options={{headerShown:false }} />
+        <Stack.Screen name="HowToPlay" options={{headerShown:false }} />
         <Stack.Screen name="KYC" options={{headerShown:false }} />
         <Stack.Screen name="(leaderboard)" options={{headerShown:false }} />
     </Stack>
