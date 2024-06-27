@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { SafeAreaView, ScrollView, View, Text, Image, StyleSheet } from 'react-native';
+import { SafeAreaView, FlatList, View, Text, Image, StyleSheet } from 'react-native';
 
 const HowToPlayScreen = () => {
   const instructions = [
@@ -18,7 +19,6 @@ const HowToPlayScreen = () => {
       description: 'Players take turns rolling a single die to move their tokens. A roll of six allows a player to bring a token onto the board and roll again. Tokens move clockwise around the board.',
       image: require('../app/assets/gameplay.jpg'),
     },
-    
     {
       title: 'Winning the Game',
       description: 'The first player to move all four of their tokens to their home area wins the game.',
@@ -26,18 +26,23 @@ const HowToPlayScreen = () => {
     },
   ];
 
+  const renderItem = ({ item }) => (
+    <View style={styles.instructionContainer} className="bg-blue-400">
+      <Text style={styles.instructionTitle}>{item.title}</Text>
+      <Image source={item.image} style={styles.instructionImage} />
+      <Text style={styles.instructionDescription}>{item.description}</Text>
+    </View>
+  );
+
   return (
     <SafeAreaView className="flex-1 px-10 bg-primary">
-      <ScrollView>
-        <Text className="font-psemibold mb-10 items-center">How to Play Ludo</Text>
-        {instructions.map((instruction, index) => (
-          <View key={index} style={styles.instructionContainer} className="bg-blue-400">
-            <Text style={styles.instructionTitle}>{instruction.title}</Text>
-            <Image source={instruction.image} style={styles.instructionImage} />
-            <Text style={styles.instructionDescription}>{instruction.description}</Text>
-          </View>
-        ))}
-      </ScrollView>
+      <Text className="font-psemibold mb-10 mt-10 text-blue-400 text-2xl items-center">How to Play Ludo</Text>
+      <FlatList
+        data={instructions}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={styles.listContainer}
+      />
     </SafeAreaView>
   );
 };
@@ -54,10 +59,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
+  listContainer: {
+    paddingBottom: 20,
+  },
   instructionContainer: {
     marginBottom: 20,
     padding: 15,
-    
     borderRadius: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
