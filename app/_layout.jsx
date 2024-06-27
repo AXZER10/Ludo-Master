@@ -42,6 +42,7 @@ export default function RootLayout() {
         <Stack.Screen name="Menu/Refund" options={{headerShown:false }} />
         <Stack.Screen name="Menu/Terms" options={{headerShown:false }} />
         <Stack.Screen name="KYC" options={{headerShown:false }} />
+        <Stack.Screen name="(leaderboard)" options={{headerShown:false }} />
     </Stack>
     </>
   );

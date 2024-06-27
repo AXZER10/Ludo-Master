@@ -50,16 +50,22 @@ const Home = () => {
             activeOpacity={0.7}>
               <Text className="text-blue-400 ml-60 px-4 "> Referral </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.replace("../Ads")}
+              <TouchableOpacity onPress={() => router.push("../Ads")}
             activeOpacity={0.7}>
               <Text className="text-blue-400  px-7 "> Ads</Text>
               </TouchableOpacity>
-              </View>
-               
-            
-          </View>
-           
-
+              </View>          
+          </View>    
+          <View className="flex-row-reverse">
+          <TouchableOpacity className="w-[50px] h-[50px] items-center justify-center"
+          onPress={() => router.push("../(leaderboard)/LeaderBoard")}
+          activeOpacity={0.7}>
+                <Image source={require("../assets/icons/leaderboard.png")}
+                resizeMode='contain'
+                className="h-full w-full"
+                />
+            </TouchableOpacity>
+          </View>      
           <View className='items-center m-5 justify-center'>
             <Image source={require('../assets/Title.png')} 
             className='h-[50px] mt-2 justify-center'
@@ -121,6 +127,12 @@ const Home = () => {
                 handlePress={() => router.push("/KYC")}
                 textStyles={'text-lg font-pbold text-blue-400'}
               />
+            <CustomButton 
+                title={'kyc verifications'} 
+                ContainerStyles={'w-40 bg-black'}
+                handlePress={() => router.push("../(leaderboard)/LeaderBoard")}
+                textStyles={'text-lg font-pbold text-blue-400'}
+              />  
           </View>
        </ScrollView>
     </SafeAreaView>
