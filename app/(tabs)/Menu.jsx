@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView,Switch, StyleSheet, Linking, TouchableOpacity,
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { router } from 'expo-router';
+import { handleLogout } from '../../FirebaseConfig';
 
 const Menu = () => {
 
@@ -9,10 +10,6 @@ const Menu = () => {
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
   const [isVibrateEnabled, setIsVibrateEnabled] = useState(false);
 
-  const handleLogout = () => {
-    // Handle logout logic here
-    Alert.alert("Logout", "You have been logged out.");
-  };
 
   const handleQuit = () => {
     // Handle quit logic here
@@ -101,38 +98,5 @@ const Menu = () => {
     </SafeAreaView>
   );
 };
-   
-    
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 20,
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     marginBottom: 20,
-//   },
-//   subTitle: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     marginTop: 20,
-//     marginBottom: 10,
-//   },
-//   setting: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     marginVertical: 10,
-//   },
-//   link: {
-//     marginVertical: 10,
-//   },
-//   socialMediaContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-around',
-//     marginTop: 20,
-//   },
-// });
 
 export default Menu

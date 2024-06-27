@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView, Button } from 'react-native'
+import { View, Text, Image, ScrollView, Button, FlatList } from 'react-native'
 import React from 'react'
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
@@ -8,12 +8,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import TopBar from '../../components/TopBar';
 
 const Home = () => {
-
   return (
-    <SafeAreaView className="bg-primary h-full justify-center px-2 position-relative" >
-      <ScrollView>
+    <SafeAreaView className="bg-primary h-full justify-center px-2 flex-1" >
+      <FlatList 
+      ListHeaderComponent={() => (
         <TopBar/>
-              <View className="my-2  w-full items-center justify-center flex-row">
+      )}
+      renderItem={null}
+      ListFooterComponent={() => (
+        <>
+              <View className="my-2 w-full items-center justify-center flex-row">
               <View className="w-full flex-row-reverse">
               <TouchableOpacity onPress={() => router.push("../Referral")}
             activeOpacity={0.7}>
@@ -96,14 +100,10 @@ const Home = () => {
                 handlePress={() => router.push("/KYC")}
                 textStyles={'text-lg font-pbold text-blue-400'}
               />
-            <CustomButton 
-                title={'kyc verifications'} 
-                ContainerStyles={'w-40 bg-black'}
-                handlePress={() => router.push("../(leaderboard)/LeaderBoard")}
-                textStyles={'text-lg font-pbold text-blue-400'}
-              />  
           </View>
-       </ScrollView>
+          </>
+      )}
+      />
     </SafeAreaView>
   )
 }
