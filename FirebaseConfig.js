@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
-//import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
 import { initializeApp } from 'firebase/app';
 import { signOut } from 'firebase/auth';
-//import FormField from '../../components/FormField'
-//import CustomButton from '../../components/CustomButton';
-//import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
