@@ -28,7 +28,7 @@ const HowToPlayScreen = () => {
   ];
 
   const renderItem = ({ item }) => (
-    <View style={styles.instructionContainer} className="bg-blue-400">
+    <View style={styles.instructionContainer} className="bg-blue-400 mr-2">
       <Text style={styles.instructionTitle}>{item.title}</Text>
       <Image source={item.image} style={styles.instructionImage} />
       <Text style={styles.instructionDescription}>{item.description}</Text>
@@ -36,9 +36,10 @@ const HowToPlayScreen = () => {
   );
 
   return (
-    <SafeAreaView className="bg-primary px-4">
-      <Text className="font-psemibold px-4 mb-10 mt-5 text-blue-400 text-2xl items-center">How to Play Ludo</Text>
+    <SafeAreaView className="bg-primary px-4 h-full items-center justify-center">
+      <Text className="font-pbold px-4 mb-10 mt-5 text-blue-400 text-3xl items-center">How to Play Ludo</Text>
       <FlatList
+        horizontal
         data={instructions}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
@@ -67,6 +68,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 15,
     borderRadius: 10,
+    width: 300,
+    maxHeight: 400,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
   },
   instructionDescription: {
     fontSize: 16,
-    color: '#555',
+    color: '#444',
   },
 });
 
