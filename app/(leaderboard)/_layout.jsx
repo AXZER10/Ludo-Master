@@ -2,7 +2,7 @@ import React from 'react'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 
-const AuthLayout = () => {
+const LeaderBoardLayout = () => {
   return (
     <>
       <Stack>
@@ -20,4 +20,4 @@ const AuthLayout = () => {
   )
 }
 
-export default AuthLayout
+export default LeaderBoardLayout

@@ -28,26 +28,26 @@ const Home = () => {
               </TouchableOpacity>
               </View>          
           </View>    
-          <View className="flex-row-reverse">
-          <TouchableOpacity className="w-[50px] h-[50px] items-center justify-center"
-          onPress={() => router.push("../(leaderboard)/LeaderBoard")}
-          activeOpacity={0.7}>
-                <Image source={require("../assets/icons/leaderboard.png")}
-                resizeMode='contain'
-                className="h-full w-full"
-                />
+          <View className="flex-row-reverse my-1">
+            <TouchableOpacity className="w-[40px] h-[40px] items-center justify-center"
+            onPress={() => router.push("../(leaderboard)/LeaderBoard")}
+            activeOpacity={0.7}>
+                  <Image source={require("../assets/icons/leaderboard.png")}
+                  resizeMode='contain'
+                  className="h-full w-full"
+                  />
             </TouchableOpacity>
           </View>      
-           
-            <View className="  w-full    justify-center ">
-            <TouchableOpacity onPress={() => router.push("../HowToPlay")}
+          <View className="flex-row-reverse my-1">
+            <TouchableOpacity className="w-[40px] h-[40px] items-center justify-center"
+            onPress={() => router.push("/HowToPlay")}
             activeOpacity={0.7}>
-              <View className=" h-10 w-full  flex-row-reverse">
-                <Image className="h-8 w-8 mr-4" source={require("../assets/mac1024.png")}/>
-            
-              </View>
-              </TouchableOpacity>
-              </View>
+                  <Image source={require("../assets/icons/how.png")}
+                  resizeMode='contain'
+                  className="h-full w-full"
+                  />
+            </TouchableOpacity>
+          </View>  
 
           <View className='items-center m-5 justify-center'>
             <Image source={require('../assets/Title.png')} 

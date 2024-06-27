@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { SafeAreaView, FlatList, View, Text, Image, StyleSheet } from 'react-native';
+import { FlatList, View, Text, Image, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HowToPlayScreen = () => {
   const instructions = [
@@ -35,8 +36,8 @@ const HowToPlayScreen = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 px-10 bg-primary">
-      <Text className="font-psemibold mb-10 mt-10 text-blue-400 text-2xl items-center">How to Play Ludo</Text>
+    <SafeAreaView className="bg-primary px-4">
+      <Text className="font-psemibold px-4 mb-10 mt-5 text-blue-400 text-2xl items-center">How to Play Ludo</Text>
       <FlatList
         data={instructions}
         renderItem={renderItem}
