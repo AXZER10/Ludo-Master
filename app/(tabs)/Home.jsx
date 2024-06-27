@@ -48,17 +48,26 @@ const Home = () => {
               <View className="w-full flex-row-reverse">
               <TouchableOpacity onPress={() => router.push("../Referral")}
             activeOpacity={0.7}>
-              <Text className="text-blue-400 ml-60 px-4 "> Referral </Text>
+              <Text className="text-blue-400 ml-60 px-3 "> Referral </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => router.replace("../Ads")}
             activeOpacity={0.7}>
-              <Text className="text-blue-400  px-7 "> Ads</Text>
+              <Text className="text-blue-400 ml-20  px-7 "> Ads</Text>
               </TouchableOpacity>
               </View>
                
             
           </View>
            
+            <View className="  w-full    justify-center ">
+            <TouchableOpacity onPress={() => router.push("../HowToPlay")}
+            activeOpacity={0.7}>
+              <View className=" h-10 w-full  flex-row-reverse">
+                <Image className="h-8 w-8 mr-4" source={require("../assets/mac1024.png")}/>
+            
+              </View>
+              </TouchableOpacity>
+              </View>
 
           <View className='items-center m-5 justify-center'>
             <Image source={require('../assets/Title.png')} 

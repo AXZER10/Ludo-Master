@@ -1,16 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Clipboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import auth from '../FirebaseConfig';
+import firestore from '../FirebaseConfig';
 import CustomButton from '../components/CustomButton';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const ReferralComponent = () => {
   const [myReferralCode, setMyReferralCode] = useState('');
   const [inputReferralCode, setInputReferralCode] = useState('');
 
-  const generateReferralCode = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user); // Set current user state
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const generateReferralCode = async  (currentUser) => {
     // For simplicity, generating a random code here
-    const code = Math.random().toString(36).substring(7).toUpperCase();
+    const code = `REF-${currentUser.uid.slice(0, 6).toUpperCase()}`;
     setMyReferralCode(code);
+    try {
+      await firestore().collection('referral code').doc(currentUser.uid).set(
+        { referralCode: code },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error('Error storing referral code: ', error);
+      Alert.alert('Error', 'Failed to store referral code');
+    }
   };
 
   const copyReferralCode = () => {
