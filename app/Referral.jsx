@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, Clipboard } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Alert, Clipboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import auth from '../FirebaseConfig';

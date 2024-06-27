@@ -1,73 +1,53 @@
-import { View, Text, Image, ScrollView, Button } from 'react-native'
+import { View, Text, Image, ScrollView, Button, FlatList } from 'react-native'
 import React from 'react'
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
-//import { TouchableHighlight } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { handleLogout } from '../../FirebaseConfig';
-import SplashScreen from '../Ads';
-import ReferralComponent from '../Referral'
-import { UserBalances } from '../../FirebaseConfig';
+import TopBar from '../../components/TopBar';
 
 const Home = () => {
-
-  const {bonusBalance, mainBalance} = UserBalances();
-    
   return (
-    <SafeAreaView className="bg-primary h-full justify-center px-2 position-relative" >
-      <ScrollView>
-        <View className=" flex-row-reverse items-center px-2 space-x-2">
-            <TouchableOpacity
-            onPress={() => router.replace("./Menu")}
-            activeOpacity={0.7}
-            >
-              <Image  className=" h-8 w-8 mx-2" source={require("../assets/Settings-L-icon.png")  } 
-              resizeMode='contain'
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => router.replace("./Profile")}
-            activeOpacity={0.7}
-            >
-              <Image  className="h-8 w-8 mx-2" source={require("../assets/icons/profile.png") } 
-              resizeMode='contain'
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-            activeOpacity={0.7}
-            >
-              <Image   className=" h-8 w-8" source={require("../assets/msg.jpg")  } 
-              resizeMode='contain'
-              />
-            </TouchableOpacity>
-              <Text className="text-blue-400 font-psemibold text-lg mr-2">Bonus-₹{bonusBalance}</Text>
-                <Text className="text-blue-400 font-psemibold text-lg mr-2">Main-₹{mainBalance}</Text>
-              </View>
-
-              <View className="my-2  w-full items-center justify-center flex-row">
+    <SafeAreaView className="bg-primary h-full justify-center px-2 flex-1" >
+      <FlatList 
+      ListHeaderComponent={() => (
+        <TopBar/>
+      )}
+      renderItem={null}
+      ListFooterComponent={() => (
+        <>
+              <View className="my-2 w-full items-center justify-center flex-row">
               <View className="w-full flex-row-reverse">
               <TouchableOpacity onPress={() => router.push("../Referral")}
             activeOpacity={0.7}>
               <Text className="text-blue-400 ml-60 px-3 "> Referral </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.replace("../Ads")}
+              <TouchableOpacity onPress={() => router.push("../Ads")}
             activeOpacity={0.7}>
-              <Text className="text-blue-400 ml-20  px-7 "> Ads</Text>
+              <Text className="text-blue-400  px-7 "> Ads</Text>
               </TouchableOpacity>
-              </View>
-               
-            
-          </View>
-           
-            <View className="  w-full    justify-center ">
-            <TouchableOpacity onPress={() => router.push("../HowToPlay")}
+              </View>          
+          </View>    
+          <View className="flex-row-reverse my-1">
+            <TouchableOpacity className="w-[40px] h-[40px] items-center justify-center"
+            onPress={() => router.push("../(leaderboard)/LeaderBoard")}
             activeOpacity={0.7}>
-              <View className=" h-10 w-full  flex-row-reverse">
-                <Image className="h-8 w-8 mr-4" source={require("../assets/mac1024.png")}/>
-            
-              </View>
-              </TouchableOpacity>
-              </View>
+                  <Image source={require("../assets/icons/leaderboard.png")}
+                  resizeMode='contain'
+                  className="h-full w-full"
+                  />
+            </TouchableOpacity>
+          </View>      
+          <View className="flex-row-reverse my-1">
+            <TouchableOpacity className="w-[40px] h-[40px] items-center justify-center"
+            onPress={() => router.push("/HowToPlay")}
+            activeOpacity={0.7}>
+                  <Image source={require("../assets/icons/how.png")}
+                  resizeMode='contain'
+                  className="h-full w-full"
+                  />
+            </TouchableOpacity>
+          </View>  
 
           <View className='items-center m-5 justify-center'>
             <Image source={require('../assets/Title.png')} 
@@ -131,7 +111,9 @@ const Home = () => {
                 textStyles={'text-lg font-pbold text-blue-400'}
               />
           </View>
-       </ScrollView>
+          </>
+      )}
+      />
     </SafeAreaView>
   )
 }

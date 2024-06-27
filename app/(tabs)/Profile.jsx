@@ -2,28 +2,21 @@ import React from 'react';
 import { View, Text, Image, Button, FlatList, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { handleLogout } from '../../FirebaseConfig';
-import { auth, firebase } from '../../FirebaseConfig';
+import { auth, UserBalances } from '../../FirebaseConfig';
 import { useState, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { UserBalances } from '../../FirebaseConfig';
 
 const Profile = () => {
 
   const {bonusBalance, mainBalance, refetch} = UserBalances();
   const [currentUser, setCurrentUser] = useState(null);
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user); // Set current user state
-    });
-    return () => unsubscribe();
-  }, []);
+  const user = auth.currentUser;
   
   const [Username, setUserName] = useState("")
   useEffect(() => {
-    if (currentUser) {
-      setUserName(currentUser.displayName);
+    if (user) {
+      setUserName(user.displayName);
     }
-  }, [currentUser]);
+  }, [user]);
   
   const[refreshing, setRefreshing] = useState(false)
   const onRefresh = async () => {
@@ -54,7 +47,6 @@ const Profile = () => {
         tintColor="lightblue"
         />}
       />
-      
     </SafeAreaView>
   );
 }
