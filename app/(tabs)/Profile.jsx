@@ -4,10 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { handleLogout } from '../../FirebaseConfig';
 import { auth, UserBalances } from '../../FirebaseConfig';
 import { useState, useEffect } from 'react';
+import { numberFormatter } from '../../FirebaseConfig';
 
 const Profile = () => {
 
-  const {bonusBalance, mainBalance, refetch} = UserBalances();
+  const {bonusBalance, mainBalance, winBalance, refetch} = UserBalances();
   const [currentUser, setCurrentUser] = useState(null);
   const user = auth.currentUser;
   
@@ -24,6 +25,7 @@ const Profile = () => {
     await refetch();    
     setRefreshing(false);
   }
+
   return (
     <SafeAreaView className="h-full justify-center items-center bg-primary">
       <FlatList 
@@ -35,8 +37,9 @@ const Profile = () => {
           <Text className="items-center font-psemibold justify-center text-2xl text-blue-400 mx-2"> {Username}</Text>
           <Image className="w-[50] h-[30]" source={require("../assets/india.png")} />
         </View>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400">Main Balance: ₹{mainBalance} </Text>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Bonus Balance: ₹{bonusBalance} </Text>
+        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400">Main Balance: {mainBalance} </Text>
+        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Bonus Balance: {bonusBalance} </Text>
+        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Total Winnings: {winBalance} </Text>
       </View>
       <View className="items-center justify-center">
         <Button title="Logout" onPress={() => handleLogout(setCurrentUser)} color="#e74c3c" />

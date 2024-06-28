@@ -5,6 +5,8 @@ import { router } from 'expo-router';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, getDocs, query, collection, where } from 'firebase/firestore';
+import { NumericFormat } from 'react-number-format';
+import { NumberFormat } from 'react-number-format';
 
 
 // Firebase configuration
@@ -43,6 +45,7 @@ export const handleLogout = async () => {
 export const UserBalances = () => {
   const [bonusBalance, setBonusBalance] = useState(null);
   const [mainBalance, setMainBalance] = useState(null);
+  const [winBalance, setWinBalance] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -51,31 +54,49 @@ export const UserBalances = () => {
     const db = getFirestore();
     const walletRef = collection(db, 'wallet');
 
-        if(user){
-          const q = query(walletRef, where("uid", "==", user.uid))
-        
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            const walletbalance = doc.data().mainbalance;
-            const BonusBalance = doc.data().bonusbalance;
-            setBonusBalance(BonusBalance);
-            setMainBalance(walletbalance);
-        })
-        }
-    };
-    useEffect(() => {
-    
+    if (user) {
+      const q = query(walletRef, where("uid", "==", user.uid))
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const walletbalance = doc.data().mainbalance;
+        const BonusBalance = doc.data().bonusbalance;
+        const WinBalance = doc.data().winningbalance;
+        setBonusBalance(balanceFormatter(BonusBalance));
+        setMainBalance(balanceFormatter(walletbalance));
+        setWinBalance(balanceFormatter(WinBalance));
+      })
+    }
+  };
+  useEffect(() => {
+
     fetchBalances();
   }, []);
+  const balanceFormatter = (value) => {
+    return (
+      Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR'
+      }).format(value)
+    );
+  };
 
-  const refetch = () => fetchBalances();
+  const refetch = () => { fetchBalances(); }
 
-  return{
-      bonusBalance,
-      mainBalance,
-      refetch
+  return {
+    bonusBalance,
+    mainBalance,
+    winBalance,
+    refetch
   }
-
 };
 
-export default {app, firestore}
+export const numberFormatter = (value) => {
+  return (
+    Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR'
+    }).format(value)
+  );
+};
+export default { app, firestore }
