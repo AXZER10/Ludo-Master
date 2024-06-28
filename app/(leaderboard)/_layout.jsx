@@ -2,18 +2,12 @@ import React from 'react'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 
-const AuthLayout = () => {
+const LeaderBoardLayout = () => {
   return (
     <>
       <Stack>
         <Stack.Screen
-          name='EmailSignIn'
-          options={{
-            headerShown:false
-          }}
-        />
-        <Stack.Screen
-          name='AuthScreen'
+          name='LeaderBoard'
           options={{
             headerShown:false
           }}
@@ -26,4 +20,4 @@ const AuthLayout = () => {
   )
 }
 
-export default AuthLayout
+export default LeaderBoardLayout

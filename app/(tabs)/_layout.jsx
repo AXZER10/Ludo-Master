@@ -1,9 +1,7 @@
 import { View, Text ,Image } from 'react-native'
 import React from 'react'
-import { Tabs,Redirect } from 'expo-router'
-import iconSet from '@expo/vector-icons/build/Fontisto'
+import { Tabs} from 'expo-router'
 import {icons} from '../../constants';
-import { AntDesign } from '@expo/vector-icons';
 
 const TabIcon = ({icon,color,name,focused}) => {
     return (
@@ -34,7 +32,7 @@ const TabsLayout = () => {
       backgroundColor:'#161632',
       borderTopWidth:1,
       borderTopColor:'#232533',
-      height:100,
+      height:90,
     }
    }}>
     <Tabs.Screen
