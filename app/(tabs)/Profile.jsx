@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { handleLogout } from '../../FirebaseConfig';
 import { auth, UserBalances } from '../../FirebaseConfig';
 import { useState, useEffect } from 'react';
-import { numberFormatter } from '../../FirebaseConfig';
 
 const Profile = () => {
 
