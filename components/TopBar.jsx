@@ -29,8 +29,8 @@ export const TopBar = () => {
               resizeMode='contain'
               />
             </TouchableOpacity>
-              <Text className="text-blue-400 font-psemibold text-lg mr-2">Bonus-₹{bonusBalance}</Text>
-                <Text className="text-blue-400 font-psemibold text-lg mr-2">Main-₹{mainBalance}</Text>
+              <Text className="text-blue-400 font-psemibold text-s mr-2">Bonus-{bonusBalance}</Text>
+                <Text className="text-blue-400 font-psemibold text- mr-2">Main-{mainBalance}</Text>
               </View>
   )
 }

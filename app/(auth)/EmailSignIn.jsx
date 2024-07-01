@@ -107,6 +107,7 @@ const App = () => {
           uid: userCredential.user.uid,
           mainbalance: 0,
           bonusbalance: 5,
+          winningbalance: 0,
           createdAt: new Date(),
         });
 

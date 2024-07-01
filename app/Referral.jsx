@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Alert, Clipboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -11,20 +11,14 @@ const ReferralComponent = () => {
   const [myReferralCode, setMyReferralCode] = useState('');
   const [inputReferralCode, setInputReferralCode] = useState('');
 
-  const [currentUser, setCurrentUser] = useState(null);
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user); // Set current user state
-    });
-    return () => unsubscribe();
-  }, []);
+  const user = auth.currentUser;
 
-  const generateReferralCode = async  (currentUser) => {
+  const generateReferralCode = async  (user) => {
     // For simplicity, generating a random code here
-    const code = `REF-${currentUser.uid.slice(0, 6).toUpperCase()}`;
+    const code = `REF-${user.uid.slice(0, 6).toUpperCase()}`;
     setMyReferralCode(code);
     try {
-      await firestore().collection('referral code').doc(currentUser.uid).set(
+      await firestore().collection('referral code').doc(user.uid).set(
         { referralCode: code },
         { merge: true }
       );
