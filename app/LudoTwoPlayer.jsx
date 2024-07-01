@@ -33,8 +33,8 @@ export default class App extends React.Component {
         position21 : -12,position22 : -22 ,position23 : -32, position24 : -42,
         position31 : -13,position32 : -23 ,position33 : -33, position34 : -43,
         position41 : -14,position42 : -24 ,position43 : -34, position44 : -44,
-      turn1 : false,turn2 : false, turn3 : true,turn4 : false,currentNumber : 0 ,turnMessage : "",moveMessage : "",whoseTurnToMove : 0,
-      isMovedBy1 : false,isMovedBy2 : false,isMovedBy3 : false,isMovedBy4 : false,
+      turn1 : false, turn3 : true, currentNumber : 0 ,turnMessage : "",moveMessage : "",whoseTurnToMove : 0,
+      isMovedBy1 : false,isMovedBy3 : false,
       image1 : require("./assets/dice1.png"),image2 : require("./assets/dice1.png"),image3 : require("./assets/dice1.png"),image4 : require("./assets/dice1.png")
     }
   }
@@ -608,7 +608,7 @@ export default class App extends React.Component {
          
           </View>
           <View style={[row.Style,{ marginTop : 82,borderTopWidth : 0 }]}>
-              <View style={[styles.first]}>
+              <View style={[styles.First]}>
                   <View style={styles.item}>
                     {this.checkPostion(1,1,11)}{this.checkPostion(1,2,11)}{this.checkPostion(1,3,11)}{this.checkPostion(1,4,11)}
                     {this.checkPostion(2,1,11)}{this.checkPostion(2,2,11)}{this.checkPostion(2,3,11)}{this.checkPostion(2,4,11)}
