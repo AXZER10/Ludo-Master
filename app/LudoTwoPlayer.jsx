@@ -67,7 +67,7 @@ export default class App extends React.Component {
                         console.log("in if")
                       }
                     }
-                    this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor3(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                    this.checkIfCutPossibleFor3(nextPosition);
                     this.setState({ position11 : nextPosition });
                     this.setState({ isMovedBy1 : true })
                   }
@@ -95,7 +95,7 @@ export default class App extends React.Component {
                           nextPosition += 1
                         }
                       }
-                      this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor3(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                      this.checkIfCutPossibleFor3(nextPosition);
                       this.setState({ position12 : nextPosition })
                       this.setState({ isMovedBy1 : true })
                     }
@@ -124,7 +124,7 @@ export default class App extends React.Component {
                           nextPosition += 1
                         }
                       }
-                      this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor3(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                      this.checkIfCutPossibleFor3(nextPosition);
                       this.setState({ position13 : nextPosition })
                       this.setState({ isMovedBy1 : true })
                     }
@@ -152,7 +152,7 @@ export default class App extends React.Component {
                           nextPosition += 1
                         }
                       }
-                      this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor3(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                      this.checkIfCutPossibleFor3(nextPosition);
                       this.setState({ position14 : nextPosition })
                       this.setState({ isMovedBy1 : true })
                     }
@@ -163,218 +163,6 @@ export default class App extends React.Component {
           this.setState({moveMessage : "You cannot move right now"})
         }
         break;
-      case 2:
-          if(this.state.whoseTurnToMove == 2 && (!this.state.isMovedBy2)){
-            switch(whichOne){
-              case 1:
-                if(this.state.position21 != "winner"){
-                  if(this.state.position21 < 0){
-                    if(this.state.currentNumber == 6){
-                      this.setState({ position21 : 14 })
-                      this.setState({ isMovedBy2 : true })
-                    }else{
-                      this.setState({ moveMessage : "You Cannot Move It" })
-                    }
-                  }else{
-                      var currentPosition = this.state.position21;
-                      var nextPosition = this.state.currentNumber + currentPosition;
-                      if(nextPosition > 52 && nextPosition < 58){
-                        extraMoves = nextPosition - 52
-                        this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor3(extraMoves);this.checkIfCutPossibleFor4(extraMoves);
-                        this.setState({ position21 : extraMoves })
-                        this.setState({ isMovedBy2 : true })
-                      }else if(this.state.position21 >= 7 && this.state.position21 <= 12){
-                        if(nextPosition > 12){                        
-                          extraMoves = nextPosition -12
-                          newPosition = 57 + extraMoves
-                          if(this.state.position21 == 12 && this.state.currentNumber == 6){
-                            this.setState({ position21 : "winner"})
-                            this.setState({ isMovedBy2 : true })
-                          }else{
-                            this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor3(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                            this.setState({ position21 : newPosition})
-                            this.setState({ isMovedBy2 : true })
-                          }
-                        }
-                      }else if(this.state.position21 >= 58 && this.state.position21 <= 62){
-                          nextPosition = this.state.position21 + this.state.currentNumber
-                          if(nextPosition == 63){
-                            this.setState({ position21 : "winner" })
-                            this.setState({ isMovedBy2 : true })
-                          }else if(nextPosition > 63){
-                            this.setState({ moveMessage : "Cannot Move This One" })
-                          }else{
-                            this.setState({ position21 : nextPosition })
-                            this.setState({ isMovedBy2 : true })
-                          }
-                      }
-                      else{
-                        nextPosition = this.state.position21 + this.state.currentNumber
-                        this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor3(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
-                        this.setState({ position21 : nextPosition })
-                        this.setState({ isMovedBy2 : true })
-                      }
-                  }
-                }  
-                break;
-              case 2 :
-                  if(this.state.position22 != "winner"){
-                    if(this.state.position22 < 0){
-                      if(this.state.currentNumber == 6){
-                        this.setState({ position22 : 14 })
-                        this.setState({ isMovedBy2 : true })
-                      }else{
-                        this.setState({ moveMessage : "You Cannot Move It" })
-                      }
-                    }else{
-                        var currentPosition = this.state.position22;
-                        var nextPosition = this.state.currentNumber + currentPosition;
-                        if(nextPosition > 52 && nextPosition < 58){
-                          extraMoves = nextPosition - 52
-                          this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor3(extraMoves);this.checkIfCutPossibleFor4(extraMoves)
-                          this.setState({ position22 : extraMoves })
-                          this.setState({ isMovedBy2 : true })
-                        }else if(this.state.position22 >= 7 && this.state.position22 <= 12){
-                          if(nextPosition > 12){                        
-                            extraMoves = nextPosition -12
-                            newPosition = 57 + extraMoves
-                            if(this.state.position22 == 12 && this.state.currentNumber == 6){
-                              this.setState({ position22 : "winner"})
-                              this.setState({ isMovedBy2 : true })
-                            }else{
-                              this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor3(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                              this.setState({ position22 : newPosition})
-                              this.setState({ isMovedBy2 : true })
-                            }
-                          }
-                        }else if(this.state.position22 >= 58 && this.state.position22 <= 62){
-                            nextPosition = this.state.position22 + this.state.currentNumber
-                            if(nextPosition == 63){
-                              this.setState({ position22 : "winner" })
-                              this.setState({ isMovedBy2 : true })
-                            }else if(nextPosition > 63){
-                              this.setState({ moveMessage : "Cannot Move This One" })
-                            }else{
-                              this.setState({ position22 : nextPosition })
-                              this.setState({ isMovedBy2 : true })
-                            }
-                        }
-                        else{
-                          nextPosition = this.state.position22 + this.state.currentNumber
-                          this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor3(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
-                          this.setState({ position22 : nextPosition })
-                          this.setState({ isMovedBy2 : true })
-                        }
-                    }
-                  }  
-                  break;
-              case 3 :
-                  if(this.state.position23 != "winner"){
-                    if(this.state.position23 < 0){
-                      if(this.state.currentNumber == 6){
-                        this.setState({ position23 : 14 })
-                        this.setState({ isMovedBy2 : true })
-                      }else{
-                        this.setState({ moveMessage : "You Cannot Move It" })
-                      }
-                    }else{
-                        var currentPosition = this.state.position23;
-                        var nextPosition = this.state.currentNumber + currentPosition;
-                        if(nextPosition > 52 && nextPosition < 58){
-                          extraMoves = nextPosition - 52
-                          this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor3(extraMoves);this.checkIfCutPossibleFor4(extraMoves)
-                          this.setState({ position23 : extraMoves })
-                          this.setState({ isMovedBy2 : true })
-                        }else if(this.state.position23 >= 7 && this.state.position23 <= 12){
-                          if(nextPosition > 12){                        
-                            extraMoves = nextPosition -12
-                            newPosition = 57 + extraMoves
-                            if(this.state.position23 == 12 && this.state.currentNumber == 6){
-                              this.setState({ position23 : "winner"})
-                              this.setState({ isMovedBy2 : true })
-                            }else{
-                              this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor3(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                              this.setState({ position23 : newPosition})
-                              this.setState({ isMovedBy2 : true })
-                            }
-                          }
-                        }else if(this.state.position23 >= 58 && this.state.position23 <= 62){
-                            nextPosition = this.state.position23 + this.state.currentNumber
-                            if(nextPosition == 63){
-                              this.setState({ position23 : "winner" })
-                              this.setState({ isMovedBy2 : true })
-                            }else if(nextPosition > 63){
-                              this.setState({ moveMessage : "Cannot Move This One" })
-                            }else{
-                              this.setState({ position23 : nextPosition })
-                              this.setState({ isMovedBy2 : true })
-                            }
-                        }
-                        else{
-                          nextPosition = this.state.position23 + this.state.currentNumber
-                          this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor3(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
-                          this.setState({ position23 : nextPosition })
-                          this.setState({ isMovedBy2 : true })
-                        }
-                    }
-                  }
-                  break;
-              case 4 :
-                  if(this.state.position24 != "winner"){
-                    if(this.state.position24 < 0){
-                      if(this.state.currentNumber == 6){
-                        this.setState({ position24 : 14 })
-                        this.setState({ isMovedBy2 : true })
-                      }else{
-                        this.setState({ moveMessage : "You Cannot Move It" })
-                      }
-                    }else{
-                        var currentPosition = this.state.position24;
-                        var nextPosition = this.state.currentNumber + currentPosition;
-                        if(nextPosition > 52 && nextPosition < 58){
-                          extraMoves = nextPosition - 52
-                          this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor3(extraMoves);this.checkIfCutPossibleFor4(extraMoves)
-                          this.setState({ position24 : extraMoves })
-                          this.setState({ isMovedBy2 : true })
-                        }else if(this.state.position24 >= 7 && this.state.position24 <= 12){
-                          if(nextPosition > 12){                        
-                            extraMoves = nextPosition -12
-                            newPosition = 57 + extraMoves
-                            if(this.state.position24 == 12 && this.state.currentNumber == 6){
-                              this.setState({ position24 : "winner"})
-                              this.setState({ isMovedBy2 : true })
-                            }else{
-                              this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor3(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                              this.setState({ position24 : newPosition})
-                              this.setState({ isMovedBy2 : true })
-                            }
-                          }
-                        }else if(this.state.position24 >= 58 && this.state.position24 <= 62){
-                            nextPosition = this.state.position24 + this.state.currentNumber
-                            if(nextPosition == 63){
-                              this.setState({ position24 : "winner" })
-                              this.setState({ isMovedBy2 : true })
-                            }else if(nextPosition > 63){
-                              this.setState({ moveMessage : "Cannot Move This One" })
-                            }else{
-                              this.setState({ position24 : nextPosition })
-                              this.setState({ isMovedBy2 : true })
-                            }
-                        }
-                        else{
-                          nextPosition = this.state.position24 + this.state.currentNumber
-                          this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor3(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
-                          this.setState({ position24 : nextPosition })
-                          this.setState({ isMovedBy2 : true })
-                        }
-                    }
-                  }
-                  break;
-            }
-          }else{
-            this.setState({moveMessage : "You cannot move right now"})
-          }
-          break;
       case 3 :
           if(this.state.whoseTurnToMove == 3 && (!this.state.isMovedBy3)){
             switch(whichOne){
@@ -392,7 +180,7 @@ export default class App extends React.Component {
                       var nextPosition = this.state.currentNumber + currentPosition;
                       if(nextPosition > 52 && nextPosition < 58){
                         extraMoves = nextPosition - 52
-                        this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor2(extraMoves);this.checkIfCutPossibleFor4(extraMoves)
+                        this.checkIfCutPossibleFor1(extraMoves);
                         this.setState({ position31 : extraMoves })
                         this.setState({ isMovedBy3 : true })
                       }else if(this.state.position31 >= 20 && this.state.position31 <= 25){
@@ -422,7 +210,7 @@ export default class App extends React.Component {
                       }
                       else{
                         nextPosition = this.state.position31 + this.state.currentNumber
-                        this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                        this.checkIfCutPossibleFor1(nextPosition);
                         this.setState({ position31 : nextPosition })
                         this.setState({ isMovedBy3 : true })
                       }
@@ -443,7 +231,7 @@ export default class App extends React.Component {
                         var nextPosition = this.state.currentNumber + currentPosition;
                         if(nextPosition > 52 && nextPosition < 58){
                           extraMoves = nextPosition - 52
-                          this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor2(extraMoves);this.checkIfCutPossibleFor4(extraMoves)
+                          this.checkIfCutPossibleFor1(extraMoves);
                           this.setState({ position32 : extraMoves })
                           this.setState({ isMovedBy3 : true })
                         }else if(this.state.position32 >= 20 && this.state.position32 <= 25){
@@ -473,7 +261,7 @@ export default class App extends React.Component {
                         }
                         else{
                           nextPosition = this.state.position32 + this.state.currentNumber
-                          this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                          this.checkIfCutPossibleFor1(nextPosition);
                           this.setState({ position32 : nextPosition })
                           this.setState({ isMovedBy3 : true })
                         }
@@ -494,7 +282,7 @@ export default class App extends React.Component {
                         var nextPosition = this.state.currentNumber + currentPosition;
                         if(nextPosition > 52 && nextPosition < 58){
                           extraMoves = nextPosition - 52
-                          this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor2(extraMoves);this.checkIfCutPossibleFor4(extraMoves)
+                          this.checkIfCutPossibleFor1(extraMoves);
                           this.setState({ position33 : extraMoves })
                           this.setState({ isMovedBy3 : true })
                         }else if(this.state.position33 >= 20 && this.state.position33 <= 25){
@@ -524,7 +312,7 @@ export default class App extends React.Component {
                         }
                         else{
                           nextPosition = this.state.position33 + this.state.currentNumber
-                          this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                          this.checkIfCutPossibleFor1(nextPosition);
                           this.setState({ position33 : nextPosition })
                           this.setState({ isMovedBy3 : true })
                         }
@@ -545,7 +333,7 @@ export default class App extends React.Component {
                         var nextPosition = this.state.currentNumber + currentPosition;
                         if(nextPosition > 52 && nextPosition < 58){
                           extraMoves = nextPosition - 52
-                          this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor2(extraMoves);this.checkIfCutPossibleFor4(extraMoves)
+                          this.checkIfCutPossibleFor1(extraMoves);
                           this.setState({ position34 : extraMoves })
                           this.setState({ isMovedBy3 : true })
                         }else if(this.state.position34 >= 20 && this.state.position34 <= 25){
@@ -575,7 +363,7 @@ export default class App extends React.Component {
                         }
                         else{
                           nextPosition = this.state.position34 + this.state.currentNumber
-                          this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                          this.checkIfCutPossibleFor1(nextPosition);
                           this.setState({ position34 : nextPosition })
                           this.setState({ isMovedBy3 : true })
                         }
@@ -587,219 +375,7 @@ export default class App extends React.Component {
             this.setState({moveMessage : "You cannot move right now"})
           }
           break;
-      case 4 :
-          if(this.state.whoseTurnToMove == 4 && (!this.state.isMovedBy4)){
-            switch(whichOne){
-              case 1:
-                if(this.state.position41 != "winner"){
-                  if(this.state.position41 < 0){
-                    if(this.state.currentNumber == 6){
-                      this.setState({ position41 : 40 })
-                      this.setState({ isMovedBy4 : true })
-                    }else{
-                      this.setState({ moveMessage : "You Cannot Move It" })
-                    }
-                  }else{
-                      var currentPosition = this.state.position41;
-                      var nextPosition = this.state.currentNumber + currentPosition;
-                      if(nextPosition > 52 && nextPosition <= 58){
-                        extraMoves = nextPosition - 52
-                        this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor2(extraMoves);this.checkIfCutPossibleFor3(extraMoves)
-                        this.setState({ position41 : extraMoves })
-                        this.setState({ isMovedBy4 : true })
-                      }else if(this.state.position41 >= 33 && this.state.position41 <= 38){
-                        if(nextPosition > 38){                        
-                          extraMoves = nextPosition - 38
-                          newPosition = 67 + extraMoves
-                          if(this.state.position41 == 38 && this.state.currentNumber == 6){
-                            this.setState({position41 : "winner"})
-                            this.setState({ isMovedBy4 : true })
-                          }else{
-                            this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor3(newPosition)
-                            this.setState({ position41 : newPosition})
-                            this.setState({ isMovedBy4 : true })
-                          }
-                        }
-                      }else if(this.state.position41 >= 68 && this.state.position41 <= 72){
-                          nextPosition = this.state.position41 + this.state.currentNumber
-                          if(nextPosition == 73){
-                            this.setState({ position41 : "winner" })
-                            this.setState({ isMovedBy4 : true })
-                          }else if(nextPosition > 73){
-                            this.setState({ moveMessage : "Cannot Move This One" })
-                          }else{
-                            this.setState({ position41 : nextPosition })
-                            this.setState({ isMovedBy4 : true })
-                          }
-                      }
-                      else{
-                        nextPosition = this.state.position41 + this.state.currentNumber
-                        this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor3(nextPosition)
-                        this.setState({ position41 : nextPosition })
-                        this.setState({ isMovedBy4 : true })
-                      }
-                  }
-                }  
-                break;
-              case 2 :
-                if(this.state.position42 != "winner"){
-                  if(this.state.position42 < 0){
-                    if(this.state.currentNumber == 6){
-                      this.setState({ position42 : 40 })
-                      this.setState({ isMovedBy4 : true })
-                    }else{
-                      this.setState({ moveMessage : "You Cannot Move It" })
-                    }
-                  }else{
-                      var currentPosition = this.state.position42;
-                      var nextPosition = this.state.currentNumber + currentPosition;
-                      if(nextPosition > 52 && nextPosition <= 58){
-                        extraMoves = nextPosition - 52
-                        this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor2(extraMoves);this.checkIfCutPossibleFor3(extraMoves)
-                        this.setState({ position42 : extraMoves })
-                        this.setState({ isMovedBy4 : true })
-                      }else if(this.state.position42 >= 33 && this.state.position42 <= 38){
-                        if(nextPosition > 38){                        
-                          extraMoves = nextPosition - 38
-                          newPosition = 67 + extraMoves
-                          if(this.state.position42 == 38 && this.state.currentNumber == 6){
-                            this.setState({position42 : "winner"})
-                            this.setState({ isMovedBy4 : true })
-                          }else{
-                            this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor3(newPosition)
-                            this.setState({ position42 : newPosition})
-                            this.setState({ isMovedBy4 : true })
-                          }
-                        }
-                      }else if(this.state.position42 >= 68 && this.state.position42 <= 72){
-                          nextPosition = this.state.position42 + this.state.currentNumber
-                          if(nextPosition == 73){
-                            this.setState({ position41 : "winner" })
-                            this.setState({ isMovedBy4 : true })
-                          }else if(nextPosition > 73){
-                            this.setState({ moveMessage : "Cannot Move This One" })
-                          }else{
-                            this.setState({ position42 : nextPosition })
-                            this.setState({ isMovedBy4 : true })
-                          }
-                      }
-                      else{
-                        nextPosition = this.state.position42 + this.state.currentNumber
-                        this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor3(nextPosition)
-                        this.setState({ position42 : nextPosition })
-                        this.setState({ isMovedBy4 : true })
-                      }
-                  }
-                }  
-                break;
-              case 3 :
-                if(this.state.position43 != "winner"){
-                  if(this.state.position43 < 0){
-                    if(this.state.currentNumber == 6){
-                      this.setState({ position43 : 40 })
-                      this.setState({ isMovedBy4 : true })
-                    }else{
-                      this.setState({ moveMessage : "You Cannot Move It" })
-                    }
-                  }else{
-                      var currentPosition = this.state.position43;
-                      var nextPosition = this.state.currentNumber + currentPosition;
-                      if(nextPosition > 52 && nextPosition <= 58){
-                        extraMoves = nextPosition - 52
-                        this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor2(extraMoves);this.checkIfCutPossibleFor3(extraMoves)
-                        this.setState({ position43 : extraMoves })
-                        this.setState({ isMovedBy4 : true })
-                      }else if(this.state.position43 >= 33 && this.state.position43 <= 38){
-                        if(nextPosition > 38){                        
-                          extraMoves = nextPosition - 38
-                          newPosition = 67 + extraMoves
-                          if(this.state.position43 == 38 && this.state.currentNumber == 6){
-                            this.setState({position43 : "winner"})
-                            this.setState({ isMovedBy4 : true })
-                          }else{
-                            this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor3(newPosition)
-                            this.setState({ position43 : newPosition})
-                            this.setState({ isMovedBy4 : true })
-                          }
-                        }
-                      }else if(this.state.position43 >= 68 && this.state.position43 <= 72){
-                          nextPosition = this.state.position43 + this.state.currentNumber
-                          if(nextPosition == 73){
-                            this.setState({ position43 : "winner" })
-                            this.setState({ isMovedBy4 : true })
-                          }else if(nextPosition > 73){
-                            this.setState({ moveMessage : "Cannot Move This One" })
-                          }else{
-                            this.setState({ position43 : nextPosition })
-                            this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor3(nextPosition)
-                            this.setState({ isMovedBy4 : true })
-                          }
-                      }
-                      else{
-                        nextPosition = this.state.position43 + this.state.currentNumber
-                        this.setState({ position43 : nextPosition })
-                        this.setState({ isMovedBy4 : true })
-                      }
-                  }
-                }  
-                break;
-              case 4 :
-                if(this.state.position44 != "winner"){
-                  if(this.state.position44 < 0){
-                    if(this.state.currentNumber == 6){
-                      this.setState({ position44 : 40 })
-                      this.setState({ isMovedBy4 : true })
-                    }else{
-                      this.setState({ moveMessage : "You Cannot Move It" })
-                    }
-                  }else{
-                      var currentPosition = this.state.position44;
-                      var nextPosition = this.state.currentNumber + currentPosition;
-                      if(nextPosition > 52 && nextPosition <= 58){
-                        extraMoves = nextPosition - 52
-                        this.checkIfCutPossibleFor1(extraMoves);this.checkIfCutPossibleFor2(extraMoves);this.checkIfCutPossibleFor3(extraMoves)
-                        this.setState({ position44 : extraMoves })
-                        this.setState({ isMovedBy4 : true })
-                      }else if(this.state.position44 >= 33 && this.state.position44 <= 38){
-                        if(nextPosition > 38){                        
-                          extraMoves = nextPosition - 38
-                          newPosition = 67 + extraMoves
-                          if(this.state.position44 == 38 && this.state.currentNumber == 6){
-                            this.setState({position44 : "winner"})
-                            this.setState({ isMovedBy4 : true })
-                          }else{
-                            this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor3(newPosition)
-                            this.setState({ position44 : newPosition})
-                            this.setState({ isMovedBy4 : true })
-                          }
-                        }
-                      }else if(this.state.position44 >= 68 && this.state.position44 <= 72){
-                          nextPosition = this.state.position44 + this.state.currentNumber
-                          if(nextPosition == 73){
-                            this.setState({ position44 : "winner" })
-                            this.setState({ isMovedBy4 : true })
-                          }else if(nextPosition > 73){
-                            this.setState({ moveMessage : "Cannot Move This One" })
-                          }else{
-                            this.setState({ position44 : nextPosition })
-                            this.setState({ isMovedBy4 : true })
-                          }
-                      }
-                      else{
-                        nextPosition = this.state.position44 + this.state.currentNumber
-                        this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor2(nextPosition);this.checkIfCutPossibleFor3(nextPosition)
-                        this.setState({ position44 : nextPosition })
-                        this.setState({ isMovedBy4 : true })
-                      }
-                  }
-                }  
-                break;
-            }
-          }else{
-            this.setState({moveMessage : "You cannot move right now"})
           }
-          break;
-    }
   }
   checkIfCutPossibleFor1 = (atPosition) => {
     if(atPosition != 1 && atPosition != 9  && atPosition != 14 && atPosition != 22 && atPosition != 27 && atPosition != 35 && atPosition != 40 && atPosition != 48 ){
@@ -814,22 +390,6 @@ export default class App extends React.Component {
       }
       if(this.state.position14 == atPosition){
         this.setState({ position14 : -41 })
-      }
-    }
-  }
-  checkIfCutPossibleFor2 = (atPosition) => {
-    if(atPosition != 1 && atPosition != 9  && atPosition != 14 && atPosition != 22 && atPosition != 27 && atPosition != 35 && atPosition != 40 && atPosition != 48 ){
-      if(this.state.position21 == atPosition){
-        this.setState({ position21 : -12 })
-      }
-      if(this.state.position22 == atPosition){
-        this.setState({ position22 : -22 })
-      }
-      if(this.state.position23 == atPosition){
-        this.setState({ position23 : -32 })
-      }
-      if(this.state.position24 == atPosition){
-        this.setState({ position24 : -42 })
       }
     }
   }
@@ -849,22 +409,6 @@ export default class App extends React.Component {
       }
     }
   }
-  checkIfCutPossibleFor4 = (atPosition) => {
-    if(atPosition != 1 && atPosition != 9  && atPosition != 14 && atPosition != 22 && atPosition != 27 && atPosition != 35 && atPosition != 40 && atPosition != 48 ){
-      if(this.state.position41 == atPosition){
-        this.setState({ position41 : -14 })
-      }
-      if(this.state.position42 == atPosition){
-        this.setState({ position42 : -24 })
-      }
-      if(this.state.position43 == atPosition){
-        this.setState({ position43 : -34 })
-      }
-      if(this.state.position44 == atPosition){
-        this.setState({ position44 : -44 })
-      }
-    }
-  }
   checkIfAnythingOpened = (player) => {
     switch(player){
       case 1 :
@@ -873,20 +417,8 @@ export default class App extends React.Component {
           }else{
             return false
           }
-      case 2 :
-          if((this.state.position21 < 0) && (this.state.position22 < 0) && (this.state.position23 < 0) && (this.state.position24 < 0) ){
-            return true
-          }else{
-            return false
-          }
       case 3 :
           if((this.state.position31 < 0) && (this.state.position32 < 0) && (this.state.position33 < 0) && (this.state.position34 < 0) ){
-            return true
-          }else{
-            return false
-          }
-      case 4:
-          if((this.state.position41 < 0) && (this.state.position42 < 0) && (this.state.position43 < 0) && (this.state.position44 < 0) ){
             return true
           }else{
             return false
@@ -898,8 +430,8 @@ export default class App extends React.Component {
       this.setState({turnMessage : " "}) ; this.setState({ moveMessage : "" })
       switch(player){
         case 1 :
-          console.log(this.state.turn1 + "  " + this.state.isMovedBy4 +"  " + this.checkIfAnythingOpened(4))
-          if(this.state.turn1 && (this.state.isMovedBy4 || this.checkIfAnythingOpened(4))){
+          console.log(this.state.turn1 + "  " + this.state.isMovedBy3 +"  " + this.checkIfAnythingOpened(3))
+          if(this.state.turn1 && (this.state.isMovedBy3 || this.checkIfAnythingOpened(3))){
             this.setState({ whoseTurnToMove : 1 })            
             this.setState({ isMovedBy1 : false })
             this.setState({currentNumber : randomNumber})
@@ -924,7 +456,7 @@ export default class App extends React.Component {
                 break;
             }
             if(randomNumber != 6){
-              this.setState({ turn1 : false}); this.setState({ turn2 : true}); this.setState({ isMovedBy4 : false })
+              this.setState({ turn1 : false}); this.setState({ turn3 : true}); this.setState({ isMovedBy3 : false })
             }else{
               console.log("same conditions must be there")
             }
@@ -932,44 +464,9 @@ export default class App extends React.Component {
             this.setState({ turnMessage : "It's Not Your Turn" })
           }
           break;
-        case 2  :
-            console.log(this.state.turn2 + "  " + this.state.isMovedBy1 +"  " + this.checkIfAnythingOpened(1))
-            if(this.state.turn2 && (this.state.isMovedBy1 || this.checkIfAnythingOpened(1))){
-              this.setState({ whoseTurnToMove : 2 })
-              this.setState({ isMovedBy2 : false })
-              this.setState({currentNumber : randomNumber})
-              switch(randomNumber){
-                case 1 : 
-                  this.setState({image2 : require("./assets/dice1.png")})
-                  break;
-                case 2 : 
-                  this.setState({image2 : require("./assets/dice2.png")})
-                  break;
-                case 3 : 
-                  this.setState({image2 : require("./assets/dice3.png")})
-                  break;
-                case 4 : 
-                  this.setState({image2 : require("./assets/dice4.png")})
-                  break;
-                case 5 : 
-                  this.setState({image2 : require("./assets/dice5.png")})
-                  break;
-                case 6 : 
-                  this.setState({image2 : require("./assets/dice6.png")})
-                  break;
-              }
-              if(randomNumber != 6){
-                this.setState({ turn2 : false}); this.setState({ turn3 : true});this.setState({ isMovedBy1 : false });
-              }else{
-                console.log("same conditions must be there")
-              }
-            }else{
-              this.setState({ turnMessage : "It's Not Your Turn" })
-            }
-            break;
         case 3:
-            console.log(this.state.turn3 + "  " + this.state.isMovedBy2 +"  " + this.checkIfAnythingOpened(2))
-            if(this.state.turn3 && (this.state.isMovedBy2 || this.checkIfAnythingOpened(2))){
+            console.log(this.state.turn3 + "  " + this.state.isMovedBy1 +"  " + this.checkIfAnythingOpened(1))
+            if(this.state.turn3 && (this.state.isMovedBy1 || this.checkIfAnythingOpened(1))){
               this.setState({ whoseTurnToMove : 3 })
               this.setState({ isMovedBy3 : false })
               this.setState({currentNumber : randomNumber})
@@ -994,45 +491,10 @@ export default class App extends React.Component {
                   break;
               }
               if(randomNumber != 6){
-                this.setState({ turn3 : false}); this.setState({ turn4 : true});this.setState({ isMovedBy2 : false })
+                this.setState({ turn3 : false}); this.setState({ turn1 : true});this.setState({ isMovedBy1 : false })
               }else{
                 console.log("same conditions must be there")
               }
-            }else{
-              this.setState({ turnMessage : "It's Not Your Turn" })
-            }
-            break;
-        case 4:
-            console.log(this.state.turn4 + "  " + this.state.isMovedBy3 +"  " + this.checkIfAnythingOpened(3))
-            if(this.state.turn4 && (this.state.isMovedBy3 || this.checkIfAnythingOpened(3))){
-              this.setState({ whoseTurnToMove : 4 })
-              this.setState({isMovedBy4 : false})
-              this.setState({currentNumber : randomNumber})
-              switch(randomNumber){
-                case 1 : 
-                  this.setState({image4 : require("./assets/dice1.png")})
-                  break;
-                case 2 : 
-                  this.setState({image4 : require("./assets/dice2.png")})
-                  break;
-                case 3 : 
-                  this.setState({image4 : require("./assets/dice3.png")})
-                  break;
-                case 4 : 
-                  this.setState({image4 : require("./assets/dice4.png")})
-                  break;
-                case 5 : 
-                  this.setState({image4 : require("./assets/dice5.png")})
-                  break;
-                case 6 : 
-                  this.setState({image4 : require("./assets/dice6.png")})
-                  break;
-              }
-              if(randomNumber != 6){
-                this.setState({ turn4 : false}); this.setState({ turn1 : true});this.setState({ isMovedBy3 : false });
-              }else{
-              console.log("same conditions must be there")
-            }
             }else{
               this.setState({ turnMessage : "It's Not Your Turn" })
             }
@@ -1065,31 +527,7 @@ export default class App extends React.Component {
               break;
           }
           break;
-        case 2 :
-            switch(whichOne){
-              case 1 :
-                if(this.state.position21 === position){
-                  return   <FontAwesome name="user" style={styles.icons} onPress={()=>{this.moveIcon(2,1,position)}} color="green" size={20} />
-                }
-                break;
-              case 2 : 
-                if(this.state.position22 === position){
-                  return   <FontAwesome name="user" style={styles.icons} onPress={()=>{this.moveIcon(2,2,position)}} color="green" size={20} />
-                }
-                break;
-              case 3 : 
-                if(this.state.position23 === position){
-                  return   <FontAwesome name="user" style={styles.icons} onPress={()=>{this.moveIcon(2,3,position)}} color="green" size={20} />
-                }
-                break;
-              case 4 :
-                  if(this.state.position24 === position){
-                    return   <FontAwesome name="user" style={styles.icons} onPress={()=>{this.moveIcon(2,4,position)}} color="green" size={20} />
-                  }
-                  break;
-              }
-              break;
-        case 3 :
+      case 3 :
             switch(whichOne){
               case 1 :
                 if(this.state.position31 === position){
@@ -1113,30 +551,6 @@ export default class App extends React.Component {
                 break;
               }
               break;
-        case 4 :
-          switch(whichOne){
-            case 1 :
-              if(this.state.position41 === position){
-                return   <FontAwesome name="user" style={styles.icons} onPress={()=>{this.moveIcon(4,1,position)}} color="blue" size={20} />
-              }
-              break;
-            case 2 : 
-              if(this.state.position42 === position){
-                return   <FontAwesome name="user" style={styles.icons} onPress={()=>{this.moveIcon(4,2,position)}} color="blue" size={20} />
-              }
-              break;
-            case 3 : 
-              if(this.state.position43 === position){
-                return   <FontAwesome name="user" style={styles.icons} onPress={()=>{this.moveIcon(4,3,position)}} color="blue" size={20} />
-              }
-              break;
-            case 4 :
-                if(this.state.position44 === position){
-                  return   <FontAwesome name="user" style={styles.icons} onPress={()=>{this.moveIcon(4,4,position)}} color="blue" size={20} />
-                }
-                break;
-            }
-          break;
         }
     }
   render(){
@@ -1311,49 +725,6 @@ export default class App extends React.Component {
               </View>   
               
           </View>
-          <Animatable.View
-      animation={this.state.turn2 ? zoomIn : zoomOut}
-      duration={500}
-    >
-          <View>
-          
-          <TouchableOpacity  onPress={()=>{ this.generateRandomNumber(2) }}>
-            <Image style={{ width : 90,height : 70,marginLeft : 30,marginBottom : 10}} source={this.state.image2} />
-          </TouchableOpacity>
-          <View style={[Players.styles,{borderLeftWidth : 1,marginTop : 1.7}]}>
-            <ImageBackground source={require("./assets/doremon.jpg")} style={{width: '100%', height: '100%'}}>
-              <View>
-                  <View style={row.Style}>
-                    <View style={styles.places}>
-                    <TouchableOpacity>
-                        {this.checkPostion(2,1,-12)}
-                      </TouchableOpacity>
-                    </View>
-                    <View style={[styles.places,{marginLeft : 90}]}>
-                    <TouchableOpacity>
-                        {this.checkPostion(2,2,-22)}
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                  <View style={row.Style}>
-                    <View style={[styles.places,{marginTop : 90}]}>
-                    <TouchableOpacity>
-                        {this.checkPostion(2,3,-32)}
-                      </TouchableOpacity>
-                    </View>
-                    <View style={[styles.places,{marginLeft : 90,marginTop : 90}]}>
-                    <TouchableOpacity>
-                        {this.checkPostion(2,4,-42)}
-                    </TouchableOpacity>
-
-                  </View>
-                </View>
-              </View>
-            </ImageBackground>
-               
-          </View>
-          </View>
-          </Animatable.View>
            </View>
            
         {/* =============================== Middle Part =============================== */}
@@ -1611,13 +982,9 @@ export default class App extends React.Component {
         {/* =============================== Lowest Part ============================= */}
         <View style={row.Style}>
           <View>
-          <Animatable.View
-      animation={this.state.turn4 ? zoomIn : zoomOut}
-      duration={500}
-    >
-          <View style={[Players.styles,{marginLeft : Dimensions.get("window").width/50,borderRightWidth : 1}]}>
+          <View style={[Players.styles,{marginLeft : Dimensions.get("window").width/50}]}>
           
-          <ImageBackground source={require("./assets/tomJerry.png")} style={{width: '100%', height: '100%'}}>
+          <ImageBackground source={require("./assets/Blank.png")} style={{width: '100%', height: '100%'}}>
             <View>
             <View style={row.Style}>
                 <View style={styles.places}>
@@ -1626,34 +993,21 @@ export default class App extends React.Component {
                   </TouchableOpacity>
                 </View>
                 <View style={[styles.places,{marginLeft : 90}]}>
-                <TouchableOpacity >
-                    {this.checkPostion(4,2,-24)}
-                  </TouchableOpacity>
                 </View>
               </View>
               <View style={row.Style}>
                 <View style={[styles.places,{marginTop : 90}]}>
-                <TouchableOpacity >
-                    {this.checkPostion(4,3,-34)}
-                  </TouchableOpacity>
                 </View>
                 <View style={[styles.places,{marginLeft : 90,marginTop : 90}]}>
-                <TouchableOpacity >
-                    {this.checkPostion(4,4,-44)}
-                  </TouchableOpacity>
               </View>
               </View>
             </View>
           </ImageBackground>
           
           </View>
-          <TouchableOpacity  onPress={()=>{this.generateRandomNumber(4)}}>
-            <Image style={{ width : 90,height : 70,marginLeft : 30,marginTop : 10}} source={this.state.image4} />
-          </TouchableOpacity>
-          </Animatable.View>
           </View>
          <View style={row.Style}>
-              <View style={styles.first}>
+              <View style={styles.First}>
                   <View style={styles.item}>
                     {this.checkPostion(1,1,44)}{this.checkPostion(1,2,44)}{this.checkPostion(1,3,44)}{this.checkPostion(1,4,44)}
                     {this.checkPostion(2,1,44)}{this.checkPostion(2,2,44)}{this.checkPostion(2,3,44)}{this.checkPostion(2,4,44)}
