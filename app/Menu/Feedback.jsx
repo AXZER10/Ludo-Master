@@ -1,20 +1,40 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {auth} from '../../FirebaseConfig'
+import { collection, addDoc, getFirestore } from 'firebase/firestore';
 
 const FeedbackScreen = () => {
   const [name, setName] = useState('');
   const [feedback, setFeedback] = useState('');
+  const user = auth.currentUser;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (name && feedback) {
-      Alert.alert('Feedback Submitted', `Thank you, ${name}, for your feedback!`);
-      // Here you can also add the logic to send the feedback to your server or API
-      setName('');
-      setFeedback('');
+
+      try{
+        const db = getFirestore();
+
+        const userRef = collection(db, 'feedback'); // Reference to users collection
+        const feedbackRef = await addDoc(userRef, {
+          uid: user.uid,
+          feedback: feedback,
+          createdAt: new Date(),
+        });
+
+        Alert.alert('Feedback Submitted', `Thank you, ${name}, for your feedback!`);
+        // Here you can also add the logic to send the feedback to your server or API
+        setName('');
+        setFeedback('');
+        
+      }catch(error){
+        Alert.alert('Error', error);
+      }
+     
     } else {
       Alert.alert('Error', 'Please fill in all fields.');
     }
+    
   };
 
   return (

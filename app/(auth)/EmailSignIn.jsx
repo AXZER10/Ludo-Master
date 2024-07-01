@@ -110,6 +110,13 @@ const App = () => {
           createdAt: new Date(),
         });
 
+        // referralCOde
+        // const referralRef = collection(db, 'referral');
+        // const signupreferralCode = await addDoc(referralRef, {
+        //   uid: userCredential.user.uid,
+        //   referral:
+        // });
+
         console.log('User created successfully and data stored in Firestore!', signupRef.id);
         console.log('Bonus Added successfully and wallet created in Firestore!', signupbonusref.id);
 
