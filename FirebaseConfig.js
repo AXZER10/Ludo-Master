@@ -5,11 +5,8 @@ import { router } from 'expo-router';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, getDocs, query, collection, where } from 'firebase/firestore';
-import { getStorage, ref } from 'firebase/storage';
+import { getStorage, ref ,uploadBytes, getDownloadURL } from 'firebase/storage';
 import 'firebase/storage';
-
-
-
 
 // Firebase configuration
 const firebaseConfig = {
@@ -43,6 +40,25 @@ export const handleLogout = async () => {
   }
 };
 
+export const uploadImage = async (uri, path) => {
+  try {
+    
+
+    const response = await fetch(uri);
+
+    const blob = await response.blob();
+
+    const storageRef = ref(storage, path);
+
+    await uploadBytes(storageRef, blob);
+
+    const url = await getDownloadURL(storageRef);
+    return url;
+  } catch (error) {
+    console.error("Error uploading image: ", error);
+    throw error;
+  }
+};
 
 export const UserBalances = () => {
   const [bonusBalance, setBonusBalance] = useState(null);

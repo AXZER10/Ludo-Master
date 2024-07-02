@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Button, Image, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-import { firestore, storage, auth } from '../FirebaseConfig';
+import { firestore, auth, uploadImage } from '../FirebaseConfig';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 
@@ -31,25 +30,6 @@ const KYCForm = () => {
     }
   };
 
-  const uploadImage = async (uri, path) => {
-    try {
-      
-
-      const response = await fetch(uri);
-
-      const blob = await response.blob();
-
-      const storageRef = ref(storage, path);
-
-      await uploadBytes(storageRef, blob);
-
-      const url = await getDownloadURL(storageRef);
-      return url;
-    } catch (error) {
-      console.error("Error uploading image: ", error);
-      throw error;
-    }
-  };
 
   const handleSubmit = async () => {
     if (!frontImage || !backImage) {
