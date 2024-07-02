@@ -82,6 +82,10 @@ const Menu = () => {
           <Text className=" text-slate-400 mt-2 text-lg font-psemibold">Feedback</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={() => router.push('../Menu/TDS')}>
+          <Text className=" text-slate-400 mt-2 text-lg font-psemibold">TDS</Text>
+        </TouchableOpacity>
+
         <Text className="text-3xl font-pbold mt-8 mb-5 text-blue-400">Follow Us</Text>
 
         <View className="flex-row justify-space-around">
