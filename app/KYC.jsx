@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Button, Image, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, ActivityIndicator, Alert, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { firestore, auth, uploadImage } from '../FirebaseConfig';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import TopBar from '../components/TopBar';
 
 
 const KYCForm = () => {
@@ -50,6 +51,13 @@ const KYCForm = () => {
         frontImageUrl,
         backImageUrl,
         createdAt: serverTimestamp(),
+        docsUploaded: true
+      });
+      await addDoc(collection(firestore, 'kycStatus'), {
+        userid: user.uid,
+        docsUploaded: true,
+        createdAt: serverTimestamp(),
+        kycStatus: false
       });
 
       Alert.alert('Success', 'KYC submitted successfully.');
@@ -67,11 +75,17 @@ const KYCForm = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <FlatList
+      ListHeaderComponent={() => (
+        <View style={styles.header}>
         <Text style={styles.headerText}>KYC Verification</Text>
         <Text style={styles.headerText}>Document Upload</Text>
       </View>
-      <View style={styles.form}>
+      )}
+      renderItem={null}
+      ListFooterComponent={() => (
+        <>
+        <View style={styles.form}>
         <Text style={styles.label}>Select Document Type:</Text>
         <Picker
           selectedValue={documentType}
@@ -101,6 +115,9 @@ const KYCForm = () => {
 
         {error && <Text style={styles.error}>{error}</Text>}
       </View>
+        </>
+      )}
+      />
     </SafeAreaView>
   );
 };
@@ -108,7 +125,7 @@ const KYCForm = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 0,
     backgroundColor: '#1a202c', // Adjust the background color as needed
   },
   header: {
