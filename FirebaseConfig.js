@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, firebase } from 'firebase/app';
 import { signOut } from 'firebase/auth';
 import { router } from 'expo-router';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, getDocs, query, collection, where } from 'firebase/firestore';
-import { NumericFormat } from 'react-number-format';
-import { NumberFormat } from 'react-number-format';
+import { getStorage, ref } from 'firebase/storage';
+import 'firebase/storage';
+
+
 
 
 // Firebase configuration
@@ -26,8 +28,8 @@ export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
 
-const firestore = getFirestore(app);
-
+export const firestore = getFirestore(app);
+export const storage = getStorage(app);
 
 //export const auth = getAuth(app);
 
@@ -99,4 +101,4 @@ export const numberFormatter = (value) => {
     }).format(value)
   );
 };
-export default { app, firestore }
+export default { app }
