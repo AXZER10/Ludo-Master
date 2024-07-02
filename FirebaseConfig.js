@@ -63,6 +63,7 @@ export const uploadImage = async (uri, path) => {
 export const UserBalances = () => {
   const [bonusBalance, setBonusBalance] = useState(null);
   const [mainBalance, setMainBalance] = useState(null);
+  const [totalBalance, setTotalBalance] = useState(null);
   const [winBalance, setWinBalance] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -83,6 +84,8 @@ export const UserBalances = () => {
         setBonusBalance(balanceFormatter(BonusBalance));
         setMainBalance(balanceFormatter(walletbalance));
         setWinBalance(balanceFormatter(WinBalance));
+        const total = BonusBalance + walletbalance;
+        setTotalBalance(balanceFormatter(total))
       })
     }
   };
@@ -105,6 +108,7 @@ export const UserBalances = () => {
     bonusBalance,
     mainBalance,
     winBalance,
+    totalBalance,
     refetch
   }
 };
