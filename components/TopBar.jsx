@@ -4,7 +4,7 @@ import { UserBalances } from '../FirebaseConfig';
 import { router } from 'expo-router';
 
 export const TopBar = () => {
-  const {bonusBalance, mainBalance} = UserBalances();
+  const {bonusBalance, mainBalance, totalBalance} = UserBalances();
   return (
     <View className=" flex-row-reverse items-center px-2 space-x-2">
             <TouchableOpacity
@@ -29,8 +29,9 @@ export const TopBar = () => {
               resizeMode='contain'
               />
             </TouchableOpacity>
-              <Text className="text-blue-400 font-psemibold text-s mr-2">Bonus-{bonusBalance}</Text>
-                <Text className="text-blue-400 font-psemibold text- mr-2">Main-{mainBalance}</Text>
+              {/* <Text className="text-blue-400 font-psemibold text-s mr-2">Bonus-{bonusBalance}</Text> */}
+              {/* <Text className="text-blue-400 font-psemibold text- mr-2">Main-{mainBalance}</Text> */}
+              <Text className="text-blue-400 font-psemibold text- mr-2">Balance-{totalBalance}</Text>
               </View>
   )
 }
