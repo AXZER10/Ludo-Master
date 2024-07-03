@@ -107,7 +107,7 @@ const Home = () => {
             <CustomButton 
                 title={'kyc verifications'} 
                 ContainerStyles={'w-40 bg-black'}
-                handlePress={() => router.push("/KYC")}
+                handlePress={() => router.push("/KYCStatus")}
                 textStyles={'text-lg font-pbold text-blue-400'}
               />
           </View>
