@@ -67,6 +67,7 @@ const App = () => {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [isLogin, setIsLogin] = useState(true);
+  const [myReferralCode, setMyReferralCode] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -111,15 +112,18 @@ const App = () => {
           createdAt: new Date(),
         });
 
+        const Code = `REF-${userCredential.user.uid.slice(0, 6).toUpperCase()}`;
+        setMyReferralCode(Code);
         // referralCOde
-        // const referralRef = collection(db, 'referral');
-        // const signupreferralCode = await addDoc(referralRef, {
-        //   uid: userCredential.user.uid,
-        //   referral:
-        // });
+        const referralRef = collection(db, 'referralcode');
+        const signupreferralCode = await addDoc(referralRef, {
+          uid: userCredential.user.uid,
+          code: Code
+        });
 
         console.log('User created successfully and data stored in Firestore!', signupRef.id);
         console.log('Bonus Added successfully and wallet created in Firestore!', signupbonusref.id);
+        console.log('Referral code created in Firestore!', signupreferralCode.id);
 
 
         router.replace("/Home");
