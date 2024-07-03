@@ -1,10 +1,15 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { UserBalances } from '../FirebaseConfig';
 import { router } from 'expo-router';
 
 export const TopBar = () => {
-  const {bonusBalance, mainBalance, totalBalance} = UserBalances();
+  const {bonusBalance, mainBalance, totalBalance, refetch} = UserBalances();
+  
+  useEffect(() => {
+    refetch();
+  }, []);
+  
   return (
     <View className=" flex-row-reverse items-center px-2 space-x-2">
             <TouchableOpacity

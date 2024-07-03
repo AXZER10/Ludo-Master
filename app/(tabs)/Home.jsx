@@ -8,7 +8,7 @@ import TopBar from '../../components/TopBar';
 
 const Home = () => {
   return (
-    <SafeAreaView className="bg-primary h-full justify-center px-2 flex-1" >
+    <SafeAreaView className="bg-primary h-full justify-center px-2" >
       <FlatList 
       ListHeaderComponent={() => (
         <TopBar/>
@@ -16,20 +16,22 @@ const Home = () => {
       renderItem={null}
       ListFooterComponent={() => (
         <>
-              <View className="my-2 w-full items-center justify-center flex-row">
-              <View className="w-full flex-row-reverse">
-              <TouchableOpacity onPress={() => router.push("../Referral")}
-            activeOpacity={0.7}>
-              <Text className="text-blue-400 ml-60 px-3 "> Referral </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push("../Ads")}
-            activeOpacity={0.7}>
-              <Text className="text-blue-400  px-7 "> Ads</Text>
-              </TouchableOpacity>
+          <View className="my-2 w-full flex-row">
+              <View className="items-start">
+                <TouchableOpacity onPress={() => router.push("../Referral")}
+                activeOpacity={0.7}>
+                  <Text className="text-blue-400 px-3 "> Referral </Text>
+                </TouchableOpacity>
+              </View>
+              <View className="items-end min-w-[78%] px-3">
+                <TouchableOpacity onPress={() => router.push("../Ads")}
+                activeOpacity={0.7}>
+                  <Text className="text-blue-400"> Ads</Text>
+                </TouchableOpacity>
               </View>          
           </View>    
           <View className="flex-row-reverse my-1">
-            <TouchableOpacity className="w-[40px] h-[40px] items-center justify-center"
+            <TouchableOpacity className="w-10 h-10 items-center justify-center"
             onPress={() => router.push("../(leaderboard)/LeaderBoard")}
             activeOpacity={0.7}>
                   <Image source={require("../assets/icons/leaderboard.png")}
