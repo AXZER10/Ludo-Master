@@ -44,6 +44,9 @@ export default function RootLayout() {
         <Stack.Screen name="HowToPlay" options={{headerShown:false }} />
         <Stack.Screen name="KYC" options={{headerShown:false }} />
         <Stack.Screen name="(leaderboard)" options={{headerShown:false }} />
+        <Stack.Screen name="Menu/TDS" options={{headerShown:false }} />
+        <Stack.Screen name="Menu/Feedback" options={{headerShown:false }} />
+        <Stack.Screen name="Menu/Help" options={{headerShown:false }} />
     </Stack>
     </>
   );
