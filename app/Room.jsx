@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, View, StyleSheet } from 'react-native';
+import { Alert, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, onSnapshot } from 'firebase/firestore';
 import { auth } from '../FirebaseConfig';
 import CustomButton from "../components/CustomButton";
 import { useRouter } from 'expo-router';
+import icons from '../constants/icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LudoTwoPlayer = () => {
   const [roomId, setRoomId] = useState('');
@@ -24,7 +26,7 @@ const LudoTwoPlayer = () => {
     const db = getFirestore();
     const roomRef = collection(db, 'twoPlayerRooms');
     try {
-      const q = query(roomRef, where('uid2', '==', ''));
+      const q = query(roomRef, where('uid2', '==', ''), where('uid1', '!=', uid));
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
         const roomDoc = querySnapshot.docs[0];
@@ -85,7 +87,7 @@ const LudoTwoPlayer = () => {
         if (gameState === "Started") {
           console.log('Match found. Starting in 5 seconds');
           setTimeout(() => {
-            router.push('/LudoTwoPlayer');
+            router.replace('/LudoTwoPlayer');
           }, 5000);
         }
       } else {
@@ -100,22 +102,20 @@ const LudoTwoPlayer = () => {
   };
 
   return (
-    <View className="flex-col w-40 mx-2">
-       
+    <SafeAreaView className="bg-primary h-full">
+      <View className="flex-col w-10 h-10 mx-2">
+       <TouchableOpacity
+       activeOpacity={0.7}
+       //onPress={router.replace('/Home')}
+       >
+        <Image source={icons.back}
+        resizeMode='contain'
+        className="w-10 h-10"
+        />
+       </TouchableOpacity>
     </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    padding: 20,
-    backgroundColor: 'blue',
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-  },
-});
 
 export default LudoTwoPlayer;
