@@ -51,9 +51,9 @@ const Home = () => {
             </TouchableOpacity>
           </View>  
 
-          <View className='items-center m-5 justify-center'>
+          <View className='items-center justify-center'>
             <Image source={require('../assets/Title.png')} 
-            className='h-[50px] mt-2 justify-center'
+            className='h-[50px] justify-center'
             resizeMode="contain"
             />
             <Image source={require('../assets/Logo.jpeg')} 
