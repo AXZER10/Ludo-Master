@@ -112,6 +112,8 @@ const App = () => {
           createdAt: new Date(),
         });
 
+
+        //Refferal Code Generation
         const Code = `REF-${userCredential.user.uid.slice(0, 6).toUpperCase()}`;
         const referralRef = collection(db, 'referralcode');
         const signupreferralCode = await addDoc(referralRef, {
