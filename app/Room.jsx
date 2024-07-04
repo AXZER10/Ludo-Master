@@ -30,7 +30,7 @@ const LudoTwoPlayer = () => {
             const db = getFirestore();
             const roomRef = collection(db, 'twoPlayerRooms')
             try {
-              const q = query (roomRef,where('uid', '==', ''))
+              const q = query (roomRef,where('uid2', '==', ''))
                 
                 
                 const querySnapshot = await getDocs(q);
@@ -79,7 +79,7 @@ const LudoTwoPlayer = () => {
           const roomRef = doc( db, 'twoPlayerRooms', roomId);
     
           await updateDoc( roomRef,{
-            uid2: uid
+            uid2: user.uid
           });
     
           const updatedDoc = await getDocs(roomRef);
