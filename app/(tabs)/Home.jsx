@@ -24,7 +24,7 @@ const Home = () => {
                 </TouchableOpacity>
               </View>
               <View className="items-end min-w-[78%] px-3">
-                <TouchableOpacity onPress={() => router.push("../Ads")}
+                <TouchableOpacity onPress={() => router.replace("../Ads")}
                 activeOpacity={0.7}>
                   <Text className="text-blue-400"> Ads</Text>
                 </TouchableOpacity>
@@ -109,7 +109,7 @@ const Home = () => {
             <CustomButton 
                 title={'kyc verifications'} 
                 ContainerStyles={'w-40 bg-black'}
-                handlePress={() => router.push("/KYCStatus")}
+                handlePress={() => router.push("/KYC")}
                 textStyles={'text-lg font-pbold text-blue-400'}
               />
           </View>

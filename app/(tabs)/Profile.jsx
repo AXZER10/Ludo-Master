@@ -17,6 +17,9 @@ const Profile = () => {
     if (user) {
       setUserName(user.displayName);
     }
+    else{
+      setUserName("Guest")
+    }
   }, [user]);
   
   const[refreshing, setRefreshing] = useState(false)

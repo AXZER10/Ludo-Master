@@ -89,6 +89,7 @@ export const UserBalances = () => {
       })
     }
   };
+
   useEffect(() => {
 
     fetchBalances();
@@ -109,6 +110,33 @@ export const UserBalances = () => {
     mainBalance,
     winBalance,
     totalBalance,
+    refetch
+  }
+};
+
+export const ReferralCode = () => {
+  const [Code, setCode] = useState(null);
+  const user = auth.currentUser;
+  const db = getFirestore();
+  const RefferalRef = collection(db, 'referralcode');
+
+  const fetchReferralCode = async() => {
+    if (user) {
+      const q = query(RefferalRef, where("uid", "==", user.uid))
+  
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const code = doc.data().code;
+        setCode(code);
+      })
+    }
+  }
+  useEffect(() => {
+    fetchReferralCode();
+  }, []);
+  const refetch = () => { fetchReferralCode(); }
+  return {
+    Code,
     refetch
   }
 };
