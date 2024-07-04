@@ -86,7 +86,6 @@ const App = () => {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
         router.replace("/Home");
-        console.log('User signed in successfully!');
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCredential.user, { displayName: username });
@@ -121,13 +120,7 @@ const App = () => {
           code: Code
         });
 
-        console.log('User created successfully and data stored in Firestore!', signupRef.id);
-        console.log('Bonus Added successfully and wallet created in Firestore!', signupbonusref.id);
-        console.log('Referral code created in Firestore!', signupreferralCode.id);
-
-
         router.replace("/Home");
-        console.log('User created successfully!');
       }
       setEmail("");
       setPassword("");

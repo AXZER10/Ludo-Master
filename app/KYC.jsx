@@ -61,7 +61,7 @@ const KYCForm = () => {
 
       Alert.alert('Success', 'KYC submitted successfully.');
     } catch (error) {
-      console.error('Error submitting KYC: ', error);
+      Alert.alert('Error submitting KYC: ', error);
       setError('Error submitting KYC');
     } finally {
       setLoading(false);
