@@ -67,7 +67,6 @@ const App = () => {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [isLogin, setIsLogin] = useState(true);
-  const [myReferralCode, setMyReferralCode] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -94,6 +93,7 @@ const App = () => {
 
         const db = getFirestore();
 
+        //User SignUp
         const userRef = collection(db, 'users'); // Reference to users collection
         const signupRef = await addDoc(userRef, {
           uid: userCredential.user.uid,
@@ -113,8 +113,6 @@ const App = () => {
         });
 
         const Code = `REF-${userCredential.user.uid.slice(0, 6).toUpperCase()}`;
-        setMyReferralCode(Code);
-        // referralCOde
         const referralRef = collection(db, 'referralcode');
         const signupreferralCode = await addDoc(referralRef, {
           uid: userCredential.user.uid,
