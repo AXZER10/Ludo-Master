@@ -48,6 +48,7 @@ const KYCStatus = () => {
         console.log(docId)
       } else {
         console.log('No matching document found');
+        console.log(querySnapshot.empty)
       }
       
 

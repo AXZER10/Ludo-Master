@@ -5,7 +5,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { firestore, auth, uploadImage } from '../FirebaseConfig';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import TopBar from '../components/TopBar';
 
 
 const KYCForm = () => {
@@ -62,7 +61,7 @@ const KYCForm = () => {
 
       Alert.alert('Success', 'KYC submitted successfully.');
     } catch (error) {
-      console.error('Error submitting KYC: ', error);
+      Alert.alert('Error submitting KYC: ', error);
       setError('Error submitting KYC');
     } finally {
       setLoading(false);

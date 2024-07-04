@@ -86,13 +86,13 @@ const App = () => {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
         router.replace("/Home");
-        console.log('User signed in successfully!');
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCredential.user, { displayName: username });
 
         const db = getFirestore();
 
+        //User SignUp
         const userRef = collection(db, 'users'); // Reference to users collection
         const signupRef = await addDoc(userRef, {
           uid: userCredential.user.uid,
@@ -111,19 +111,16 @@ const App = () => {
           createdAt: new Date(),
         });
 
-        // referralCOde
-        // const referralRef = collection(db, 'referral');
-        // const signupreferralCode = await addDoc(referralRef, {
-        //   uid: userCredential.user.uid,
-        //   referral:
-        // });
 
-        console.log('User created successfully and data stored in Firestore!', signupRef.id);
-        console.log('Bonus Added successfully and wallet created in Firestore!', signupbonusref.id);
-
+        //Refferal Code Generation
+        const Code = `REF-${userCredential.user.uid.slice(0, 6).toUpperCase()}`;
+        const referralRef = collection(db, 'referralcode');
+        const signupreferralCode = await addDoc(referralRef, {
+          uid: userCredential.user.uid,
+          code: Code
+        });
 
         router.replace("/Home");
-        console.log('User created successfully!');
       }
       setEmail("");
       setPassword("");

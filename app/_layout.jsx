@@ -31,6 +31,7 @@ export default function RootLayout() {
     <Stack>
       <Stack.Screen name="index" options={{headerShown:false}}/>
       <Stack.Screen name="Ludo" options={{headerShown:false}}/>
+      <Stack.Screen name="LudoTwoPlayer" options={{headerShown:false}}/>
       <Stack.Screen name="(tabs)" options={{headerShown:false}}/>
       <Stack.Screen name="(auth)" options={{headerShown:false}}/>
       <Stack.Screen name="Referral" options={{headerShown:false}}/>
@@ -43,6 +44,9 @@ export default function RootLayout() {
         <Stack.Screen name="HowToPlay" options={{headerShown:false }} />
         <Stack.Screen name="KYC" options={{headerShown:false }} />
         <Stack.Screen name="(leaderboard)" options={{headerShown:false }} />
+        <Stack.Screen name="Menu/TDS" options={{headerShown:false }} />
+        <Stack.Screen name="Menu/Feedback" options={{headerShown:false }} />
+        <Stack.Screen name="Menu/Help" options={{headerShown:false }} />
     </Stack>
     </>
   );
