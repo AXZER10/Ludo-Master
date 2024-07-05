@@ -3,7 +3,7 @@ import { View, Text, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { auth, ReferralCode } from '../FirebaseConfig';
 import CustomButton from '../components/CustomButton';
-//import * as Clipboard from 'expo-clipboard';
+import * as Clipboard from 'expo-clipboard';
 
 const ReferralComponent = () => {
   const { Code, refetch } = ReferralCode();
@@ -51,7 +51,7 @@ const ReferralComponent = () => {
           <CustomButton
             title="Copy Code"
             ContainerStyles="w-full text-blue-400"
-            //onPress={copyReferralCode}
+            onPress={copyReferralCode}
             textStyles="text-xl font-pbold"
           />
         </View>
