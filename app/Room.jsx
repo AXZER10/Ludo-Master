@@ -1,26 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Alert, View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, onSnapshot } from 'firebase/firestore';
 import { auth } from '../FirebaseConfig';
-import CustomButton from "../components/CustomButton";
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import icons from '../constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LudoTwoPlayer = () => {
   const [roomId, setRoomId] = useState('');
   const [playerUid, setPlayerUid] = useState('');
-  const router = useRouter();
+  const [countdown, setCountdown] = useState(null);
 
   useEffect(() => {
     const user = auth.currentUser;
-    if (user) {
-      setPlayerUid(user.uid);
-      checkRoomsAndJoin(user.uid);
+    if (user
+    ) {
+      if(playerUid == ''){
+        setPlayerUid(user.uid);
+        checkRoomsAndJoin(user.uid);
+      }
+      if(countdown == 0){
+        router.replace('/LudoTwoPlayer')
+      } 
     } else {
       Alert.alert("User Not Found");
     }
-  }, []);
+
+  }, [countdown]);
   
   const checkRoomsAndJoin = async (uid) => {
     const db = getFirestore();
@@ -36,7 +42,7 @@ const LudoTwoPlayer = () => {
         await createRoom(uid);
       }
     } catch (error) {
-      Alert.alert('Error checking rooms:', error);
+      Alert.alert('Error checking rooms:', error.message);
     }
   };
 
@@ -74,46 +80,60 @@ const LudoTwoPlayer = () => {
 
       startGame(roomId);
     } catch (error) {
-      Alert.alert('Error joining room:', error);
+      Alert.alert('Error joining room:', error.message);
     }
   };
 
-  const startGame = (roomId) => {
-    const db = getFirestore();
-    const roomRef = doc(db, 'twoPlayerRooms', roomId);
-    const unsubscribe = onSnapshot(roomRef, (doc) => {
-      if (doc.exists()) {
-        const gameState = doc.data().gameState;
-        if (gameState === "Started") {
-          console.log('Match found. Starting in 5 seconds');
-          setTimeout(() => {
-            router.replace('/LudoTwoPlayer');
-          }, 5000);
-        }
-      } else {
-        Alert.alert('Document not found');
+    const startGame = async(roomId) => {
+      const db = getFirestore();
+      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+      const initiateCountdown = () => {
+        setCountdown(5);
+        const interval = setInterval(() => {
+          setCountdown(prev => {
+            if (prev === 1) {
+              clearInterval(interval);
+            }
+            return prev - 1;
+          });
+        }, 1000);
       }
-    }, (error) => {
-      Alert.alert("Error starting game", error.message);
-    });
-
+      const unsubscribe = onSnapshot(roomRef, (doc) => {
+        if (doc.exists()) {
+          const gameState = doc.data().gameState;
+          if (gameState === "Started") {
+            initiateCountdown();
+          }
+        } else {
+          Alert.alert('Document not found');
+        }
+      }, (error) => {
+        Alert.alert("Error starting game", error.message);
+      });
+      
     // Cleanup subscription on unmount
     return () => unsubscribe();
+    
   };
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <View className="flex-col w-10 h-10 mx-2">
        <TouchableOpacity
-       activeOpacity={0.7}
-       //onPress={router.replace('/Home')}
+         activeOpacity={0.7}
+         //onPress={router.replace('/Home')}
        >
         <Image source={icons.back}
-        resizeMode='contain'
-        className="w-10 h-10"
+          resizeMode='contain'
+          className="w-10 h-10"
         />
        </TouchableOpacity>
-    </View>
+      </View>
+      {countdown !== null && (
+        <View className="flex-col w-full h-full justify-center items-center">
+          <Text className="text-5xl font-pbold text-slate-600">Game starts in {countdown}...</Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
