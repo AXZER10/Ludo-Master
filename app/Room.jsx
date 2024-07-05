@@ -136,7 +136,8 @@ const Room = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       
-      {countdown == null && (
+      {countdown === null && (
+        <>
         <View className="flex-col w-10 h-10 mx-2">
         <TouchableOpacity
           activeOpacity={0.7}
@@ -148,10 +149,17 @@ const Room = () => {
          />
         </TouchableOpacity>
        </View>
+
+        <View className="flex-col w-full h-full justify-center items-center">
+          <Text className="text-5xl font-pbold text-slate-400">
+            Waiting For Players to Join
+          </Text>
+        </View>
+        </>
       )}
       {countdown !== null && (
         <View className="flex-col w-full h-full justify-center items-center">
-          <Text className="text-5xl font-pbold text-slate-600">Game starts in {countdown}...</Text>
+          <Text className="text-5xl font-pbold text-slate-400">Game starts in {countdown}...</Text>
         </View>
       )}
     </SafeAreaView>
