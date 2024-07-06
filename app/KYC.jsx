@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, Button, Image, StyleSheet, ActivityIndicator, Alert, FlatList } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, ActivityIndicator, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { firestore, auth, uploadImage } from '../FirebaseConfig';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import icons from '../constants/icons';
+import { router } from 'expo-router';
 
 
 const KYCForm = () => {
@@ -73,13 +75,26 @@ const KYCForm = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className='h-full bg-primary'>
       <FlatList
       ListHeaderComponent={() => (
+        <>
+        <View className="flex-col w-10 h-10 mx-2">
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => router.replace('/Home')}
+        >
+         <Image source={icons.back}
+           resizeMode='contain'
+           className="w-10 h-10"
+         />
+        </TouchableOpacity>
+       </View>
         <View style={styles.header}>
         <Text style={styles.headerText}>KYC Verification</Text>
         <Text style={styles.headerText}>Document Upload</Text>
       </View>
+        </>
       )}
       renderItem={null}
       ListFooterComponent={() => (
