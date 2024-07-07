@@ -76,7 +76,7 @@ const KYCStatus = () => {
         </TouchableOpacity>
        </View>
       <View className="flex-1 p-2 space-y-2 mt-10 mx-2">
-        <Text className="font-semibold text-white">UserId: {userId}</Text>
+        <Text className="font-semibold text-white">User Name: {user.displayName}</Text>
         <Text className="font-semibold text-white">KYC Status: {status ? 'Yes' : 'No'}</Text>
         <Text className="font-semibold text-white mb-2">Documents Uploaded: {docStatus ? 'Yes' : 'No'}</Text>
         {docStatus && (
