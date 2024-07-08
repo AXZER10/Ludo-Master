@@ -6,6 +6,9 @@ import {Audio} from 'expo-av'
 import * as Animatable from "react-native-animatable";
 import icons from '../constants/icons'
 import { router } from 'expo-router';
+import { auth } from '../FirebaseConfig';
+import { collection, getFirestore, doc, query, where, getDocs, updateDoc, onSnapshot } from 'firebase/firestore';
+import { Alert } from 'react-native';
 
 soundObject = new Audio.Sound()
 
@@ -41,6 +44,41 @@ export default class App extends React.Component {
       image1 : require("./assets/dice1.png"),image2 : require("./assets/dice1.png"),image3 : require("./assets/dice1.png"),image4 : require("./assets/dice1.png")
     }
   }
+  CurrentRoom = async () => {
+    let user = auth.currentUser;
+    console.log(user.uid);
+    const db = getFirestore();
+    const roomRef = collection(db, 'twoPlayerRooms');
+    try {
+      const q = query(roomRef, where('gameState', '==', 'Started'));
+      const querySnapshot = await getDocs(q);
+      const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1 === user.uid || doc.data().uid2 === user.uid);
+      if (filteredRooms.length > 0) {
+        const roomDoc = filteredRooms[0];
+        const roomId = roomDoc.id;
+        return roomId;
+      }else{
+        router.replace('/Home')
+      }
+    } catch (error) {
+      Alert.alert('Error checking rooms:', error.message);
+    }
+  };
+  Cancel = async () => {
+    const roomId = await this.CurrentRoom();
+    console.log('room: ',roomId);
+    const db = getFirestore();
+    try {
+      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+      await updateDoc(roomRef, {
+        gameState: "Cancelled"
+      });
+  
+      router.replace('/Home');
+    } catch (error) {
+    }
+  };
+  
   moveIcon = (player,whichOne,position) => {
     switch(player){
       case 1:
@@ -562,7 +600,7 @@ export default class App extends React.Component {
           <View className="flex-col w-10 h-10 mx-2">
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => router.replace('/Home')}
+          onPress={() => this.Cancel()}
         >
          <Image source={icons.back}
            resizeMode='contain'
