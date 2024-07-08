@@ -16,9 +16,13 @@ const ReferralComponent = () => {
 
   const user = auth.currentUser;
 
-  const copyReferralCode = () => {
-    Clipboard.setStringAsync(myReferralCode);
-    Alert.alert('Referral Code Copied', 'Your referral code has been copied to clipboard.');
+  const copyReferralCode = async () => {
+    try {
+      await Clipboard.setStringAsync(myReferralCode);
+      Alert.alert('Referral Code Copied', 'Your referral code has been copied to clipboard.');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to copy referral code. Please try again.');
+    }
   };
 
   const redeemReferralCode = () => {

@@ -4,6 +4,9 @@ import {FontAwesome} from '@expo/vector-icons'
 import {Players,row} from './styles/forPlayers'
 import {Audio} from 'expo-av'
 import * as Animatable from "react-native-animatable";
+import icons from '../constants/icons'
+import { router } from 'expo-router';
+
 soundObject = new Audio.Sound()
 
 const zoomIn = {
@@ -556,6 +559,17 @@ export default class App extends React.Component {
   render(){
     return (
         <SafeAreaView className="flex-1 bg-primary">
+          <View className="flex-col w-10 h-10 mx-2">
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => router.replace('/Home')}
+        >
+         <Image source={icons.back}
+           resizeMode='contain'
+           className="w-10 h-10"
+         />
+        </TouchableOpacity>
+       </View>
         <View className="mt-10 items-center">
         <Text className='text-2xl text-blue-400 font-psemibold'> Welcome to Ludo Master </Text>
         

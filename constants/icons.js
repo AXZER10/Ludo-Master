@@ -6,6 +6,7 @@ import friends from "../app/assets/icons/friends.png"
 import eyehide from "../app/assets/icons/eye-hide.png"
 import eye from "../app/assets/icons/eye.png"
 import logout from "../app/assets/icons/logout.png"
+import back from "../app/assets/icons/back.png"
 
 
 export default{
@@ -16,5 +17,6 @@ export default{
     friends,
     eye,
     eyehide,
-    logout
+    logout,
+    back
 }

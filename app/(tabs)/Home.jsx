@@ -51,9 +51,9 @@ const Home = () => {
             </TouchableOpacity>
           </View>  
 
-          <View className='items-center m-5 justify-center'>
+          <View className='items-center justify-center'>
             <Image source={require('../assets/Title.png')} 
-            className='h-[50px] mt-2 justify-center'
+            className='h-[50px] justify-center'
             resizeMode="contain"
             />
             <Image source={require('../assets/Logo.jpeg')} 
@@ -75,7 +75,7 @@ const Home = () => {
                     <CustomButton 
                     title={'2 Players'} 
                     ContainerStyles={'w-full bg-black'}
-                    handlePress={() => router.push("/Room")}
+                    handlePress={() => router.replace("/Room")}
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
                 </View>
@@ -109,7 +109,7 @@ const Home = () => {
             <CustomButton 
                 title={'kyc verifications'} 
                 ContainerStyles={'w-40 bg-black'}
-                handlePress={() => router.push("/KYC")}
+                handlePress={() => router.replace("/KYCStatus")}
                 textStyles={'text-lg font-pbold text-blue-400'}
               />
           </View>

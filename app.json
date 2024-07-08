@@ -19,6 +19,11 @@
 
     },
     "android": {
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -34,7 +39,15 @@
     "plugins": [
       "expo-router",
       "@react-native-firebase/app",
-      "@react-native-firebase/auth"
+      "@react-native-firebase/auth",
+      [
+        "expo-build-properties",
+         {
+          "ios": {
+             "useFrameworks": "static"
+           }
+         }
+       ]
     ],
     "experiments": {
       "typedRoutes": true

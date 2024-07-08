@@ -1,70 +1,116 @@
-import { View, Text } from 'react-native'
-import { React, useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { auth } from '../FirebaseConfig';
-import { getFirestore, collection, query, where, getDocs, doc } from 'firebase/firestore';
-
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import icons from '../constants/icons';
+import { router } from 'expo-router';
+import CustomButton from '../components/CustomButton'
 
 const KYCStatus = () => {
   const user = auth.currentUser;
   const db = getFirestore();
   const KycRef = collection(db, 'kyc');
   const KycStatRef = collection(db, 'kycStatus');
-  let frontImageUri
-  let backImageUri
-  const [Status, setStatus] = useState(null);
-  const [DocStatus, setDocStatus] = useState(null);
-  const [UserId, setUserId] = useState(null);
+
+  const [status, setStatus] = useState(null);
+  const [docStatus, setDocStatus] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [docId, setDocId] = useState(null);
+  const [frontImageUri, setFrontImageUri] = useState(null);
+  const [backImageUri, setBackImageUri] = useState(null);
 
-
-  const fetchDocs = async() => {
+  useEffect(() => {
     if (user) {
-      const q = query(KycRef, where("userid", "==", user.uid))
-  
+      fetchDocs();
+      fetchStatus();
+      setUserId(user.uid)
+    }
+  }, [user]);
+
+  const fetchDocs = async () => {
+    try {
+      const q = query(KycRef, where('userid', '==', user.uid));
       const querySnapshot = await getDocs(q);
-      if(querySnapshot){
+      if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
-          frontImageUri = doc.data().frontImageUrl;
-          backImageUri = doc.data().bonusbalance;
-          //console.log(frontImageUri);
-        })
+          setFrontImageUri(doc.data().frontImageUrl);
+          setBackImageUri(doc.data().backImageUrl);
+        });
       }
-      else{
-        console.log("HI")
-      }
-      
+    } catch (error) {
+      Alert.alert('Error fetching documents:', error);
     }
   };
-  console.log(user.uid);
-  const FetchStatus = async() => {
-    if (user) {
-      const q = query(KycStatRef, where('userId', '==', user.uid));
 
+  const fetchStatus = async () => {
+    try {
+      const q = query(KycStatRef, where('userid', '==', user.uid));
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot)
       if (!querySnapshot.empty) {
         const doc = querySnapshot.docs[0];
         setDocId(doc.id);
-        console.log(docId)
-      } else {
-        console.log('No matching document found');
-        console.log(querySnapshot.empty)
+        setStatus(doc.data().kycStatus);
+        setUserId(doc.data().userid);
+        setDocStatus(doc.data().docsUploaded);
       }
-      
-
+    } catch (error) {
+      Alert.alert('Error fetching status:', error);
     }
-  };FetchStatus();
-    return (
-    <View>
-      <Text>
-        {UserId}
-        {Status}
-      </Text>
-      <Text>
-      {DocStatus}
-      </Text>
-    </View>
-  )
-}
+  };
 
-export default KYCStatus
+  return (
+    <SafeAreaView className="w-full h-full border bg-primary">
+      <FlatList
+      ListHeaderComponent={() => (
+        <>
+        <View className="flex-col w-10 h-10 mx-2">
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => router.replace('/Home')}
+        >
+         <Image source={icons.back}
+           resizeMode='contain'
+           className="w-10 h-10"
+         />
+        </TouchableOpacity>
+       </View>
+      <View className="flex-1 p-2 space-y-2 mt-10 mx-2">
+        <Text className="font-semibold text-white">User Name: {user.displayName}</Text>
+        <Text className="font-semibold text-white">KYC Status: {status ? 'Yes' : 'No'}</Text>
+        <Text className="font-semibold text-white mb-2">Documents Uploaded: {docStatus ? 'Yes' : 'No'}</Text>
+        {docStatus && (
+          <>
+            <Text className="font-semibold text-white">Front Image:</Text>
+            {frontImageUri ? (
+              <Image source={{ uri: frontImageUri }} className="w-60 h-40 my-2" />
+            ) : (
+              <Text className="font-semibold text-white">No front image found</Text>
+            )}
+            <Text className="font-semibold text-white">Back Image:</Text>
+            {backImageUri ? (
+              <Image source={{ uri: backImageUri }} className="w-60 h-40 my-2" />
+            ) : (
+              <Text className="font-semibold text-white">No back image found</Text>
+            )}
+          </>
+        )}
+        {!docStatus && (
+          <View className="w-80 mt-4">
+            <CustomButton 
+                title={'Upload Documents'} 
+                ContainerStyles={'w-full bg-black'}
+                handlePress={() => router.replace("/KYC")}
+                textStyles={'text-lg font-pbold text-blue-400'}
+              />
+          </View>
+        )}
+      </View>
+      </>
+      )}
+      />
+    </SafeAreaView>
+  );
+};
+
+export default KYCStatus;
