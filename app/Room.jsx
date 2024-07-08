@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
+import { Alert, View, TouchableOpacity, Image, Text } from 'react-native';
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, onSnapshot } from 'firebase/firestore';
 import { auth } from '../FirebaseConfig';
 import { router } from 'expo-router';

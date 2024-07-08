@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { initializeApp, firebase } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import { signOut } from 'firebase/auth';
 import { router } from 'expo-router';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
