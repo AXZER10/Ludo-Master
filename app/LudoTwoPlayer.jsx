@@ -46,7 +46,7 @@ export default class App extends React.Component {
   }
   CurrentRoom = async () => {
     let user = auth.currentUser;
-    console.log(user.uid);
+    //console.log(user.uid);
     const db = getFirestore();
     const roomRef = collection(db, 'twoPlayerRooms');
     try {
@@ -467,7 +467,21 @@ export default class App extends React.Component {
     }
   }
   generateRandomNumber = (player) => {
+    const updateDice = async (Dice) => {
+      roomId = await this.CurrentRoom();
+      console.log('roomId: ', roomId)
+      const db = getFirestore();
+    try {
+      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+      await updateDoc(roomRef, {
+        dice: Dice
+      });
+    } catch (error) {
+      Alert.alert('Error Updating Dice', error.message)
+    }
+    }
       var randomNumber = Math.floor(Math.random() * 6) +1;
+      updateDice(randomNumber);
       this.setState({turnMessage : " "}) ; this.setState({ moveMessage : "" })
       switch(player){
         case 1 :
