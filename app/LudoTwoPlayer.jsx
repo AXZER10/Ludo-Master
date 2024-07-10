@@ -39,7 +39,7 @@ export default class App extends React.Component {
         position21 : -12,position22 : -22 ,position23 : -32, position24 : -42,
         position31 : -13,position32 : -23 ,position33 : -33, position34 : -43,
         position41 : -14,position42 : -24 ,position43 : -34, position44 : -44,
-      turn1 : false, turn3 : true, currentNumber : 0 ,turnMessage : "",moveMessage : "",whoseTurnToMove : 0,
+      turn1 : false, turn3 : true, currentNumber : 0 ,turnMessage : "",moveMessage : "",whoseTurnToMove : 3,
       isMovedBy1 : false,isMovedBy3 : false,
       image1 : require("./assets/dice1.png"),image2 : require("./assets/dice1.png"),image3 : require("./assets/dice1.png"),image4 : require("./assets/dice1.png")
     }
@@ -79,10 +79,62 @@ export default class App extends React.Component {
     }
   };
   
-  moveIcon = (player,whichOne,position) => {
-    switch(player){
-      case 1:
-        if(this.state.whoseTurnToMove == 1 && (!this.state.isMovedBy1)){
+   
+
+  moveIcon = async (player,whichOne,position) => {
+    
+   
+    const getPlayerTurn = async() =>{
+      const db = getFirestore();
+      const roomId = await this.CurrentRoom();
+      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+
+      const unsubscribe = onSnapshot(roomRef, (doc) =>{
+      try {
+        if (doc.exists()) {
+          const data = doc.data();
+          console.log('Current Player', data.PlayerTurn);
+          return data.PlayerTurn;
+        } else {
+          console.log('No Turn');
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching player turn:', error);
+        Alert.alert('Error PlayerTurn', error.message);
+        return null;
+      }
+      });
+      return () => unsubscribe();
+    
+    }
+
+        const UpdatePlayerTurn = async(num) =>{
+          const db = getFirestore();
+          const roomId = await this.CurrentRoom(); // Ensure roomId is awaited correctly
+          
+          try{
+            const roomRefer = doc(db, 'twoPlayerRooms', roomId);
+            console.log('roomId', roomId);
+             await updateDoc(roomRefer, {
+             PlayerTurn : num
+            });
+            console .log('Player turn updated to', num);
+          }catch(error){
+            console.log('error Updating player turn', error);
+            Alert.alert('Error Updating player turn', error.message);
+          }
+        }
+      
+  
+  
+    
+   
+    const currentPlayerTurn = await  getPlayerTurn();
+  switch(player){
+    
+    case 1:
+        if( currentPlayerTurn != 1 && this.state.whoseTurnToMove == 1){
           switch(whichOne){
             case 1:
               if(this.state.position11 < 0){
@@ -199,13 +251,19 @@ export default class App extends React.Component {
                     }
                 }
                 break;
-          }
-        }else{
+                }
+                if(this.state.currentNumber !==6){
+                  await UpdatePlayerTurn(3);
+                  this.setState({turn1 : false, turn3 : true, isMovedBy3:false});
+                }
+          }else{
           this.setState({moveMessage : "You cannot move right now"})
         }
+      
         break;
-      case 3 :
-          if(this.state.whoseTurnToMove == 3 && (!this.state.isMovedBy3)){
+      
+      case 3:
+          if(currentPlayerTurn != 3 && this.state.whoseTurnToMove == 3){
             switch(whichOne){
               case 1:
                 if(this.state.position31 != "winner"){
@@ -412,6 +470,10 @@ export default class App extends React.Component {
                   }  
                   break;
             }
+            if(this.state.currentNumber !==6){
+              await UpdatePlayerTurn(1);
+              this.setState({turn1: true, turn3: false, isMovedBy1:false})
+            }
           }else{
             this.setState({moveMessage : "You cannot move right now"})
           }
@@ -607,8 +669,8 @@ export default class App extends React.Component {
               }
               break;
         }
-    }
-  render(){
+      }
+   render(){
     return (
         <SafeAreaView className="flex-1 bg-primary">
           <View className="flex-col w-10 h-10 mx-2">
