@@ -56,7 +56,8 @@ const Room = () => {
         players: [],
         gameState: 'waiting',
         uid1: uid,
-        uid2: ''
+        uid2: '',
+        
       });
       setRoomId(createRef.id); // Store the created room ID
       Alert.alert('Room Created', `Room ID: ${createRef.id}`);
