@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View,Dimensions,TouchableOpacity,Image,ImageBackground, SafeAreaView } from 'react-native';
 import {FontAwesome} from '@expo/vector-icons'
 import {Players,row} from './styles/forPlayers'
@@ -40,7 +40,7 @@ export default class App extends React.Component {
         position31 : -13,position32 : -23 ,position33 : -33, position34 : -43,
         position41 : -14,position42 : -24 ,position43 : -34, position44 : -44,
       turn1 : false, turn3 : true, currentNumber : 0 ,turnMessage : "",moveMessage : "",whoseTurnToMove : 3,
-      isMovedBy1 : false,isMovedBy3 : false,
+      isMovedBy1 : false,isMovedBy3 : false,Flag : null,
       image1 : require("./assets/dice1.png"),image2 : require("./assets/dice1.png"),image3 : require("./assets/dice1.png"),image4 : require("./assets/dice1.png")
     }
   }
@@ -82,32 +82,34 @@ export default class App extends React.Component {
    
 
   moveIcon = async (player,whichOne,position) => {
-    
-   
-    const getPlayerTurn = async() =>{
-      const db = getFirestore();
-      const roomId = await this.CurrentRoom();
-      const roomRef = doc(db, 'twoPlayerRooms', roomId);
-
-      const unsubscribe = onSnapshot(roomRef, (doc) =>{
-      try {
-        if (doc.exists()) {
-          const data = doc.data();
-          console.log('Current Player', data.PlayerTurn);
-          return data.PlayerTurn;
-        } else {
-          console.log('No Turn');
-          return null;
+    const [flag, setFlag] = useState(false);
+    useEffect(() => {
+      const getPlayerTurn = async () => {
+        try {
+          const db = getFirestore();
+          const roomId = await CurrentRoom();
+          const roomRef = doc(db, 'twoPlayerRooms', roomId);
+  
+          const unsubscribe = onSnapshot(roomRef, (doc) => {
+            if (doc.exists()) {
+              const data = doc.data();
+              setFlag(data.PlayerTurn === 1);
+              console.log('Flag: ', data.PlayerTurn === 1);
+            } else {
+              console.log('No Turn');
+            }
+          });
+  
+          // Clean up the subscription on unmount
+          return () => unsubscribe();
+        } catch (error) {
+          console.error('Error fetching player turn:', error);
+          Alert.alert('Error PlayerTurn', error.message);
         }
-      } catch (error) {
-        console.error('Error fetching player turn:', error);
-        Alert.alert('Error PlayerTurn', error.message);
-        return null;
-      }
-      });
-      return () => unsubscribe();
-    
-    }
+      };
+  
+      getPlayerTurn();
+    }, []);
 
         const UpdatePlayerTurn = async(num) =>{
           const db = getFirestore();
@@ -115,7 +117,7 @@ export default class App extends React.Component {
           
           try{
             const roomRefer = doc(db, 'twoPlayerRooms', roomId);
-            console.log('roomId', roomId);
+            //console.log('roomId', roomId);
              await updateDoc(roomRefer, {
              PlayerTurn : num
             });
@@ -130,11 +132,12 @@ export default class App extends React.Component {
   
     
    
-    const currentPlayerTurn = await  getPlayerTurn();
+    //const currentPlayerTurn = await  getPlayerTurn();
+    //console.log(currentPlayerTurn)
   switch(player){
     
     case 1:
-        if( currentPlayerTurn != 1 && this.state.whoseTurnToMove == 1){
+        if( !flag && this.state.whoseTurnToMove == 1){
           switch(whichOne){
             case 1:
               if(this.state.position11 < 0){
@@ -263,7 +266,7 @@ export default class App extends React.Component {
         break;
       
       case 3:
-          if(currentPlayerTurn != 3 && this.state.whoseTurnToMove == 3){
+          if( !flag && this.state.whoseTurnToMove == 3){
             switch(whichOne){
               case 1:
                 if(this.state.position31 != "winner"){
@@ -285,13 +288,13 @@ export default class App extends React.Component {
                       }else if(this.state.position31 >= 20 && this.state.position31 <= 25){
                         if(nextPosition > 25){                        
                           extraMoves = nextPosition - 25
-                          newPosition = 62 + extraMoves
+                          nextPosition = 62 + extraMoves
                           if(this.state.position31 == 25 && this.state.currentNumber == 6){
                             this.setState({ position31 : "winner"})
                             this.setState({ isMovedBy3 : true })
                           }else{
-                            this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                            this.setState({ position31 : newPosition})
+                            this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                            this.setState({ position31 : nextPosition})
                             this.setState({ isMovedBy3 : true })
                           }
                         }
@@ -336,13 +339,13 @@ export default class App extends React.Component {
                         }else if(this.state.position32 >= 20 && this.state.position32 <= 25){
                           if(nextPosition > 25){                        
                             extraMoves = nextPosition - 25
-                            newPosition = 62 + extraMoves
+                            nextPosition = 62 + extraMoves
                             if(this.state.position32 == 25 && this.state.currentNumber == 6){
                               this.setState({ position32 : "winner"})
                               this.setState({ isMovedBy3 : true })
                             }else{
-                              this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                              this.setState({ position32 : newPosition})
+                              this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                              this.setState({ position32 : nextPosition})
                               this.setState({ isMovedBy3 : true })
                             }
                           }
@@ -387,13 +390,13 @@ export default class App extends React.Component {
                         }else if(this.state.position33 >= 20 && this.state.position33 <= 25){
                           if(nextPosition > 25){                        
                             extraMoves = nextPosition - 25
-                            newPosition = 62 + extraMoves
+                            nextPosition = 62 + extraMoves
                             if(this.state.position33 == 25 && this.state.currentNumber == 6){
                               this.setState({ position33 : "winner"})
                               this.setState({ isMovedBy3 : true })
                             }else{
-                              this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                              this.setState({ position33 : newPosition})
+                              this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                              this.setState({ position33 : nextPosition})
                               this.setState({ isMovedBy3 : true })
                             }
                           }
@@ -438,13 +441,13 @@ export default class App extends React.Component {
                         }else if(this.state.position34 >= 20 && this.state.position34 <= 25){
                           if(nextPosition > 25){                        
                             extraMoves = nextPosition - 25
-                            newPosition = 62 + extraMoves
+                            nextPosition = 62 + extraMoves
                             if(this.state.position34 == 25 && this.state.currentNumber == 6){
                               this.setState({ position34 : "winner"})
                               this.setState({ isMovedBy3 : true })
                             }else{
-                              this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                              this.setState({ position34 : newPosition})
+                              this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                              this.setState({ position34 : nextPosition})
                               this.setState({ isMovedBy3 : true })
                             }
                           }
@@ -531,7 +534,7 @@ export default class App extends React.Component {
   generateRandomNumber = (player) => {
     const updateDice = async (Dice) => {
       roomId = await this.CurrentRoom();
-      console.log('roomId: ', roomId)
+      //console.log('roomId: ', roomId)
       const db = getFirestore();
     try {
       const roomRef = doc(db, 'twoPlayerRooms', roomId);
