@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import { StyleSheet, Text, View,Dimensions,TouchableOpacity,Image,ImageBackground, SafeAreaView } from 'react-native';
 import {FontAwesome} from '@expo/vector-icons'
 import {Players,row} from './styles/forPlayers'
@@ -45,17 +45,50 @@ const zoomIn = {
     const [isMovedBy2, setIsMovedBy2] = useState(false);
     const [isMovedBy3, setIsMovedBy3] = useState(false);
     const [isMovedBy4, setIsMovedBy4] = useState(false);
-    const image1 = require("./assets/dice1.png")
-    const image2 = require("./assets/dice1.png")
-    const image3 = require("./assets/dice1.png")
-    const image4 = require("./assets/dice1.png")
     
-    const [images, setImages] = useState({
+    const [image1, setImage1] = useState({
       1: require("./assets/dice1.png"),
-      2: require("./assets/dice1.png"),
-      3: require("./assets/dice1.png"),
-      4: require("./assets/dice1.png")
+
     });
+    const [image2, setImage2] = useState({
+      1: require("./assets/dice1.png"),
+      2: require("./assets/dice2.png"),
+      3: require("./assets/dice3.png"),
+      4: require("./assets/dice4.png"),
+      5: require("./assets/dice5.png"),
+      6: require("./assets/dice6.png"),
+    });
+    const [image3, setImage3] = useState({
+      1: require("./assets/dice1.png"),
+      2: require("./assets/dice2.png"),
+      3: require("./assets/dice3.png"),
+      4: require("./assets/dice4.png"),
+      5: require("./assets/dice5.png"),
+      6: require("./assets/dice6.png"),
+    });
+    const [image4, setImage4] = useState({
+      1: require("./assets/dice1.png"),
+      2: require("./assets/dice2.png"),
+      3: require("./assets/dice3.png"),
+      4: require("./assets/dice4.png"),
+      5: require("./assets/dice5.png"),
+      6: require("./assets/dice6.png"),
+    });
+  
+    useEffect(() => {
+      setImage1(48);
+      console.log("useEffect1: ",image1)
+      setImage2(48);
+      console.log("useEffect2: ",image1)
+      setImage3(48);
+      console.log("useEffect3: ",image1)
+      setImage4(48);
+      console.log("useEffect4: ",image1)
+      setIsMovedBy1(false);
+
+    }, [])
+
+    
     const moveIcon = (player,whichOne,position) => 
     {
         switch(player)
@@ -88,11 +121,6 @@ const zoomIn = {
                                 nextPosition += 1;
                             }
                             }
-                            checkIfCutPossibleFor2(nextPosition);
-                            checkIfCutPossibleFor3(nextPosition);
-                            checkIfCutPossibleFor4(nextPosition);
-                            setPositions({ ...positions, 1: nextPosition });
-                            setIsMovedBy1(true);
                         }
                         }
                     }
@@ -888,22 +916,23 @@ const zoomIn = {
               setCurrentNumber(randomNumber);
               switch (randomNumber) {
                 case 1:
-                  setImages({ ...images, 1: require("./assets/dice1.png") });
+                  setImage1(48);
+                  console.log('Dice1',image1)
                   break;
                 case 2:
-                  setImages({ ...images, 1: require("./assets/dice2.png") });
+                  setImage1(49);
                   break;
                 case 3:
-                  setImages({ ...images, 1: require("./assets/dice3.png") });
+                  setImage1(50);
                   break;
                 case 4:
-                  setImages({ ...images, 1: require("./assets/dice4.png") });
+                  setImage1(51);
                   break;
                 case 5:
-                  setImages({ ...images, 1: require("./assets/dice5.png") });
+                  setImage1(52);
                   break;
                 case 6:
-                  setImages({ ...images, 1: require("./assets/dice6.png") });
+                  setImage1(53);
                   break;
                 default:
                   break;
@@ -927,22 +956,23 @@ const zoomIn = {
               setCurrentNumber(randomNumber);
               switch (randomNumber) {
                 case 1:
-                  setImages({ ...images, 2: require("./assets/dice1.png") });
+                  setImage2(48);
+                  console.log('Dice1',image1)
                   break;
                 case 2:
-                  setImages({ ...images, 2: require("./assets/dice2.png") });
+                  setImage2(49);
                   break;
                 case 3:
-                  setImages({ ...images, 2: require("./assets/dice3.png") });
+                  setImage2(50);
                   break;
                 case 4:
-                  setImages({ ...images, 2: require("./assets/dice4.png") });
+                  setImage2(51);
                   break;
                 case 5:
-                  setImages({ ...images, 2: require("./assets/dice5.png") });
+                  setImage2(52);
                   break;
                 case 6:
-                  setImages({ ...images, 2: require("./assets/dice6.png") });
+                  setImage2(53);
                   break;
                 default:
                   break;
@@ -966,22 +996,23 @@ const zoomIn = {
               setCurrentNumber(randomNumber);
               switch (randomNumber) {
                 case 1:
-                  setImages({ ...images, 3: require("./assets/dice1.png") });
+                  setImage3(48);
+                  console.log('Dice1',image1)
                   break;
                 case 2:
-                  setImages({ ...images, 3: require("./assets/dice2.png") });
+                  setImage3(49);
                   break;
                 case 3:
-                  setImages({ ...images, 3: require("./assets/dice3.png") });
+                  setImage3(50);
                   break;
                 case 4:
-                  setImages({ ...images, 3: require("./assets/dice4.png") });
+                  setImage3(51);
                   break;
                 case 5:
-                  setImages({ ...images, 3: require("./assets/dice5.png") });
+                  setImage3(52);
                   break;
                 case 6:
-                  setImages({ ...images, 3: require("./assets/dice6.png") });
+                  setImage3(53);
                   break;
                 default:
                   break;
@@ -1005,22 +1036,23 @@ const zoomIn = {
               setCurrentNumber(randomNumber);
               switch (randomNumber) {
                 case 1:
-                  setImages({ ...images, 4: require("./assets/dice1.png") });
+                  setImage4(48);
+                  console.log('Dice1',image1)
                   break;
                 case 2:
-                  setImages({ ...images, 4: require("./assets/dice2.png") });
+                  setImage4(49);
                   break;
                 case 3:
-                  setImages({ ...images, 4: require("./assets/dice3.png") });
+                  setImage4(50);
                   break;
                 case 4:
-                  setImages({ ...images, 4: require("./assets/dice4.png") });
+                  setImage4(51);
                   break;
                 case 5:
-                  setImages({ ...images, 4: require("./assets/dice5.png") });
+                  setImage4(52);
                   break;
                 case 6:
-                  setImages({ ...images, 4: require("./assets/dice6.png") });
+                  setImage4(53);
                   break;
                 default:
                   break;
