@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TopBar from '../../components/TopBar';
 
+
 const Home = () => {
   return (
     <SafeAreaView className="bg-primary h-full justify-center px-2" >
@@ -85,7 +86,7 @@ const Home = () => {
                     <CustomButton 
                     title={'3 Players'} 
                     ContainerStyles={'w-full bg-black'}
-                    handlePress={() => router.push("/Ludo")}
+                    handlePress={() => router.push("/LudoNew")}
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
                 </View>

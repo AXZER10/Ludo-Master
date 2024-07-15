@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import { StyleSheet, Text, View,Dimensions,TouchableOpacity,Image,ImageBackground, SafeAreaView } from 'react-native';
 import {FontAwesome} from '@expo/vector-icons'
 import {Players,row} from './styles/forPlayers'
@@ -45,6 +45,10 @@ const zoomIn = {
     const [isMovedBy2, setIsMovedBy2] = useState(false);
     const [isMovedBy3, setIsMovedBy3] = useState(false);
     const [isMovedBy4, setIsMovedBy4] = useState(false);
+    const image1 = require("./assets/dice1.png")
+    const image2 = require("./assets/dice1.png")
+    const image3 = require("./assets/dice1.png")
+    const image4 = require("./assets/dice1.png")
     
     const [images, setImages] = useState({
       1: require("./assets/dice1.png"),
@@ -58,6 +62,7 @@ const zoomIn = {
         {
             case 1:
                 if (whoseTurnToMove === 1 && !isMovedBy1) {
+                  console.log("player1")
                 switch (whichOne) {
                     case 1:
                     if (positions[1] !== "winner") {
@@ -200,6 +205,7 @@ const zoomIn = {
                 break;
             case 2:
                 if (whoseTurnToMove === 2 && !isMovedBy2) {
+                  console.log("player2")
                 switch (whichOne) {
                     case 1:
                     if (positions[5] !== "winner") {
@@ -207,7 +213,8 @@ const zoomIn = {
                         if (currentNumber === 6) {
                             setPositions({ ...positions, 5: 14 });
                             setIsMovedBy2(true);
-                        } else {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else {
                             setMoveMessage("You Cannot Move It");
                         }
                         } else {
@@ -220,32 +227,37 @@ const zoomIn = {
                             checkIfCutPossibleFor4(extraMoves);
                             setPositions({ ...positions, 5: extraMoves });
                             setIsMovedBy2(true);
-                        } else if (positions[5] >= 7 && positions[5] <= 12) {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else if (positions[5] >= 7 && positions[5] <= 12) {
                             if (nextPosition > 12) {
                             let extraMoves = nextPosition - 12;
                             let newPosition = 57 + extraMoves;
                             if (positions[5] === 12 && currentNumber === 6) {
                                 setPositions({ ...positions, 5: "winner" });
                                 setIsMovedBy2(true);
-                            } else {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else {
                                 checkIfCutPossibleFor1(newPosition);
                                 checkIfCutPossibleFor3(newPosition);
                                 checkIfCutPossibleFor4(newPosition);
                                 setPositions({ ...positions, 5: newPosition });
                                 setIsMovedBy2(true);
-                            }
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          }
                             }
                         } else if (positions[5] >= 58 && positions[5] <= 62) {
                             nextPosition = positions[5] + currentNumber;
                             if (nextPosition === 63) {
                             setPositions({ ...positions, 5: "winner" });
                             setIsMovedBy2(true);
-                            } else if (nextPosition > 63) {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else if (nextPosition > 63) {
                             setMoveMessage("Cannot Move This One");
                             } else {
                             setPositions({ ...positions, 5: nextPosition });
                             setIsMovedBy2(true);
-                            }
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          }
                         } else {
                             nextPosition = positions[5] + currentNumber;
                             checkIfCutPossibleFor1(nextPosition);
@@ -253,6 +265,7 @@ const zoomIn = {
                             checkIfCutPossibleFor4(nextPosition);
                             setPositions({ ...positions, 5: nextPosition });
                             setIsMovedBy2(true);
+                            console.log("isMovedBy2: ",isMovedBy2)
                         }
                         }
                     }
@@ -263,7 +276,8 @@ const zoomIn = {
                         if (currentNumber === 6) {
                             setPositions({ ...positions, 6: 14 });
                             setIsMovedBy2(true);
-                        } else {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else {
                             setMoveMessage("You Cannot Move It");
                         }
                         } else {
@@ -276,32 +290,37 @@ const zoomIn = {
                             checkIfCutPossibleFor4(extraMoves);
                             setPositions({ ...positions, 6: extraMoves });
                             setIsMovedBy2(true);
-                        } else if (positions[6] >= 7 && positions[6] <= 12) {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else if (positions[6] >= 7 && positions[6] <= 12) {
                             if (nextPosition > 12) {
                             let extraMoves = nextPosition - 12;
                             let newPosition = 57 + extraMoves;
                             if (positions[6] === 12 && currentNumber === 6) {
                                 setPositions({ ...positions, 6: "winner" });
                                 setIsMovedBy2(true);
-                            } else {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else {
                                 checkIfCutPossibleFor1(newPosition);
                                 checkIfCutPossibleFor3(newPosition);
                                 checkIfCutPossibleFor4(newPosition);
                                 setPositions({ ...positions, 6: newPosition });
                                 setIsMovedBy2(true);
-                            }
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          }
                             }
                         } else if (positions[6] >= 58 && positions[6] <= 62) {
                             nextPosition = positions[6] + currentNumber;
                             if (nextPosition === 63) {
                             setPositions({ ...positions, 6: "winner" });
                             setIsMovedBy2(true);
-                            } else if (nextPosition > 63) {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else if (nextPosition > 63) {
                             setMoveMessage("Cannot Move This One");
                             } else {
                             setPositions({ ...positions, 6: nextPosition });
                             setIsMovedBy2(true);
-                            }
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          }
                         } else {
                             nextPosition = positions[6] + currentNumber;
                             checkIfCutPossibleFor1(nextPosition);
@@ -309,6 +328,7 @@ const zoomIn = {
                             checkIfCutPossibleFor4(nextPosition);
                             setPositions({ ...positions, 6: nextPosition });
                             setIsMovedBy2(true);
+                            console.log("isMovedBy2: ",isMovedBy2)
                         }
                         }
                     }
@@ -319,7 +339,8 @@ const zoomIn = {
                         if (currentNumber === 6) {
                             setPositions({ ...positions, 7: 14 });
                             setIsMovedBy2(true);
-                        } else {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else {
                             setMoveMessage("You Cannot Move It");
                         }
                         } else {
@@ -332,32 +353,37 @@ const zoomIn = {
                             checkIfCutPossibleFor4(extraMoves);
                             setPositions({ ...positions, 7: extraMoves });
                             setIsMovedBy2(true);
-                        } else if (positions[7] >= 7 && positions[7] <= 12) {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else if (positions[7] >= 7 && positions[7] <= 12) {
                             if (nextPosition > 12) {
                             let extraMoves = nextPosition - 12;
                             let newPosition = 57 + extraMoves;
                             if (positions[7] === 12 && currentNumber === 6) {
                                 setPositions({ ...positions, 7: "winner" });
                                 setIsMovedBy2(true);
-                            } else {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else {
                                 checkIfCutPossibleFor1(newPosition);
                                 checkIfCutPossibleFor3(newPosition);
                                 checkIfCutPossibleFor4(newPosition);
                                 setPositions({ ...positions, 7: newPosition });
                                 setIsMovedBy2(true);
-                            }
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          }
                             }
                         } else if (positions[7] >= 58 && positions[7] <= 62) {
                             nextPosition = positions[7] + currentNumber;
                             if (nextPosition === 63) {
                             setPositions({ ...positions, 7: "winner" });
                             setIsMovedBy2(true);
-                            } else if (nextPosition > 63) {
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          } else if (nextPosition > 63) {
                             setMoveMessage("Cannot Move This One");
                             } else {
                             setPositions({ ...positions, 7: nextPosition });
                             setIsMovedBy2(true);
-                            }
+                            console.log("isMovedBy2: ",isMovedBy2)
+                          }
                         } else {
                             nextPosition = positions[7] + currentNumber;
                             checkIfCutPossibleFor1(nextPosition);
@@ -365,6 +391,7 @@ const zoomIn = {
                             checkIfCutPossibleFor4(nextPosition);
                             setPositions({ ...positions, 7: nextPosition });
                             setIsMovedBy2(true);
+                            console.log("isMovedBy2: ",isMovedBy2)
                         }
                         }
                     }
@@ -375,6 +402,8 @@ const zoomIn = {
                         if (currentNumber === 6) {
                             setPositions({ ...positions, 8: 14 });
                             setIsMovedBy2(true);
+                            console.log("isMovedBy2: ",isMovedBy2)
+
                         } else {
                             setMoveMessage("You Cannot Move It");
                         }
@@ -388,6 +417,7 @@ const zoomIn = {
                             checkIfCutPossibleFor4(extraMoves);
                             setPositions({ ...positions, 8: extraMoves });
                             setIsMovedBy2(true);
+                            console.log("isMovedBy2: ",isMovedBy2)
                         } else if (positions[8] >= 7 && positions[8] <= 12) {
                             if (nextPosition > 12) {
                             let extraMoves = nextPosition - 12;
@@ -434,6 +464,7 @@ const zoomIn = {
                 break;
             case 3:
                 if (whoseTurnToMove === 3 && !isMovedBy3) {
+                  console.log("player3")
                 switch (whichOne) {
                     case 1:
                     if (positions[9] !== "winner") {
@@ -576,6 +607,7 @@ const zoomIn = {
                 break;
             case 4:
                 if (whoseTurnToMove === 4 && !isMovedBy4) {
+                  console.log("player4")
                 switch (whichOne) {
                     case 1:
                     if (positions[13] !== "winner") {
@@ -1261,11 +1293,11 @@ const zoomIn = {
         <View style={row.Style}>
           <View>
     <Animatable.View
-      animation={this.state.turn1 ? zoomIn : zoomOut}
+      animation={turn1 ? zoomIn : zoomOut}
       duration={500}
     >
           <TouchableOpacity  onPress={()=>{generateRandomNumber(1)}}>
-            <Image style={{ width : 90,height : 70,marginLeft : 30,marginBottom : 10}} source={this.state.image1} />
+            <Image style={{ width : 90,height : 70,marginLeft : 30,marginBottom : 10}} source={image1} />
           </TouchableOpacity>
      
           <View style={[Players.styles,{marginLeft : Dimensions.get("window").width/50,borderRightWidth : 1,marginTop : 2}]}>
@@ -1274,24 +1306,24 @@ const zoomIn = {
               <View style={row.Style}>
                 <View style={[styles.places]}>
                   <TouchableOpacity>
-                  {checkPostion(1,1,-11)}
+                  {checkPosition(1,1,-11)}
                   </TouchableOpacity>
                 </View>
                 <View style={[styles.places,{marginLeft : 90}]}>
                 <TouchableOpacity>
-                    {checkPostion(1,2,-21)}
+                    {checkPosition(1,2,-21)}
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={row.Style}>
                 <View style={[styles.places,{marginTop : 90}]} >
                 <TouchableOpacity>
-                    {checkPostion(1,3,-31)}
+                    {checkPosition(1,3,-31)}
                   </TouchableOpacity>
                 </View>
                 <View  style={[styles.places,{marginTop : 90,marginLeft : 90}]}>
                 <TouchableOpacity>
-                    {checkPostion(1,4,-41)}
+                    {checkPosition(1,4,-41)}
                   </TouchableOpacity>
               </View>
               </View>
@@ -1304,129 +1336,129 @@ const zoomIn = {
           <View style={[row.Style,{ marginTop : 82,borderTopWidth : 0 }]}>
               <View style={[styles.first]}>
                   <View style={styles.item}>
-                    {checkPostion(1,1,11)}{checkPostion(1,2,11)}{checkPostion(1,3,11)}{checkPostion(1,4,11)}
-                    {checkPostion(2,1,11)}{checkPostion(2,2,11)}{checkPostion(2,3,11)}{checkPostion(2,4,11)}
-                    {checkPostion(3,1,11)}{checkPostion(3,2,11)}{checkPostion(3,3,11)}{checkPostion(3,4,11)}
-                    {checkPostion(4,1,11)}{checkPostion(4,2,11)}{checkPostion(4,3,11)}{checkPostion(4,4,11)}
+                    {checkPosition(1,1,11)}{checkPosition(1,2,11)}{checkPosition(1,3,11)}{checkPosition(1,4,11)}
+                    {checkPosition(2,1,11)}{checkPosition(2,2,11)}{checkPosition(2,3,11)}{checkPosition(2,4,11)}
+                    {checkPosition(3,1,11)}{checkPosition(3,2,11)}{checkPosition(3,3,11)}{checkPosition(3,4,11)}
+                    {checkPosition(4,1,11)}{checkPosition(4,2,11)}{checkPosition(4,3,11)}{checkPosition(4,4,11)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,10)}{checkPostion(1,2,10)}{checkPostion(1,3,10)}{checkPostion(1,4,10)}
-                    {checkPostion(2,1,10)}{checkPostion(2,2,10)}{checkPostion(2,3,10)}{checkPostion(2,4,10)}
-                    {checkPostion(3,1,10)}{checkPostion(3,2,10)}{checkPostion(3,3,10)}{checkPostion(3,4,10)}
-                    {checkPostion(4,1,10)}{checkPostion(4,2,10)}{checkPostion(4,3,10)}{checkPostion(4,4,10)}
+                    {checkPosition(1,1,10)}{checkPosition(1,2,10)}{checkPosition(1,3,10)}{checkPosition(1,4,10)}
+                    {checkPosition(2,1,10)}{checkPosition(2,2,10)}{checkPosition(2,3,10)}{checkPosition(2,4,10)}
+                    {checkPosition(3,1,10)}{checkPosition(3,2,10)}{checkPosition(3,3,10)}{checkPosition(3,4,10)}
+                    {checkPosition(4,1,10)}{checkPosition(4,2,10)}{checkPosition(4,3,10)}{checkPosition(4,4,10)}
                   </View>
                   <View style={[styles.item,{backgroundColor : "#9effa5"}]}>
-                    {checkPostion(1,1,9)}{checkPostion(1,2,9)}{checkPostion(1,3,9)}{checkPostion(1,4,9)}
-                    {checkPostion(2,1,9)}{checkPostion(2,2,9)}{checkPostion(2,3,9)}{checkPostion(2,4,9)}
-                    {checkPostion(3,1,9)}{checkPostion(3,2,9)}{checkPostion(3,3,9)}{checkPostion(3,4,9)}
-                    {checkPostion(4,1,9)}{checkPostion(4,2,9)}{checkPostion(4,3,9)}{checkPostion(4,4,9)}
+                    {checkPosition(1,1,9)}{checkPosition(1,2,9)}{checkPosition(1,3,9)}{checkPosition(1,4,9)}
+                    {checkPosition(2,1,9)}{checkPosition(2,2,9)}{checkPosition(2,3,9)}{checkPosition(2,4,9)}
+                    {checkPosition(3,1,9)}{checkPosition(3,2,9)}{checkPosition(3,3,9)}{checkPosition(3,4,9)}
+                    {checkPosition(4,1,9)}{checkPosition(4,2,9)}{checkPosition(4,3,9)}{checkPosition(4,4,9)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,8)}{checkPostion(1,2,8)}{checkPostion(1,3,8)}{checkPostion(1,4,8)}
-                    {checkPostion(2,1,8)}{checkPostion(2,2,8)}{checkPostion(2,3,8)}{checkPostion(2,4,8)}
-                    {checkPostion(3,1,8)}{checkPostion(3,2,8)}{checkPostion(3,3,8)}{checkPostion(3,4,8)}
-                    {checkPostion(4,1,8)}{checkPostion(4,2,8)}{checkPostion(4,3,8)}{checkPostion(4,4,8)}
+                    {checkPosition(1,1,8)}{checkPosition(1,2,8)}{checkPosition(1,3,8)}{checkPosition(1,4,8)}
+                    {checkPosition(2,1,8)}{checkPosition(2,2,8)}{checkPosition(2,3,8)}{checkPosition(2,4,8)}
+                    {checkPosition(3,1,8)}{checkPosition(3,2,8)}{checkPosition(3,3,8)}{checkPosition(3,4,8)}
+                    {checkPosition(4,1,8)}{checkPosition(4,2,8)}{checkPosition(4,3,8)}{checkPosition(4,4,8)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,7)}{checkPostion(1,2,7)}{checkPostion(1,3,7)}{checkPostion(1,4,7)}
-                    {checkPostion(2,1,7)}{checkPostion(2,2,7)}{checkPostion(2,3,7)}{checkPostion(2,4,7)}
-                    {checkPostion(3,1,7)}{checkPostion(3,2,7)}{checkPostion(3,3,7)}{checkPostion(3,4,7)}
-                    {checkPostion(4,1,7)}{checkPostion(4,2,7)}{checkPostion(4,3,7)}{checkPostion(4,4,7)}
+                    {checkPosition(1,1,7)}{checkPosition(1,2,7)}{checkPosition(1,3,7)}{checkPosition(1,4,7)}
+                    {checkPosition(2,1,7)}{checkPosition(2,2,7)}{checkPosition(2,3,7)}{checkPosition(2,4,7)}
+                    {checkPosition(3,1,7)}{checkPosition(3,2,7)}{checkPosition(3,3,7)}{checkPosition(3,4,7)}
+                    {checkPosition(4,1,7)}{checkPosition(4,2,7)}{checkPosition(4,3,7)}{checkPosition(4,4,7)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,6)}{checkPostion(1,2,6)}{checkPostion(1,3,6)}{checkPostion(1,4,6)}
-                    {checkPostion(2,1,6)}{checkPostion(2,2,6)}{checkPostion(2,3,6)}{checkPostion(2,4,6)}
-                    {checkPostion(3,1,6)}{checkPostion(3,2,6)}{checkPostion(3,3,6)}{checkPostion(3,4,6)}
-                    {checkPostion(4,1,6)}{checkPostion(4,2,6)}{checkPostion(4,3,6)}{checkPostion(4,4,6)}
+                    {checkPosition(1,1,6)}{checkPosition(1,2,6)}{checkPosition(1,3,6)}{checkPosition(1,4,6)}
+                    {checkPosition(2,1,6)}{checkPosition(2,2,6)}{checkPosition(2,3,6)}{checkPosition(2,4,6)}
+                    {checkPosition(3,1,6)}{checkPosition(3,2,6)}{checkPosition(3,3,6)}{checkPosition(3,4,6)}
+                    {checkPosition(4,1,6)}{checkPosition(4,2,6)}{checkPosition(4,3,6)}{checkPosition(4,4,6)}
                   </View>
               </View>
               <View style={[styles.second]}>
                   <View style={styles.item}>
-                    {checkPostion(1,1,12)}{checkPostion(1,2,12)}{checkPostion(1,3,12)}{checkPostion(1,4,12)}
-                    {checkPostion(2,1,12)}{checkPostion(2,2,12)}{checkPostion(2,3,12)}{checkPostion(2,4,12)}
-                    {checkPostion(3,1,12)}{checkPostion(3,2,12)}{checkPostion(3,3,12)}{checkPostion(3,4,12)}
-                    {checkPostion(4,1,12)}{checkPostion(4,2,12)}{checkPostion(4,3,12)}{checkPostion(4,4,12)}
+                    {checkPosition(1,1,12)}{checkPosition(1,2,12)}{checkPosition(1,3,12)}{checkPosition(1,4,12)}
+                    {checkPosition(2,1,12)}{checkPosition(2,2,12)}{checkPosition(2,3,12)}{checkPosition(2,4,12)}
+                    {checkPosition(3,1,12)}{checkPosition(3,2,12)}{checkPosition(3,3,12)}{checkPosition(3,4,12)}
+                    {checkPosition(4,1,12)}{checkPosition(4,2,12)}{checkPosition(4,3,12)}{checkPosition(4,4,12)}
                   </View>
                   <View style={[styles.item,styles.green]}>
-                    {checkPostion(1,1,58)}{checkPostion(1,2,58)}{checkPostion(1,3,58)}{checkPostion(1,4,58)}
-                    {checkPostion(2,1,58)}{checkPostion(2,2,58)}{checkPostion(2,3,58)}{checkPostion(2,4,58)}
-                    {checkPostion(3,1,58)}{checkPostion(3,2,58)}{checkPostion(3,3,58)}{checkPostion(3,4,58)}
-                    {checkPostion(4,1,58)}{checkPostion(4,2,58)}{checkPostion(4,3,58)}{checkPostion(4,4,58)}
+                    {checkPosition(1,1,58)}{checkPosition(1,2,58)}{checkPosition(1,3,58)}{checkPosition(1,4,58)}
+                    {checkPosition(2,1,58)}{checkPosition(2,2,58)}{checkPosition(2,3,58)}{checkPosition(2,4,58)}
+                    {checkPosition(3,1,58)}{checkPosition(3,2,58)}{checkPosition(3,3,58)}{checkPosition(3,4,58)}
+                    {checkPosition(4,1,58)}{checkPosition(4,2,58)}{checkPosition(4,3,58)}{checkPosition(4,4,58)}
                   </View>
                   <View style={[styles.item,styles.green]}>
-                    {checkPostion(1,1,59)}{checkPostion(1,2,59)}{checkPostion(1,3,59)}{checkPostion(1,4,59)}
-                    {checkPostion(2,1,59)}{checkPostion(2,2,59)}{checkPostion(2,3,59)}{checkPostion(2,4,59)}
-                    {checkPostion(3,1,59)}{checkPostion(3,2,59)}{checkPostion(3,3,59)}{checkPostion(3,4,59)}
-                    {checkPostion(4,1,59)}{checkPostion(4,2,59)}{checkPostion(4,3,59)}{checkPostion(4,4,59)}
+                    {checkPosition(1,1,59)}{checkPosition(1,2,59)}{checkPosition(1,3,59)}{checkPosition(1,4,59)}
+                    {checkPosition(2,1,59)}{checkPosition(2,2,59)}{checkPosition(2,3,59)}{checkPosition(2,4,59)}
+                    {checkPosition(3,1,59)}{checkPosition(3,2,59)}{checkPosition(3,3,59)}{checkPosition(3,4,59)}
+                    {checkPosition(4,1,59)}{checkPosition(4,2,59)}{checkPosition(4,3,59)}{checkPosition(4,4,59)}
                   </View>
                   <View style={[styles.item,styles.green]}>
-                    {checkPostion(1,1,60)}{checkPostion(1,2,60)}{checkPostion(1,3,60)}{checkPostion(1,4,60)}
-                    {checkPostion(2,1,60)}{checkPostion(2,2,60)}{checkPostion(2,3,60)}{checkPostion(2,4,60)}
-                    {checkPostion(3,1,60)}{checkPostion(3,2,60)}{checkPostion(3,3,60)}{checkPostion(3,4,60)}
-                    {checkPostion(4,1,60)}{checkPostion(4,2,60)}{checkPostion(4,3,60)}{checkPostion(4,4,60)}
+                    {checkPosition(1,1,60)}{checkPosition(1,2,60)}{checkPosition(1,3,60)}{checkPosition(1,4,60)}
+                    {checkPosition(2,1,60)}{checkPosition(2,2,60)}{checkPosition(2,3,60)}{checkPosition(2,4,60)}
+                    {checkPosition(3,1,60)}{checkPosition(3,2,60)}{checkPosition(3,3,60)}{checkPosition(3,4,60)}
+                    {checkPosition(4,1,60)}{checkPosition(4,2,60)}{checkPosition(4,3,60)}{checkPosition(4,4,60)}
                   </View>
                   <View style={[styles.item,styles.green]}>
-                    {checkPostion(1,1,61)}{checkPostion(1,2,61)}{checkPostion(1,3,61)}{checkPostion(1,4,61)}
-                    {checkPostion(2,1,61)}{checkPostion(2,2,61)}{checkPostion(2,3,61)}{checkPostion(2,4,61)}
-                    {checkPostion(3,1,61)}{checkPostion(3,2,61)}{checkPostion(3,3,61)}{checkPostion(3,4,61)}
-                    {checkPostion(4,1,61)}{checkPostion(4,2,61)}{checkPostion(4,3,61)}{checkPostion(4,4,61)}
+                    {checkPosition(1,1,61)}{checkPosition(1,2,61)}{checkPosition(1,3,61)}{checkPosition(1,4,61)}
+                    {checkPosition(2,1,61)}{checkPosition(2,2,61)}{checkPosition(2,3,61)}{checkPosition(2,4,61)}
+                    {checkPosition(3,1,61)}{checkPosition(3,2,61)}{checkPosition(3,3,61)}{checkPosition(3,4,61)}
+                    {checkPosition(4,1,61)}{checkPosition(4,2,61)}{checkPosition(4,3,61)}{checkPosition(4,4,61)}
                   </View>
                   <View style={[styles.item,styles.green]}>
-                    {checkPostion(1,1,62)}{checkPostion(1,2,62)}{checkPostion(1,3,62)}{checkPostion(1,4,62)}
-                    {checkPostion(2,1,62)}{checkPostion(2,2,62)}{checkPostion(2,3,62)}{checkPostion(2,4,62)}
-                    {checkPostion(3,1,62)}{checkPostion(3,2,62)}{checkPostion(3,3,62)}{checkPostion(3,4,62)}
-                    {checkPostion(4,1,62)}{checkPostion(4,2,62)}{checkPostion(4,3,62)}{checkPostion(4,4,62)}
+                    {checkPosition(1,1,62)}{checkPosition(1,2,62)}{checkPosition(1,3,62)}{checkPosition(1,4,62)}
+                    {checkPosition(2,1,62)}{checkPosition(2,2,62)}{checkPosition(2,3,62)}{checkPosition(2,4,62)}
+                    {checkPosition(3,1,62)}{checkPosition(3,2,62)}{checkPosition(3,3,62)}{checkPosition(3,4,62)}
+                    {checkPosition(4,1,62)}{checkPosition(4,2,62)}{checkPosition(4,3,62)}{checkPosition(4,4,62)}
                   </View>
               </View>
               <View style={[styles.third,]}>
                   <View style={styles.item}>
-                    {checkPostion(1,1,13)}{checkPostion(1,2,13)}{checkPostion(1,3,13)}{checkPostion(1,4,13)}
-                    {checkPostion(2,1,13)}{checkPostion(2,2,13)}{checkPostion(2,3,13)}{checkPostion(2,4,13)}
-                    {checkPostion(3,1,13)}{checkPostion(3,2,13)}{checkPostion(3,3,13)}{checkPostion(3,4,13)}
-                    {checkPostion(4,1,13)}{checkPostion(4,2,13)}{checkPostion(4,3,13)}{checkPostion(4,4,13)}
+                    {checkPosition(1,1,13)}{checkPosition(1,2,13)}{checkPosition(1,3,13)}{checkPosition(1,4,13)}
+                    {checkPosition(2,1,13)}{checkPosition(2,2,13)}{checkPosition(2,3,13)}{checkPosition(2,4,13)}
+                    {checkPosition(3,1,13)}{checkPosition(3,2,13)}{checkPosition(3,3,13)}{checkPosition(3,4,13)}
+                    {checkPosition(4,1,13)}{checkPosition(4,2,13)}{checkPosition(4,3,13)}{checkPosition(4,4,13)}
                   </View>
                   <View style={[styles.item,{backgroundColor : "#9effa5"}]}>
-                    {checkPostion(1,1,14)}{checkPostion(1,2,14)}{checkPostion(1,3,14)}{checkPostion(1,4,14)}
-                    {checkPostion(2,1,14)}{checkPostion(2,2,14)}{checkPostion(2,3,14)}{checkPostion(2,4,14)}
-                    {checkPostion(3,1,14)}{checkPostion(3,2,14)}{checkPostion(3,3,14)}{checkPostion(3,4,14)}
-                    {checkPostion(4,1,14)}{checkPostion(4,2,14)}{checkPostion(4,3,14)}{checkPostion(4,4,14)}
+                    {checkPosition(1,1,14)}{checkPosition(1,2,14)}{checkPosition(1,3,14)}{checkPosition(1,4,14)}
+                    {checkPosition(2,1,14)}{checkPosition(2,2,14)}{checkPosition(2,3,14)}{checkPosition(2,4,14)}
+                    {checkPosition(3,1,14)}{checkPosition(3,2,14)}{checkPosition(3,3,14)}{checkPosition(3,4,14)}
+                    {checkPosition(4,1,14)}{checkPosition(4,2,14)}{checkPosition(4,3,14)}{checkPosition(4,4,14)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,15)}{checkPostion(1,2,15)}{checkPostion(1,3,15)}{checkPostion(1,4,15)}
-                    {checkPostion(2,1,15)}{checkPostion(2,2,15)}{checkPostion(2,3,15)}{checkPostion(2,4,15)}
-                    {checkPostion(3,1,15)}{checkPostion(3,2,15)}{checkPostion(3,3,15)}{checkPostion(3,4,15)}
-                    {checkPostion(4,1,15)}{checkPostion(4,2,15)}{checkPostion(4,3,15)}{checkPostion(4,4,15)}
+                    {checkPosition(1,1,15)}{checkPosition(1,2,15)}{checkPosition(1,3,15)}{checkPosition(1,4,15)}
+                    {checkPosition(2,1,15)}{checkPosition(2,2,15)}{checkPosition(2,3,15)}{checkPosition(2,4,15)}
+                    {checkPosition(3,1,15)}{checkPosition(3,2,15)}{checkPosition(3,3,15)}{checkPosition(3,4,15)}
+                    {checkPosition(4,1,15)}{checkPosition(4,2,15)}{checkPosition(4,3,15)}{checkPosition(4,4,15)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,16)}{checkPostion(1,2,16)}{checkPostion(1,3,16)}{checkPostion(1,4,16)}
-                    {checkPostion(2,1,16)}{checkPostion(2,2,16)}{checkPostion(2,3,16)}{checkPostion(2,4,16)}
-                    {checkPostion(3,1,16)}{checkPostion(3,2,16)}{checkPostion(3,3,16)}{checkPostion(3,4,16)}
-                    {checkPostion(4,1,16)}{checkPostion(4,2,16)}{checkPostion(4,3,16)}{checkPostion(4,4,16)}
+                    {checkPosition(1,1,16)}{checkPosition(1,2,16)}{checkPosition(1,3,16)}{checkPosition(1,4,16)}
+                    {checkPosition(2,1,16)}{checkPosition(2,2,16)}{checkPosition(2,3,16)}{checkPosition(2,4,16)}
+                    {checkPosition(3,1,16)}{checkPosition(3,2,16)}{checkPosition(3,3,16)}{checkPosition(3,4,16)}
+                    {checkPosition(4,1,16)}{checkPosition(4,2,16)}{checkPosition(4,3,16)}{checkPosition(4,4,16)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,17)}{checkPostion(1,2,17)}{checkPostion(1,3,17)}{checkPostion(1,4,17)}
-                    {checkPostion(2,1,17)}{checkPostion(2,2,17)}{checkPostion(2,3,17)}{checkPostion(2,4,17)}
-                    {checkPostion(3,1,17)}{checkPostion(3,2,17)}{checkPostion(3,3,17)}{checkPostion(3,4,17)}
-                    {checkPostion(4,1,17)}{checkPostion(4,2,17)}{checkPostion(4,3,17)}{checkPostion(4,4,17)}
+                    {checkPosition(1,1,17)}{checkPosition(1,2,17)}{checkPosition(1,3,17)}{checkPosition(1,4,17)}
+                    {checkPosition(2,1,17)}{checkPosition(2,2,17)}{checkPosition(2,3,17)}{checkPosition(2,4,17)}
+                    {checkPosition(3,1,17)}{checkPosition(3,2,17)}{checkPosition(3,3,17)}{checkPosition(3,4,17)}
+                    {checkPosition(4,1,17)}{checkPosition(4,2,17)}{checkPosition(4,3,17)}{checkPosition(4,4,17)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,18)}{checkPostion(1,2,18)}{checkPostion(1,3,18)}{checkPostion(1,4,18)}
-                    {checkPostion(2,1,18)}{checkPostion(2,2,18)}{checkPostion(2,3,18)}{checkPostion(2,4,18)}
-                    {checkPostion(3,1,18)}{checkPostion(3,2,18)}{checkPostion(3,3,18)}{checkPostion(3,4,18)}
-                    {checkPostion(4,1,18)}{checkPostion(4,2,18)}{checkPostion(4,3,18)}{checkPostion(4,4,18)}
+                    {checkPosition(1,1,18)}{checkPosition(1,2,18)}{checkPosition(1,3,18)}{checkPosition(1,4,18)}
+                    {checkPosition(2,1,18)}{checkPosition(2,2,18)}{checkPosition(2,3,18)}{checkPosition(2,4,18)}
+                    {checkPosition(3,1,18)}{checkPosition(3,2,18)}{checkPosition(3,3,18)}{checkPosition(3,4,18)}
+                    {checkPosition(4,1,18)}{checkPosition(4,2,18)}{checkPosition(4,3,18)}{checkPosition(4,4,18)}
                   </View>
                   
               </View>   
               
           </View>
           <Animatable.View
-      animation={this.state.turn2 ? zoomIn : zoomOut}
+      animation={turn2 ? zoomIn : zoomOut}
       duration={500}
     >
           <View>
           
           <TouchableOpacity  onPress={()=>{ generateRandomNumber(2) }}>
-            <Image style={{ width : 90,height : 70,marginLeft : 30,marginBottom : 10}} source={this.state.image2} />
+            <Image style={{ width : 90,height : 70,marginLeft : 30,marginBottom : 10}} source={image2} />
           </TouchableOpacity>
           <View style={[Players.styles,{borderLeftWidth : 1,marginTop : 1.7}]}>
             <ImageBackground source={require("./assets/doremon.jpg")} style={{width: '100%', height: '100%'}}>
@@ -1434,24 +1466,24 @@ const zoomIn = {
                   <View style={row.Style}>
                     <View style={styles.places}>
                     <TouchableOpacity>
-                        {checkPostion(2,1,-12)}
+                        {checkPosition(2,1,-12)}
                       </TouchableOpacity>
                     </View>
                     <View style={[styles.places,{marginLeft : 90}]}>
                     <TouchableOpacity>
-                        {checkPostion(2,2,-22)}
+                        {checkPosition(2,2,-22)}
                       </TouchableOpacity>
                     </View>
                   </View>
                   <View style={row.Style}>
                     <View style={[styles.places,{marginTop : 90}]}>
                     <TouchableOpacity>
-                        {checkPostion(2,3,-32)}
+                        {checkPosition(2,3,-32)}
                       </TouchableOpacity>
                     </View>
                     <View style={[styles.places,{marginLeft : 90,marginTop : 90}]}>
                     <TouchableOpacity>
-                        {checkPostion(2,4,-42)}
+                        {checkPosition(2,4,-42)}
                     </TouchableOpacity>
 
                   </View>
@@ -1470,248 +1502,248 @@ const zoomIn = {
           <View style={styles.First}>
             <View style={[row.Style,{borderLeftWidth : 2}]}>
               <View style={styles.item}>
-                  {checkPostion(1,1,52)}{checkPostion(1,2,52)}{checkPostion(1,3,52)}{checkPostion(1,4,52)}
-                  {checkPostion(2,1,52)}{checkPostion(2,2,52)}{checkPostion(2,3,52)}{checkPostion(2,4,52)}
-                  {checkPostion(3,1,52)}{checkPostion(3,2,52)}{checkPostion(3,3,52)}{checkPostion(3,4,52)}
-                  {checkPostion(4,1,52)}{checkPostion(4,2,52)}{checkPostion(4,3,52)}{checkPostion(4,4,52)}
+                  {checkPosition(1,1,52)}{checkPosition(1,2,52)}{checkPosition(1,3,52)}{checkPosition(1,4,52)}
+                  {checkPosition(2,1,52)}{checkPosition(2,2,52)}{checkPosition(2,3,52)}{checkPosition(2,4,52)}
+                  {checkPosition(3,1,52)}{checkPosition(3,2,52)}{checkPosition(3,3,52)}{checkPosition(3,4,52)}
+                  {checkPosition(4,1,52)}{checkPosition(4,2,52)}{checkPosition(4,3,52)}{checkPosition(4,4,52)}
               </View>
               <View style={[styles.item,styles.red,{backgroundColor : "#fa9daa"}]}>  
-                    {checkPostion(1,1,1)}{checkPostion(1,2,1)}{checkPostion(1,3,1)}{checkPostion(1,4,1)}                   
-                    {checkPostion(2,1,1)}{checkPostion(2,2,1)}{checkPostion(2,3,1)}{checkPostion(2,4,1)}
-                    {checkPostion(3,1,1)}{checkPostion(3,2,1)}{checkPostion(3,3,1)}{checkPostion(3,4,1)}
-                    {checkPostion(4,1,1)}{checkPostion(4,2,1)}{checkPostion(4,3,1)}{checkPostion(4,4,1)}
+                    {checkPosition(1,1,1)}{checkPosition(1,2,1)}{checkPosition(1,3,1)}{checkPosition(1,4,1)}                   
+                    {checkPosition(2,1,1)}{checkPosition(2,2,1)}{checkPosition(2,3,1)}{checkPosition(2,4,1)}
+                    {checkPosition(3,1,1)}{checkPosition(3,2,1)}{checkPosition(3,3,1)}{checkPosition(3,4,1)}
+                    {checkPosition(4,1,1)}{checkPosition(4,2,1)}{checkPosition(4,3,1)}{checkPosition(4,4,1)}
                 </View>
               <View style={styles.item}>
-                  {checkPostion(1,1,2)}{checkPostion(1,2,2)}{checkPostion(1,3,2)}{checkPostion(1,4,2)}
-                  {checkPostion(2,1,2)}{checkPostion(2,2,2)}{checkPostion(2,3,2)}{checkPostion(2,4,2)}
-                  {checkPostion(3,1,2)}{checkPostion(3,2,2)}{checkPostion(3,3,2)}{checkPostion(3,4,2)}
-                  {checkPostion(4,1,2)}{checkPostion(4,2,2)}{checkPostion(4,3,2)}{checkPostion(4,4,2)}
+                  {checkPosition(1,1,2)}{checkPosition(1,2,2)}{checkPosition(1,3,2)}{checkPosition(1,4,2)}
+                  {checkPosition(2,1,2)}{checkPosition(2,2,2)}{checkPosition(2,3,2)}{checkPosition(2,4,2)}
+                  {checkPosition(3,1,2)}{checkPosition(3,2,2)}{checkPosition(3,3,2)}{checkPosition(3,4,2)}
+                  {checkPosition(4,1,2)}{checkPosition(4,2,2)}{checkPosition(4,3,2)}{checkPosition(4,4,2)}
               </View>
               <View style={styles.item}>
-                  {checkPostion(1,1,3)}{checkPostion(1,2,3)}{checkPostion(1,3,3)}{checkPostion(1,4,3)}
-                  {checkPostion(2,1,3)}{checkPostion(2,2,3)}{checkPostion(2,3,3)}{checkPostion(2,4,3)}
-                  {checkPostion(3,1,3)}{checkPostion(3,2,3)}{checkPostion(3,3,3)}{checkPostion(3,4,3)}
-                  {checkPostion(4,1,3)}{checkPostion(4,2,3)}{checkPostion(4,3,3)}{checkPostion(4,4,3)}
+                  {checkPosition(1,1,3)}{checkPosition(1,2,3)}{checkPosition(1,3,3)}{checkPosition(1,4,3)}
+                  {checkPosition(2,1,3)}{checkPosition(2,2,3)}{checkPosition(2,3,3)}{checkPosition(2,4,3)}
+                  {checkPosition(3,1,3)}{checkPosition(3,2,3)}{checkPosition(3,3,3)}{checkPosition(3,4,3)}
+                  {checkPosition(4,1,3)}{checkPosition(4,2,3)}{checkPosition(4,3,3)}{checkPosition(4,4,3)}
               </View>
               <View style={styles.item}>
-                  {checkPostion(1,1,4)}{checkPostion(1,2,4)}{checkPostion(1,3,4)}{checkPostion(1,4,4)}
-                  {checkPostion(2,1,4)}{checkPostion(2,2,4)}{checkPostion(2,3,4)}{checkPostion(2,4,4)}
-                  {checkPostion(3,1,4)}{checkPostion(3,2,4)}{checkPostion(3,3,4)}{checkPostion(3,4,4)}
-                  {checkPostion(4,1,4)}{checkPostion(4,2,4)}{checkPostion(4,3,4)}{checkPostion(4,4,4)}
+                  {checkPosition(1,1,4)}{checkPosition(1,2,4)}{checkPosition(1,3,4)}{checkPosition(1,4,4)}
+                  {checkPosition(2,1,4)}{checkPosition(2,2,4)}{checkPosition(2,3,4)}{checkPosition(2,4,4)}
+                  {checkPosition(3,1,4)}{checkPosition(3,2,4)}{checkPosition(3,3,4)}{checkPosition(3,4,4)}
+                  {checkPosition(4,1,4)}{checkPosition(4,2,4)}{checkPosition(4,3,4)}{checkPosition(4,4,4)}
               </View>
               <View style={styles.item}>
-                    {checkPostion(1,1,5)}{checkPostion(1,2,5)}{checkPostion(1,3,5)}{checkPostion(1,4,5)}
-                    {checkPostion(2,1,5)}{checkPostion(2,2,5)}{checkPostion(2,3,5)}{checkPostion(2,4,5)}
-                    {checkPostion(3,1,5)}{checkPostion(3,2,5)}{checkPostion(3,3,5)}{checkPostion(3,4,5)}
-                    {checkPostion(4,1,5)}{checkPostion(4,2,5)}{checkPostion(4,3,5)}{checkPostion(4,4,5)}
+                    {checkPosition(1,1,5)}{checkPosition(1,2,5)}{checkPosition(1,3,5)}{checkPosition(1,4,5)}
+                    {checkPosition(2,1,5)}{checkPosition(2,2,5)}{checkPosition(2,3,5)}{checkPosition(2,4,5)}
+                    {checkPosition(3,1,5)}{checkPosition(3,2,5)}{checkPosition(3,3,5)}{checkPosition(3,4,5)}
+                    {checkPosition(4,1,5)}{checkPosition(4,2,5)}{checkPosition(4,3,5)}{checkPosition(4,4,5)}
                 </View>
             </View>
             <View style={[row.Style,{borderLeftWidth : 2}]}>
               <View style={styles.item}>
-                {checkPostion(1,1,51)}{checkPostion(1,2,51)}{checkPostion(1,3,51)}{checkPostion(1,4,51)}
-                {checkPostion(2,1,51)}{checkPostion(2,2,51)}{checkPostion(2,3,51)}{checkPostion(2,4,51)}
-                {checkPostion(3,1,51)}{checkPostion(3,2,51)}{checkPostion(3,3,51)}{checkPostion(3,4,51)}
-                {checkPostion(4,1,51)}{checkPostion(4,2,51)}{checkPostion(4,3,51)}{checkPostion(4,4,51)}
+                {checkPosition(1,1,51)}{checkPosition(1,2,51)}{checkPosition(1,3,51)}{checkPosition(1,4,51)}
+                {checkPosition(2,1,51)}{checkPosition(2,2,51)}{checkPosition(2,3,51)}{checkPosition(2,4,51)}
+                {checkPosition(3,1,51)}{checkPosition(3,2,51)}{checkPosition(3,3,51)}{checkPosition(3,4,51)}
+                {checkPosition(4,1,51)}{checkPosition(4,2,51)}{checkPosition(4,3,51)}{checkPosition(4,4,51)}
               </View>
               <View style={[styles.item,styles.red]}>
-              {checkPostion(1,1,53)}{checkPostion(1,2,53)}{checkPostion(1,3,53)}{checkPostion(1,4,53)}
-              {checkPostion(2,1,53)}{checkPostion(2,2,53)}{checkPostion(2,3,53)}{checkPostion(2,4,53)}
-              {checkPostion(3,1,53)}{checkPostion(3,2,53)}{checkPostion(3,3,53)}{checkPostion(3,4,53)}
-              {checkPostion(4,1,53)}{checkPostion(4,2,53)}{checkPostion(4,3,53)}{checkPostion(4,4,53)}           
+              {checkPosition(1,1,53)}{checkPosition(1,2,53)}{checkPosition(1,3,53)}{checkPosition(1,4,53)}
+              {checkPosition(2,1,53)}{checkPosition(2,2,53)}{checkPosition(2,3,53)}{checkPosition(2,4,53)}
+              {checkPosition(3,1,53)}{checkPosition(3,2,53)}{checkPosition(3,3,53)}{checkPosition(3,4,53)}
+              {checkPosition(4,1,53)}{checkPosition(4,2,53)}{checkPosition(4,3,53)}{checkPosition(4,4,53)}           
               </View>
               <View style={[styles.item,styles.red]}>
-              {checkPostion(1,1,54)}{checkPostion(1,2,54)}{checkPostion(1,3,54)}{checkPostion(1,4,54)}
-              {checkPostion(2,1,54)}{checkPostion(2,2,54)}{checkPostion(2,3,54)}{checkPostion(2,4,54)}
-              {checkPostion(3,1,54)}{checkPostion(3,2,54)}{checkPostion(3,3,54)}{checkPostion(3,4,54)}
-              {checkPostion(4,1,54)}{checkPostion(4,2,54)}{checkPostion(4,3,54)}{checkPostion(4,4,54)}           
+              {checkPosition(1,1,54)}{checkPosition(1,2,54)}{checkPosition(1,3,54)}{checkPosition(1,4,54)}
+              {checkPosition(2,1,54)}{checkPosition(2,2,54)}{checkPosition(2,3,54)}{checkPosition(2,4,54)}
+              {checkPosition(3,1,54)}{checkPosition(3,2,54)}{checkPosition(3,3,54)}{checkPosition(3,4,54)}
+              {checkPosition(4,1,54)}{checkPosition(4,2,54)}{checkPosition(4,3,54)}{checkPosition(4,4,54)}           
               </View>
               <View style={[styles.item,styles.red]}>
-              {checkPostion(1,1,55)}{checkPostion(1,2,55)}{checkPostion(1,3,55)}{checkPostion(1,4,55)}
-              {checkPostion(2,1,55)}{checkPostion(2,2,55)}{checkPostion(2,3,55)}{checkPostion(2,4,55)}
-              {checkPostion(3,1,55)}{checkPostion(3,2,55)}{checkPostion(3,3,55)}{checkPostion(3,4,55)}
-              {checkPostion(4,1,55)}{checkPostion(4,2,55)}{checkPostion(4,3,55)}{checkPostion(4,4,55)}           
+              {checkPosition(1,1,55)}{checkPosition(1,2,55)}{checkPosition(1,3,55)}{checkPosition(1,4,55)}
+              {checkPosition(2,1,55)}{checkPosition(2,2,55)}{checkPosition(2,3,55)}{checkPosition(2,4,55)}
+              {checkPosition(3,1,55)}{checkPosition(3,2,55)}{checkPosition(3,3,55)}{checkPosition(3,4,55)}
+              {checkPosition(4,1,55)}{checkPosition(4,2,55)}{checkPosition(4,3,55)}{checkPosition(4,4,55)}           
               </View>
               <View style={[styles.item,styles.red]}>
-                {checkPostion(1,1,56)}{checkPostion(1,2,56)}{checkPostion(1,3,56)}{checkPostion(1,4,56)}
-                {checkPostion(2,1,56)}{checkPostion(2,2,56)}{checkPostion(2,3,56)}{checkPostion(2,4,56)}
-                {checkPostion(3,1,56)}{checkPostion(3,2,56)}{checkPostion(3,3,56)}{checkPostion(3,4,56)}
-                {checkPostion(4,1,56)}{checkPostion(4,2,56)}{checkPostion(4,3,56)}{checkPostion(4,4,56)}           
+                {checkPosition(1,1,56)}{checkPosition(1,2,56)}{checkPosition(1,3,56)}{checkPosition(1,4,56)}
+                {checkPosition(2,1,56)}{checkPosition(2,2,56)}{checkPosition(2,3,56)}{checkPosition(2,4,56)}
+                {checkPosition(3,1,56)}{checkPosition(3,2,56)}{checkPosition(3,3,56)}{checkPosition(3,4,56)}
+                {checkPosition(4,1,56)}{checkPosition(4,2,56)}{checkPosition(4,3,56)}{checkPosition(4,4,56)}           
                 </View>
                 <View style={[styles.item,styles.red]}>
-                {checkPostion(1,1,57)}{checkPostion(1,2,57)}{checkPostion(1,3,57)}{checkPostion(1,4,57)}
-                {checkPostion(2,1,57)}{checkPostion(2,2,57)}{checkPostion(2,3,57)}{checkPostion(2,4,57)}
-                {checkPostion(3,1,57)}{checkPostion(3,2,57)}{checkPostion(3,3,57)}{checkPostion(3,4,57)}
-                {checkPostion(4,1,57)}{checkPostion(4,2,57)}{checkPostion(4,3,57)}{checkPostion(4,4,57)}           
+                {checkPosition(1,1,57)}{checkPosition(1,2,57)}{checkPosition(1,3,57)}{checkPosition(1,4,57)}
+                {checkPosition(2,1,57)}{checkPosition(2,2,57)}{checkPosition(2,3,57)}{checkPosition(2,4,57)}
+                {checkPosition(3,1,57)}{checkPosition(3,2,57)}{checkPosition(3,3,57)}{checkPosition(3,4,57)}
+                {checkPosition(4,1,57)}{checkPosition(4,2,57)}{checkPosition(4,3,57)}{checkPosition(4,4,57)}           
                 </View>
             </View>
             <View style={[row.Style,{borderLeftWidth : 2}]}>
               <View style={styles.item}>
-                {checkPostion(1,1,50)}{checkPostion(1,2,50)}{checkPostion(1,3,50)}{checkPostion(1,4,50)}
-                {checkPostion(2,1,50)}{checkPostion(2,2,50)}{checkPostion(2,3,50)}{checkPostion(2,4,50)}
-                {checkPostion(3,1,50)}{checkPostion(3,2,50)}{checkPostion(3,3,50)}{checkPostion(3,4,50)}
-                {checkPostion(4,1,50)}{checkPostion(4,2,50)}{checkPostion(4,3,50)}{checkPostion(4,4,50)}      
+                {checkPosition(1,1,50)}{checkPosition(1,2,50)}{checkPosition(1,3,50)}{checkPosition(1,4,50)}
+                {checkPosition(2,1,50)}{checkPosition(2,2,50)}{checkPosition(2,3,50)}{checkPosition(2,4,50)}
+                {checkPosition(3,1,50)}{checkPosition(3,2,50)}{checkPosition(3,3,50)}{checkPosition(3,4,50)}
+                {checkPosition(4,1,50)}{checkPosition(4,2,50)}{checkPosition(4,3,50)}{checkPosition(4,4,50)}      
               </View>
               <View style={styles.item}>
-                {checkPostion(1,1,49)}{checkPostion(1,2,49)}{checkPostion(1,3,49)}{checkPostion(1,4,49)}
-                {checkPostion(2,1,49)}{checkPostion(2,2,49)}{checkPostion(2,3,49)}{checkPostion(2,4,49)}
-                {checkPostion(3,1,49)}{checkPostion(3,2,49)}{checkPostion(3,3,49)}{checkPostion(3,4,49)}
-                {checkPostion(4,1,49)}{checkPostion(4,2,49)}{checkPostion(4,3,49)}{checkPostion(4,4,49)} 
+                {checkPosition(1,1,49)}{checkPosition(1,2,49)}{checkPosition(1,3,49)}{checkPosition(1,4,49)}
+                {checkPosition(2,1,49)}{checkPosition(2,2,49)}{checkPosition(2,3,49)}{checkPosition(2,4,49)}
+                {checkPosition(3,1,49)}{checkPosition(3,2,49)}{checkPosition(3,3,49)}{checkPosition(3,4,49)}
+                {checkPosition(4,1,49)}{checkPosition(4,2,49)}{checkPosition(4,3,49)}{checkPosition(4,4,49)} 
                 </View>
                 <View style={[styles.item,{backgroundColor : "#fa9daa"}]}>
-                {checkPostion(1,1,48)}{checkPostion(1,2,48)}{checkPostion(1,3,48)}{checkPostion(1,4,48)}
-                {checkPostion(2,1,48)}{checkPostion(2,2,48)}{checkPostion(2,3,48)}{checkPostion(2,4,48)}
-                {checkPostion(3,1,48)}{checkPostion(3,2,48)}{checkPostion(3,3,48)}{checkPostion(3,4,48)}
-                {checkPostion(4,1,48)}{checkPostion(4,2,48)}{checkPostion(4,3,48)}{checkPostion(4,4,48)}   
+                {checkPosition(1,1,48)}{checkPosition(1,2,48)}{checkPosition(1,3,48)}{checkPosition(1,4,48)}
+                {checkPosition(2,1,48)}{checkPosition(2,2,48)}{checkPosition(2,3,48)}{checkPosition(2,4,48)}
+                {checkPosition(3,1,48)}{checkPosition(3,2,48)}{checkPosition(3,3,48)}{checkPosition(3,4,48)}
+                {checkPosition(4,1,48)}{checkPosition(4,2,48)}{checkPosition(4,3,48)}{checkPosition(4,4,48)}   
                 </View>
                 <View style={styles.item}>
-                {checkPostion(1,1,47)}{checkPostion(1,2,47)}{checkPostion(1,3,47)}{checkPostion(1,4,47)}
-                {checkPostion(2,1,47)}{checkPostion(2,2,47)}{checkPostion(2,3,47)}{checkPostion(2,4,47)}
-                {checkPostion(3,1,47)}{checkPostion(3,2,47)}{checkPostion(3,3,47)}{checkPostion(3,4,47)}
-                {checkPostion(4,1,47)}{checkPostion(4,2,47)}{checkPostion(4,3,47)}{checkPostion(4,4,47)}    
+                {checkPosition(1,1,47)}{checkPosition(1,2,47)}{checkPosition(1,3,47)}{checkPosition(1,4,47)}
+                {checkPosition(2,1,47)}{checkPosition(2,2,47)}{checkPosition(2,3,47)}{checkPosition(2,4,47)}
+                {checkPosition(3,1,47)}{checkPosition(3,2,47)}{checkPosition(3,3,47)}{checkPosition(3,4,47)}
+                {checkPosition(4,1,47)}{checkPosition(4,2,47)}{checkPosition(4,3,47)}{checkPosition(4,4,47)}    
                 </View>
                 <View style={styles.item}>
-                {checkPostion(1,1,46)}{checkPostion(1,2,46)}{checkPostion(1,3,46)}{checkPostion(1,4,46)}
-                {checkPostion(2,1,46)}{checkPostion(2,2,46)}{checkPostion(2,3,46)}{checkPostion(2,4,46)}
-                {checkPostion(3,1,46)}{checkPostion(3,2,46)}{checkPostion(3,3,46)}{checkPostion(3,4,46)}
-                {checkPostion(4,1,46)}{checkPostion(4,2,46)}{checkPostion(4,3,46)}{checkPostion(4,4,46)}    
+                {checkPosition(1,1,46)}{checkPosition(1,2,46)}{checkPosition(1,3,46)}{checkPosition(1,4,46)}
+                {checkPosition(2,1,46)}{checkPosition(2,2,46)}{checkPosition(2,3,46)}{checkPosition(2,4,46)}
+                {checkPosition(3,1,46)}{checkPosition(3,2,46)}{checkPosition(3,3,46)}{checkPosition(3,4,46)}
+                {checkPosition(4,1,46)}{checkPosition(4,2,46)}{checkPosition(4,3,46)}{checkPosition(4,4,46)}    
                 </View>
                 <View style={styles.item}>
-                {checkPostion(1,1,45)}{checkPostion(1,2,45)}{checkPostion(1,3,45)}{checkPostion(1,4,45)}
-                {checkPostion(2,1,45)}{checkPostion(2,2,45)}{checkPostion(2,3,45)}{checkPostion(2,4,45)}
-                {checkPostion(3,1,45)}{checkPostion(3,2,45)}{checkPostion(3,3,45)}{checkPostion(3,4,45)}
-                {checkPostion(4,1,45)}{checkPostion(4,2,45)}{checkPostion(4,3,45)}{checkPostion(4,4,45)}    
+                {checkPosition(1,1,45)}{checkPosition(1,2,45)}{checkPosition(1,3,45)}{checkPosition(1,4,45)}
+                {checkPosition(2,1,45)}{checkPosition(2,2,45)}{checkPosition(2,3,45)}{checkPosition(2,4,45)}
+                {checkPosition(3,1,45)}{checkPosition(3,2,45)}{checkPosition(3,3,45)}{checkPosition(3,4,45)}
+                {checkPosition(4,1,45)}{checkPosition(4,2,45)}{checkPosition(4,3,45)}{checkPosition(4,4,45)}    
                 </View>
             </View>
           </View>
           {/* ============================= Winner Zone =========================== */}
           <View style={styles.winnerZone}>
             <View>
-              {checkPostion(1,1,"winner")}{checkPostion(2,1,"winner")}{checkPostion(3,1,"winner")}{checkPostion(4,1,"winner")}
+              {checkPosition(1,1,"winner")}{checkPosition(2,1,"winner")}{checkPosition(3,1,"winner")}{checkPosition(4,1,"winner")}
             </View>
             <View>
-              {checkPostion(2,2,"winner")}{checkPostion(1,2,"winner")}{checkPostion(3,2,"winner")}{checkPostion(4,2,"winner")}
+              {checkPosition(2,2,"winner")}{checkPosition(1,2,"winner")}{checkPosition(3,2,"winner")}{checkPosition(4,2,"winner")}
             </View>
             <View>
-              {checkPostion(3,3,"winner")}{checkPostion(1,3,"winner")}{checkPostion(2,3,"winner")}{checkPostion(4,3,"winner")}
+              {checkPosition(3,3,"winner")}{checkPosition(1,3,"winner")}{checkPosition(2,3,"winner")}{checkPosition(4,3,"winner")}
             </View>
             <View>
-              {checkPostion(4,4,"winner")}{checkPostion(1,4,"winner")}{checkPostion(2,4,"winner")}{checkPostion(3,4,"winner")}
+              {checkPosition(4,4,"winner")}{checkPosition(1,4,"winner")}{checkPosition(2,4,"winner")}{checkPosition(3,4,"winner")}
             </View>
           </View>
           {/* ============================== Last Triplet */}
           <View style={styles.Second}>
             <View style={[row.Style,{borderRightWidth : 2}]}>
               <View style={styles.item}>
-                  {checkPostion(1,1,19)}{checkPostion(1,2,19)}{checkPostion(1,3,19)}{checkPostion(1,4,19)}
-                  {checkPostion(2,1,19)}{checkPostion(2,2,19)}{checkPostion(2,3,19)}{checkPostion(2,4,19)}
-                  {checkPostion(3,1,19)}{checkPostion(3,2,19)}{checkPostion(3,3,19)}{checkPostion(3,4,19)}
-                  {checkPostion(4,1,19)}{checkPostion(4,2,19)}{checkPostion(4,3,19)}{checkPostion(4,4,19)}
+                  {checkPosition(1,1,19)}{checkPosition(1,2,19)}{checkPosition(1,3,19)}{checkPosition(1,4,19)}
+                  {checkPosition(2,1,19)}{checkPosition(2,2,19)}{checkPosition(2,3,19)}{checkPosition(2,4,19)}
+                  {checkPosition(3,1,19)}{checkPosition(3,2,19)}{checkPosition(3,3,19)}{checkPosition(3,4,19)}
+                  {checkPosition(4,1,19)}{checkPosition(4,2,19)}{checkPosition(4,3,19)}{checkPosition(4,4,19)}
                </View>
               <View style={styles.item}>
-                  {checkPostion(1,1,20)}{checkPostion(1,2,20)}{checkPostion(1,3,20)}{checkPostion(1,4,20)}
-                  {checkPostion(2,1,20)}{checkPostion(2,2,20)}{checkPostion(2,3,20)}{checkPostion(2,4,20)}
-                  {checkPostion(3,1,20)}{checkPostion(3,2,20)}{checkPostion(3,3,20)}{checkPostion(3,4,20)}
-                  {checkPostion(4,1,20)}{checkPostion(4,2,20)}{checkPostion(4,3,20)}{checkPostion(4,4,20)}
+                  {checkPosition(1,1,20)}{checkPosition(1,2,20)}{checkPosition(1,3,20)}{checkPosition(1,4,20)}
+                  {checkPosition(2,1,20)}{checkPosition(2,2,20)}{checkPosition(2,3,20)}{checkPosition(2,4,20)}
+                  {checkPosition(3,1,20)}{checkPosition(3,2,20)}{checkPosition(3,3,20)}{checkPosition(3,4,20)}
+                  {checkPosition(4,1,20)}{checkPosition(4,2,20)}{checkPosition(4,3,20)}{checkPosition(4,4,20)}
                  </View>
               <View style={styles.item}>
-                {checkPostion(1,1,21)}{checkPostion(1,2,21)}{checkPostion(1,3,21)}{checkPostion(1,4,21)}
-                {checkPostion(2,1,21)}{checkPostion(2,2,21)}{checkPostion(2,3,21)}{checkPostion(2,4,21)}
-                {checkPostion(3,1,21)}{checkPostion(3,2,21)}{checkPostion(3,3,21)}{checkPostion(3,4,21)}
-                {checkPostion(4,1,21)}{checkPostion(4,2,21)}{checkPostion(4,3,21)}{checkPostion(4,4,21)}
+                {checkPosition(1,1,21)}{checkPosition(1,2,21)}{checkPosition(1,3,21)}{checkPosition(1,4,21)}
+                {checkPosition(2,1,21)}{checkPosition(2,2,21)}{checkPosition(2,3,21)}{checkPosition(2,4,21)}
+                {checkPosition(3,1,21)}{checkPosition(3,2,21)}{checkPosition(3,3,21)}{checkPosition(3,4,21)}
+                {checkPosition(4,1,21)}{checkPosition(4,2,21)}{checkPosition(4,3,21)}{checkPosition(4,4,21)}
                 </View>
               <View style={[styles.item,{backgroundColor : "#ffcff0"}]}>
-                {checkPostion(1,1,22)}{checkPostion(1,2,22)}{checkPostion(1,3,22)}{checkPostion(1,4,22)}
-                {checkPostion(2,1,22)}{checkPostion(2,2,22)}{checkPostion(2,3,22)}{checkPostion(2,4,22)}
-                {checkPostion(3,1,22)}{checkPostion(3,2,22)}{checkPostion(3,3,22)}{checkPostion(3,4,22)}
-                {checkPostion(4,1,22)}{checkPostion(4,2,22)}{checkPostion(4,3,22)}{checkPostion(4,4,22)}
+                {checkPosition(1,1,22)}{checkPosition(1,2,22)}{checkPosition(1,3,22)}{checkPosition(1,4,22)}
+                {checkPosition(2,1,22)}{checkPosition(2,2,22)}{checkPosition(2,3,22)}{checkPosition(2,4,22)}
+                {checkPosition(3,1,22)}{checkPosition(3,2,22)}{checkPosition(3,3,22)}{checkPosition(3,4,22)}
+                {checkPosition(4,1,22)}{checkPosition(4,2,22)}{checkPosition(4,3,22)}{checkPosition(4,4,22)}
                 </View>
               <View style={styles.item}>
-                {checkPostion(1,1,23)}{checkPostion(1,2,23)}{checkPostion(1,3,23)}{checkPostion(1,4,23)}
-                {checkPostion(2,1,23)}{checkPostion(2,2,23)}{checkPostion(2,3,23)}{checkPostion(2,4,23)}
-                {checkPostion(3,1,23)}{checkPostion(3,2,23)}{checkPostion(3,3,23)}{checkPostion(3,4,23)}
-                {checkPostion(4,1,23)}{checkPostion(4,2,23)}{checkPostion(4,3,23)}{checkPostion(4,4,23)}
+                {checkPosition(1,1,23)}{checkPosition(1,2,23)}{checkPosition(1,3,23)}{checkPosition(1,4,23)}
+                {checkPosition(2,1,23)}{checkPosition(2,2,23)}{checkPosition(2,3,23)}{checkPosition(2,4,23)}
+                {checkPosition(3,1,23)}{checkPosition(3,2,23)}{checkPosition(3,3,23)}{checkPosition(3,4,23)}
+                {checkPosition(4,1,23)}{checkPosition(4,2,23)}{checkPosition(4,3,23)}{checkPosition(4,4,23)}
                 </View>
               <View style={styles.item}>
-                  {checkPostion(1,1,24)}{checkPostion(1,2,24)}{checkPostion(1,3,24)}{checkPostion(1,4,24)}
-                  {checkPostion(2,1,24)}{checkPostion(2,2,24)}{checkPostion(2,3,24)}{checkPostion(2,4,24)}
-                  {checkPostion(3,1,24)}{checkPostion(3,2,24)}{checkPostion(3,3,24)}{checkPostion(3,4,24)}
-                  {checkPostion(4,1,24)}{checkPostion(4,2,24)}{checkPostion(4,3,24)}{checkPostion(4,4,24)}
+                  {checkPosition(1,1,24)}{checkPosition(1,2,24)}{checkPosition(1,3,24)}{checkPosition(1,4,24)}
+                  {checkPosition(2,1,24)}{checkPosition(2,2,24)}{checkPosition(2,3,24)}{checkPosition(2,4,24)}
+                  {checkPosition(3,1,24)}{checkPosition(3,2,24)}{checkPosition(3,3,24)}{checkPosition(3,4,24)}
+                  {checkPosition(4,1,24)}{checkPosition(4,2,24)}{checkPosition(4,3,24)}{checkPosition(4,4,24)}
                  </View>
             </View>
             <View style={[row.Style,{borderRightWidth : 2}]}>
               <View style={[styles.item,styles.orange]}>
-                    {checkPostion(1,1,67)}{checkPostion(1,2,67)}{checkPostion(1,3,67)}{checkPostion(1,4,67)}
-                    {checkPostion(2,1,67)}{checkPostion(2,2,67)}{checkPostion(2,3,67)}{checkPostion(2,4,67)}
-                    {checkPostion(3,1,67)}{checkPostion(3,2,67)}{checkPostion(3,3,67)}{checkPostion(3,4,67)}
-                    {checkPostion(4,1,67)}{checkPostion(4,2,67)}{checkPostion(4,3,67)}{checkPostion(4,4,67)}
+                    {checkPosition(1,1,67)}{checkPosition(1,2,67)}{checkPosition(1,3,67)}{checkPosition(1,4,67)}
+                    {checkPosition(2,1,67)}{checkPosition(2,2,67)}{checkPosition(2,3,67)}{checkPosition(2,4,67)}
+                    {checkPosition(3,1,67)}{checkPosition(3,2,67)}{checkPosition(3,3,67)}{checkPosition(3,4,67)}
+                    {checkPosition(4,1,67)}{checkPosition(4,2,67)}{checkPosition(4,3,67)}{checkPosition(4,4,67)}
                   </View>
               <View style={[styles.item,styles.orange]}>
-                    {checkPostion(1,1,66)}{checkPostion(1,2,66)}{checkPostion(1,3,66)}{checkPostion(1,4,66)}
-                    {checkPostion(2,1,66)}{checkPostion(2,2,66)}{checkPostion(2,3,66)}{checkPostion(2,4,66)}
-                    {checkPostion(3,1,66)}{checkPostion(3,2,66)}{checkPostion(3,3,66)}{checkPostion(3,4,66)}
-                    {checkPostion(4,1,66)}{checkPostion(4,2,66)}{checkPostion(4,3,66)}{checkPostion(4,4,66)}
+                    {checkPosition(1,1,66)}{checkPosition(1,2,66)}{checkPosition(1,3,66)}{checkPosition(1,4,66)}
+                    {checkPosition(2,1,66)}{checkPosition(2,2,66)}{checkPosition(2,3,66)}{checkPosition(2,4,66)}
+                    {checkPosition(3,1,66)}{checkPosition(3,2,66)}{checkPosition(3,3,66)}{checkPosition(3,4,66)}
+                    {checkPosition(4,1,66)}{checkPosition(4,2,66)}{checkPosition(4,3,66)}{checkPosition(4,4,66)}
                   </View>
               <View style={[styles.item,styles.orange]}>
-                  {checkPostion(1,1,65)}{checkPostion(1,2,65)}{checkPostion(1,3,65)}{checkPostion(1,4,65)}
-                  {checkPostion(2,1,65)}{checkPostion(2,2,65)}{checkPostion(2,3,65)}{checkPostion(2,4,65)}
-                  {checkPostion(3,1,65)}{checkPostion(3,2,65)}{checkPostion(3,3,65)}{checkPostion(3,4,65)}
-                  {checkPostion(4,1,65)}{checkPostion(4,2,65)}{checkPostion(4,3,65)}{checkPostion(4,4,65)}
+                  {checkPosition(1,1,65)}{checkPosition(1,2,65)}{checkPosition(1,3,65)}{checkPosition(1,4,65)}
+                  {checkPosition(2,1,65)}{checkPosition(2,2,65)}{checkPosition(2,3,65)}{checkPosition(2,4,65)}
+                  {checkPosition(3,1,65)}{checkPosition(3,2,65)}{checkPosition(3,3,65)}{checkPosition(3,4,65)}
+                  {checkPosition(4,1,65)}{checkPosition(4,2,65)}{checkPosition(4,3,65)}{checkPosition(4,4,65)}
                 </View>
               <View style={[styles.item,styles.orange]}>
-                  {checkPostion(1,1,64)}{checkPostion(1,2,64)}{checkPostion(1,3,64)}{checkPostion(1,4,64)}
-                  {checkPostion(2,1,64)}{checkPostion(2,2,64)}{checkPostion(2,3,64)}{checkPostion(2,4,64)}
-                  {checkPostion(3,1,64)}{checkPostion(3,2,64)}{checkPostion(3,3,64)}{checkPostion(3,4,64)}
-                  {checkPostion(4,1,64)}{checkPostion(4,2,64)}{checkPostion(4,3,64)}{checkPostion(4,4,64)}
+                  {checkPosition(1,1,64)}{checkPosition(1,2,64)}{checkPosition(1,3,64)}{checkPosition(1,4,64)}
+                  {checkPosition(2,1,64)}{checkPosition(2,2,64)}{checkPosition(2,3,64)}{checkPosition(2,4,64)}
+                  {checkPosition(3,1,64)}{checkPosition(3,2,64)}{checkPosition(3,3,64)}{checkPosition(3,4,64)}
+                  {checkPosition(4,1,64)}{checkPosition(4,2,64)}{checkPosition(4,3,64)}{checkPosition(4,4,64)}
                 </View>
               <View style={[styles.item,styles.orange]}>
-                  {checkPostion(1,1,63)}{checkPostion(1,2,63)}{checkPostion(1,3,63)}{checkPostion(1,4,63)}
-                  {checkPostion(2,1,63)}{checkPostion(2,2,63)}{checkPostion(2,3,63)}{checkPostion(2,4,63)}
-                  {checkPostion(3,1,63)}{checkPostion(3,2,63)}{checkPostion(3,3,63)}{checkPostion(3,4,63)}
-                  {checkPostion(4,1,63)}{checkPostion(4,2,63)}{checkPostion(4,3,63)}{checkPostion(4,4,63)}
+                  {checkPosition(1,1,63)}{checkPosition(1,2,63)}{checkPosition(1,3,63)}{checkPosition(1,4,63)}
+                  {checkPosition(2,1,63)}{checkPosition(2,2,63)}{checkPosition(2,3,63)}{checkPosition(2,4,63)}
+                  {checkPosition(3,1,63)}{checkPosition(3,2,63)}{checkPosition(3,3,63)}{checkPosition(3,4,63)}
+                  {checkPosition(4,1,63)}{checkPosition(4,2,63)}{checkPosition(4,3,63)}{checkPosition(4,4,63)}
                 </View>
               <View style={styles.item}>
-                    {checkPostion(1,1,25)}{checkPostion(1,2,25)}{checkPostion(1,3,25)}{checkPostion(1,4,25)}
-                    {checkPostion(2,1,25)}{checkPostion(2,2,25)}{checkPostion(2,3,25)}{checkPostion(2,4,25)}
-                    {checkPostion(3,1,25)}{checkPostion(3,2,25)}{checkPostion(3,3,25)}{checkPostion(3,4,25)}
-                    {checkPostion(4,1,25)}{checkPostion(4,2,25)}{checkPostion(4,3,25)}{checkPostion(4,4,25)}
+                    {checkPosition(1,1,25)}{checkPosition(1,2,25)}{checkPosition(1,3,25)}{checkPosition(1,4,25)}
+                    {checkPosition(2,1,25)}{checkPosition(2,2,25)}{checkPosition(2,3,25)}{checkPosition(2,4,25)}
+                    {checkPosition(3,1,25)}{checkPosition(3,2,25)}{checkPosition(3,3,25)}{checkPosition(3,4,25)}
+                    {checkPosition(4,1,25)}{checkPosition(4,2,25)}{checkPosition(4,3,25)}{checkPosition(4,4,25)}
                   </View>
             </View>
             <View style={[row.Style,{borderRightWidth : 2}]}>
               <View style={styles.item}>
-                    {checkPostion(1,1,31)}{checkPostion(1,2,31)}{checkPostion(1,3,31)}{checkPostion(1,4,31)}
-                    {checkPostion(2,1,31)}{checkPostion(2,2,31)}{checkPostion(2,3,31)}{checkPostion(2,4,31)}
-                    {checkPostion(3,1,31)}{checkPostion(3,2,31)}{checkPostion(3,3,31)}{checkPostion(3,4,31)}
-                    {checkPostion(4,1,31)}{checkPostion(4,2,31)}{checkPostion(4,3,31)}{checkPostion(4,4,31)}
+                    {checkPosition(1,1,31)}{checkPosition(1,2,31)}{checkPosition(1,3,31)}{checkPosition(1,4,31)}
+                    {checkPosition(2,1,31)}{checkPosition(2,2,31)}{checkPosition(2,3,31)}{checkPosition(2,4,31)}
+                    {checkPosition(3,1,31)}{checkPosition(3,2,31)}{checkPosition(3,3,31)}{checkPosition(3,4,31)}
+                    {checkPosition(4,1,31)}{checkPosition(4,2,31)}{checkPosition(4,3,31)}{checkPosition(4,4,31)}
                  </View>
               <View style={styles.item}>
-                    {checkPostion(1,1,30)}{checkPostion(1,2,30)}{checkPostion(1,3,30)}{checkPostion(1,4,30)}
-                    {checkPostion(2,1,30)}{checkPostion(2,2,30)}{checkPostion(2,3,30)}{checkPostion(2,4,30)}
-                    {checkPostion(3,1,30)}{checkPostion(3,2,30)}{checkPostion(3,3,30)}{checkPostion(3,4,30)}
-                    {checkPostion(4,1,30)}{checkPostion(4,2,30)}{checkPostion(4,3,30)}{checkPostion(4,4,30)}
+                    {checkPosition(1,1,30)}{checkPosition(1,2,30)}{checkPosition(1,3,30)}{checkPosition(1,4,30)}
+                    {checkPosition(2,1,30)}{checkPosition(2,2,30)}{checkPosition(2,3,30)}{checkPosition(2,4,30)}
+                    {checkPosition(3,1,30)}{checkPosition(3,2,30)}{checkPosition(3,3,30)}{checkPosition(3,4,30)}
+                    {checkPosition(4,1,30)}{checkPosition(4,2,30)}{checkPosition(4,3,30)}{checkPosition(4,4,30)}
                    </View>
               <View style={styles.item}>
-                  {checkPostion(1,1,29)}{checkPostion(1,2,29)}{checkPostion(1,3,29)}{checkPostion(1,4,29)}
-                  {checkPostion(2,1,29)}{checkPostion(2,2,29)}{checkPostion(2,3,29)}{checkPostion(2,4,29)}
-                  {checkPostion(3,1,29)}{checkPostion(3,2,29)}{checkPostion(3,3,29)}{checkPostion(3,4,29)}
-                  {checkPostion(4,1,29)}{checkPostion(4,2,29)}{checkPostion(4,3,29)}{checkPostion(4,4,29)}
+                  {checkPosition(1,1,29)}{checkPosition(1,2,29)}{checkPosition(1,3,29)}{checkPosition(1,4,29)}
+                  {checkPosition(2,1,29)}{checkPosition(2,2,29)}{checkPosition(2,3,29)}{checkPosition(2,4,29)}
+                  {checkPosition(3,1,29)}{checkPosition(3,2,29)}{checkPosition(3,3,29)}{checkPosition(3,4,29)}
+                  {checkPosition(4,1,29)}{checkPosition(4,2,29)}{checkPosition(4,3,29)}{checkPosition(4,4,29)}
                   </View>
               <View style={styles.item}>
-                  {checkPostion(1,1,28)}{checkPostion(1,2,28)}{checkPostion(1,3,28)}{checkPostion(1,4,28)}
-                  {checkPostion(2,1,28)}{checkPostion(2,2,28)}{checkPostion(2,3,28)}{checkPostion(2,4,28)}
-                  {checkPostion(3,1,28)}{checkPostion(3,2,28)}{checkPostion(3,3,28)}{checkPostion(3,4,28)}
-                  {checkPostion(4,1,28)}{checkPostion(4,2,28)}{checkPostion(4,3,28)}{checkPostion(4,4,28)}
+                  {checkPosition(1,1,28)}{checkPosition(1,2,28)}{checkPosition(1,3,28)}{checkPosition(1,4,28)}
+                  {checkPosition(2,1,28)}{checkPosition(2,2,28)}{checkPosition(2,3,28)}{checkPosition(2,4,28)}
+                  {checkPosition(3,1,28)}{checkPosition(3,2,28)}{checkPosition(3,3,28)}{checkPosition(3,4,28)}
+                  {checkPosition(4,1,28)}{checkPosition(4,2,28)}{checkPosition(4,3,28)}{checkPosition(4,4,28)}
                   </View>
               <View style={[styles.item,styles.orange,{backgroundColor : "#ffcff0"}]}>
-                  {checkPostion(1,1,27)}{checkPostion(1,2,27)}{checkPostion(1,3,27)}{checkPostion(1,4,27)}
-                  {checkPostion(2,1,27)}{checkPostion(2,2,27)}{checkPostion(2,3,27)}{checkPostion(2,4,27)}
-                  {checkPostion(3,1,27)}{checkPostion(3,2,27)}{checkPostion(3,3,27)}{checkPostion(3,4,27)}
-                  {checkPostion(4,1,27)}{checkPostion(4,2,27)}{checkPostion(4,3,27)}{checkPostion(4,4,27)}
+                  {checkPosition(1,1,27)}{checkPosition(1,2,27)}{checkPosition(1,3,27)}{checkPosition(1,4,27)}
+                  {checkPosition(2,1,27)}{checkPosition(2,2,27)}{checkPosition(2,3,27)}{checkPosition(2,4,27)}
+                  {checkPosition(3,1,27)}{checkPosition(3,2,27)}{checkPosition(3,3,27)}{checkPosition(3,4,27)}
+                  {checkPosition(4,1,27)}{checkPosition(4,2,27)}{checkPosition(4,3,27)}{checkPosition(4,4,27)}
                   </View>
               <View style={styles.item}>
-                    {checkPostion(1,1,26)}{checkPostion(1,2,26)}{checkPostion(1,3,26)}{checkPostion(1,4,26)}
-                    {checkPostion(2,1,26)}{checkPostion(2,2,26)}{checkPostion(2,3,26)}{checkPostion(2,4,26)}
-                    {checkPostion(3,1,26)}{checkPostion(3,2,26)}{checkPostion(3,3,26)}{checkPostion(3,4,26)}
-                    {checkPostion(4,1,26)}{checkPostion(4,2,26)}{checkPostion(4,3,26)}{checkPostion(4,4,26)}
+                    {checkPosition(1,1,26)}{checkPosition(1,2,26)}{checkPosition(1,3,26)}{checkPosition(1,4,26)}
+                    {checkPosition(2,1,26)}{checkPosition(2,2,26)}{checkPosition(2,3,26)}{checkPosition(2,4,26)}
+                    {checkPosition(3,1,26)}{checkPosition(3,2,26)}{checkPosition(3,3,26)}{checkPosition(3,4,26)}
+                    {checkPosition(4,1,26)}{checkPosition(4,2,26)}{checkPosition(4,3,26)}{checkPosition(4,4,26)}
                    </View>
             </View>
           </View>   
@@ -1720,7 +1752,7 @@ const zoomIn = {
         <View style={row.Style}>
           <View>
           <Animatable.View
-      animation={this.state.turn4 ? zoomIn : zoomOut}
+      animation={turn4 ? zoomIn : zoomOut}
       duration={500}
     >
           <View style={[Players.styles,{marginLeft : Dimensions.get("window").width/50,borderRightWidth : 1}]}>
@@ -1730,24 +1762,24 @@ const zoomIn = {
             <View style={row.Style}>
                 <View style={styles.places}>
                 <TouchableOpacity >
-                    {checkPostion(4,1,-14)}
+                    {checkPosition(4,1,-14)}
                   </TouchableOpacity>
                 </View>
                 <View style={[styles.places,{marginLeft : 90}]}>
                 <TouchableOpacity >
-                    {checkPostion(4,2,-24)}
+                    {checkPosition(4,2,-24)}
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={row.Style}>
                 <View style={[styles.places,{marginTop : 90}]}>
                 <TouchableOpacity >
-                    {checkPostion(4,3,-34)}
+                    {checkPosition(4,3,-34)}
                   </TouchableOpacity>
                 </View>
                 <View style={[styles.places,{marginLeft : 90,marginTop : 90}]}>
                 <TouchableOpacity >
-                    {checkPostion(4,4,-44)}
+                    {checkPosition(4,4,-44)}
                   </TouchableOpacity>
               </View>
               </View>
@@ -1756,131 +1788,131 @@ const zoomIn = {
           
           </View>
           <TouchableOpacity  onPress={()=>{generateRandomNumber(4)}}>
-            <Image style={{ width : 90,height : 70,marginLeft : 30,marginTop : 10}} source={this.state.image4} />
+            <Image style={{ width : 90,height : 70,marginLeft : 30,marginTop : 10}} source={image4} />
           </TouchableOpacity>
           </Animatable.View>
           </View>
          <View style={row.Style}>
               <View style={styles.first}>
                   <View style={styles.item}>
-                    {checkPostion(1,1,44)}{checkPostion(1,2,44)}{checkPostion(1,3,44)}{checkPostion(1,4,44)}
-                    {checkPostion(2,1,44)}{checkPostion(2,2,44)}{checkPostion(2,3,44)}{checkPostion(2,4,44)}
-                    {checkPostion(3,1,44)}{checkPostion(3,2,44)}{checkPostion(3,3,44)}{checkPostion(3,4,44)}
-                    {checkPostion(4,1,44)}{checkPostion(4,2,44)}{checkPostion(4,3,44)}{checkPostion(4,4,44)}
+                    {checkPosition(1,1,44)}{checkPosition(1,2,44)}{checkPosition(1,3,44)}{checkPosition(1,4,44)}
+                    {checkPosition(2,1,44)}{checkPosition(2,2,44)}{checkPosition(2,3,44)}{checkPosition(2,4,44)}
+                    {checkPosition(3,1,44)}{checkPosition(3,2,44)}{checkPosition(3,3,44)}{checkPosition(3,4,44)}
+                    {checkPosition(4,1,44)}{checkPosition(4,2,44)}{checkPosition(4,3,44)}{checkPosition(4,4,44)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,43)}{checkPostion(1,2,43)}{checkPostion(1,3,43)}{checkPostion(1,4,43)}
-                    {checkPostion(2,1,43)}{checkPostion(2,2,43)}{checkPostion(2,3,43)}{checkPostion(2,4,43)}
-                    {checkPostion(3,1,43)}{checkPostion(3,2,43)}{checkPostion(3,3,43)}{checkPostion(3,4,43)}
-                    {checkPostion(4,1,43)}{checkPostion(4,2,43)}{checkPostion(4,3,43)}{checkPostion(4,4,43)}
+                    {checkPosition(1,1,43)}{checkPosition(1,2,43)}{checkPosition(1,3,43)}{checkPosition(1,4,43)}
+                    {checkPosition(2,1,43)}{checkPosition(2,2,43)}{checkPosition(2,3,43)}{checkPosition(2,4,43)}
+                    {checkPosition(3,1,43)}{checkPosition(3,2,43)}{checkPosition(3,3,43)}{checkPosition(3,4,43)}
+                    {checkPosition(4,1,43)}{checkPosition(4,2,43)}{checkPosition(4,3,43)}{checkPosition(4,4,43)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,42)}{checkPostion(1,2,42)}{checkPostion(1,3,42)}{checkPostion(1,4,42)}
-                    {checkPostion(2,1,42)}{checkPostion(2,2,42)}{checkPostion(2,3,42)}{checkPostion(2,4,42)}
-                    {checkPostion(3,1,42)}{checkPostion(3,2,42)}{checkPostion(3,3,42)}{checkPostion(3,4,42)}
-                    {checkPostion(4,1,42)}{checkPostion(4,2,42)}{checkPostion(4,3,42)}{checkPostion(4,4,42)}
+                    {checkPosition(1,1,42)}{checkPosition(1,2,42)}{checkPosition(1,3,42)}{checkPosition(1,4,42)}
+                    {checkPosition(2,1,42)}{checkPosition(2,2,42)}{checkPosition(2,3,42)}{checkPosition(2,4,42)}
+                    {checkPosition(3,1,42)}{checkPosition(3,2,42)}{checkPosition(3,3,42)}{checkPosition(3,4,42)}
+                    {checkPosition(4,1,42)}{checkPosition(4,2,42)}{checkPosition(4,3,42)}{checkPosition(4,4,42)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,41)}{checkPostion(1,2,41)}{checkPostion(1,3,41)}{checkPostion(1,4,41)}
-                    {checkPostion(2,1,41)}{checkPostion(2,2,41)}{checkPostion(2,3,41)}{checkPostion(2,4,41)}
-                    {checkPostion(3,1,41)}{checkPostion(3,2,41)}{checkPostion(3,3,41)}{checkPostion(3,4,41)}
-                    {checkPostion(4,1,41)}{checkPostion(4,2,41)}{checkPostion(4,3,41)}{checkPostion(4,4,41)}
+                    {checkPosition(1,1,41)}{checkPosition(1,2,41)}{checkPosition(1,3,41)}{checkPosition(1,4,41)}
+                    {checkPosition(2,1,41)}{checkPosition(2,2,41)}{checkPosition(2,3,41)}{checkPosition(2,4,41)}
+                    {checkPosition(3,1,41)}{checkPosition(3,2,41)}{checkPosition(3,3,41)}{checkPosition(3,4,41)}
+                    {checkPosition(4,1,41)}{checkPosition(4,2,41)}{checkPosition(4,3,41)}{checkPosition(4,4,41)}
                   </View>
                   <View style={[styles.item,styles.blue,{backgroundColor : "#67E6DC"}]}>
-                    {checkPostion(1,1,40)}{checkPostion(1,2,40)}{checkPostion(1,3,40)}{checkPostion(1,4,40)}
-                    {checkPostion(2,1,40)}{checkPostion(2,2,40)}{checkPostion(2,3,40)}{checkPostion(2,4,40)}
-                    {checkPostion(3,1,40)}{checkPostion(3,2,40)}{checkPostion(3,3,40)}{checkPostion(3,4,40)}
-                    {checkPostion(4,1,40)}{checkPostion(4,2,40)}{checkPostion(4,3,40)}{checkPostion(4,4,40)}
+                    {checkPosition(1,1,40)}{checkPosition(1,2,40)}{checkPosition(1,3,40)}{checkPosition(1,4,40)}
+                    {checkPosition(2,1,40)}{checkPosition(2,2,40)}{checkPosition(2,3,40)}{checkPosition(2,4,40)}
+                    {checkPosition(3,1,40)}{checkPosition(3,2,40)}{checkPosition(3,3,40)}{checkPosition(3,4,40)}
+                    {checkPosition(4,1,40)}{checkPosition(4,2,40)}{checkPosition(4,3,40)}{checkPosition(4,4,40)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,39)}{checkPostion(1,2,39)}{checkPostion(1,3,39)}{checkPostion(1,4,39)}
-                    {checkPostion(2,1,39)}{checkPostion(2,2,39)}{checkPostion(2,3,39)}{checkPostion(2,4,39)}
-                    {checkPostion(3,1,39)}{checkPostion(3,2,39)}{checkPostion(3,3,39)}{checkPostion(3,4,39)}
-                    {checkPostion(4,1,39)}{checkPostion(4,2,39)}{checkPostion(4,3,39)}{checkPostion(4,4,39)}
+                    {checkPosition(1,1,39)}{checkPosition(1,2,39)}{checkPosition(1,3,39)}{checkPosition(1,4,39)}
+                    {checkPosition(2,1,39)}{checkPosition(2,2,39)}{checkPosition(2,3,39)}{checkPosition(2,4,39)}
+                    {checkPosition(3,1,39)}{checkPosition(3,2,39)}{checkPosition(3,3,39)}{checkPosition(3,4,39)}
+                    {checkPosition(4,1,39)}{checkPosition(4,2,39)}{checkPosition(4,3,39)}{checkPosition(4,4,39)}
                   </View>
               </View>
               <View style={styles.second}>
                   <View style={[styles.item,styles.blue]}>
-                    {checkPostion(1,1,72)}{checkPostion(1,2,72)}{checkPostion(1,3,72)}{checkPostion(1,4,72)}
-                    {checkPostion(2,1,72)}{checkPostion(2,2,72)}{checkPostion(2,3,72)}{checkPostion(2,4,72)}
-                    {checkPostion(3,1,72)}{checkPostion(3,2,72)}{checkPostion(3,3,72)}{checkPostion(3,4,72)}
-                    {checkPostion(4,1,72)}{checkPostion(4,2,72)}{checkPostion(4,3,72)}{checkPostion(4,4,72)}
+                    {checkPosition(1,1,72)}{checkPosition(1,2,72)}{checkPosition(1,3,72)}{checkPosition(1,4,72)}
+                    {checkPosition(2,1,72)}{checkPosition(2,2,72)}{checkPosition(2,3,72)}{checkPosition(2,4,72)}
+                    {checkPosition(3,1,72)}{checkPosition(3,2,72)}{checkPosition(3,3,72)}{checkPosition(3,4,72)}
+                    {checkPosition(4,1,72)}{checkPosition(4,2,72)}{checkPosition(4,3,72)}{checkPosition(4,4,72)}
                   </View>
                   <View style={[styles.item,styles.blue]}>
-                    {checkPostion(1,1,71)}{checkPostion(1,2,71)}{checkPostion(1,3,71)}{checkPostion(1,4,71)}
-                    {checkPostion(2,1,71)}{checkPostion(2,2,71)}{checkPostion(2,3,71)}{checkPostion(2,4,71)}
-                    {checkPostion(3,1,71)}{checkPostion(3,2,71)}{checkPostion(3,3,71)}{checkPostion(3,4,71)}
-                    {checkPostion(4,1,71)}{checkPostion(4,2,71)}{checkPostion(4,3,71)}{checkPostion(4,4,71)}
+                    {checkPosition(1,1,71)}{checkPosition(1,2,71)}{checkPosition(1,3,71)}{checkPosition(1,4,71)}
+                    {checkPosition(2,1,71)}{checkPosition(2,2,71)}{checkPosition(2,3,71)}{checkPosition(2,4,71)}
+                    {checkPosition(3,1,71)}{checkPosition(3,2,71)}{checkPosition(3,3,71)}{checkPosition(3,4,71)}
+                    {checkPosition(4,1,71)}{checkPosition(4,2,71)}{checkPosition(4,3,71)}{checkPosition(4,4,71)}
                   </View>
                   <View style={[styles.item,styles.blue]}>
-                    {checkPostion(1,1,70)}{checkPostion(1,2,70)}{checkPostion(1,3,70)}{checkPostion(1,4,70)}
-                    {checkPostion(2,1,70)}{checkPostion(2,2,70)}{checkPostion(2,3,70)}{checkPostion(2,4,70)}
-                    {checkPostion(3,1,70)}{checkPostion(3,2,70)}{checkPostion(3,3,70)}{checkPostion(3,4,70)}
-                    {checkPostion(4,1,70)}{checkPostion(4,2,70)}{checkPostion(4,3,70)}{checkPostion(4,4,70)}
+                    {checkPosition(1,1,70)}{checkPosition(1,2,70)}{checkPosition(1,3,70)}{checkPosition(1,4,70)}
+                    {checkPosition(2,1,70)}{checkPosition(2,2,70)}{checkPosition(2,3,70)}{checkPosition(2,4,70)}
+                    {checkPosition(3,1,70)}{checkPosition(3,2,70)}{checkPosition(3,3,70)}{checkPosition(3,4,70)}
+                    {checkPosition(4,1,70)}{checkPosition(4,2,70)}{checkPosition(4,3,70)}{checkPosition(4,4,70)}
                   </View>
                   <View style={[styles.item,styles.blue]}>
-                    {checkPostion(1,1,69)}{checkPostion(1,2,69)}{checkPostion(1,3,69)}{checkPostion(1,4,69)}
-                    {checkPostion(2,1,69)}{checkPostion(2,2,69)}{checkPostion(2,3,69)}{checkPostion(2,4,69)}
-                    {checkPostion(3,1,69)}{checkPostion(3,2,69)}{checkPostion(3,3,69)}{checkPostion(3,4,69)}
-                    {checkPostion(4,1,69)}{checkPostion(4,2,69)}{checkPostion(4,3,69)}{checkPostion(4,4,69)}
+                    {checkPosition(1,1,69)}{checkPosition(1,2,69)}{checkPosition(1,3,69)}{checkPosition(1,4,69)}
+                    {checkPosition(2,1,69)}{checkPosition(2,2,69)}{checkPosition(2,3,69)}{checkPosition(2,4,69)}
+                    {checkPosition(3,1,69)}{checkPosition(3,2,69)}{checkPosition(3,3,69)}{checkPosition(3,4,69)}
+                    {checkPosition(4,1,69)}{checkPosition(4,2,69)}{checkPosition(4,3,69)}{checkPosition(4,4,69)}
                   </View>
                   <View style={[styles.item,styles.blue]}>
-                    {checkPostion(1,1,68)}{checkPostion(1,2,68)}{checkPostion(1,3,68)}{checkPostion(1,4,68)}
-                    {checkPostion(2,1,68)}{checkPostion(2,2,68)}{checkPostion(2,3,68)}{checkPostion(2,4,68)}
-                    {checkPostion(3,1,68)}{checkPostion(3,2,68)}{checkPostion(3,3,68)}{checkPostion(3,4,68)}
-                    {checkPostion(4,1,68)}{checkPostion(4,2,68)}{checkPostion(4,3,68)}{checkPostion(4,4,68)}
+                    {checkPosition(1,1,68)}{checkPosition(1,2,68)}{checkPosition(1,3,68)}{checkPosition(1,4,68)}
+                    {checkPosition(2,1,68)}{checkPosition(2,2,68)}{checkPosition(2,3,68)}{checkPosition(2,4,68)}
+                    {checkPosition(3,1,68)}{checkPosition(3,2,68)}{checkPosition(3,3,68)}{checkPosition(3,4,68)}
+                    {checkPosition(4,1,68)}{checkPosition(4,2,68)}{checkPosition(4,3,68)}{checkPosition(4,4,68)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,38)}{checkPostion(1,2,38)}{checkPostion(1,3,38)}{checkPostion(1,4,38)}
-                    {checkPostion(2,1,38)}{checkPostion(2,2,38)}{checkPostion(2,3,38)}{checkPostion(2,4,38)}
-                    {checkPostion(3,1,38)}{checkPostion(3,2,38)}{checkPostion(3,3,38)}{checkPostion(3,4,38)}
-                    {checkPostion(4,1,38)}{checkPostion(4,2,38)}{checkPostion(4,3,38)}{checkPostion(4,4,38)}
+                    {checkPosition(1,1,38)}{checkPosition(1,2,38)}{checkPosition(1,3,38)}{checkPosition(1,4,38)}
+                    {checkPosition(2,1,38)}{checkPosition(2,2,38)}{checkPosition(2,3,38)}{checkPosition(2,4,38)}
+                    {checkPosition(3,1,38)}{checkPosition(3,2,38)}{checkPosition(3,3,38)}{checkPosition(3,4,38)}
+                    {checkPosition(4,1,38)}{checkPosition(4,2,38)}{checkPosition(4,3,38)}{checkPosition(4,4,38)}
                   </View>
               </View>
               <View style={styles.third}>
                   <View style={styles.item}>
-                    {checkPostion(1,1,32)}{checkPostion(1,2,32)}{checkPostion(1,3,32)}{checkPostion(1,4,32)}
-                    {checkPostion(2,1,32)}{checkPostion(2,2,32)}{checkPostion(2,3,32)}{checkPostion(2,4,32)}
-                    {checkPostion(3,1,32)}{checkPostion(3,2,32)}{checkPostion(3,3,32)}{checkPostion(3,4,32)}
-                    {checkPostion(4,1,32)}{checkPostion(4,2,32)}{checkPostion(4,3,32)}{checkPostion(4,4,32)}
+                    {checkPosition(1,1,32)}{checkPosition(1,2,32)}{checkPosition(1,3,32)}{checkPosition(1,4,32)}
+                    {checkPosition(2,1,32)}{checkPosition(2,2,32)}{checkPosition(2,3,32)}{checkPosition(2,4,32)}
+                    {checkPosition(3,1,32)}{checkPosition(3,2,32)}{checkPosition(3,3,32)}{checkPosition(3,4,32)}
+                    {checkPosition(4,1,32)}{checkPosition(4,2,32)}{checkPosition(4,3,32)}{checkPosition(4,4,32)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,33)}{checkPostion(1,2,33)}{checkPostion(1,3,33)}{checkPostion(1,4,33)}
-                    {checkPostion(2,1,33)}{checkPostion(2,2,33)}{checkPostion(2,3,33)}{checkPostion(2,4,33)}
-                    {checkPostion(3,1,33)}{checkPostion(3,2,33)}{checkPostion(3,3,33)}{checkPostion(3,4,33)}
-                    {checkPostion(4,1,33)}{checkPostion(4,2,33)}{checkPostion(4,3,33)}{checkPostion(4,4,33)}
+                    {checkPosition(1,1,33)}{checkPosition(1,2,33)}{checkPosition(1,3,33)}{checkPosition(1,4,33)}
+                    {checkPosition(2,1,33)}{checkPosition(2,2,33)}{checkPosition(2,3,33)}{checkPosition(2,4,33)}
+                    {checkPosition(3,1,33)}{checkPosition(3,2,33)}{checkPosition(3,3,33)}{checkPosition(3,4,33)}
+                    {checkPosition(4,1,33)}{checkPosition(4,2,33)}{checkPosition(4,3,33)}{checkPosition(4,4,33)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,34)}{checkPostion(1,2,34)}{checkPostion(1,3,34)}{checkPostion(1,4,34)}
-                    {checkPostion(2,1,34)}{checkPostion(2,2,34)}{checkPostion(2,3,34)}{checkPostion(2,4,34)}
-                    {checkPostion(3,1,34)}{checkPostion(3,2,34)}{checkPostion(3,3,34)}{checkPostion(3,4,34)}
-                    {checkPostion(4,1,34)}{checkPostion(4,2,34)}{checkPostion(4,3,34)}{checkPostion(4,4,34)}
+                    {checkPosition(1,1,34)}{checkPosition(1,2,34)}{checkPosition(1,3,34)}{checkPosition(1,4,34)}
+                    {checkPosition(2,1,34)}{checkPosition(2,2,34)}{checkPosition(2,3,34)}{checkPosition(2,4,34)}
+                    {checkPosition(3,1,34)}{checkPosition(3,2,34)}{checkPosition(3,3,34)}{checkPosition(3,4,34)}
+                    {checkPosition(4,1,34)}{checkPosition(4,2,34)}{checkPosition(4,3,34)}{checkPosition(4,4,34)}
                   </View>
                   <View style={[styles.item,{backgroundColor : "#67E6DC"}]}>
-                    {checkPostion(1,1,35)}{checkPostion(1,2,35)}{checkPostion(1,3,35)}{checkPostion(1,4,35)}
-                    {checkPostion(2,1,35)}{checkPostion(2,2,35)}{checkPostion(2,3,35)}{checkPostion(2,4,35)}
-                    {checkPostion(3,1,35)}{checkPostion(3,2,35)}{checkPostion(3,3,35)}{checkPostion(3,4,35)}
-                    {checkPostion(4,1,35)}{checkPostion(4,2,35)}{checkPostion(4,3,35)}{checkPostion(4,4,35)}
+                    {checkPosition(1,1,35)}{checkPosition(1,2,35)}{checkPosition(1,3,35)}{checkPosition(1,4,35)}
+                    {checkPosition(2,1,35)}{checkPosition(2,2,35)}{checkPosition(2,3,35)}{checkPosition(2,4,35)}
+                    {checkPosition(3,1,35)}{checkPosition(3,2,35)}{checkPosition(3,3,35)}{checkPosition(3,4,35)}
+                    {checkPosition(4,1,35)}{checkPosition(4,2,35)}{checkPosition(4,3,35)}{checkPosition(4,4,35)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,36)}{checkPostion(1,2,36)}{checkPostion(1,3,36)}{checkPostion(1,4,36)}
-                    {checkPostion(2,1,36)}{checkPostion(2,2,36)}{checkPostion(2,3,36)}{checkPostion(2,4,36)}
-                    {checkPostion(3,1,36)}{checkPostion(3,2,36)}{checkPostion(3,3,36)}{checkPostion(3,4,36)}
-                    {checkPostion(4,1,36)}{checkPostion(4,2,36)}{checkPostion(4,3,36)}{checkPostion(4,4,36)}
+                    {checkPosition(1,1,36)}{checkPosition(1,2,36)}{checkPosition(1,3,36)}{checkPosition(1,4,36)}
+                    {checkPosition(2,1,36)}{checkPosition(2,2,36)}{checkPosition(2,3,36)}{checkPosition(2,4,36)}
+                    {checkPosition(3,1,36)}{checkPosition(3,2,36)}{checkPosition(3,3,36)}{checkPosition(3,4,36)}
+                    {checkPosition(4,1,36)}{checkPosition(4,2,36)}{checkPosition(4,3,36)}{checkPosition(4,4,36)}
                   </View>
                   <View style={styles.item}>
-                    {checkPostion(1,1,37)}{checkPostion(1,2,37)}{checkPostion(1,3,37)}{checkPostion(1,4,37)}
-                    {checkPostion(2,1,37)}{checkPostion(2,2,37)}{checkPostion(2,3,37)}{checkPostion(2,4,37)}
-                    {checkPostion(3,1,37)}{checkPostion(3,2,37)}{checkPostion(3,3,37)}{checkPostion(3,4,37)}
-                    {checkPostion(4,1,37)}{checkPostion(4,2,37)}{checkPostion(4,3,37)}{checkPostion(4,4,37)}
+                    {checkPosition(1,1,37)}{checkPosition(1,2,37)}{checkPosition(1,3,37)}{checkPosition(1,4,37)}
+                    {checkPosition(2,1,37)}{checkPosition(2,2,37)}{checkPosition(2,3,37)}{checkPosition(2,4,37)}
+                    {checkPosition(3,1,37)}{checkPosition(3,2,37)}{checkPosition(3,3,37)}{checkPosition(3,4,37)}
+                    {checkPosition(4,1,37)}{checkPosition(4,2,37)}{checkPosition(4,3,37)}{checkPosition(4,4,37)}
                   </View>
               </View>
           </View>
           <Animatable.View
-      //animation={this.state.turn3 ? zoomIn : (c?zoomIn:zoomOut)}
-      animation={this.state.turn3 || this.state.whoseTurnToMove==3? zoomIn:zoomOut}
+      //animation={turn3 ? zoomIn : (c?zoomIn:zoomOut)}
+      animation={turn3 || whoseTurnToMove==3? zoomIn:zoomOut}
       duration={500}
-      //this.state.whoseTurnToMove==
+      //whoseTurnToMove==
     >   
           <View>
             <View style={[Players.styles,{borderLeftWidth : 1}]}>
@@ -1890,24 +1922,24 @@ const zoomIn = {
                   <View style={row.Style}>
                     <View style={styles.places}>
                     <TouchableOpacity >
-                        {checkPostion(3,1,-13)}
+                        {checkPosition(3,1,-13)}
                       </TouchableOpacity>
                     </View>
                     <View style={[styles.places,{marginLeft : 90}]}>
                     <TouchableOpacity >
-                        {checkPostion(3,2,-23)}
+                        {checkPosition(3,2,-23)}
                       </TouchableOpacity>
                     </View>
                   </View>
                   <View style={row.Style}>
                     <View style={[styles.places,{marginTop : 90}]}>
                     <TouchableOpacity >
-                        {checkPostion(3,3,-33)}
+                        {checkPosition(3,3,-33)}
                       </TouchableOpacity>
                     </View>
                     <View style={[styles.places,{marginLeft : 90,marginTop : 90}]}>
                     <TouchableOpacity activeOpacity='70'>
-                        {checkPostion(3,4,-43)}
+                        {checkPosition(3,4,-43)}
                       </TouchableOpacity>
                   </View>
                 </View>
@@ -1915,14 +1947,14 @@ const zoomIn = {
               </ImageBackground>
             </View>
           <TouchableOpacity  onPress={()=>{generateRandomNumber(3)}}>
-            <Image style={{ width : 90,height : 70,marginLeft : 30,marginTop : 10}} source={this.state.image3} />
+            <Image style={{ width : 90,height : 70,marginLeft : 30,marginTop : 10}} source={image3} />
           </TouchableOpacity>
           
           </View>
           </Animatable.View>
         </View>
         <View style={styles.message}>
-          <Text style={{color : "red",fontSize : 30,marginLeft : 60,marginTop : 20}}> {this.state.turnMessage} {this.state.moveMessage} </Text>
+          <Text style={{color : "red",fontSize : 30,marginLeft : 60,marginTop : 20}}> {turnMessage} {moveMessage} </Text>
           
         </View>
         </View>
