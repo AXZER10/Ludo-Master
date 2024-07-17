@@ -62,18 +62,15 @@ const App = (props) => {
 
 
   const moveIcon = (player, whichOne, position) => {
-    // console.log("whichOne")
-    // console.log(whichOne)
-    // console.log("position1",positions[1])
-    // console.log("position2",positions[2])
-    // console.log("position3",positions[3])
-    // console.log("position4",positions[4])
     switch (player) {
       case 1:
         if (whoseTurnToMove === 1 && !isMovedBy1) {
           switch (whichOne) {
             case 1:
               if (positions[1][0] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn1(true)
+                }
                 if (positions[1][0] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[1];
@@ -126,6 +123,9 @@ const App = (props) => {
               break;
             case 2:
               if (positions[1][1] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn1(true)
+                }
                 if (positions[1][1] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[1];
@@ -176,6 +176,9 @@ const App = (props) => {
               break;
             case 3:
               if (positions[1][2] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn1(true)
+                }
                 if (positions[1][2] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[1];
@@ -226,6 +229,9 @@ const App = (props) => {
               break;
             case 4:
               if (positions[1][3] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn1(true)
+                }
                 if (positions[1][3] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[1];
@@ -283,6 +289,9 @@ const App = (props) => {
         break;
       case 2:
         if (whoseTurnToMove === 2 && !isMovedBy2) {
+          if (currentNumber === 6) {
+            setTurn2(true)
+          }
           console.log("which one: ", whichOne)
           console.log("player2")
           switch (whichOne) {
@@ -373,6 +382,9 @@ const App = (props) => {
               break;
             case 2:
               if (positions[2][1] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn2(true)
+                }
                 if (positions[2][1] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[2];
@@ -458,6 +470,9 @@ const App = (props) => {
               break;
             case 3:
               if (positions[2][2] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn2(true)
+                }
                 if (positions[2][2] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[2];
@@ -544,6 +559,9 @@ const App = (props) => {
               break;
             case 4:
               if (positions[2][3] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn2(true)
+                }
                 if (positions[2][3] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[2];
@@ -926,8 +944,6 @@ const App = (props) => {
   }
 
   const checkIfCutPossibleFor1 = (atPosition) => {
-    const { position11, position12, position13, position14 } = positions;
-
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -966,8 +982,6 @@ const App = (props) => {
   };
   const checkIfCutPossibleFor2 = (atPosition) => {
     console.log("checked for 2")
-    const { position21, position22, position23, position24 } = positions;
-
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -1005,8 +1019,6 @@ const App = (props) => {
     }
   };
   const checkIfCutPossibleFor3 = (atPosition) => {
-    const { position21, position22, position23, position24 } = positions;
-
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -1044,8 +1056,6 @@ const App = (props) => {
     }
   };
   const checkIfCutPossibleFor4 = (atPosition) => {
-    const { position21, position22, position23, position24 } = positions;
-
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -1136,6 +1146,7 @@ const App = (props) => {
             setIsMovedBy4(false);
           } else {
             console.log("same conditions must be there");
+            setTurn1(false)
           }
         } else {
           setTurnMessage("It's Not Your Turn");
@@ -1175,6 +1186,8 @@ const App = (props) => {
             setIsMovedBy1(false);
           } else {
             console.log("same conditions must be there");
+            setTurn2(false)
+
           }
         } else {
           setTurnMessage("It's Not Your Turn");
