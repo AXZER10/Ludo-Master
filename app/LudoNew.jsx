@@ -584,7 +584,7 @@ const App = (props) => {
                     if (nextPosition > 52 && nextPosition < 58) {
                       let extraMoves = nextPosition - 52;
                       checkIfCutPossibleFor1(extraMoves);
-                      checkIfCutPossibleFor3(extraMoves);
+                      checkIfCutPossibleFor2(extraMoves);
                       checkIfCutPossibleFor4(extraMoves);
                       let temparr = positions[3];
                       temparr[0] = extraMoves;
@@ -602,7 +602,7 @@ const App = (props) => {
                           console.log("isMovedBy3: ", isMovedBy3)
                         } else {
                           checkIfCutPossibleFor1(newPosition);
-                          checkIfCutPossibleFor3(newPosition);
+                          checkIfCutPossibleFor2(newPosition);
                           checkIfCutPossibleFor4(newPosition);
                           let temparr = positions[3];
                           temparr[0] = newPosition;
@@ -610,6 +610,17 @@ const App = (props) => {
                           setIsMovedBy3(true);
                           console.log("isMovedBy3: ", isMovedBy3)
                         }
+                      }
+                      else {
+                        nextPosition = positions[3][0] + currentNumber;
+                        checkIfCutPossibleFor1(nextPosition);
+                        checkIfCutPossibleFor2(nextPosition);
+                        checkIfCutPossibleFor4(nextPosition);
+                        let temparr = positions[3];
+                        temparr[0] = nextPosition;
+                        setPositions(positions);
+                        setIsMovedBy3(true);
+                        console.log("isMovedBy3: ", isMovedBy3)
                       }
                     } else if (positions[3][0] >= 63 && positions[3][0] <= 67) {
                       nextPosition = positions[3][0] + currentNumber;
@@ -631,7 +642,7 @@ const App = (props) => {
                     } else {
                       nextPosition = positions[3][0] + currentNumber;
                       checkIfCutPossibleFor1(nextPosition);
-                      checkIfCutPossibleFor3(nextPosition);
+                      checkIfCutPossibleFor2(nextPosition);
                       checkIfCutPossibleFor4(nextPosition);
                       let temparr = positions[3];
                       temparr[0] = nextPosition;
@@ -660,7 +671,7 @@ const App = (props) => {
                     if (nextPosition > 52 && nextPosition < 58) {
                       let extraMoves = nextPosition - 52;
                       checkIfCutPossibleFor1(extraMoves);
-                      checkIfCutPossibleFor3(extraMoves);
+                      checkIfCutPossibleFor2(extraMoves);
                       checkIfCutPossibleFor4(extraMoves);
                       let temparr = positions[3];
                       temparr[1] = extraMoves;
@@ -680,7 +691,7 @@ const App = (props) => {
                           console.log("isMovedBy3: ", isMovedBy3)
                         } else {
                           checkIfCutPossibleFor1(newPosition);
-                          checkIfCutPossibleFor3(newPosition);
+                          checkIfCutPossibleFor2(newPosition);
                           checkIfCutPossibleFor4(newPosition);
                           let temparr = positions[3];
                           temparr[1] = newPosition;
@@ -689,6 +700,17 @@ const App = (props) => {
                           console.log("isMovedBy3: ", isMovedBy3)
                           console.log(currentPosition);
                         }
+                      }
+                      else {
+                        nextPosition = positions[3][1] + currentNumber;
+                        checkIfCutPossibleFor1(nextPosition);
+                        checkIfCutPossibleFor2(nextPosition);
+                        checkIfCutPossibleFor4(nextPosition);
+                        let temparr = positions[3];
+                        temparr[1] = nextPosition;
+                        setPositions(positions);
+                        setIsMovedBy3(true);
+                        console.log("isMovedBy3: ", isMovedBy3)
                       }
                     } else if (positions[3][1] >= 63 && positions[3][1] <= 67) {
                       nextPosition = positions[3][1] + currentNumber;
@@ -710,7 +732,7 @@ const App = (props) => {
                     } else {
                       nextPosition = positions[3][1] + currentNumber;
                       checkIfCutPossibleFor1(nextPosition);
-                      checkIfCutPossibleFor3(nextPosition);
+                      checkIfCutPossibleFor2(nextPosition);
                       checkIfCutPossibleFor4(nextPosition);
                       let temparr = positions[3];
                       temparr[1] = nextPosition;
@@ -739,7 +761,7 @@ const App = (props) => {
                     if (nextPosition > 52 && nextPosition < 58) {
                       let extraMoves = nextPosition - 52;
                       checkIfCutPossibleFor1(extraMoves);
-                      checkIfCutPossibleFor3(extraMoves);
+                      checkIfCutPossibleFor2(extraMoves);
                       checkIfCutPossibleFor4(extraMoves);
                       let temparr = positions[3];
                       temparr[2] = extraMoves;
@@ -759,7 +781,7 @@ const App = (props) => {
                           console.log("isMovedBy3: ", isMovedBy3)
                         } else {
                           checkIfCutPossibleFor1(newPosition);
-                          checkIfCutPossibleFor3(newPosition);
+                          checkIfCutPossibleFor2(newPosition);
                           checkIfCutPossibleFor4(newPosition);
                           let temparr = positions[3];
                           temparr[2] = newPosition;
@@ -767,6 +789,17 @@ const App = (props) => {
                           setIsMovedBy3(true);
                           console.log("isMovedBy3: ", isMovedBy3)
                         }
+                      }
+                      else {
+                        nextPosition = positions[3][2] + currentNumber;
+                        checkIfCutPossibleFor1(nextPosition);
+                        checkIfCutPossibleFor2(nextPosition);
+                        checkIfCutPossibleFor4(nextPosition);
+                        let temparr = positions[3];
+                        temparr[2] = nextPosition;
+                        setPositions(positions);
+                        setIsMovedBy3(true);
+                        console.log("isMovedBy3: ", isMovedBy3)
                       }
                     } else if (positions[3][2] >= 63 && positions[3][2] <= 67) {
                       nextPosition = positions[3][2] + currentNumber;
@@ -788,7 +821,7 @@ const App = (props) => {
                     } else {
                       nextPosition = positions[3][2] + currentNumber;
                       checkIfCutPossibleFor1(nextPosition);
-                      checkIfCutPossibleFor3(nextPosition);
+                      checkIfCutPossibleFor2(nextPosition);
                       checkIfCutPossibleFor4(nextPosition);
                       let temparr = positions[3];
                       temparr[2] = nextPosition;
@@ -818,7 +851,7 @@ const App = (props) => {
                     if (nextPosition > 52 && nextPosition < 58) {
                       let extraMoves = nextPosition - 52;
                       checkIfCutPossibleFor1(extraMoves);
-                      checkIfCutPossibleFor3(extraMoves);
+                      checkIfCutPossibleFor2(extraMoves);
                       checkIfCutPossibleFor4(extraMoves);
                       let temparr = positions[3];
                       temparr[3] = extraMoves;
@@ -837,13 +870,23 @@ const App = (props) => {
                           setIsMovedBy3(true);
                         } else {
                           checkIfCutPossibleFor1(newPosition);
-                          checkIfCutPossibleFor3(newPosition);
+                          checkIfCutPossibleFor2(newPosition);
                           checkIfCutPossibleFor4(newPosition);
                           let temparr = positions[3];
                           temparr[3] = newPosition;
                           setPositions(positions);
                           setIsMovedBy2(true);
                         }
+                      } else {
+                        nextPosition = positions[3][3] + currentNumber;
+                        checkIfCutPossibleFor1(nextPosition);
+                        checkIfCutPossibleFor2(nextPosition);
+                        checkIfCutPossibleFor4(nextPosition);
+                        let temparr = positions[3];
+                        temparr[3] = nextPosition;
+                        setPositions(positions);
+                        setIsMovedBy3(true);
+                        console.log("isMovedBy3: ", isMovedBy3)
                       }
                     } else if (positions[3][3] >= 63 && positions[3][3] <= 67) {
                       nextPosition = positions[3][3] + currentNumber;
@@ -863,7 +906,7 @@ const App = (props) => {
                     } else {
                       nextPosition = positions[3][3] + currentNumber;
                       checkIfCutPossibleFor1(nextPosition);
-                      checkIfCutPossibleFor3(nextPosition);
+                      checkIfCutPossibleFor2(nextPosition);
                       checkIfCutPossibleFor4(nextPosition);
                       let temparr = positions[3];
                       temparr[3] = nextPosition;
@@ -905,12 +948,12 @@ const App = (props) => {
                       if (nextPosition > 52 && nextPosition < 58) {
                         let extraMoves = nextPosition - 52;
                         checkIfCutPossibleFor1(extraMoves);
+                        checkIfCutPossibleFor2(extraMoves);
                         checkIfCutPossibleFor3(extraMoves);
-                        checkIfCutPossibleFor4(extraMoves);
                         let temparr = positions[4];
                         temparr[0] = extraMoves;
                         setPositions(positions); setIsMovedBy3(true);
-                        console.log("isMovedBy3: ", isMovedBy3)
+                        console.log("isMovedBy4: ", isMovedBy4)
                       } else if (positions[4][0] >= 33 && positions[4][0] <= 38) {
                         if (nextPosition > 38) {
                           let extraMoves = nextPosition - 38;
@@ -923,14 +966,24 @@ const App = (props) => {
                             console.log("isMovedBy4: ", isMovedBy4)
                           } else {
                             checkIfCutPossibleFor1(newPosition);
+                            checkIfCutPossibleFor2(newPosition);
                             checkIfCutPossibleFor3(newPosition);
-                            checkIfCutPossibleFor4(newPosition);
                             let temparr = positions[4];
                             temparr[0] = newPosition;
                             setPositions(positions);
                             setIsMovedBy4(true);
                             console.log("isMovedBy4: ", isMovedBy4)
                           }
+                        } else {
+                          nextPosition = positions[4][0] + currentNumber;
+                          checkIfCutPossibleFor1(nextPosition);
+                          checkIfCutPossibleFor2(nextPosition);
+                          checkIfCutPossibleFor3(nextPosition);
+                          let temparr = positions[4];
+                          temparr[0] = nextPosition;
+                          setPositions(positions);
+                          setIsMovedBy3(true);
+                          console.log("isMovedBy4: ", isMovedBy4)
                         }
                       } else if (positions[4][0] >= 68 && positions[4][0] <= 72) {
                         nextPosition = positions[4][0] + currentNumber;
@@ -952,8 +1005,8 @@ const App = (props) => {
                       } else {
                         nextPosition = positions[4][0] + currentNumber;
                         checkIfCutPossibleFor1(nextPosition);
+                        checkIfCutPossibleFor2(nextPosition);
                         checkIfCutPossibleFor3(nextPosition);
-                        checkIfCutPossibleFor4(nextPosition);
                         let temparr = positions[4];
                         temparr[0] = nextPosition;
                         setPositions(positions);
@@ -981,8 +1034,8 @@ const App = (props) => {
                       if (nextPosition > 52 && nextPosition < 58) {
                         let extraMoves = nextPosition - 52;
                         checkIfCutPossibleFor1(extraMoves);
+                        checkIfCutPossibleFor2(extraMoves);
                         checkIfCutPossibleFor3(extraMoves);
-                        checkIfCutPossibleFor4(extraMoves);
                         let temparr = positions[4];
                         temparr[1] = extraMoves;
                         setPositions(positions);
@@ -1000,14 +1053,24 @@ const App = (props) => {
                             console.log("isMovedBy4: ", isMovedBy4)
                           } else {
                             checkIfCutPossibleFor1(newPosition);
+                            checkIfCutPossibleFor2(newPosition);
                             checkIfCutPossibleFor3(newPosition);
-                            checkIfCutPossibleFor4(newPosition);
                             let temparr = positions[4];
                             temparr[1] = newPosition;
                             setPositions(positions);
                             setIsMovedBy4(true);
                             console.log("isMovedBy4: ", isMovedBy4)
                           }
+                        } else {
+                          nextPosition = positions[4][1] + currentNumber;
+                          checkIfCutPossibleFor1(nextPosition);
+                          checkIfCutPossibleFor2(nextPosition);
+                          checkIfCutPossibleFor3(nextPosition);
+                          let temparr = positions[4];
+                          temparr[1] = nextPosition;
+                          setPositions(positions);
+                          setIsMovedBy3(true);
+                          console.log("isMovedBy4: ", isMovedBy4)
                         }
                       } else if (positions[4][1] >= 68 && positions[4][1] <= 72) {
                         nextPosition = positions[4][1] + currentNumber;
@@ -1029,8 +1092,8 @@ const App = (props) => {
                       } else {
                         nextPosition = positions[4][1] + currentNumber;
                         checkIfCutPossibleFor1(nextPosition);
+                        checkIfCutPossibleFor2(nextPosition);
                         checkIfCutPossibleFor3(nextPosition);
-                        checkIfCutPossibleFor4(nextPosition);
                         let temparr = positions[4];
                         temparr[1] = nextPosition;
                         setPositions(positions);
@@ -1058,8 +1121,8 @@ const App = (props) => {
                       if (nextPosition > 52 && nextPosition < 58) {
                         let extraMoves = nextPosition - 52;
                         checkIfCutPossibleFor1(extraMoves);
+                        checkIfCutPossibleFor2(extraMoves);
                         checkIfCutPossibleFor3(extraMoves);
-                        checkIfCutPossibleFor4(extraMoves);
                         let temparr = positions[4];
                         temparr[2] = extraMoves;
                         setPositions(positions);
@@ -1078,14 +1141,24 @@ const App = (props) => {
                             console.log("isMovedBy4: ", isMovedBy4)
                           } else {
                             checkIfCutPossibleFor1(newPosition);
+                            checkIfCutPossibleFor2(newPosition);
                             checkIfCutPossibleFor3(newPosition);
-                            checkIfCutPossibleFor4(newPosition);
                             let temparr = positions[4];
                             temparr[2] = newPosition;
                             setPositions(positions);
                             setIsMovedBy4(true);
                             console.log("isMovedBy4: ", isMovedBy4)
                           }
+                        }else {
+                          nextPosition = positions[4][2] + currentNumber;
+                          checkIfCutPossibleFor1(nextPosition);
+                          checkIfCutPossibleFor2(nextPosition);
+                          checkIfCutPossibleFor3(nextPosition);
+                          let temparr = positions[4];
+                          temparr[2] = nextPosition;
+                          setPositions(positions);
+                          setIsMovedBy3(true);
+                          console.log("isMovedBy4: ", isMovedBy4)
                         }
                       } else if (positions[4][2] >= 68 && positions[4][2] <= 72) {
                         nextPosition = positions[4][2] + currentNumber;
@@ -1107,8 +1180,8 @@ const App = (props) => {
                       } else {
                         nextPosition = positions[4][2] + currentNumber;
                         checkIfCutPossibleFor1(nextPosition);
+                        checkIfCutPossibleFor2(nextPosition);
                         checkIfCutPossibleFor3(nextPosition);
-                        checkIfCutPossibleFor4(nextPosition);
                         let temparr = positions[4];
                         temparr[2] = nextPosition;
                         setPositions(positions);
@@ -1156,13 +1229,23 @@ const App = (props) => {
                             setIsMovedBy4(true);
                           } else {
                             checkIfCutPossibleFor1(newPosition);
+                            checkIfCutPossibleFor2(newPosition);
                             checkIfCutPossibleFor3(newPosition);
-                            checkIfCutPossibleFor4(newPosition);
                             let temparr = positions[4];
                             temparr[3] = newPosition;
                             setPositions(positions);
                             setIsMovedBy4(true);
                           }
+                        }else {
+                          nextPosition = positions[4][3] + currentNumber;
+                          checkIfCutPossibleFor1(nextPosition);
+                          checkIfCutPossibleFor2(nextPosition);
+                          checkIfCutPossibleFor3(nextPosition);
+                          let temparr = positions[4];
+                          temparr[3] = nextPosition;
+                          setPositions(positions);
+                          setIsMovedBy3(true);
+                          console.log("isMovedBy4: ", isMovedBy4)
                         }
                       } else if (positions[4][3] >= 68 && positions[4][3] <= 72) {
                         nextPosition = positions[4][3] + currentNumber;
@@ -1182,8 +1265,8 @@ const App = (props) => {
                       } else {
                         nextPosition = positions[4][3] + currentNumber;
                         checkIfCutPossibleFor1(nextPosition);
+                        checkIfCutPossibleFor2(nextPosition);
                         checkIfCutPossibleFor3(nextPosition);
-                        checkIfCutPossibleFor4(nextPosition);
                         let temparr = positions[4];
                         temparr[3] = nextPosition;
                         setPositions(positions);
