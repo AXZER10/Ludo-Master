@@ -51,8 +51,8 @@ const LudoNew2Player = (props) => {
   const [image1, setImage1] = useState(require("./assets/dice1.png"));
   const [image3, setImage3] = useState(require("./assets/dice1.png"));
 
-  // console.log(positions[1])
-  // console.log(positions[3]);
+  console.log(positions[1])
+  console.log(positions[3]);
 
   const moveIcon = (player, whichOne, position) => {
     switch (player) {
@@ -110,6 +110,17 @@ const LudoNew2Player = (props) => {
                     setPositions(positions);
                     setIsMovedBy1(true);
                   }
+                }
+              }
+              else {
+                if (
+                  (positions[1][1] > 0 && positions[1][1] !== "winner") ||
+                  (positions[1][2] > 0 && positions[1][2] !== "winner") ||
+                  (positions[1][3] > 0 && positions[1][3] !== "winner")
+                ) {
+                  setMoveMessage("No, Move Other One");
+                } else {
+                  setIsMovedBy1(true);
                 }
               }
               break;
@@ -584,7 +595,7 @@ const LudoNew2Player = (props) => {
                       let temparr = positions[3];
                       temparr[3] = "winner";
                       setPositions(positions);
-                      setIsMovedBy4(true);
+                      setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
                         (positions[3][0] > 0 && positions[3][0] !== "winner") ||
@@ -790,7 +801,7 @@ const LudoNew2Player = (props) => {
           setTurnMessage("It's Not Your Turn");
         }
         break;
-      
+
     }
   };
 
@@ -1328,9 +1339,56 @@ const LudoNew2Player = (props) => {
                   {checkPosition(4, 4, 18)}
                 </View>
               </View>
+              <View>
+                <View
+                  style={[
+                    Players.styles,
+                    {
+                      marginLeft: Dimensions.get("window").width / 50,
+                      borderRightWidth: 1,
+                    },
+                  ]}
+                >
+                  <ImageBackground
+                    source={require("./assets/tomJerry.png")}
+                    style={{ width: "100%", height: "100%" }}
+                  >
+                    <View>
+                      <View style={row.Style}>
+                        <View style={styles.places}>
+                          <TouchableOpacity>
+                            {checkPosition(4, 1, -14)}
+                          </TouchableOpacity>
+                        </View>
+                        <View style={[styles.places, { marginLeft: 90 }]}>
+                          <TouchableOpacity>
+                            {checkPosition(4, 2, -24)}
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                      <View style={row.Style}>
+                        <View style={[styles.places, { marginTop: 90 }]}>
+                          <TouchableOpacity>
+                            {checkPosition(4, 3, -34)}
+                          </TouchableOpacity>
+                        </View>
+                        <View
+                          style={[
+                            styles.places,
+                            { marginLeft: 90, marginTop: 90 },
+                          ]}
+                        >
+                          <TouchableOpacity>
+                            {checkPosition(4, 4, -44)}
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  </ImageBackground>
+                </View>
+              </View>
             </View>
           </View>
-
           {/* =============================== Middle Part =============================== */}
           <View style={row.Style}>
             {/* ============================= First Triplet ============================== */}
@@ -2042,72 +2100,52 @@ const LudoNew2Player = (props) => {
           {/* =============================== Lowest Part ============================= */}
           <View style={row.Style}>
             <View>
-              <Animatable.View
-                animation={turn4 ? zoomIn : zoomOut}
-                duration={500}
+              <View
+                style={[
+                  Players.styles,
+                  {
+                    marginLeft: Dimensions.get("window").width / 50,
+                    borderRightWidth: 1,
+                  },
+                ]}
               >
-                <View
-                  style={[
-                    Players.styles,
-                    {
-                      marginLeft: Dimensions.get("window").width / 50,
-                      borderRightWidth: 1,
-                    },
-                  ]}
+                <ImageBackground
+                  source={require("./assets/tomJerry.png")}
+                  style={{ width: "100%", height: "100%" }}
                 >
-                  <ImageBackground
-                    source={require("./assets/tomJerry.png")}
-                    style={{ width: "100%", height: "100%" }}
-                  >
-                    <View>
-                      <View style={row.Style}>
-                        <View style={styles.places}>
-                          <TouchableOpacity>
-                            {checkPosition(4, 1, -14)}
-                          </TouchableOpacity>
-                        </View>
-                        <View style={[styles.places, { marginLeft: 90 }]}>
-                          <TouchableOpacity>
-                            {checkPosition(4, 2, -24)}
-                          </TouchableOpacity>
-                        </View>
+                  <View>
+                    <View style={row.Style}>
+                      <View style={styles.places}>
+                        <TouchableOpacity>
+                          {checkPosition(4, 1, -14)}
+                        </TouchableOpacity>
                       </View>
-                      <View style={row.Style}>
-                        <View style={[styles.places, { marginTop: 90 }]}>
-                          <TouchableOpacity>
-                            {checkPosition(4, 3, -34)}
-                          </TouchableOpacity>
-                        </View>
-                        <View
-                          style={[
-                            styles.places,
-                            { marginLeft: 90, marginTop: 90 },
-                          ]}
-                        >
-                          <TouchableOpacity>
-                            {checkPosition(4, 4, -44)}
-                          </TouchableOpacity>
-                        </View>
+                      <View style={[styles.places, { marginLeft: 90 }]}>
+                        <TouchableOpacity>
+                          {checkPosition(4, 2, -24)}
+                        </TouchableOpacity>
                       </View>
                     </View>
-                  </ImageBackground>
-                </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    generateRandomNumber(4);
-                  }}
-                >
-                  <Image
-                    style={{
-                      width: 90,
-                      height: 70,
-                      marginLeft: 30,
-                      marginTop: 10,
-                    }}
-                    source={image4}
-                  />
-                </TouchableOpacity>
-              </Animatable.View>
+                    <View style={row.Style}>
+                      <View style={[styles.places, { marginTop: 90 }]}>
+                        <TouchableOpacity>
+                          {checkPosition(4, 3, -34)}
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={[
+                          styles.places,
+                          { marginLeft: 90, marginTop: 90 },
+                        ]}
+                      >
+                        <TouchableOpacity>
+                          {checkPosition(4, 4, -44)}
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </ImageBackground>
+              </View>
             </View>
             <View style={row.Style}>
               <View style={styles.first}>
