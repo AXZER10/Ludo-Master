@@ -20,7 +20,7 @@ const Room = () => {
         checkRoomsAndJoin(user.uid);
       }
       if(countdown == 0){
-        router.replace('/LudoTwoPlayer')
+        router.replace('/LudoNew2Player')
       } 
     } else {
       Alert.alert("User Not Found");
