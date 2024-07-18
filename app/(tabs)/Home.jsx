@@ -94,7 +94,7 @@ const Home = () => {
                     <CustomButton 
                     title={'4 Players'} 
                     ContainerStyles={'w-full bg-black'}
-                    handlePress={() => router.push("/Ludo")}
+                    handlePress={() => router.push("/LudoNew2Player")}
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
                 </View>
