@@ -60,7 +60,7 @@ const App = (props) => {
   const [image4, setImage4] = useState(require("./assets/dice1.png"));
 
   console.log(positions[1])
-  //console.log(positions[2])
+  console.log(positions[2])
   console.log(positions[3]);
   console.log(positions[4]);
 
@@ -374,7 +374,7 @@ const App = (props) => {
                         setMoveMessage("No, Move Other One");
                       }
                       else {
-                        setIsMovedBy1(true)
+                        setIsMovedBy2(true)
                       }
                     } else {
                       let temparr = positions[2];
@@ -461,7 +461,7 @@ const App = (props) => {
                         setMoveMessage("No, Move Other One");
                       }
                       else {
-                        setIsMovedBy1(true)
+                        setIsMovedBy2(true)
                       }
                     } else {
                       let temparr = positions[2];
@@ -548,7 +548,7 @@ const App = (props) => {
                         setMoveMessage("No, Move Other One");
                       }
                       else {
-                        setIsMovedBy1(true);
+                        setIsMovedBy2(true);
                       }
                     } else {
                       let temparr = positions[2];
@@ -635,7 +635,7 @@ const App = (props) => {
                         setMoveMessage("No, Move Other One");
                       }
                       else {
-                        setIsMovedBy1(true)
+                        setIsMovedBy2(true)
                       }
                     } else {
                       let temparr = positions[2];
@@ -826,7 +826,7 @@ const App = (props) => {
                     nextPosition = positions[3][1] + currentNumber;
                     if (nextPosition == 68) {
                       console.log("winner"); 
-                      1
+                      
                        
                       let temparr = positions[3];
                       temparr[1] = nextPosition;
