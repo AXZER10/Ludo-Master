@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
+import { Alert, View, TouchableOpacity, Image, Text } from 'react-native';
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, onSnapshot } from 'firebase/firestore';
 import { auth } from '../FirebaseConfig';
 import { router } from 'expo-router';
@@ -56,7 +56,8 @@ const Room = () => {
         players: [],
         gameState: 'waiting',
         uid1: uid,
-        uid2: ''
+        uid2: '',
+        
       });
       setRoomId(createRef.id); // Store the created room ID
       Alert.alert('Room Created', `Room ID: ${createRef.id}`);

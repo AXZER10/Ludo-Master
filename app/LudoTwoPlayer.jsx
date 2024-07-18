@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View,Dimensions,TouchableOpacity,Image,ImageBackground, SafeAreaView } from 'react-native';
 import {FontAwesome} from '@expo/vector-icons'
 import {Players,row} from './styles/forPlayers'
@@ -6,6 +6,9 @@ import {Audio} from 'expo-av'
 import * as Animatable from "react-native-animatable";
 import icons from '../constants/icons'
 import { router } from 'expo-router';
+import { auth } from '../FirebaseConfig';
+import { collection, getFirestore, doc, query, where, getDocs, updateDoc, onSnapshot } from 'firebase/firestore';
+import { Alert } from 'react-native';
 
 soundObject = new Audio.Sound()
 
@@ -36,15 +39,105 @@ export default class App extends React.Component {
         position21 : -12,position22 : -22 ,position23 : -32, position24 : -42,
         position31 : -13,position32 : -23 ,position33 : -33, position34 : -43,
         position41 : -14,position42 : -24 ,position43 : -34, position44 : -44,
-      turn1 : false, turn3 : true, currentNumber : 0 ,turnMessage : "",moveMessage : "",whoseTurnToMove : 0,
-      isMovedBy1 : false,isMovedBy3 : false,
+      turn1 : false, turn3 : true, currentNumber : 0 ,turnMessage : "",moveMessage : "",whoseTurnToMove : 3,
+      isMovedBy1 : false,isMovedBy3 : false,Flag : null,
       image1 : require("./assets/dice1.png"),image2 : require("./assets/dice1.png"),image3 : require("./assets/dice1.png"),image4 : require("./assets/dice1.png")
     }
   }
-  moveIcon = (player,whichOne,position) => {
-    switch(player){
-      case 1:
-        if(this.state.whoseTurnToMove == 1 && (!this.state.isMovedBy1)){
+  CurrentRoom = async () => {
+    let user = auth.currentUser;
+    //console.log(user.uid);
+    const db = getFirestore();
+    const roomRef = collection(db, 'twoPlayerRooms');
+    try {
+      const q = query(roomRef, where('gameState', '==', 'Started'));
+      const querySnapshot = await getDocs(q);
+      const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1 === user.uid || doc.data().uid2 === user.uid);
+      if (filteredRooms.length > 0) {
+        const roomDoc = filteredRooms[0];
+        const roomId = roomDoc.id;
+        return roomId;
+      }else{
+        router.replace('/Home')
+      }
+    } catch (error) {
+      Alert.alert('Error checking rooms:', error.message);
+    }
+  };
+  Cancel = async () => {
+    const roomId = await this.CurrentRoom();
+    console.log('room: ',roomId);
+    const db = getFirestore();
+    try {
+      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+      await updateDoc(roomRef, {
+        gameState: "Cancelled"
+      });
+  
+      router.replace('/Home');
+    } catch (error) {
+    }
+  };
+  
+   
+
+  moveIcon = async (player,whichOne,position) => {
+    const [flag, setFlag] = useState(false);
+    useEffect(() => {
+      const getPlayerTurn = async () => {
+        try {
+          const db = getFirestore();
+          const roomId = await CurrentRoom();
+          const roomRef = doc(db, 'twoPlayerRooms', roomId);
+  
+          const unsubscribe = onSnapshot(roomRef, (doc) => {
+            if (doc.exists()) {
+              const data = doc.data();
+              setFlag(data.PlayerTurn === 1);
+              console.log('Flag: ', data.PlayerTurn === 1);
+            } else {
+              console.log('No Turn');
+            }
+          });
+  
+          // Clean up the subscription on unmount
+          return () => unsubscribe();
+        } catch (error) {
+          console.error('Error fetching player turn:', error);
+          Alert.alert('Error PlayerTurn', error.message);
+        }
+      };
+  
+      getPlayerTurn();
+    }, []);
+
+        const UpdatePlayerTurn = async(num) =>{
+          const db = getFirestore();
+          const roomId = await this.CurrentRoom(); // Ensure roomId is awaited correctly
+          
+          try{
+            const roomRefer = doc(db, 'twoPlayerRooms', roomId);
+            //console.log('roomId', roomId);
+             await updateDoc(roomRefer, {
+             PlayerTurn : num
+            });
+            console .log('Player turn updated to', num);
+          }catch(error){
+            console.log('error Updating player turn', error);
+            Alert.alert('Error Updating player turn', error.message);
+          }
+        }
+      
+  
+  
+    
+   
+    //const currentPlayerTurn = await  getPlayerTurn();
+    //console.log(currentPlayerTurn)
+  switch(player){
+    
+    case 1:
+        if( !flag && this.state.whoseTurnToMove == 1){
           switch(whichOne){
             case 1:
               if(this.state.position11 < 0){
@@ -161,13 +254,19 @@ export default class App extends React.Component {
                     }
                 }
                 break;
-          }
-        }else{
+                }
+                if(this.state.currentNumber !==6){
+                  await UpdatePlayerTurn(3);
+                  this.setState({turn1 : false, turn3 : true, isMovedBy3:false});
+                }
+          }else{
           this.setState({moveMessage : "You cannot move right now"})
         }
+      
         break;
-      case 3 :
-          if(this.state.whoseTurnToMove == 3 && (!this.state.isMovedBy3)){
+      
+      case 3:
+          if( !flag && this.state.whoseTurnToMove == 3){
             switch(whichOne){
               case 1:
                 if(this.state.position31 != "winner"){
@@ -189,13 +288,13 @@ export default class App extends React.Component {
                       }else if(this.state.position31 >= 20 && this.state.position31 <= 25){
                         if(nextPosition > 25){                        
                           extraMoves = nextPosition - 25
-                          newPosition = 62 + extraMoves
+                          nextPosition = 62 + extraMoves
                           if(this.state.position31 == 25 && this.state.currentNumber == 6){
                             this.setState({ position31 : "winner"})
                             this.setState({ isMovedBy3 : true })
                           }else{
-                            this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                            this.setState({ position31 : newPosition})
+                            this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                            this.setState({ position31 : nextPosition})
                             this.setState({ isMovedBy3 : true })
                           }
                         }
@@ -240,13 +339,13 @@ export default class App extends React.Component {
                         }else if(this.state.position32 >= 20 && this.state.position32 <= 25){
                           if(nextPosition > 25){                        
                             extraMoves = nextPosition - 25
-                            newPosition = 62 + extraMoves
+                            nextPosition = 62 + extraMoves
                             if(this.state.position32 == 25 && this.state.currentNumber == 6){
                               this.setState({ position32 : "winner"})
                               this.setState({ isMovedBy3 : true })
                             }else{
-                              this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                              this.setState({ position32 : newPosition})
+                              this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                              this.setState({ position32 : nextPosition})
                               this.setState({ isMovedBy3 : true })
                             }
                           }
@@ -291,13 +390,13 @@ export default class App extends React.Component {
                         }else if(this.state.position33 >= 20 && this.state.position33 <= 25){
                           if(nextPosition > 25){                        
                             extraMoves = nextPosition - 25
-                            newPosition = 62 + extraMoves
+                            nextPosition = 62 + extraMoves
                             if(this.state.position33 == 25 && this.state.currentNumber == 6){
                               this.setState({ position33 : "winner"})
                               this.setState({ isMovedBy3 : true })
                             }else{
-                              this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                              this.setState({ position33 : newPosition})
+                              this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                              this.setState({ position33 : nextPosition})
                               this.setState({ isMovedBy3 : true })
                             }
                           }
@@ -342,13 +441,13 @@ export default class App extends React.Component {
                         }else if(this.state.position34 >= 20 && this.state.position34 <= 25){
                           if(nextPosition > 25){                        
                             extraMoves = nextPosition - 25
-                            newPosition = 62 + extraMoves
+                            nextPosition = 62 + extraMoves
                             if(this.state.position34 == 25 && this.state.currentNumber == 6){
                               this.setState({ position34 : "winner"})
                               this.setState({ isMovedBy3 : true })
                             }else{
-                              this.checkIfCutPossibleFor1(newPosition);this.checkIfCutPossibleFor2(newPosition);this.checkIfCutPossibleFor4(newPosition)
-                              this.setState({ position34 : newPosition})
+                              this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor1(nextPosition);this.checkIfCutPossibleFor4(nextPosition)
+                              this.setState({ position34 : nextPosition})
                               this.setState({ isMovedBy3 : true })
                             }
                           }
@@ -373,6 +472,10 @@ export default class App extends React.Component {
                     }
                   }  
                   break;
+            }
+            if(this.state.currentNumber !==6){
+              await UpdatePlayerTurn(1);
+              this.setState({turn1: true, turn3: false, isMovedBy1:false})
             }
           }else{
             this.setState({moveMessage : "You cannot move right now"})
@@ -429,7 +532,21 @@ export default class App extends React.Component {
     }
   }
   generateRandomNumber = (player) => {
+    const updateDice = async (Dice) => {
+      roomId = await this.CurrentRoom();
+      //console.log('roomId: ', roomId)
+      const db = getFirestore();
+    try {
+      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+      await updateDoc(roomRef, {
+        dice: Dice
+      });
+    } catch (error) {
+      Alert.alert('Error Updating Dice', error.message)
+    }
+    }
       var randomNumber = Math.floor(Math.random() * 6) +1;
+      updateDice(randomNumber);
       this.setState({turnMessage : " "}) ; this.setState({ moveMessage : "" })
       switch(player){
         case 1 :
@@ -555,14 +672,14 @@ export default class App extends React.Component {
               }
               break;
         }
-    }
-  render(){
+      }
+   render(){
     return (
         <SafeAreaView className="flex-1 bg-primary">
           <View className="flex-col w-10 h-10 mx-2">
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => router.replace('/Home')}
+          onPress={() => this.Cancel()}
         >
          <Image source={icons.back}
            resizeMode='contain'

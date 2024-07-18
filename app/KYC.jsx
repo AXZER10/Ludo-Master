@@ -7,12 +7,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import icons from '../constants/icons';
 import { router } from 'expo-router';
-
+import CustomButton from '../components/CustomButton'
 
 const KYCForm = () => {
-
   const user = auth.currentUser;
-
   const [documentType, setDocumentType] = useState('passport');
   const [frontImage, setFrontImage] = useState(null);
   const [backImage, setBackImage] = useState(null);
@@ -90,17 +88,17 @@ const KYCForm = () => {
          />
         </TouchableOpacity>
        </View>
-        <View style={styles.header}>
-        <Text style={styles.headerText}>KYC Verification</Text>
-        <Text style={styles.headerText}>Document Upload</Text>
+        <View className="items-center">
+        <Text className="text-blue-400 text-3xl font-pbold">KYC Verification</Text>
+        <Text className="text-blue-400 text-xl font-psemibold">Document Upload</Text>
       </View>
         </>
       )}
       renderItem={null}
       ListFooterComponent={() => (
         <>
-        <View style={styles.form}>
-        <Text style={styles.label}>Select Document Type:</Text>
+        <View className="p-4">
+        <Text className="text-slate-400 text-lg my-3">Select Document Type:</Text>
         <Picker
           selectedValue={documentType}
           style={styles.picker}
@@ -113,21 +111,22 @@ const KYCForm = () => {
           <Picker.Item label="Voter Id Card" value="voter" />
         </Picker>
 
-        <Text style={styles.label}>Front Image:</Text>
+        <Text className="text-slate-400 text-lg my-3">Front Image:</Text>
         {frontImage && <Image source={{ uri: frontImage }} style={styles.image} />}
         <Button title="Select Front Image" onPress={() => selectImage(setFrontImage)} />
 
-        <Text style={styles.label}>Back Image:</Text>
+        <Text className="text-slate-400 text-lg my-3">Back Image:</Text>
         {backImage && <Image source={{ uri: backImage }} style={styles.image} />}
-        <Button title="Select Back Image" onPress={() => selectImage(setBackImage)} />
+        <View className="mb-5">
+          <Button title="Select Back Image" onPress={() => selectImage(setBackImage)} />
+        </View>
 
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#ffffff" />
         ) : (
-          <Button title="Submit KYC" onPress={handleSubmit} />
+          <CustomButton title="Submit KYC" handlePress={handleSubmit} />
         )}
 
-        {error && <Text style={styles.error}>{error}</Text>}
       </View>
         </>
       )}
@@ -137,28 +136,6 @@ const KYCForm = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 0,
-    backgroundColor: '#1a202c', // Adjust the background color as needed
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  headerText: {
-    fontSize: 24,
-    color: '#4a90e2',
-    fontWeight: 'bold',
-  },
-  form: {
-    padding: 10,
-  },
-  label: {
-    fontSize: 16,
-    color: '#d1d5db',
-    marginVertical: 8,
-  },
   picker: {
     borderRadius: 40,
     width: '80%',
@@ -169,10 +146,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 100,
     marginVertical: 8,
-  },
-  error: {
-    color: 'red',
-    marginTop: 10,
   },
 });
 
