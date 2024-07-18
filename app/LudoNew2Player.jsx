@@ -2487,7 +2487,8 @@ const LudoNew2Player = (props) => {
             </View>
             <Animatable.View
               //animation={turn3 ? zoomIn : (c?zoomIn:zoomOut)}
-              animation={turn3 || whoseTurnToMove == 3 ? zoomIn : zoomOut}
+              //animation={turn3 || whoseTurnToMove == 3 ? zoomIn : zoomOut}
+              animation={turn3 ? zoomIn : zoomOut}
               duration={500}
             //whoseTurnToMove==
             >
