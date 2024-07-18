@@ -548,7 +548,7 @@ const App = (props) => {
                         setMoveMessage("No, Move Other One");
                       }
                       else {
-                        setIsMovedBy2(true);
+                        setIsMovedBy2(true)
                       }
                     } else {
                       let temparr = positions[2];
