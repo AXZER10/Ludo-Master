@@ -825,11 +825,9 @@ const App = (props) => {
                   } else if (positions[3][1] >= 63 && positions[3][1] <= 67) {
                     nextPosition = positions[3][1] + currentNumber;
                     if (nextPosition == 68) {
-                      console.log("winner"); 
-                      
-                       
+                      console.log("winner");
                       let temparr = positions[3];
-                      temparr[1] = nextPosition;
+                      temparr[1] = "winner";
                       setPositions(positions);
                       setIsMovedBy3(true);
                       console.log("isMovedBy3: ", isMovedBy3);
@@ -1463,25 +1461,21 @@ const App = (props) => {
         let temparr = positions[1];
         temparr[0] = -11;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[1][1] === atPosition) {
         let temparr = positions[1];
         temparr[1] = -21;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[1][2] === atPosition) {
         let temparr = positions[1];
         temparr[2] = -31;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[1][3] === atPosition) {
         let temparr = positions[1];
         temparr[3] = -41;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
     }
   };
@@ -1501,25 +1495,21 @@ const App = (props) => {
         let temparr = positions[2];
         temparr[0] = -12;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[2][1] === atPosition) {
         let temparr = positions[2];
         temparr[1] = -22;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[2][2] === atPosition) {
         let temparr = positions[2];
         temparr[2] = -32;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[2][3] === atPosition) {
         let temparr = positions[2];
         temparr[3] = -42;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
     }
   };
@@ -1538,25 +1528,21 @@ const App = (props) => {
         let temparr = positions[3];
         temparr[0] = -13;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[3][1] === atPosition) {
         let temparr = positions[3];
         temparr[1] = -23;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[3][2] === atPosition) {
         let temparr = positions[3];
         temparr[2] = -33;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[3][3] === atPosition) {
         let temparr = positions[3];
         temparr[3] = -43;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
     }
   };
@@ -1575,25 +1561,21 @@ const App = (props) => {
         let temparr = positions[4];
         temparr[0] = -14;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[4][1] === atPosition) {
         let temparr = positions[4];
         temparr[1] = -24;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[4][2] === atPosition) {
         let temparr = positions[4];
         temparr[2] = -34;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
       if (positions[4][3] === atPosition) {
         let temparr = positions[4];
         temparr[3] = -44;
         setPositions(positions);
-        setIsMovedBy1(true);
       }
     }
   };
@@ -3629,7 +3611,7 @@ const App = (props) => {
               //animation={turn3 ? zoomIn : (c?zoomIn:zoomOut)}
               animation={turn3 || whoseTurnToMove == 3 ? zoomIn : zoomOut}
               duration={500}
-              //whoseTurnToMove==
+            //whoseTurnToMove==
             >
               <View>
                 <View style={[Players.styles, { borderLeftWidth: 1 }]}>
