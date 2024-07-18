@@ -666,6 +666,9 @@ const App = (props) => {
         break;
       case 3:
         if (whoseTurnToMove === 3 && !isMovedBy3) {
+          if(currentNumber === 6){
+            setTurn3(true)
+          }
           console.log("which one: ", whichOne);
           console.log("player3");
           switch (whichOne) {
@@ -768,6 +771,9 @@ const App = (props) => {
               break;
             case 2:
               if (positions[3][1] !== "winner") {
+                if(currentNumber === 6){
+                  setTurn3(true)
+                }
                 if (positions[3][1] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[3];
@@ -829,7 +835,7 @@ const App = (props) => {
                       
                        
                       let temparr = positions[3];
-                      temparr[1] = nextPosition;
+                      temparr[1] = "winner";
                       setPositions(positions);
                       setIsMovedBy3(true);
                       console.log("isMovedBy3: ", isMovedBy3);
@@ -866,6 +872,9 @@ const App = (props) => {
               break;
             case 3:
               if (positions[3][2] !== "winner") {
+                if(currentNumber === 6){
+                  setTurn3(true)
+                }
                 if (positions[3][2] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[3];
@@ -961,6 +970,9 @@ const App = (props) => {
               break;
             case 4:
               if (positions[3][3] !== "winner") {
+                if(currentNumber === 6){
+                  setTurn3(true)
+                }
                 if (positions[3][3] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[3];
@@ -1059,6 +1071,9 @@ const App = (props) => {
         break;
       case 4:
         if (whoseTurnToMove === 4 && !isMovedBy4) {
+          if(currentNumber === 6){
+            setTurn4(true)
+          }
           console.log("which one: ", whichOne);
           console.log("player4");
           switch (whichOne) {
@@ -1160,6 +1175,9 @@ const App = (props) => {
               break;
             case 2:
               if (positions[4][1] !== "winner") {
+                if(currentNumber === 6){
+                  setTurn4(true)
+                }
                 if (positions[4][1] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[4];
@@ -1218,7 +1236,7 @@ const App = (props) => {
                     nextPosition = positions[4][1] + currentNumber;
                     if (nextPosition === 73) {
                       let temparr = positions[4];
-                      temparr[1] = nextPosition;
+                      temparr[1] = "winner";
                       setPositions(positions);
                       setIsMovedBy4(true);
                       console.log("isMovedBy4: ", isMovedBy4);
@@ -1255,6 +1273,9 @@ const App = (props) => {
               break;
             case 3:
               if (positions[4][2] !== "winner") {
+                if(currentNumber === 6){
+                  setTurn4(true)
+                }
                 if (positions[4][2] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[4];
@@ -1350,6 +1371,9 @@ const App = (props) => {
               break;
             case 4:
               if (positions[4][3] !== "winner") {
+                if(currentNumber === 6){
+                  setTurn4(true)
+                }
                 if (positions[4][3] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[4];
@@ -1738,6 +1762,7 @@ const App = (props) => {
             setIsMovedBy2(false);
           } else {
             console.log("same conditions must be there");
+            setTurn3(false)
           }
         } else {
           setTurnMessage("It's Not Your Turn");
@@ -1779,6 +1804,7 @@ const App = (props) => {
             setIsMovedBy3(false);
           } else {
             console.log("same conditions must be there");
+            setTurn4(false)
           }
         } else {
           setTurnMessage("It's Not Your Turn");
