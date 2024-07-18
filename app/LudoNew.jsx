@@ -59,7 +59,7 @@ const App = (props) => {
   const [image3, setImage3] = useState(require("./assets/dice1.png"));
   const [image4, setImage4] = useState(require("./assets/dice1.png"));
 
-  // console.log(positions[1])
+  console.log(positions[1])
   //console.log(positions[2])
   console.log(positions[3]);
   console.log(positions[4]);
@@ -69,18 +69,15 @@ const App = (props) => {
   // }, [isMovedBy1, positions])
 
   const moveIcon = (player, whichOne, position) => {
-    // console.log("whichOne")
-    // console.log(whichOne)
-    // console.log("position1",positions[1])
-    // console.log("position2",positions[2])
-    // console.log("position3",positions[3])
-    // console.log("position4",positions[4])
     switch (player) {
       case 1:
         if (whoseTurnToMove === 1 && !isMovedBy1) {
           switch (whichOne) {
             case 1:
               if (positions[1][0] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn1(true)
+                }
                 if (positions[1][0] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[1];
@@ -134,6 +131,9 @@ const App = (props) => {
               break;
             case 2:
               if (positions[1][1] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn1(true)
+                }
                 if (positions[1][1] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[1];
@@ -186,6 +186,9 @@ const App = (props) => {
               break;
             case 3:
               if (positions[1][2] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn1(true)
+                }
                 if (positions[1][2] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[1];
@@ -238,6 +241,9 @@ const App = (props) => {
               break;
             case 4:
               if (positions[1][3] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn1(true)
+                }
                 if (positions[1][3] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[1];
@@ -299,6 +305,9 @@ const App = (props) => {
         break;
       case 2:
         if (whoseTurnToMove === 2 && !isMovedBy2) {
+          if (currentNumber === 6) {
+            setTurn2(true)
+          }
           console.log("which one: ", whichOne);
           console.log("player2");
           switch (whichOne) {
@@ -361,7 +370,12 @@ const App = (props) => {
                       setPositions(positions);
                       setIsMovedBy2(true);
                     } else if (nextPosition > 63) {
-                      setMoveMessage("Cannot Move This One");
+                      if ((positions[2][3] > 0 && positions[2][3] !== 'winner') || (positions[2][1] > 0 && positions[2][1] !== 'winner') || (positions[2][2] > 0 && positions[2][2] !== 'winner')) {
+                        setMoveMessage("No, Move Other One");
+                      }
+                      else {
+                        setIsMovedBy1(true)
+                      }
                     } else {
                       let temparr = positions[2];
                       temparr[0] = nextPosition;
@@ -383,6 +397,9 @@ const App = (props) => {
               break;
             case 2:
               if (positions[2][1] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn2(true)
+                }
                 if (positions[2][1] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[2];
@@ -440,7 +457,12 @@ const App = (props) => {
                       setPositions(positions);
                       setIsMovedBy2(true);
                     } else if (nextPosition > 63) {
-                      setMoveMessage("Cannot Move This One");
+                      if ((positions[2][0] > 0 && positions[2][0] !== 'winner') || (positions[2][3] > 0 && positions[2][3] !== 'winner') || (positions[1][2] > 0 && positions[1][2] !== 'winner')) {
+                        setMoveMessage("No, Move Other One");
+                      }
+                      else {
+                        setIsMovedBy1(true)
+                      }
                     } else {
                       let temparr = positions[2];
                       temparr[1] = nextPosition;
@@ -462,6 +484,9 @@ const App = (props) => {
               break;
             case 3:
               if (positions[2][2] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn2(true)
+                }
                 if (positions[2][2] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[2];
@@ -519,8 +544,12 @@ const App = (props) => {
                       setPositions(positions);
                       setIsMovedBy2(true);
                     } else if (nextPosition > 63) {
-                      setMoveMessage("Cannot Move This One");
-                      setIsMovedBy2(true);
+                      if ((positions[2][0] > 0 && positions[2][0] !== 'winner') || (positions[2][1] > 0 && positions[2][1] !== 'winner') || (positions[2][3] > 0 && positions[2][3] !== 'winner')) {
+                        setMoveMessage("No, Move Other One");
+                      }
+                      else {
+                        setIsMovedBy1(true);
+                      }
                     } else {
                       let temparr = positions[2];
                       temparr[2] = nextPosition;
@@ -542,6 +571,9 @@ const App = (props) => {
               break;
             case 4:
               if (positions[2][3] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn2(true)
+                }
                 if (positions[2][3] < 0) {
                   if (currentNumber === 6) {
                     let temparr = positions[2];
@@ -599,7 +631,12 @@ const App = (props) => {
                       setPositions(positions);
                       setIsMovedBy2(true);
                     } else if (nextPosition > 63) {
-                      setMoveMessage("Cannot Move This One");
+                      if ((positions[2][0] > 0 && positions[2][0] !== 'winner') || (positions[2][1] > 0 && positions[2][1] !== 'winner') || (positions[2][2] > 0 && positions[2][2] !== 'winner')) {
+                        setMoveMessage("No, Move Other One");
+                      }
+                      else {
+                        setIsMovedBy1(true)
+                      }
                     } else {
                       let temparr = positions[2];
                       temparr[3] = nextPosition;
@@ -1412,8 +1449,6 @@ const App = (props) => {
   };
 
   const checkIfCutPossibleFor1 = (atPosition) => {
-    const { position11, position12, position13, position14 } = positions;
-
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -1424,23 +1459,34 @@ const App = (props) => {
       atPosition !== 40 &&
       atPosition !== 48
     ) {
-      if (position11 === atPosition) {
-        setPositions({ ...positions, 1: [-11, -21, -31, -41] });
+      if (positions[1][0] === atPosition) {
+        let temparr = positions[1];
+        temparr[0] = -11;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position12 === atPosition) {
-        setPositions({ ...positions, 2: [-12, -22, -32, -42] });
+      if (positions[1][1] === atPosition) {
+        let temparr = positions[1];
+        temparr[1] = -21;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position13 === atPosition) {
-        setPositions({ ...positions, 3: [-13, -23, -33, -43] });
+      if (positions[1][2] === atPosition) {
+        let temparr = positions[1];
+        temparr[2] = -31;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position14 === atPosition) {
-        setPositions({ ...positions, 4: [-14, -24, -34, -44] });
+      if (positions[1][3] === atPosition) {
+        let temparr = positions[1];
+        temparr[3] = -41;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
     }
   };
   const checkIfCutPossibleFor2 = (atPosition) => {
-    const { position21, position22, position23, position24 } = positions;
-
+    console.log("checked for 2")
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -1451,23 +1497,33 @@ const App = (props) => {
       atPosition !== 40 &&
       atPosition !== 48
     ) {
-      if (position21 === atPosition) {
-        setPositions({ ...positions, 1: [-12, -22, -32, -42] });
+      if (positions[2][0] === atPosition) {
+        let temparr = positions[2];
+        temparr[0] = -12;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position22 === atPosition) {
-        setPositions({ ...positions, 2: [-12, -22, -32, -42] });
+      if (positions[2][1] === atPosition) {
+        let temparr = positions[2];
+        temparr[1] = -22;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position23 === atPosition) {
-        setPositions({ ...positions, 3: [-12, -22, -32, -42] });
+      if (positions[2][2] === atPosition) {
+        let temparr = positions[2];
+        temparr[2] = -32;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position24 === atPosition) {
-        setPositions({ ...positions, 4: [-12, -22, -32, -42] });
+      if (positions[2][3] === atPosition) {
+        let temparr = positions[2];
+        temparr[3] = -42;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
     }
   };
   const checkIfCutPossibleFor3 = (atPosition) => {
-    const { position31, position32, position33, position34 } = positions;
-
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -1478,23 +1534,33 @@ const App = (props) => {
       atPosition !== 40 &&
       atPosition !== 48
     ) {
-      if (position31 === atPosition) {
-        setPositions({ ...positions, 1: [-13, -23, -33, -43] });
+      if (positions[3][0] === atPosition) {
+        let temparr = positions[3];
+        temparr[0] = -13;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position32 === atPosition) {
-        setPositions({ ...positions, 2: [-13, -23, -33, -43] });
+      if (positions[3][1] === atPosition) {
+        let temparr = positions[3];
+        temparr[1] = -23;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position33 === atPosition) {
-        setPositions({ ...positions, 3: [-13, -23, -33, -43] });
+      if (positions[3][2] === atPosition) {
+        let temparr = positions[3];
+        temparr[2] = -33;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position34 === atPosition) {
-        setPositions({ ...positions, 4: [-13, -23, -33, -43] });
+      if (positions[3][3] === atPosition) {
+        let temparr = positions[3];
+        temparr[3] = -43;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
     }
   };
   const checkIfCutPossibleFor4 = (atPosition) => {
-    const { position41, position42, position43, position44 } = positions;
-
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -1505,17 +1571,29 @@ const App = (props) => {
       atPosition !== 40 &&
       atPosition !== 48
     ) {
-      if (position41 === atPosition) {
-        setPositions({ ...positions, 1: [-14, -24, -34, -44] });
+      if (positions[4][0] === atPosition) {
+        let temparr = positions[4];
+        temparr[0] = -14;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position42 === atPosition) {
-        setPositions({ ...positions, 2: [-14, -24, -34, -44] });
+      if (positions[4][1] === atPosition) {
+        let temparr = positions[4];
+        temparr[1] = -24;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position43 === atPosition) {
-        setPositions({ ...positions, 3: [-14, -24, -34, -44] });
+      if (positions[4][2] === atPosition) {
+        let temparr = positions[4];
+        temparr[2] = -34;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
-      if (position44 === atPosition) {
-        setPositions({ ...positions, 4: [-14, -24, -34, -44] });
+      if (positions[4][3] === atPosition) {
+        let temparr = positions[4];
+        temparr[3] = -44;
+        setPositions(positions);
+        setIsMovedBy1(true);
       }
     }
   };
@@ -1575,6 +1653,7 @@ const App = (props) => {
             setIsMovedBy4(false);
           } else {
             console.log("same conditions must be there");
+            setTurn1(false)
           }
         } else {
           setTurnMessage("It's Not Your Turn");
@@ -1616,6 +1695,8 @@ const App = (props) => {
             setIsMovedBy1(false);
           } else {
             console.log("same conditions must be there");
+            setTurn2(false)
+
           }
         } else {
           setTurnMessage("It's Not Your Turn");
