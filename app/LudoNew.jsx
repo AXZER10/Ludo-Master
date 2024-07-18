@@ -788,7 +788,9 @@ const App = (props) => {
                   } else if (positions[3][1] >= 63 && positions[3][1] <= 67) {
                     nextPosition = positions[3][1] + currentNumber;
                     if (nextPosition == 68) {
-                      console.log("winner");
+                      console.log("winner"); 
+                      1
+                       
                       let temparr = positions[3];
                       temparr[1] = nextPosition;
                       setPositions(positions);
