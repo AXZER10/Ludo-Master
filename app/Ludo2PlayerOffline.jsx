@@ -1,14 +1,5 @@
 import { React, useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-  ImageBackground,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image, ImageBackground, SafeAreaView } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Players, row } from "./styles/forPlayers";
 import { Audio } from "expo-av";
