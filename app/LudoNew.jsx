@@ -359,7 +359,7 @@ const App = (props) => {
                         setMoveMessage("No, Move Other One");
                       }
                       else {
-                        setIsMovedBy1(true)
+                        setIsMovedBy2(true)
                       }
                     } else {
                       let temparr = positions[2];
@@ -447,7 +447,7 @@ const App = (props) => {
                         setMoveMessage("No, Move Other One");
                       }
                       else {
-                        setIsMovedBy1(true)
+                        setIsMovedBy2(true)
                       }
                     } else {
                       let temparr = positions[2];
@@ -535,7 +535,7 @@ const App = (props) => {
                         setMoveMessage("No, Move Other One");
                       }
                       else {
-                        setIsMovedBy1(true)
+                        setIsMovedBy2(true)
                       }
                     }
                     else {
@@ -625,7 +625,7 @@ const App = (props) => {
                         setMoveMessage("No, Move Other One");
                       }
                       else {
-                        setIsMovedBy1(true)
+                        setIsMovedBy2(true)
                       }
                     } else {
                       let temparr = positions[2];
