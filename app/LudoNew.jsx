@@ -319,7 +319,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[2][0];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor3(extraMoves);
@@ -406,7 +406,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[2][1];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor3(extraMoves);
@@ -493,7 +493,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[2][2];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor3(extraMoves);
@@ -580,7 +580,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[2][3];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor3(extraMoves);
@@ -678,7 +678,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[3][0];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor2(extraMoves);
@@ -768,7 +768,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[3][1];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor2(extraMoves);
@@ -858,7 +858,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[3][2];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor2(extraMoves);
@@ -948,7 +948,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[3][3];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor2(extraMoves);
@@ -1049,7 +1049,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[4][0];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor2(extraMoves);
@@ -1139,7 +1139,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[4][1];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor2(extraMoves);
@@ -1229,7 +1229,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[4][2];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor2(extraMoves);
@@ -1319,7 +1319,7 @@ const App = (props) => {
                 } else {
                   let currentPosition = positions[4][3];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     checkIfCutPossibleFor3(extraMoves);
