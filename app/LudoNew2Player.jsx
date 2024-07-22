@@ -34,7 +34,12 @@ const LudoNew2Player = (props) => {
     1: [-11, -21, -31, -41],
     3: [-13, -23, -33, -43],
   });
-
+  if (positions[1][0] === 'winner' && positions[1][1] === 'winner' && positions[1][2] === 'winner' && positions[1][3] === 'winner') {
+    Alert.alert("Game Over", "Player 1 Wins")
+  }
+  if (positions[3][0] === 'winner' && positions[3][1] === 'winner' && positions[3][2] === 'winner' && positions[3][3] === 'winner') {
+    Alert.alert("Game Over", "Player 2 Wins")
+  }
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
   const [currentNumber, setCurrentNumber] = useState(0);
@@ -182,6 +187,7 @@ const LudoNew2Player = (props) => {
                       let temparr = positions[1];
                       temparr[1] = "winner";
                       setPositions(positions);
+                      setIsMovedBy1(true);
                     } else {
                       if (
                         (positions[1][0] > 0 && positions[1][0] !== "winner") ||
@@ -235,6 +241,7 @@ const LudoNew2Player = (props) => {
                       let temparr = positions[1];
                       temparr[2] = "winner";
                       setPositions(positions);
+                      setIsMovedBy1(true);
                     } else {
                       if (
                         (positions[1][0] > 0 && positions[1][0] !== "winner") ||
@@ -742,10 +749,50 @@ const LudoNew2Player = (props) => {
         return false;
     }
   };
-  const generateRandomNumber = (player) => {
+  const generateRandomNumber = async (player) => {
+    const updateDice = async (Dice) => {
+      roomId = await this.CurrentRoom();
+      //console.log('roomId: ', roomId)
+      const db = getFirestore();
+      try {
+        const roomRef = doc(db, 'twoPlayerRooms', roomId);
+        await updateDoc(roomRef, {
+          dice: Dice
+        });
+      } catch (error) {
+        Alert.alert('Error Updating Dice', error.message)
+      }
+    }
+
+    const FetchDice = async () => {
+      try {
+        const db = getFirestore();
+        const roomId = await CurrentRoom();
+        const roomRef = doc(db, 'twoPlayerRooms', roomId);
+
+        const unsubscribe = onSnapshot(roomRef, (doc) => {
+          if (doc.exists()) {
+            const data = doc.data();
+            setCurrentNumber(data.dice)
+          } else {
+            console.log('No Turn');
+          }
+        });
+
+        // Clean up the subscription on unmount
+        return () => unsubscribe();
+      } catch (error) {
+        console.error('Error fetching player turn:', error);
+        Alert.alert('Error PlayerTurn', error.message);
+      }
+    };
+    FetchDice();
+
+    console.log(currentNumber)
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setTurnMessage("");
     setMoveMessage("");
+    console.log("player: ", player)
 
     switch (player) {
       case 1:
@@ -755,7 +802,7 @@ const LudoNew2Player = (props) => {
         if (turn1 && (isMovedBy3 || checkIfAnythingOpened(3))) {
           setWhoseTurnToMove(1);
           setIsMovedBy1(false);
-          setCurrentNumber(randomNumber);
+          await updateDice(randomNumber)
           switch (randomNumber) {
             case 1:
               setImage1(require("./assets/dice1.png"));
@@ -797,7 +844,7 @@ const LudoNew2Player = (props) => {
         if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
           setWhoseTurnToMove(3);
           setIsMovedBy3(false);
-          setCurrentNumber(randomNumber);
+          await updateDice(randomNumber)
           switch (randomNumber) {
             case 1:
               setImage3(require("./assets/dice1.png"));

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image, ImageBackground, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image, ImageBackground, SafeAreaView, Alert } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Players, row } from "./styles/forPlayers";
 import { Audio } from "expo-av";
@@ -29,6 +29,12 @@ const LudoNew2Player = (props) => {
     1: [-11, -21, -31, -41],
     3: [-13, -23, -33, -43],
   });
+  if (positions[1][0] === 'winner' && positions[1][1] === 'winner' && positions[1][2] === 'winner' && positions[1][3] === 'winner') {
+    Alert.alert("Game Over", "Player 1 Wins")
+  }
+  if (positions[3][0] === 'winner' && positions[3][1] === 'winner' && positions[3][2] === 'winner' && positions[3][3] === 'winner') {
+    Alert.alert("Game Over", "Player 2 Wins")
+  }
 
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
@@ -142,6 +148,7 @@ const LudoNew2Player = (props) => {
                       let temparr = positions[1];
                       temparr[1] = "winner";
                       setPositions(positions);
+                      setIsMovedBy1(true)
                     } else {
                       if (
                         (positions[1][0] > 0 && positions[1][0] !== "winner") ||
@@ -195,6 +202,7 @@ const LudoNew2Player = (props) => {
                       let temparr = positions[1];
                       temparr[2] = "winner";
                       setPositions(positions);
+                      setIsMovedBy1(true)
                     } else {
                       if (
                         (positions[1][0] > 0 && positions[1][0] !== "winner") ||
@@ -303,7 +311,7 @@ const LudoNew2Player = (props) => {
                 } else {
                   let currentPosition = positions[3][0];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition >= 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     let temparr = positions[3];
@@ -385,7 +393,7 @@ const LudoNew2Player = (props) => {
                 } else {
                   let currentPosition = positions[3][1];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition >= 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     let temparr = positions[3];
@@ -467,7 +475,7 @@ const LudoNew2Player = (props) => {
                 } else {
                   let currentPosition = positions[3][2];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition >= 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     let temparr = positions[3];
@@ -549,7 +557,7 @@ const LudoNew2Player = (props) => {
                 } else {
                   let currentPosition = positions[3][3];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition > 52 && nextPosition < 58) {
+                  if (nextPosition >= 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     let temparr = positions[3];

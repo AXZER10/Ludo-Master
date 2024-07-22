@@ -34,6 +34,7 @@ export default function RootLayout() {
       <Stack.Screen name="LudoTwoPlayer" options={{headerShown:false}}/>
       <Stack.Screen name="LudoNew" options={{headerShown:false}}/>
       <Stack.Screen name="LudoNew2Player" options={{headerShown:false}}/>
+      <Stack.Screen name="Ludo2PlayerOffline" options={{headerShown:false}}/>
       <Stack.Screen name="(tabs)" options={{headerShown:false}}/>
       <Stack.Screen name="(auth)" options={{headerShown:false}}/>
       <Stack.Screen name="Referral" options={{headerShown:false}}/>
