@@ -20,7 +20,9 @@ const Room = () => {
         checkRoomsAndJoin(user.uid);
       }
       if(countdown == 0){
-        router.replace('/LudoNew2Player')
+        // router.setParams({roomId : roomId})
+        // console.log("roomId roomIdroomIdroomIdroomId ", roomId)
+        
       } 
     } else {
       Alert.alert("User Not Found");
@@ -55,11 +57,18 @@ const Room = () => {
         createdAt: new Date(),
         players: [],
         gameState: 'waiting',
-        uid1: uid,
+        uid1: {
+          uid,
+          dice:0
+        },
         uid2: '',
         
       });
-      setRoomId(createRef.id); // Store the created room ID
+      if(roomId && roomId != ""){
+      } else {
+        setRoomId(createRef.id); // Store the created room ID
+      }
+      
       Alert.alert('Room Created', `Room ID: ${createRef.id}`);
       
       setTimeout(() => {
@@ -76,7 +85,10 @@ const Room = () => {
     try {
       const roomRef = doc(db, 'twoPlayerRooms', roomId);
       await updateDoc(roomRef, {
-        uid2: uid,
+        uid2: {
+          uid,
+          dice:0
+        },
         gameState: "Started"
       });
 
@@ -104,6 +116,7 @@ const Room = () => {
         if (doc.exists()) {
           const gameState = doc.data().gameState;
           if (gameState === "Started") {
+            router.replace({pathname :'/LudoNew2Player' , params:  {roomId} })
             initiateCountdown();
           }
         } else {
