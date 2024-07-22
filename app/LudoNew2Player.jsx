@@ -350,7 +350,7 @@ const LudoNew2Player = (props) => {
                 } else {
                   let currentPosition = positions[3][0];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition >= 52 && nextPosition <= 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     let temparr = positions[3];
@@ -432,7 +432,7 @@ const LudoNew2Player = (props) => {
                 } else {
                   let currentPosition = positions[3][1];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition >= 52 && nextPosition <= 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     let temparr = positions[3];
@@ -514,7 +514,7 @@ const LudoNew2Player = (props) => {
                 } else {
                   let currentPosition = positions[3][2];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition >= 52 && nextPosition <= 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     let temparr = positions[3];
@@ -596,7 +596,7 @@ const LudoNew2Player = (props) => {
                 } else {
                   let currentPosition = positions[3][3];
                   let nextPosition = currentNumber + currentPosition;
-                  if (nextPosition >= 52 && nextPosition <= 58) {
+                  if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
                     let temparr = positions[3];
