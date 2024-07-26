@@ -7,7 +7,7 @@ import * as Animatable from "react-native-animatable";
 import icons from '../constants/icons'
 import { router } from 'expo-router';
 import { auth } from '../FirebaseConfig';
-import { collection, getFirestore, doc, query, where, getDocs, updateDoc, onSnapshot,documentId } from 'firebase/firestore';
+import { collection, getFirestore, doc, query, where, getDocs, updateDoc, onSnapshot, documentId, getDoc, docs } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 
@@ -32,9 +32,9 @@ const zoomOut = {
 };
 
 const LudoNew2Player = () => {
-  const {roomId} = useLocalSearchParams()
-  console.log("location.state  location.statelocation.state ",roomId)
-  
+  // const { roomId } = useLocalSearchParams()
+  // console.log("location.state  location.statelocation.state ", roomId)
+
   const [positions, setPositions] = useState({
     1: [-11, -21, -31, -41],
     3: [-13, -23, -33, -43],
@@ -54,41 +54,75 @@ const LudoNew2Player = () => {
   const [whoseTurnToMove, setWhoseTurnToMove] = useState(0);
   const [isMovedBy1, setIsMovedBy1] = useState(false);
   const [isMovedBy3, setIsMovedBy3] = useState(false);
-  const [room,setRoom] = useState({});
-  const [user,setUser] = useState({});
+  const [room, setRoom] = useState({});
+  // const [roomID, setRoomID] = useState();
+  const [User, setUser] = useState({});
 
   const [image1, setImage1] = useState(require("./assets/dice1.png"));
   const [image3, setImage3] = useState(require("./assets/dice1.png"));
 
+  useEffect(() => {
+    // setRoomID(roomId)
+    // CurrentRoom()
+    // console.log("roomIDroomIDroomIDroomIDroomIDroomIDroomIDroomIDroomID", roomID)
+    const user = auth.currentUser;
+    setUser(user)
+  }, [User])
+
+
   const CurrentRoom = async () => {
-    let user = auth.currentUser;
-    console.log(user.uid);
-    try {
+    // let user = auth.currentUser;
+    // // console.log(user.uid);
+    // try {
+    //   const db = getFirestore();
+    //   const roomRef = collection(db, 'twoPlayerRooms');
+
+    //   const q = query(roomRef, where(documentId(), '==', roomID));
+
+    //   const querySnapshot = await getDocs(q);
+
+    //   // console.log("roomRef roomRef ", querySnapshot?.docs[0].data())
+    //   // console.log(" documentId().data documentId().data documentId().data ", roomId)
+    //   setUser(user);
+    //   let room = { ...{ id: roomID }, ...querySnapshot?.docs[0].data() };
+    //   setRoom(room);
+    //   // setRoomID(roomId)
+    //   // console.log(room)
+    //   getDataFromDb(user, room);
+
+    // } catch (error) {
+    //   Alert.alert('Error checking rooms:', error.message);
+    // }
+    ///////////////////////////////////////////
+    const user = auth.currentUser;
+    setUser(user)
+    console.log("USERIDINCURRENTROOM:",user.uid);
     const db = getFirestore();
     const roomRef = collection(db, 'twoPlayerRooms');
-
-    // const roomRef = await getDocs(doc(db, 'twoPlayerRooms', roomId))
-    const q = query(roomRef, where(documentId(), '==', roomId ));
-
-    const querySnapshot = await getDocs(q);
-
-    console.log("roomRef roomRef ",querySnapshot?.docs[0].data())
-    console.log(" documentId().data documentId().data documentId().data ",roomId)
-    setUser(user);
-    let room = {...{id:roomId},...querySnapshot?.docs[0].data()};
-    setRoom(room);
-    getDataFromDb(user,room);
-
+    try {
+      const q = query(roomRef, where('gameState', '==', 'Started'));
+      const querySnapshot = await getDocs(q);
+      const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1.uid === user.uid || doc.data().uid2.uid === user.uid);
+      if (filteredRooms.length > 0) {
+        const roomDoc = filteredRooms[0];
+        const roomId = roomDoc.id;
+        // setRoomID(roomId)
+        console.log("RoomID: ",roomId)
+        return roomId;
+      } else {
+        router.replace('/Home')
+      }
     } catch (error) {
       Alert.alert('Error checking rooms:', error.message);
     }
   };
   Cancel = async () => {
-    const roomId = room?.id;
-    console.log('room: ', roomId);
+    // const roomId = room?.id;
+    const roomID = await CurrentRoom();
+    console.log('room: ', roomID);
     const db = getFirestore();
     try {
-      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+      const roomRef = doc(db, 'twoPlayerRooms', roomID);
       await updateDoc(roomRef, {
         gameState: "Cancelled"
       });
@@ -772,23 +806,44 @@ const LudoNew2Player = () => {
     }
   };
 
-  const updateDice1= async (Dice) => {
-    const roomId = room?.id;
-    let uid = user?.uid;
+  const updateDice1 = async (Dice) => {
+    // const roomId = room?.id;
+    const roomId = await CurrentRoom();
+    let UID = User.uid;
+    console.log("UID: ",UID)
     const db = getFirestore();
     try {
-      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+      const roomRef = collection(db, 'twoPlayerRooms');
+      console.log("PrintingRoomID: ", roomId)
+      const q = query(roomRef, where(documentId(), '==', roomId));
+      const querySnapshot = await getDocs(q);
+      const DataUid1 = querySnapshot?.docs[0].data().uid1.uid
+      console.log("DATADATADATA: ",DataUid1)
+      const DataUid2 = querySnapshot?.docs[0].data().uid2.uid
+      console.log("DATADATADATA2: ",DataUid2)
       var whichUser = '';
-      if(roomId?.uid1 == uid){
+      if (DataUid1 == UID) {
         whichUser = 'uid1';
-      } else if (roomId?.uid2 == uid){
+      } else //if (DataUid2 == uid) 
+      {
         whichUser = 'uid2';
       }
-      await updateDoc(roomRef, {
-        whichUser:{
-          dice:Dice
-        }
-      });
+      const updateRef = doc(db, 'twoPlayerRooms', roomId);
+      if (whichUser == "uid1") {
+        await updateDoc(updateRef, {
+          uid1: {
+            dice: Dice,
+            uid: UID
+          }
+        });
+      } else if (whichUser == "uid2") {
+        await updateDoc(updateRef, {
+          uid2: {
+            dice: Dice,
+            uid: UID
+          }
+        });
+      }
       setCurrentNumber1(Dice)
     } catch (error) {
       Alert.alert('Error Updating Dice', error.message)
@@ -796,10 +851,8 @@ const LudoNew2Player = () => {
   }
 
   const UpdateDice2 = (dice) => {
-
     setCurrentNumber2(dice)
-
-    console.log(
+    console.log("UpdateDice2" + "  " +
       turn3 + "  " + isMovedBy1 + "  " + checkIfAnythingOpened(1)
     );
     if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
@@ -840,44 +893,47 @@ const LudoNew2Player = () => {
     }
   };
 
-  const getDataFromDb = async(user,room) => {
+  const getDataFromDb = async (user, room) => {
     try {
-      console.log(" roomroomroomroom ",room)
+      // console.log(" roomroomroomroom ", room)
       const db = getFirestore();
-      const roomId = room?.id;
-      console.log("roomId      roomId _________",roomId)
-      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+      // const roomId = room?.id;
+      const roomID= await CurrentRoom();
+      // console.log("roomId      roomId _________", roomId)
+      const roomRef = doc(db, 'twoPlayerRooms', roomID);
 
-      const unsubscribe = onSnapshot(roomRef, (doc) => {
-        if (doc.exists()) {
-          const data = doc.data();
-          console.log("console.log(data?.dice2)    ",data)
-          // console.log(data?.dice2)
-          let uid = user?.uid;
-          // UpdateDice2(data?.dice2)
-          if(room?.uid1?.uid != uid){
-            UpdateDice2(data?.uid1?.dice);
-          } else if (room?.uid2?.uid != uid){
-            UpdateDice2(data?.uid2?.dice);
-      
+      useEffect(()=>{
+        const unsubscribe = onSnapshot(roomRef, (doc) => {
+          if (doc.exists()) {
+            const data = doc.data();
+            // console.log("console.log(data?.dice2)    ", data)
+            // console.log(data?.dice2)
+            let uid = User?.uid;
+            // UpdateDice2(data?.dice2)
+            if (room?.uid1?.uid != uid) {
+              UpdateDice2(data?.uid1?.dice);
+            } else if (room?.uid2?.uid != uid) {
+              UpdateDice2(data?.uid2?.dice);
+  
+            }
+  
+          } else {
+            console.log('No Turn');
           }
-
-        } else {
-          console.log('No Turn');
-        }
-      });
-
-      // Clean up the subscription on unmount
-      return () => unsubscribe();
+        });
+  
+        // Clean up the subscription on unmount
+        return () => unsubscribe();
+      },[data])
     } catch (error) {
       console.error('Error fetching player turn:', error);
       Alert.alert('Error PlayerTurn', error.message);
     }
   }
 
-  useEffect(()=> {
-    CurrentRoom();
-  },[])
+  // useEffect(() => {
+  //   getDataFromDb();
+  // }, [])
 
   const generateRandomNumber = async (player) => {
     const randomNumber = Math.floor(Math.random() * 6) + 1;
@@ -886,10 +942,12 @@ const LudoNew2Player = () => {
 
     switch (player) {
       case 1:
+        console.log("UpdateDice1" + "  " + turn3 + "  " + isMovedBy1 + "  " + checkIfAnythingOpened(1))
         if (turn1 && (isMovedBy3 || checkIfAnythingOpened(3))) {
           setWhoseTurnToMove(1);
           setIsMovedBy1(false);
           await updateDice1(randomNumber)
+          // await updateDice1(randomNumber)
           switch (randomNumber) {
             case 1:
               setImage1(require("./assets/dice1.png"));
