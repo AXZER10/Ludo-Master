@@ -59,7 +59,8 @@ const Room = () => {
         gameState: 'waiting',
         uid1: {
           uid,
-          dice:0
+          dice:0,
+          turn:true
         },
         uid2: '',
         
@@ -87,7 +88,8 @@ const Room = () => {
       await updateDoc(roomRef, {
         uid2: {
           uid,
-          dice:0
+          dice:0,
+          turn:false
         },
         gameState: "Started"
       });

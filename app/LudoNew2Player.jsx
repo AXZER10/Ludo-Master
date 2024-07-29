@@ -10,7 +10,7 @@ import { auth } from '../FirebaseConfig';
 import { collection, getFirestore, doc, query, where, getDocs, updateDoc, onSnapshot, documentId, getDoc, docs } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { firebase } from '@react-native-firebase/firestore';
+
 
 soundObject = new Audio.Sound();
 
@@ -60,6 +60,8 @@ const LudoNew2Player = () => {
   const [User, setUser] = useState(auth.currentUser);
   const [User1, setUser1] = useState({});
   const [User2, setUser2] = useState({});
+
+  const [snapCreated,onSnapCreated] = useState(false)
 
   const [image1, setImage1] = useState(require("./assets/dice1.png"));
   const [image3, setImage3] = useState(require("./assets/dice1.png"));
@@ -792,20 +794,31 @@ const LudoNew2Player = () => {
     const roomId = room?.id;
     let UID = User.uid;
     console.log("UID: ", UID)
-    const db = firebase.firestore();
+    const db = getFirestore();
     try {
-      var whichUser = '';
+      const roomRef = doc(db, 'twoPlayerRooms', roomId);
       if (User1 == UID) {
-        whichUser = 'uid1';
-      } else //if (DataUid2 == uid) 
-      {
-        whichUser = 'uid2';
-      }
-
-      if (whichUser == "uid1") {
-        db.collection('twoPlayerRooms').doc(roomId).update({uid1:{dice:Dice}})
-      } else if (whichUser == "uid2") {
-        db.collection('twoPlayerRooms').doc(roomId).update({uid2:{dice:Dice}})
+        await updateDoc(roomRef, {...room,...{
+          uid1: {
+            dice:Dice,
+            turn:false
+          },
+          uid2: {
+            turn:true
+          },
+          gameState: "InProgress"
+        }});
+      } else {
+        await updateDoc(roomRef, {...room,...{
+          uid2: {
+            dice:Dice,
+            turn:false
+          },
+          uid1: {
+            turn:true
+          },
+          gameState: "InProgress"
+        }});
       }
       setCurrentNumber1(Dice)
     } catch (error) {
@@ -818,7 +831,7 @@ const LudoNew2Player = () => {
     console.log("UpdateDice2" + "  " +
       turn3 + "  " + isMovedBy1 + "  " + checkIfAnythingOpened(1)
     );
-    if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
+    // if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
       setWhoseTurnToMove(3);
       setIsMovedBy3(false);
       switch (dice) {
@@ -851,40 +864,47 @@ const LudoNew2Player = () => {
         console.log("same conditions must be there");
         setTurn3(false);
       }
-    } else {
-      setTurnMessage("It's Not Your Turn");
-    }
+    // } else {
+    //   setTurnMessage("It's Not Your Turn");
+    // }
   };
 
   const getDataFromDb = async () => {
     try {
-      // console.log(" roomroomroomroom ", room)
       const db = getFirestore();
       // const roomId = room?.id;
       // const roomID = await CurrentRoom();
       // console.log("roomId      roomId _________", roomId)
-      console.log('room?.id',room)
+      // console.log('room?.id ???????',room)
       const roomRef = doc(db, 'twoPlayerRooms', room?.id);
-      console.log('room?.id',room?.id)
+      // console.log('room?.id',room?.id)
       // useEffect(()=>{
       const unsubscribe = onSnapshot(roomRef, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
-          // console.log("console.log(data?.dice2)    ", data)
-          // console.log(data?.dice2)
-          // UpdateDice2(data?.dice2)
-          if (room?.uid1?.uid != User1) {
-            UpdateDice2(data?.uid1?.dice);
+          console.log("for update 2",data)
+          console.log('User1',User1)
+          console.log('data?.uid1?.turn',data?.uid1?.dice)
+          // UpdateDice2(data?.uid1?.dice);
+          if(room?.uid1?.uid == User1){
+            if(data?.uid1?.turn == true){
+              UpdateDice2(data?.uid2?.dice);  
+            }
           } else {
-            UpdateDice2(data?.uid2?.dice);
+            if (data?.uid2?.turn == true){
+              UpdateDice2(data?.uid1?.dice);  
+            }
           }
 
+          let room = { ...{ id: roomId }, ...doc.data() };
+          setRoom(room)
         } else {
           console.log('No Turn');
         }
       });
 
       // Clean up the subscription on unmount
+      onSnapCreated(true);
       return () => unsubscribe();
       // },[data])
     } catch (error) {
@@ -897,11 +917,12 @@ const LudoNew2Player = () => {
     async function getRoom () {
       await CurrentRoom();
     }
-    if(!room)getRoom();
-    if(turn3) getDataFromDb();
-  }, [turn3])
+    if(!room) getRoom();
+    if(room && !snapCreated) getDataFromDb();
+  }, [room])
 
   const generateRandomNumber = async () => {
+
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setTurnMessage("");
     setMoveMessage("");
@@ -1091,9 +1112,20 @@ const LudoNew2Player = () => {
               >
                 <TouchableOpacity
                   onPress={() => {
-                    generateRandomNumber();
-                    updateTurn();
+                    if(turn1){
+                      if(room){
+                        console.log(room);
+                        if(room?.uid1?.uid == User1 && room?.uid1?.turn == true){
+                          generateRandomNumber();
+                        } else {
+                          if (room?.uid2?.turn == true){
+                            generateRandomNumber();  
+                          }
+                        }
+                      }
 
+                    } 
+                    // updateTurn();
                   }}
                 >
                   <Image
