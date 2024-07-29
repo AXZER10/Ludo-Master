@@ -798,30 +798,41 @@ const LudoNew2Player = () => {
     try {
       const roomRef = doc(db, 'twoPlayerRooms', roomId);
       if (User1 == UID) {
-        await updateDoc(roomRef, {...room,...{
+        let updatedRoom = {
+          id:room?.id,
           uid1: {
             dice:Dice,
-            turn:false
+            turn:false,
+            uid:room?.uid1?.uid
           },
           uid2: {
-            turn:true
+            dice:room?.uid2?.dice,
+            turn:true,
+            uid:room?.uid2?.uid
           },
           gameState: "InProgress"
-        }});
+        }
+        console.log(updatedRoom)
+        await updateDoc(roomRef, updatedRoom);
       } else {
-        await updateDoc(roomRef, {...room,...{
+        let updatedRoom = {
+          id:room?.id,
+          uid1: {
+            dice:room?.uid1?.dice,
+            turn:true,
+            uid:room?.uid1?.uid
+          },
           uid2: {
             dice:Dice,
-            turn:false
-          },
-          uid1: {
-            turn:true
+            turn:false,
+            uid:room?.uid2?.uid
           },
           gameState: "InProgress"
-        }});
-      }
+        }
+        await updateDoc(roomRef, updatedRoom);
       setCurrentNumber1(Dice)
-    } catch (error) {
+    }
+   } catch (error) {
       Alert.alert('Error Updating Dice', error.message)
     }
   }
