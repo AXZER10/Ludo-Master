@@ -10,6 +10,7 @@ import { auth } from '../FirebaseConfig';
 import { collection, getFirestore, doc, query, where, getDocs, updateDoc, onSnapshot, documentId, getDoc, docs } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { firebase } from '@react-native-firebase/firestore';
 
 soundObject = new Audio.Sound();
 
@@ -54,7 +55,7 @@ const LudoNew2Player = () => {
   const [whoseTurnToMove, setWhoseTurnToMove] = useState(0);
   const [isMovedBy1, setIsMovedBy1] = useState(false);
   const [isMovedBy3, setIsMovedBy3] = useState(false);
-  const [room, setRoom] = useState({});
+  const [room, setRoom] = useState(undefined);
   //  const [roomID, setRoomID] = useState(roomId);
   const [User, setUser] = useState(auth.currentUser);
   const [User1, setUser1] = useState({});
@@ -63,24 +64,15 @@ const LudoNew2Player = () => {
   const [image1, setImage1] = useState(require("./assets/dice1.png"));
   const [image3, setImage3] = useState(require("./assets/dice1.png"));
 
-  // useEffect(() => {
-  //   // setRoomID(roomId)
-  //   // CurrentRoom()
-  //   // console.log("roomIDroomIDroomIDroomIDroomIDroomIDroomIDroomIDroomID", roomID)
-  //   const user = auth.currentUser;
-  //   setUser(user)
-  // }, [User])
-
-
 
   const CurrentRoom = async () => {
     let user = auth.currentUser;
-    // console.log(user.uid);
+    console.log("roomId roomId ",roomId);
     try {
       const db = getFirestore();
       const roomRef = collection(db, 'twoPlayerRooms');
 
-      const q = query(roomRef, where(documentId(), '==', roomID));
+      const q = query(roomRef, where(documentId(), '==', roomId));
 
       const querySnapshot = await getDocs(q);
 
@@ -88,40 +80,27 @@ const LudoNew2Player = () => {
       // console.log(" documentId().data documentId().data documentId().data ", roomId)
       setUser(user);
       let room = { ...{ id: roomId }, ...querySnapshot?.docs[0].data() };
-      setRoom(room);
-      // setRoomID(roomId)
-      // console.log(room)
-      getDataFromDb(user, room);
 
+      if(room){
+        let DataUid1 = room?.uid1?.uid;
+        if (DataUid1 == User?.uid) {
+          setUser1(DataUid1)
+          setUser2(room?.uid2?.uid)
+        } else //if (DataUid2 == uid) 
+        {
+          setUser1(room?.uid2?.uid)
+          setUser2(DataUid1)
+        }
+        console.log('set Room',room)
+        setRoom(room);
+      }
     } catch (error) {
       Alert.alert('Error checking rooms:', error.message);
     }
-    ///////////////////////////////////////////
-    // const user = auth.currentUser;
-    // setUser(user)
-    // console.log("USERIDINCURRENTROOM:", user.uid);
-    // const db = getFirestore();
-    // const roomRef = collection(db, 'twoPlayerRooms');
-    // try {
-    //   const q = query(roomRef, where('gameState', '==', 'Started'));
-    //   const querySnapshot = await getDocs(q);
-    //   const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1.uid === user.uid || doc.data().uid2.uid === user.uid);
-    //   if (filteredRooms.length > 0) {
-    //     const roomDoc = filteredRooms[0];
-    //     const roomId = roomDoc.id;
-    //     // setRoomID(roomId)
-    //     console.log("RoomID: ", roomId)
-    //     return roomId;
-    //   } else {
-    //     router.replace('/Home')
-    //   }
-    // } catch (error) {
-    //   Alert.alert('Error checking rooms:', error.message);
-    // }
   };
   Cancel = async () => {
     // const roomId = room?.id;
-    const roomID = await CurrentRoom();
+    const roomID = room?.id;
     console.log('room: ', roomID);
     const db = getFirestore();
     try {
@@ -810,42 +789,23 @@ const LudoNew2Player = () => {
   };
 
   const updateDice1 = async (Dice) => {
-    // const roomId = room?.id;
-    const roomId = await CurrentRoom();
+    const roomId = room?.id;
     let UID = User.uid;
     console.log("UID: ", UID)
-    const db = getFirestore();
+    const db = firebase.firestore();
     try {
-      const roomRef = collection(db, 'twoPlayerRooms');
-      console.log("PrintingRoomID: ", roomId)
-      const q = query(roomRef, where(documentId(), '==', roomId));
-      const querySnapshot = await getDocs(q);
-      const DataUid1 = querySnapshot?.docs[0].data().uid1.uid
-      console.log("DATADATADATA: ", DataUid1)
-      const DataUid2 = querySnapshot?.docs[0].data().uid2.uid
-      console.log("DATADATADATA2: ", DataUid2)
       var whichUser = '';
-      if (DataUid1 == UID) {
+      if (User1 == UID) {
         whichUser = 'uid1';
       } else //if (DataUid2 == uid) 
       {
         whichUser = 'uid2';
       }
-      const updateRef = doc(db, 'twoPlayerRooms', roomId);
+
       if (whichUser == "uid1") {
-        await updateDoc(updateRef, {
-          uid1: {
-            dice: Dice,
-            uid: UID
-          }
-        });
+        db.collection('twoPlayerRooms').doc(roomId).update({uid1:{dice:Dice}})
       } else if (whichUser == "uid2") {
-        await updateDoc(updateRef, {
-          uid2: {
-            dice: Dice,
-            uid: UID
-          }
-        });
+        db.collection('twoPlayerRooms').doc(roomId).update({uid2:{dice:Dice}})
       }
       setCurrentNumber1(Dice)
     } catch (error) {
@@ -896,28 +856,27 @@ const LudoNew2Player = () => {
     }
   };
 
-  const getDataFromDb = async (user, room) => {
+  const getDataFromDb = async () => {
     try {
       // console.log(" roomroomroomroom ", room)
       const db = getFirestore();
       // const roomId = room?.id;
-      const roomID = await CurrentRoom();
+      // const roomID = await CurrentRoom();
       // console.log("roomId      roomId _________", roomId)
-      const roomRef = doc(db, 'twoPlayerRooms', roomID);
-
+      console.log('room?.id',room)
+      const roomRef = doc(db, 'twoPlayerRooms', room?.id);
+      console.log('room?.id',room?.id)
       // useEffect(()=>{
       const unsubscribe = onSnapshot(roomRef, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
           // console.log("console.log(data?.dice2)    ", data)
           // console.log(data?.dice2)
-          let uid = User?.uid;
           // UpdateDice2(data?.dice2)
-          if (room?.uid1?.uid != uid) {
+          if (room?.uid1?.uid != User1) {
             UpdateDice2(data?.uid1?.dice);
-          } else if (room?.uid2?.uid != uid) {
+          } else {
             UpdateDice2(data?.uid2?.dice);
-
           }
 
         } else {
@@ -935,63 +894,53 @@ const LudoNew2Player = () => {
   }
 
   useEffect(() => {
-    getDataFromDb();
-    if (DataUid1 == UID) {
-      whichUser = 'uid1';
-    } else //if (DataUid2 == uid) 
-    {
-      whichUser = 'uid2';
+    async function getRoom () {
+      await CurrentRoom();
     }
-  }, [])
+    if(!room)getRoom();
+    if(turn3) getDataFromDb();
+  }, [turn3])
 
-  const generateRandomNumber = async (player) => {
+  const generateRandomNumber = async () => {
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setTurnMessage("");
     setMoveMessage("");
-
-    switch (player) {
-      case 1:
-        console.log("UpdateDice1" + "  " + turn3 + "  " + isMovedBy1 + "  " + checkIfAnythingOpened(1))
-        if (turn1 && (isMovedBy3 || checkIfAnythingOpened(3))) {
-          setWhoseTurnToMove(1);
-          setIsMovedBy1(false);
-          await updateDice1(randomNumber)
-          // await updateDice1(randomNumber)
-          switch (randomNumber) {
-            case 1:
-              setImage1(require("./assets/dice1.png"));
-              break;
-            case 2:
-              setImage1(require("./assets/dice2.png"));
-              break;
-            case 3:
-              setImage1(require("./assets/dice3.png"));
-              break;
-            case 4:
-              setImage1(require("./assets/dice4.png"));
-              break;
-            case 5:
-              setImage1(require("./assets/dice5.png"));
-              break;
-            case 6:
-              setImage1(require("./assets/dice6.png"));
-              break;
-            default:
-              break;
-          }
-          if (randomNumber !== 6) {
-            setTurn1(false);
-            setTurn3(true);
-            setIsMovedBy3(false);
-          } else {
-            console.log("same conditions must be there");
-            setTurn1(false)
-          }
-        } else {
-          setTurnMessage("It's Not Your Turn");
-        }
-        break;
+    console.log("UpdateDice1" + "  " + turn3 + "  " + isMovedBy1 + "  " + checkIfAnythingOpened(1))
+    if (turn1 && (isMovedBy3 || checkIfAnythingOpened(3))) {
+      setWhoseTurnToMove(1);
+      setIsMovedBy1(false);
+      switch (randomNumber) {
+        case 1:
+          setImage1(require("./assets/dice1.png"));
+          break;
+        case 2:
+          setImage1(require("./assets/dice2.png"));
+          break;
+        case 3:
+          setImage1(require("./assets/dice3.png"));
+          break;
+        case 4:
+          setImage1(require("./assets/dice4.png"));
+          break;
+        case 5:
+          setImage1(require("./assets/dice5.png"));
+          break;
+        case 6:
+          setImage1(require("./assets/dice6.png"));
+          break;
+        default:
+          break;
+      }
+      await updateDice1(randomNumber)
+      if (randomNumber !== 6) {
+        setTurn1(false);
+        setTurn3(true);
+        setIsMovedBy3(false);
+      } 
+    } else {
+      setTurnMessage("It's Not Your Turn");
     }
+
   };
 
   const checkPosition = (player, whichOne, position) => {
@@ -1142,7 +1091,7 @@ const LudoNew2Player = () => {
               >
                 <TouchableOpacity
                   onPress={() => {
-                    generateRandomNumber(1);
+                    generateRandomNumber();
                     updateTurn();
 
                   }}
@@ -2730,13 +2679,7 @@ const LudoNew2Player = () => {
                     </View>
                   </ImageBackground>
                 </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    generateRandomNumber(3);
-                    updateTurn();
-                  }}
-                >
-                  <Image
+                <Image
                     style={{
                       width: 90,
                       height: 70,
@@ -2745,7 +2688,6 @@ const LudoNew2Player = () => {
                     }}
                     source={image3}
                   />
-                </TouchableOpacity>
               </View>
             </Animatable.View>
           </View>
