@@ -32,7 +32,7 @@ const zoomOut = {
 };
 
 const LudoNew2Player = () => {
-  // const { roomId } = useLocalSearchParams()
+   const { roomId } = useLocalSearchParams()
   // console.log("location.state  location.statelocation.state ", roomId)
 
   const [positions, setPositions] = useState({
@@ -55,66 +55,69 @@ const LudoNew2Player = () => {
   const [isMovedBy1, setIsMovedBy1] = useState(false);
   const [isMovedBy3, setIsMovedBy3] = useState(false);
   const [room, setRoom] = useState({});
-  // const [roomID, setRoomID] = useState();
-  const [User, setUser] = useState({});
+  //  const [roomID, setRoomID] = useState(roomId);
+  const [User, setUser] = useState(auth.currentUser);
+  const [User1, setUser1] = useState({});
+  const [User2, setUser2] = useState({});
 
   const [image1, setImage1] = useState(require("./assets/dice1.png"));
   const [image3, setImage3] = useState(require("./assets/dice1.png"));
 
-  useEffect(() => {
-    // setRoomID(roomId)
-    // CurrentRoom()
-    // console.log("roomIDroomIDroomIDroomIDroomIDroomIDroomIDroomIDroomID", roomID)
-    const user = auth.currentUser;
-    setUser(user)
-  }, [User])
+  // useEffect(() => {
+  //   // setRoomID(roomId)
+  //   // CurrentRoom()
+  //   // console.log("roomIDroomIDroomIDroomIDroomIDroomIDroomIDroomIDroomID", roomID)
+  //   const user = auth.currentUser;
+  //   setUser(user)
+  // }, [User])
+
 
 
   const CurrentRoom = async () => {
-    // let user = auth.currentUser;
-    // // console.log(user.uid);
-    // try {
-    //   const db = getFirestore();
-    //   const roomRef = collection(db, 'twoPlayerRooms');
-
-    //   const q = query(roomRef, where(documentId(), '==', roomID));
-
-    //   const querySnapshot = await getDocs(q);
-
-    //   // console.log("roomRef roomRef ", querySnapshot?.docs[0].data())
-    //   // console.log(" documentId().data documentId().data documentId().data ", roomId)
-    //   setUser(user);
-    //   let room = { ...{ id: roomID }, ...querySnapshot?.docs[0].data() };
-    //   setRoom(room);
-    //   // setRoomID(roomId)
-    //   // console.log(room)
-    //   getDataFromDb(user, room);
-
-    // } catch (error) {
-    //   Alert.alert('Error checking rooms:', error.message);
-    // }
-    ///////////////////////////////////////////
-    const user = auth.currentUser;
-    setUser(user)
-    console.log("USERIDINCURRENTROOM:",user.uid);
-    const db = getFirestore();
-    const roomRef = collection(db, 'twoPlayerRooms');
+    let user = auth.currentUser;
+    // console.log(user.uid);
     try {
-      const q = query(roomRef, where('gameState', '==', 'Started'));
+      const db = getFirestore();
+      const roomRef = collection(db, 'twoPlayerRooms');
+
+      const q = query(roomRef, where(documentId(), '==', roomID));
+
       const querySnapshot = await getDocs(q);
-      const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1.uid === user.uid || doc.data().uid2.uid === user.uid);
-      if (filteredRooms.length > 0) {
-        const roomDoc = filteredRooms[0];
-        const roomId = roomDoc.id;
-        // setRoomID(roomId)
-        console.log("RoomID: ",roomId)
-        return roomId;
-      } else {
-        router.replace('/Home')
-      }
+
+      // console.log("roomRef roomRef ", querySnapshot?.docs[0].data())
+      // console.log(" documentId().data documentId().data documentId().data ", roomId)
+      setUser(user);
+      let room = { ...{ id: roomId }, ...querySnapshot?.docs[0].data() };
+      setRoom(room);
+      // setRoomID(roomId)
+      // console.log(room)
+      getDataFromDb(user, room);
+
     } catch (error) {
       Alert.alert('Error checking rooms:', error.message);
     }
+    ///////////////////////////////////////////
+    // const user = auth.currentUser;
+    // setUser(user)
+    // console.log("USERIDINCURRENTROOM:", user.uid);
+    // const db = getFirestore();
+    // const roomRef = collection(db, 'twoPlayerRooms');
+    // try {
+    //   const q = query(roomRef, where('gameState', '==', 'Started'));
+    //   const querySnapshot = await getDocs(q);
+    //   const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1.uid === user.uid || doc.data().uid2.uid === user.uid);
+    //   if (filteredRooms.length > 0) {
+    //     const roomDoc = filteredRooms[0];
+    //     const roomId = roomDoc.id;
+    //     // setRoomID(roomId)
+    //     console.log("RoomID: ", roomId)
+    //     return roomId;
+    //   } else {
+    //     router.replace('/Home')
+    //   }
+    // } catch (error) {
+    //   Alert.alert('Error checking rooms:', error.message);
+    // }
   };
   Cancel = async () => {
     // const roomId = room?.id;
@@ -810,7 +813,7 @@ const LudoNew2Player = () => {
     // const roomId = room?.id;
     const roomId = await CurrentRoom();
     let UID = User.uid;
-    console.log("UID: ",UID)
+    console.log("UID: ", UID)
     const db = getFirestore();
     try {
       const roomRef = collection(db, 'twoPlayerRooms');
@@ -818,9 +821,9 @@ const LudoNew2Player = () => {
       const q = query(roomRef, where(documentId(), '==', roomId));
       const querySnapshot = await getDocs(q);
       const DataUid1 = querySnapshot?.docs[0].data().uid1.uid
-      console.log("DATADATADATA: ",DataUid1)
+      console.log("DATADATADATA: ", DataUid1)
       const DataUid2 = querySnapshot?.docs[0].data().uid2.uid
-      console.log("DATADATADATA2: ",DataUid2)
+      console.log("DATADATADATA2: ", DataUid2)
       var whichUser = '';
       if (DataUid1 == UID) {
         whichUser = 'uid1';
@@ -898,42 +901,48 @@ const LudoNew2Player = () => {
       // console.log(" roomroomroomroom ", room)
       const db = getFirestore();
       // const roomId = room?.id;
-      const roomID= await CurrentRoom();
+      const roomID = await CurrentRoom();
       // console.log("roomId      roomId _________", roomId)
       const roomRef = doc(db, 'twoPlayerRooms', roomID);
 
-      useEffect(()=>{
-        const unsubscribe = onSnapshot(roomRef, (doc) => {
-          if (doc.exists()) {
-            const data = doc.data();
-            // console.log("console.log(data?.dice2)    ", data)
-            // console.log(data?.dice2)
-            let uid = User?.uid;
-            // UpdateDice2(data?.dice2)
-            if (room?.uid1?.uid != uid) {
-              UpdateDice2(data?.uid1?.dice);
-            } else if (room?.uid2?.uid != uid) {
-              UpdateDice2(data?.uid2?.dice);
-  
-            }
-  
-          } else {
-            console.log('No Turn');
+      // useEffect(()=>{
+      const unsubscribe = onSnapshot(roomRef, (doc) => {
+        if (doc.exists()) {
+          const data = doc.data();
+          // console.log("console.log(data?.dice2)    ", data)
+          // console.log(data?.dice2)
+          let uid = User?.uid;
+          // UpdateDice2(data?.dice2)
+          if (room?.uid1?.uid != uid) {
+            UpdateDice2(data?.uid1?.dice);
+          } else if (room?.uid2?.uid != uid) {
+            UpdateDice2(data?.uid2?.dice);
+
           }
-        });
-  
-        // Clean up the subscription on unmount
-        return () => unsubscribe();
-      },[data])
+
+        } else {
+          console.log('No Turn');
+        }
+      });
+
+      // Clean up the subscription on unmount
+      return () => unsubscribe();
+      // },[data])
     } catch (error) {
       console.error('Error fetching player turn:', error);
       Alert.alert('Error PlayerTurn', error.message);
     }
   }
 
-  // useEffect(() => {
-  //   getDataFromDb();
-  // }, [])
+  useEffect(() => {
+    getDataFromDb();
+    if (DataUid1 == UID) {
+      whichUser = 'uid1';
+    } else //if (DataUid2 == uid) 
+    {
+      whichUser = 'uid2';
+    }
+  }, [])
 
   const generateRandomNumber = async (player) => {
     const randomNumber = Math.floor(Math.random() * 6) + 1;
