@@ -790,10 +790,10 @@ const LudoNew2Player = () => {
     }
   };
 
-  const validateChangeOfChange = (Dice) => {
-    if(Dice == 6) return false;
-    return true;
-  }
+  // const validateChangeOfChange = (Dice) => {
+  //   if(Dice == 6) return false;
+  //   return true;
+  // }
 
   const updateDice1 = async (Dice, ) => {
     const roomId = room?.id;
@@ -879,7 +879,7 @@ const LudoNew2Player = () => {
          setIsMovedBy1(false);
       } else {
         console.log("same conditions must be there");
-        setTurn3(false);
+        setTurn3(true);
       }
     // } else {
     //   setTurnMessage("It's Not Your Turn");
