@@ -76,7 +76,7 @@ const Home = () => {
                     <CustomButton 
                     title={'2 Players'} 
                     ContainerStyles={'w-full bg-black'}
-                    handlePress={() => router.replace("/Room")}
+                    handlePress={() => router.push("/Ludo2PlayerOffline")}
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
                 </View>
@@ -94,7 +94,7 @@ const Home = () => {
                     <CustomButton 
                     title={'4 Players'} 
                     ContainerStyles={'w-full bg-black'}
-                    handlePress={() => router.push("/LudoNew2Player")}
+                    handlePress={() => router.push("/LudoNew")}
                     textStyles={'text-lg font-pbold text-blue-400'}
                     />
                 </View>
@@ -103,7 +103,7 @@ const Home = () => {
               <CustomButton 
                 title={'Online play'} 
                 ContainerStyles={'w-40 bg-black'}
-                handlePress={() => router.push("/Ludo")}
+                handlePress={() => router.replace("/Room")}
                 textStyles={'text-lg font-pbold text-blue-400'}
               />
             </View>
