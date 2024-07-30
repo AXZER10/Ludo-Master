@@ -835,7 +835,7 @@ const LudoNew2Player = () => {
           gameState: "InProgress"
         }
         await updateDoc(roomRef, updatedRoom);
-      // setCurrentNumber1(Dice)
+      setCurrentNumber1(Dice) 
     }
    
    } catch (error) {
@@ -879,7 +879,7 @@ const LudoNew2Player = () => {
          setIsMovedBy1(false);
       } else {
         console.log("same conditions must be there");
-        setTurn3(true);
+        //setTurn3(true);
       }
     // } else {
     //   setTurnMessage("It's Not Your Turn");
@@ -969,9 +969,9 @@ const LudoNew2Player = () => {
         default:
           break;
       }
-      
+      await updateDice1(randomNumber)
       if (randomNumber !== 6) {
-        await updateDice1(randomNumber)
+       
         setTurn1(false);
         setTurn3(true);
          setIsMovedBy3(false);
