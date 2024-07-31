@@ -988,6 +988,7 @@ const LudoNew2Player = () => {
         switch (whichOne) {
           case 1:
             if (positions[1][0] === position) {
+              //Update Database with position
               return (
                 <FontAwesome
                   name="user"
@@ -1001,6 +1002,7 @@ const LudoNew2Player = () => {
             break;
           case 2:
             if (positions[1][1] === position) {
+              //Update Database with position
               return (
                 <FontAwesome
                   name="user"
@@ -1014,6 +1016,7 @@ const LudoNew2Player = () => {
             break;
           case 3:
             if (positions[1][2] === position) {
+              //Update Database with position
               return (
                 <FontAwesome
                   name="user"
@@ -1027,6 +1030,7 @@ const LudoNew2Player = () => {
             break;
           case 4:
             if (positions[1][3] === position) {
+              //Update Database with position
               return (
                 <FontAwesome
                   name="user"
@@ -1046,11 +1050,15 @@ const LudoNew2Player = () => {
         switch (whichOne) {
           case 1:
             if (positions[3][0] === position) {
+              // useEffect(() => {
+              //   moveIcon(3, 1, position)
+              // }, [position.database])
+              
               return (
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  onPress={() => moveIcon(3, 1, position)}
+                  //onPress={() => }
                   color="#ed24ae"
                   size={20}
                 />
