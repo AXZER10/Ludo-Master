@@ -790,14 +790,19 @@ const LudoNew2Player = () => {
     }
   };
 
-  const updateDice1 = async (Dice) => {
+  // const validateChangeOfChange = (Dice) => {
+  //   if(Dice == 6) return false;
+  //   return true;
+  // }
+
+  const updateDice1 = async (Dice, ) => {
     const roomId = room?.id;
     let UID = User.uid;
     console.log("UID: ", UID)
     const db = getFirestore();
     try {
       const roomRef = doc(db, 'twoPlayerRooms', roomId);
-      if (User1 == UID) {
+      if (room?.uid1?.uid == UID) {
         let updatedRoom = {
           id:room?.id,
           uid1: {
@@ -830,8 +835,9 @@ const LudoNew2Player = () => {
           gameState: "InProgress"
         }
         await updateDoc(roomRef, updatedRoom);
-      setCurrentNumber1(Dice)
+      setCurrentNumber1(Dice) 
     }
+   
    } catch (error) {
       Alert.alert('Error Updating Dice', error.message)
     }
@@ -843,8 +849,8 @@ const LudoNew2Player = () => {
       turn3 + "  " + isMovedBy1 + "  " + checkIfAnythingOpened(1)
     );
     // if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
-      setWhoseTurnToMove(3);
-      setIsMovedBy3(false);
+    //   setWhoseTurnToMove(3);
+    //   setIsMovedBy3(false);
       switch (dice) {
         case 1:
           setImage3(require("./assets/dice1.png"));
@@ -870,10 +876,10 @@ const LudoNew2Player = () => {
       if (dice !== 6) {
         setTurn3(false);
         setTurn1(true);
-        setIsMovedBy1(false);
+         setIsMovedBy1(false);
       } else {
         console.log("same conditions must be there");
-        setTurn3(false);
+        //setTurn3(true);
       }
     // } else {
     //   setTurnMessage("It's Not Your Turn");
@@ -883,7 +889,7 @@ const LudoNew2Player = () => {
   const getDataFromDb = async () => {
     try {
       const db = getFirestore();
-      // const roomId = room?.id;
+      let UID = User.uid;
       // const roomID = await CurrentRoom();
       // console.log("roomId      roomId _________", roomId)
       // console.log('room?.id ???????',room)
@@ -893,11 +899,11 @@ const LudoNew2Player = () => {
       const unsubscribe = onSnapshot(roomRef, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
-          console.log("for update 2",data)
-          console.log('User1',User1)
-          console.log('data?.uid1?.turn',data?.uid1?.dice)
+          // console.log("for update 2",data)
+          // console.log('User1',User1)
+          // console.log('data?.uid1?.turn',data?.uid1?.dice)
           // UpdateDice2(data?.uid1?.dice);
-          if(room?.uid1?.uid == User1){
+          if(data?.uid1?.uid == UID){
             if(data?.uid1?.turn == true){
               UpdateDice2(data?.uid2?.dice);  
             }
@@ -965,9 +971,10 @@ const LudoNew2Player = () => {
       }
       await updateDice1(randomNumber)
       if (randomNumber !== 6) {
+       
         setTurn1(false);
         setTurn3(true);
-        setIsMovedBy3(false);
+         setIsMovedBy3(false);
       } 
     } else {
       setTurnMessage("It's Not Your Turn");
@@ -2746,7 +2753,7 @@ const LudoNew2Player = () => {
   );
 };
 
-export default LudoNew2Player;
+
 
 const styles = StyleSheet.create({
   red: {
@@ -2799,3 +2806,4 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 });
+export default LudoNew2Player;
