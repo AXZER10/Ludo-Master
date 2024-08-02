@@ -893,7 +893,6 @@ const LudoNew2Player = () => {
     // if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
     //   setWhoseTurnToMove(3);
     //   setIsMovedBy3(false);
-<<<<<<< HEAD
       switch (dice) {
         case 1:
           setImage3(require("./assets/dice1.png"));
@@ -924,7 +923,6 @@ const LudoNew2Player = () => {
         console.log("same conditions must be there");
         //setTurn3(true);
       }
-=======
     switch (dice) {
       case 1:
         setImage3(require("./assets/dice1.png"));
@@ -955,7 +953,6 @@ const LudoNew2Player = () => {
       console.log("same conditions must be there");
       setTurn3(true);
     }
->>>>>>> f3d643ee53b3a161e5a6f86c821e5b7ca19eb603
     // } else {
     //   setTurnMessage("It's Not Your Turn");
     // }
