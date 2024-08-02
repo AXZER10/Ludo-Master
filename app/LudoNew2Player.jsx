@@ -365,8 +365,15 @@ const LudoNew2Player = () => {
         }
         break;
       case 3:
-        console.log(whoseTurnToMove === 3 && !isMovedBy3)
-        console.log(currentNumber2)
+        // console.log(whoseTurnToMove === 3 && !isMovedBy3)
+        // console.log(currentNumber2)
+        // const fetchdata = async () =>{
+        //     const db  = getFirestore();
+        //     const roomRef = doc(db, 'twoPlayerRooms', room?.id);
+          
+        // }
+       
+
         if (whoseTurnToMove === 3 && !isMovedBy3) {
           if (currentNumber2 === 6) {
             setTurn3(true)
@@ -870,7 +877,7 @@ const LudoNew2Player = () => {
         case 6:
           setImage3(require("./assets/dice6.png"));
           break;
-        default:
+        default: 
           break;
       }
       if (dice !== 6) {
@@ -1050,15 +1057,15 @@ const LudoNew2Player = () => {
         switch (whichOne) {
           case 1:
             if (positions[3][0] === position) {
-              // useEffect(() => {
-              //   moveIcon(3, 1, position)
-              // }, [position.database])
+              useEffect(() => {
+                moveIcon(3, 1, position)
+              }, [position.database])
               
               return (
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  //onPress={() => }
+                  //onPress={() => moveIcon(3, 1, position) }
                   color="#ed24ae"
                   size={20}
                 />
