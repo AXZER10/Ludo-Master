@@ -1127,17 +1127,14 @@ const LudoNew2Player = () => {
         switch (whichOne) {
           case 1:
             if (positions[3][0] === position) {
-<<<<<<< HEAD
               useEffect(() => {
                 moveIcon(3, 1, position)
               }, [position.database])
               
-=======
               // useEffect(() => {
               //   moveIcon(3, 1, position)
               // }, [position.database])
 
->>>>>>> f3d643ee53b3a161e5a6f86c821e5b7ca19eb603
               return (
                 <FontAwesome
                   name="user"
