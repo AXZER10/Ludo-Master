@@ -130,42 +130,42 @@ const LudoNew2Player = () => {
                 if (currentNumber1 === 6) {
                   setTurn1(true)
                   updateTurn();
-                  // const roomRef = doc(db, 'twoPlayerRooms', roomId);
-                  // if (room?.uid1?.uid == UID) {
-                  //   let updatedRoom = {
-                  //     id: room?.id,
-                  //     uid1: {
-                  //       dice: Dice,
-                  //       turn: false,
-                  //       uid: room?.uid1?.uid
-                  //     },
-                  //     uid2: {
-                  //       dice: room?.uid2?.dice,
-                  //       turn: true,
-                  //       uid: room?.uid2?.uid
-                  //     },
-                  //     gameState: "InProgress"
-                  //   }
-                  //   console.log(updatedRoom)
-                  //   await updateDoc(roomRef, updatedRoom);
-                  // } else {
-                  //   let updatedRoom = {
-                  //     id: room?.id,
-                  //     uid1: {
-                  //       dice: room?.uid1?.dice,
-                  //       turn: true,
-                  //       uid: room?.uid1?.uid
-                  //     },
-                  //     uid2: {
-                  //       dice: Dice,
-                  //       turn: false,
-                  //       uid: room?.uid2?.uid
-                  //     },
-                  //     gameState: "InProgress"
-                  //   }
-                  //   await updateDoc(roomRef, updatedRoom);
-                  // }
-                }
+                  const roomRef = doc(db, 'twoPlayerRooms', roomId);
+                  if (room?.uid1?.uid == UID) {
+                    let updatedRoom = {
+                      id: room?.id,
+                      uid1: {
+                        dice: Dice,
+                        turn: false,
+                        uid: room?.uid1?.uid
+                      },
+                      uid2: {
+                        dice: room?.uid2?.dice,
+                        turn: true,
+                        uid: room?.uid2?.uid
+                      },
+                      gameState: "InProgress"
+                    }
+                    console.log(updatedRoom)
+                    await updateDoc(roomRef, updatedRoom);
+                  } else {
+                    let updatedRoom = {
+                      id: room?.id,
+                      uid1: {
+                        dice: room?.uid1?.dice,
+                        turn: true,
+                        uid: room?.uid1?.uid
+                      },
+                      uid2: {
+                        dice: Dice,
+                        turn: false,
+                        uid: room?.uid2?.uid
+                      },
+                      gameState: "InProgress"
+                    }
+                    await updateDoc(roomRef, updatedRoom);
+                  }
+                 }
                 if (positions[1][0] < 0) {
                   if (currentNumber1 === 6) {
                     let temparr = positions[1];
@@ -400,19 +400,12 @@ const LudoNew2Player = () => {
         }
         break;
       case 3:
-        // console.log(whoseTurnToMove === 3 && !isMovedBy3)
-        // console.log(currentNumber2)
-        // const fetchdata = async () =>{
-        //     const db  = getFirestore();
-        //     const roomRef = doc(db, 'twoPlayerRooms', room?.id);
-          
-        // }
-       
 
         if (whoseTurnToMove === 3 && !isMovedBy3) {
           if (currentNumber2 === 6) {
             setTurn3(true)
             updateTurn();
+            
           }
           switch (whichOne) {
             case 1:
@@ -921,42 +914,9 @@ const LudoNew2Player = () => {
          setIsMovedBy1(false);
       } else {
         console.log("same conditions must be there");
-        //setTurn3(true);
+        setTurn3(false);
       }
-    switch (dice) {
-      case 1:
-        setImage3(require("./assets/dice1.png"));
-        break;
-      case 2:
-        setImage3(require("./assets/dice2.png"));
-        break;
-      case 3:
-        setImage3(require("./assets/dice3.png"));
-        break;
-      case 4:
-        setImage3(require("./assets/dice4.png"));
-        break;
-      case 5:
-        setImage3(require("./assets/dice5.png"));
-        break;
-      case 6:
-        setImage3(require("./assets/dice6.png"));
-        break;
-      default:
-        break;
-    }
-    if (dice !== 6) {
-      setTurn3(false);
-      setTurn1(true);
-      setIsMovedBy1(false);
-    } else {
-      console.log("same conditions must be there");
-      setTurn3(true);
-    }
-    // } else {
-    //   setTurnMessage("It's Not Your Turn");
-    // }
-  };
+   };
 
   const getDataFromDb = async () => {
     try {
@@ -997,8 +957,7 @@ const LudoNew2Player = () => {
       return () => unsubscribe();
       // },[data])
     } catch (error) {
-      console.error('Error fetching player turn:', error);
-      Alert.alert('Error PlayerTurn', error.message);
+      
     }
   }
 
@@ -1050,7 +1009,7 @@ const LudoNew2Player = () => {
       }
       else {
         console.log("same conditions must be there");
-        setTurn3(true);
+        setTurn1(false);
       }
     } else {
       setTurnMessage("It's Not Your Turn");
@@ -1124,16 +1083,50 @@ const LudoNew2Player = () => {
         break;
       case 3:
         //OnSnapshot
+        const fetchData = async () =>{
+          try{
+            const db = getFirestore();
+            let UID = User.uid
+            const roomRef = doc(db, 'twoPlayerRooms', room?.id);
+            const unsubscribe = onSnapshot(roomRef, (doc) => {
+              if(doc.exists()){
+                const data = doc.data();
+                if(data?.uid1?.uid == UID){
+                  if(data?.uid1?.turn == true){
+                    UpdateDice2(data?.uid1?.dice);
+                  }
+                }else{
+                  if(data?.uid2?.turn == true){
+                    UpdateDice2(data?.uid1?.dice);
+                  }
+                }
+                let room = { ...{id: roomId },...doc.data()};
+                setRoom(room)
+              }else {
+                console.log('No Turn');
+              }
+            });
+            onSnapCreated(true);
+            return() =>unsubscribe();
+          
+        }catch (error){
+          console.error('Error fetching player turn:', error);
+          Alert.alert('Error PlayerTurn', error.message); 
+        }
+      }
         switch (whichOne) {
           case 1:
             if (positions[3][0] === position) {
               useEffect(() => {
+                async function getRoom(){
+                  await CurrentRoom();
+                }
+                if(!room) getRoom();
+                if(room && !snapCreated) fetchData();
                 moveIcon(3, 1, position)
               }, [position.database])
               
-              // useEffect(() => {
-              //   moveIcon(3, 1, position)
-              // }, [position.database])
+             
 
               return (
                 <FontAwesome
