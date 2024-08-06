@@ -48,10 +48,10 @@ const LudoNew2Player = () => {
   }
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
-  // const [currentNumber1, setCurrentNumber1] = useState(0);
+  const [currentNumber1, setCurrentNumber1] = useState(0);
   // let currentNumber1 = 0;
   // let currentNumber2 = 0;
-  // const [currentNumber2, setCurrentNumber2] = useState(0);
+  const [currentNumber2, setCurrentNumber2] = useState(0);
   const [turnMessage, setTurnMessage] = useState("");
   const [moveMessage, setMoveMessage] = useState("");
   const [whoseTurnToMove, setWhoseTurnToMove] = useState(0);
@@ -123,7 +123,7 @@ const LudoNew2Player = () => {
         console.log("isMovedBy1: ", isMovedBy1)
         console.log("Whichone: ", whichOne)
         // console.log("currentNumber2: ", currentNumber2)
-        var currentNumber1 = 0
+        // var currentNumber1 = 0
         console.log("currentNumber1: ", currentNumber1)
         if (whoseTurnToMove === 1 && !isMovedBy1) {
           switch (whichOne) {
@@ -132,49 +132,6 @@ const LudoNew2Player = () => {
                 if (currentNumber1 === 6) {
                   setTurn1(true)
                   updateTurn();
-                  const roomId = room?.id;
-                  let UID = User.uid;
-                  console.log("UID: ", UID)
-                  const db = getFirestore();
-                  const roomRef = doc(db, 'twoPlayerRooms', roomId);
-                  if (room?.uid1?.uid == UID) {
-                    let updatedRoom = {
-                      id: room?.id,
-                      position1: positions[1],
-                      uid1: {
-                        dice: Dice,
-                        turn: false,
-                        uid: room?.uid1?.uid
-                      },
-                      uid2: {
-                        position2: positions[3],
-                        dice: room?.uid2?.dice,
-                        turn: true,
-                        uid: room?.uid2?.uid
-                      },
-                      gameState: "InProgress"
-                    }
-                    console.log(updatedRoom)
-                    await updateDoc(roomRef, updatedRoom);
-                  } else {
-                    let updatedRoom = {
-                      id: room?.id,
-                      uid1: {
-                        position: positions[3],
-                        dice: room?.uid1?.dice,
-                        turn: true,
-                        uid: room?.uid1?.uid
-                      },
-                      uid2: {
-                        position: positions[1],
-                        dice: Dice,
-                        turn: false,
-                        uid: room?.uid2?.uid
-                      },
-                      gameState: "InProgress"
-                    }
-                    await updateDoc(roomRef, updatedRoom);
-                  }
                 }
                 if (positions[1][0] < 0) {
                   if (currentNumber1 === 6) {
@@ -235,6 +192,49 @@ const LudoNew2Player = () => {
                   setIsMovedBy1(true);
                 }
               }
+              const roomId = room?.id;
+                  let UID = User.uid;
+                  console.log("UID: ", UID)
+                  const db = getFirestore();
+                  const roomRef = doc(db, 'twoPlayerRooms', roomId);
+                  if (room?.uid1?.uid == UID) {
+                    let updatedRoom = {
+                      id: room?.id,
+                      uid1: {
+                        position1: positions[1],
+                        dice: room?.uid1?.dice,
+                        turn: room?.uid1?.turn,
+                        uid: room?.uid1?.uid
+                      },
+                      uid2: {
+                        position2: positions[3],
+                        dice: room?.uid2?.dice,
+                        turn: room?.uid2?.turn,
+                        uid: room?.uid2?.uid
+                      },
+                      gameState: "InProgress"
+                    }
+                    console.log(updatedRoom)
+                    await updateDoc(roomRef, updatedRoom);
+                  } else {
+                    let updatedRoom = {
+                      id: room?.id,
+                      uid1: {
+                        position: positions[3],
+                        dice: room?.uid1?.dice,
+                        turn: room?.uid1?.turn,
+                        uid: room?.uid1?.uid
+                      },
+                      uid2: {
+                        position: positions[1],
+                        dice: room?.uid2?.dice,
+                        turn: room?.uid2?.turn,
+                        uid: room?.uid2?.uid
+                      },
+                      gameState: "InProgress"
+                    }
+                    await updateDoc(roomRef, updatedRoom);
+                  }
               break;
             case 2:
               if (positions[1][1] !== "winner") {
@@ -934,14 +934,14 @@ const LudoNew2Player = () => {
           if (data?.uid1?.uid == UID) {
             if (data?.uid1?.turn == true) {
               UpdateDice2(data?.uid2?.dice);
-              currentNumber1 = data?.uid1?.dice
-              currentNumber2 = data?.uid2?.dice
+              // currentNumber1 = data?.uid1?.dice
+              // currentNumber2 = data?.uid2?.dice
             }
           } else {
             if (data?.uid2?.turn == true) {
               UpdateDice2(data?.uid1?.dice);
-              currentNumber1 = data?.uid2?.dice
-              currentNumber2 = data?.uid1?.dice
+              // currentNumber1 = data?.uid2?.dice
+              // currentNumber2 = data?.uid1?.dice
             }
           }
 
@@ -998,6 +998,7 @@ const LudoNew2Player = () => {
           break;
       }
       await updateDice1(randomNumber)
+      setCurrentNumber1(randomNumber)
       if (randomNumber !== 6) {
         setTurn1(false);
         setTurn3(true);
