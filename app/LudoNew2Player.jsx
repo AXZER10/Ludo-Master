@@ -48,15 +48,16 @@ const LudoNew2Player = () => {
   }
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
-  const [currentNumber1, setCurrentNumber1] = useState(0);
-  const [currentNumber2, setCurrentNumber2] = useState(0);
+  // const [currentNumber1, setCurrentNumber1] = useState(0);
+  // let currentNumber1 = 0;
+  // let currentNumber2 = 0;
+  // const [currentNumber2, setCurrentNumber2] = useState(0);
   const [turnMessage, setTurnMessage] = useState("");
   const [moveMessage, setMoveMessage] = useState("");
   const [whoseTurnToMove, setWhoseTurnToMove] = useState(0);
   const [isMovedBy1, setIsMovedBy1] = useState(false);
   const [isMovedBy3, setIsMovedBy3] = useState(false);
   const [room, setRoom] = useState(undefined);
-  //  const [roomID, setRoomID] = useState(roomId);
   const [User, setUser] = useState(auth.currentUser);
   const [User1, setUser1] = useState({});
   const [User2, setUser2] = useState({});
@@ -73,13 +74,9 @@ const LudoNew2Player = () => {
     try {
       const db = getFirestore();
       const roomRef = collection(db, 'twoPlayerRooms');
-
       const q = query(roomRef, where(documentId(), '==', roomId));
-
       const querySnapshot = await getDocs(q);
 
-      // console.log("roomRef roomRef ", querySnapshot?.docs[0].data())
-      // console.log(" documentId().data documentId().data documentId().data ", roomId)
       setUser(user);
       let room = { ...{ id: roomId }, ...querySnapshot?.docs[0].data() };
 
@@ -88,8 +85,7 @@ const LudoNew2Player = () => {
         if (DataUid1 == User?.uid) {
           setUser1(DataUid1)
           setUser2(room?.uid2?.uid)
-        } else //if (DataUid2 == uid) 
-        {
+        } else {
           setUser1(room?.uid2?.uid)
           setUser2(DataUid1)
         }
@@ -123,6 +119,12 @@ const LudoNew2Player = () => {
   const moveIcon = async (player, whichOne, position) => {
     switch (player) {
       case 1:
+        console.log("whoseTurnToMove: ", whoseTurnToMove)
+        console.log("isMovedBy1: ", isMovedBy1)
+        console.log("Whichone: ", whichOne)
+        // console.log("currentNumber2: ", currentNumber2)
+        var currentNumber1 = 0
+        console.log("currentNumber1: ", currentNumber1)
         if (whoseTurnToMove === 1 && !isMovedBy1) {
           switch (whichOne) {
             case 1:
@@ -130,16 +132,22 @@ const LudoNew2Player = () => {
                 if (currentNumber1 === 6) {
                   setTurn1(true)
                   updateTurn();
+                  const roomId = room?.id;
+                  let UID = User.uid;
+                  console.log("UID: ", UID)
+                  const db = getFirestore();
                   const roomRef = doc(db, 'twoPlayerRooms', roomId);
                   if (room?.uid1?.uid == UID) {
                     let updatedRoom = {
                       id: room?.id,
+                      position1: positions[1],
                       uid1: {
                         dice: Dice,
                         turn: false,
                         uid: room?.uid1?.uid
                       },
                       uid2: {
+                        position2: positions[3],
                         dice: room?.uid2?.dice,
                         turn: true,
                         uid: room?.uid2?.uid
@@ -152,11 +160,13 @@ const LudoNew2Player = () => {
                     let updatedRoom = {
                       id: room?.id,
                       uid1: {
+                        position: positions[3],
                         dice: room?.uid1?.dice,
                         turn: true,
                         uid: room?.uid1?.uid
                       },
                       uid2: {
+                        position: positions[1],
                         dice: Dice,
                         turn: false,
                         uid: room?.uid2?.uid
@@ -165,7 +175,7 @@ const LudoNew2Player = () => {
                     }
                     await updateDoc(roomRef, updatedRoom);
                   }
-                 }
+                }
                 if (positions[1][0] < 0) {
                   if (currentNumber1 === 6) {
                     let temparr = positions[1];
@@ -405,7 +415,7 @@ const LudoNew2Player = () => {
           if (currentNumber2 === 6) {
             setTurn3(true)
             updateTurn();
-            
+
           }
           switch (whichOne) {
             case 1:
@@ -825,11 +835,6 @@ const LudoNew2Player = () => {
     }
   };
 
-  // const validateChangeOfChange = (Dice) => {
-  //   if(Dice == 6) return false;
-  //   return true;
-  // }
-
   const updateDice1 = async (Dice,) => {
     const roomId = room?.id;
     let UID = User.uid;
@@ -870,7 +875,9 @@ const LudoNew2Player = () => {
           gameState: "InProgress"
         }
         await updateDoc(roomRef, updatedRoom);
-        setCurrentNumber1(Dice)
+        // setCurrentNumber1(Dice)
+        // currentNumber1 = Dice;
+        console.log("currentNumber1 in Update Dice: ", currentNumber1)
       }
 
     } catch (error) {
@@ -878,70 +885,63 @@ const LudoNew2Player = () => {
     }
   }
 
-  const UpdateDice2 = (dice) => {
-    setCurrentNumber2(dice)
+  const UpdateDice2 = async (dice) => {
+    // setCurrentNumber2(dice)
+    // currentNumber2 = dice;
     console.log("UpdateDice2" + "  " +
       turn3 + "  " + isMovedBy1 + "  " + checkIfAnythingOpened(1)
     );
-    // if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
-    //   setWhoseTurnToMove(3);
-    //   setIsMovedBy3(false);
-      switch (dice) {
-        case 1:
-          setImage3(require("./assets/dice1.png"));
-          break;
-        case 2:
-          setImage3(require("./assets/dice2.png"));
-          break;
-        case 3:
-          setImage3(require("./assets/dice3.png"));
-          break;
-        case 4:
-          setImage3(require("./assets/dice4.png"));
-          break;
-        case 5:
-          setImage3(require("./assets/dice5.png"));
-          break;
-        case 6:
-          setImage3(require("./assets/dice6.png"));
-          break;
-        default: 
-          break;
-      }
-      if (dice !== 6) {
-        setTurn3(false);
-        setTurn1(true);
-         setIsMovedBy1(false);
-      } else {
-        console.log("same conditions must be there");
-        setTurn3(false);
-      }
-   };
+    switch (dice) {
+      case 1:
+        setImage3(require("./assets/dice1.png"));
+        break;
+      case 2:
+        setImage3(require("./assets/dice2.png"));
+        break;
+      case 3:
+        setImage3(require("./assets/dice3.png"));
+        break;
+      case 4:
+        setImage3(require("./assets/dice4.png"));
+        break;
+      case 5:
+        setImage3(require("./assets/dice5.png"));
+        break;
+      case 6:
+        setImage3(require("./assets/dice6.png"));
+        break;
+      default:
+        break;
+    }
+    if (dice !== 6) {
+      setTurn3(false);
+      setTurn1(true);
+      setIsMovedBy1(false);
+    } else {
+      console.log("same conditions must be there");
+      setTurn3(false);
+    }
+  };
 
   const getDataFromDb = async () => {
     try {
       const db = getFirestore();
       let UID = User.uid;
-      // const roomID = await CurrentRoom();
-      // console.log("roomId      roomId _________", roomId)
-      // console.log('room?.id ???????',room)
       const roomRef = doc(db, 'twoPlayerRooms', room?.id);
-      // console.log('room?.id',room?.id)
-      // useEffect(()=>{
       const unsubscribe = onSnapshot(roomRef, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
-          // console.log("for update 2",data)
-          // console.log('User1',User1)
-          // console.log('data?.uid1?.turn',data?.uid1?.dice)
-          // UpdateDice2(data?.uid1?.dice);
           if (data?.uid1?.uid == UID) {
             if (data?.uid1?.turn == true) {
               UpdateDice2(data?.uid2?.dice);
+              currentNumber1 = data?.uid1?.dice
+              currentNumber2 = data?.uid2?.dice
             }
           } else {
             if (data?.uid2?.turn == true) {
               UpdateDice2(data?.uid1?.dice);
+              currentNumber1 = data?.uid2?.dice
+              currentNumber2 = data?.uid1?.dice
             }
           }
 
@@ -951,13 +951,10 @@ const LudoNew2Player = () => {
           console.log('No Turn');
         }
       });
-
-      // Clean up the subscription on unmount
       onSnapCreated(true);
       return () => unsubscribe();
-      // },[data])
     } catch (error) {
-      
+
     }
   }
 
@@ -1002,7 +999,6 @@ const LudoNew2Player = () => {
       }
       await updateDice1(randomNumber)
       if (randomNumber !== 6) {
-
         setTurn1(false);
         setTurn3(true);
         setIsMovedBy3(false);
@@ -1083,50 +1079,50 @@ const LudoNew2Player = () => {
         break;
       case 3:
         //OnSnapshot
-        const fetchData = async () =>{
-          try{
+        const fetchData = async () => {
+          try {
             const db = getFirestore();
             let UID = User.uid
             const roomRef = doc(db, 'twoPlayerRooms', room?.id);
             const unsubscribe = onSnapshot(roomRef, (doc) => {
-              if(doc.exists()){
+              if (doc.exists()) {
                 const data = doc.data();
-                if(data?.uid1?.uid == UID){
-                  if(data?.uid1?.turn == true){
+                if (data?.uid1?.uid == UID) {
+                  if (data?.uid1?.turn == true) {
                     UpdateDice2(data?.uid1?.dice);
                   }
-                }else{
-                  if(data?.uid2?.turn == true){
+                } else {
+                  if (data?.uid2?.turn == true) {
                     UpdateDice2(data?.uid1?.dice);
                   }
                 }
-                let room = { ...{id: roomId },...doc.data()};
+                let room = { ...{ id: roomId }, ...doc.data() };
                 setRoom(room)
-              }else {
+              } else {
                 console.log('No Turn');
               }
             });
             onSnapCreated(true);
-            return() =>unsubscribe();
-          
-        }catch (error){
-          console.error('Error fetching player turn:', error);
-          Alert.alert('Error PlayerTurn', error.message); 
+            return () => unsubscribe();
+
+          } catch (error) {
+            console.error('Error fetching player turn:', error);
+            Alert.alert('Error PlayerTurn', error.message);
+          }
         }
-      }
         switch (whichOne) {
           case 1:
             if (positions[3][0] === position) {
               useEffect(() => {
-                async function getRoom(){
+                async function getRoom() {
                   await CurrentRoom();
                 }
-                if(!room) getRoom();
-                if(room && !snapCreated) fetchData();
+                if (!room) getRoom();
+                if (room && !snapCreated) fetchData();
                 moveIcon(3, 1, position)
               }, [position.database])
-              
-             
+
+
 
               return (
                 <FontAwesome
