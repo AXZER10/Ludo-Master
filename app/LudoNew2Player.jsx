@@ -1,16 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image, ImageBackground, SafeAreaView } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'
-import { Players, row } from './styles/forPlayers'
-import { Audio } from 'expo-av'
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+} from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { Players, row } from "./styles/forPlayers";
+import { Audio } from "expo-av";
 import * as Animatable from "react-native-animatable";
-import icons from '../constants/icons'
-import { router } from 'expo-router';
-import { auth } from '../FirebaseConfig';
-import { collection, getFirestore, doc, query, where, getDocs, updateDoc, onSnapshot, documentId, getDoc, docs } from 'firebase/firestore';
-import { Alert } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-
+import icons from "../constants/icons";
+import { router } from "expo-router";
+import { auth } from "../FirebaseConfig";
+import {
+  collection,
+  getFirestore,
+  doc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  onSnapshot,
+  documentId,
+  getDoc,
+  docs,
+} from "firebase/firestore";
+import { Alert } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 
 soundObject = new Audio.Sound();
 
@@ -33,24 +53,32 @@ const zoomOut = {
 };
 
 const LudoNew2Player = () => {
-  const { roomId } = useLocalSearchParams()
+  const { roomId } = useLocalSearchParams();
   // console.log("location.state  location.statelocation.state ", roomId)
 
   const [positions, setPositions] = useState({
     1: [-11, -21, -31, -41],
     3: [-13, -23, -33, -43],
   });
-  if (positions[1][0] === 'winner' && positions[1][1] === 'winner' && positions[1][2] === 'winner' && positions[1][3] === 'winner') {
-    Alert.alert("Game Over", "Player 1 Wins")
+  if (
+    positions[1][0] === "winner" &&
+    positions[1][1] === "winner" &&
+    positions[1][2] === "winner" &&
+    positions[1][3] === "winner"
+  ) {
+    Alert.alert("Game Over", "Player 1 Wins");
   }
-  if (positions[3][0] === 'winner' && positions[3][1] === 'winner' && positions[3][2] === 'winner' && positions[3][3] === 'winner') {
-    Alert.alert("Game Over", "Player 2 Wins")
+  if (
+    positions[3][0] === "winner" &&
+    positions[3][1] === "winner" &&
+    positions[3][2] === "winner" &&
+    positions[3][3] === "winner"
+  ) {
+    Alert.alert("Game Over", "Player 2 Wins");
   }
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
   const [currentNumber1, setCurrentNumber1] = useState(0);
-  // let currentNumber1 = 0;
-  // let currentNumber2 = 0;
   const [currentNumber2, setCurrentNumber2] = useState(0);
   const [turnMessage, setTurnMessage] = useState("");
   const [moveMessage, setMoveMessage] = useState("");
@@ -58,80 +86,111 @@ const LudoNew2Player = () => {
   const [isMovedBy1, setIsMovedBy1] = useState(false);
   const [isMovedBy3, setIsMovedBy3] = useState(false);
   const [room, setRoom] = useState(undefined);
+  //  const [roomID, setRoomID] = useState(roomId);
   const [User, setUser] = useState(auth.currentUser);
   const [User1, setUser1] = useState({});
   const [User2, setUser2] = useState({});
 
-  const [snapCreated, onSnapCreated] = useState(false)
+  const [snapCreated, onSnapCreated] = useState(false);
 
   const [image1, setImage1] = useState(require("./assets/dice1.png"));
   const [image3, setImage3] = useState(require("./assets/dice1.png"));
-
 
   const CurrentRoom = async () => {
     let user = auth.currentUser;
     console.log("roomId roomId ", roomId);
     try {
       const db = getFirestore();
-      const roomRef = collection(db, 'twoPlayerRooms');
-      const q = query(roomRef, where(documentId(), '==', roomId));
+      const roomRef = collection(db, "twoPlayerRooms");
+
+      const q = query(roomRef, where(documentId(), "==", roomId));
+
       const querySnapshot = await getDocs(q);
 
+      // console.log("roomRef roomRef ", querySnapshot?.docs[0].data())
+      // console.log(" documentId().data documentId().data documentId().data ", roomId)
       setUser(user);
       let room = { ...{ id: roomId }, ...querySnapshot?.docs[0].data() };
 
       if (room) {
         let DataUid1 = room?.uid1?.uid;
         if (DataUid1 == User?.uid) {
-          setUser1(DataUid1)
-          setUser2(room?.uid2?.uid)
-        } else {
-          setUser1(room?.uid2?.uid)
-          setUser2(DataUid1)
+          setUser1(DataUid1);
+          setUser2(room?.uid2?.uid);
+        } //if (DataUid2 == uid)
+        else {
+          setUser1(room?.uid2?.uid);
+          setUser2(DataUid1);
         }
-        console.log('set Room', room)
+        console.log("set Room", room);
         setRoom(room);
       }
     } catch (error) {
-      Alert.alert('Error checking rooms:', error.message);
+      Alert.alert("Error checking rooms:", error.message);
     }
   };
   Cancel = async () => {
     // const roomId = room?.id;
     const roomID = room?.id;
-    console.log('room: ', roomID);
+    console.log("room: ", roomID);
     const db = getFirestore();
     try {
-      const roomRef = doc(db, 'twoPlayerRooms', roomID);
+      const roomRef = doc(db, "twoPlayerRooms", roomID);
       await updateDoc(roomRef, {
-        gameState: "Cancelled"
+        gameState: "Cancelled",
       });
 
-      router.replace('/Home');
-    } catch (error) {
-    }
+      router.replace("/Home");
+    } catch (error) {}
   };
 
-  const updateTurn = () => {
-
-  }
+  const updateTurn = () => {};
 
   const moveIcon = async (player, whichOne, position) => {
     switch (player) {
       case 1:
-        console.log("whoseTurnToMove: ", whoseTurnToMove)
-        console.log("isMovedBy1: ", isMovedBy1)
-        console.log("Whichone: ", whichOne)
-        // console.log("currentNumber2: ", currentNumber2)
-        // var currentNumber1 = 0
-        console.log("currentNumber1: ", currentNumber1)
         if (whoseTurnToMove === 1 && !isMovedBy1) {
           switch (whichOne) {
             case 1:
               if (positions[1][0] !== "winner") {
                 if (currentNumber1 === 6) {
-                  setTurn1(true)
+                  setTurn1(true);
                   updateTurn();
+                  const roomRef = doc(db, "twoPlayerRooms", roomId);
+                  if (room?.uid1?.uid == UID) {
+                    let updatedRoom = {
+                      id: room?.id,
+                      uid1: {
+                        dice: Dice,
+                        turn: false,
+                        uid: room?.uid1?.uid,
+                      },
+                      uid2: {
+                        dice: room?.uid2?.dice,
+                        turn: true,
+                        uid: room?.uid2?.uid,
+                      },
+                      gameState: "InProgress",
+                    };
+                    console.log(updatedRoom);
+                    await updateDoc(roomRef, updatedRoom);
+                  } else {
+                    let updatedRoom = {
+                      id: room?.id,
+                      uid1: {
+                        dice: room?.uid1?.dice,
+                        turn: true,
+                        uid: room?.uid1?.uid,
+                      },
+                      uid2: {
+                        dice: Dice,
+                        turn: false,
+                        uid: room?.uid2?.uid,
+                      },
+                      gameState: "InProgress",
+                    };
+                    await updateDoc(roomRef, updatedRoom);
+                  }
                 }
                 if (positions[1][0] < 0) {
                   if (currentNumber1 === 6) {
@@ -180,8 +239,7 @@ const LudoNew2Player = () => {
                     setIsMovedBy1(true);
                   }
                 }
-              }
-              else {
+              } else {
                 if (
                   (positions[1][1] > 0 && positions[1][1] !== "winner") ||
                   (positions[1][2] > 0 && positions[1][2] !== "winner") ||
@@ -192,54 +250,11 @@ const LudoNew2Player = () => {
                   setIsMovedBy1(true);
                 }
               }
-              const roomId = room?.id;
-                  let UID = User.uid;
-                  console.log("UID: ", UID)
-                  const db = getFirestore();
-                  const roomRef = doc(db, 'twoPlayerRooms', roomId);
-                  if (room?.uid1?.uid == UID) {
-                    let updatedRoom = {
-                      id: room?.id,
-                      uid1: {
-                        position1: positions[1],
-                        dice: room?.uid1?.dice,
-                        turn: room?.uid1?.turn,
-                        uid: room?.uid1?.uid
-                      },
-                      uid2: {
-                        position2: positions[3],
-                        dice: room?.uid2?.dice,
-                        turn: room?.uid2?.turn,
-                        uid: room?.uid2?.uid
-                      },
-                      gameState: "InProgress"
-                    }
-                    console.log(updatedRoom)
-                    await updateDoc(roomRef, updatedRoom);
-                  } else {
-                    let updatedRoom = {
-                      id: room?.id,
-                      uid1: {
-                        position: positions[3],
-                        dice: room?.uid1?.dice,
-                        turn: room?.uid1?.turn,
-                        uid: room?.uid1?.uid
-                      },
-                      uid2: {
-                        position: positions[1],
-                        dice: room?.uid2?.dice,
-                        turn: room?.uid2?.turn,
-                        uid: room?.uid2?.uid
-                      },
-                      gameState: "InProgress"
-                    }
-                    await updateDoc(roomRef, updatedRoom);
-                  }
               break;
             case 2:
               if (positions[1][1] !== "winner") {
                 if (currentNumber1 === 6) {
-                  setTurn1(true)
+                  setTurn1(true);
                   updateTurn();
                 }
                 if (positions[1][1] < 0) {
@@ -294,7 +309,7 @@ const LudoNew2Player = () => {
             case 3:
               if (positions[1][2] !== "winner") {
                 if (currentNumber1 === 6) {
-                  setTurn1(true)
+                  setTurn1(true);
                   updateTurn();
                 }
                 if (positions[1][2] < 0) {
@@ -349,7 +364,7 @@ const LudoNew2Player = () => {
             case 4:
               if (positions[1][3] !== "winner") {
                 if (currentNumber1 === 6) {
-                  setTurn1(true)
+                  setTurn1(true);
                   updateTurn();
                 }
                 if (positions[1][3] < 0) {
@@ -410,12 +425,10 @@ const LudoNew2Player = () => {
         }
         break;
       case 3:
-
         if (whoseTurnToMove === 3 && !isMovedBy3) {
           if (currentNumber2 === 6) {
-            setTurn3(true)
+            setTurn3(true);
             updateTurn();
-
           }
           switch (whichOne) {
             case 1:
@@ -500,7 +513,7 @@ const LudoNew2Player = () => {
             case 2:
               if (positions[3][1] !== "winner") {
                 if (currentNumber2 === 6) {
-                  setTurn3(true)
+                  setTurn3(true);
                   updateTurn();
                 }
                 if (positions[3][1] < 0) {
@@ -583,7 +596,7 @@ const LudoNew2Player = () => {
             case 3:
               if (positions[3][2] !== "winner") {
                 if (currentNumber2 === 6) {
-                  setTurn3(true)
+                  setTurn3(true);
                   updateTurn();
                 }
                 if (positions[3][2] < 0) {
@@ -666,7 +679,7 @@ const LudoNew2Player = () => {
             case 4:
               if (positions[3][3] !== "winner") {
                 if (currentNumber2 === 6) {
-                  setTurn3(true)
+                  setTurn3(true);
                   updateTurn();
                 }
                 if (positions[3][3] < 0) {
@@ -835,29 +848,34 @@ const LudoNew2Player = () => {
     }
   };
 
-  const updateDice1 = async (Dice,) => {
+  // const validateChangeOfChange = (Dice) => {
+  //   if(Dice == 6) return false;
+  //   return true;
+  // }
+
+  const updateDice1 = async (Dice) => {
     const roomId = room?.id;
     let UID = User.uid;
-    console.log("UID: ", UID)
+    console.log("UID: ", UID);
     const db = getFirestore();
     try {
-      const roomRef = doc(db, 'twoPlayerRooms', roomId);
+      const roomRef = doc(db, "twoPlayerRooms", roomId);
       if (room?.uid1?.uid == UID) {
         let updatedRoom = {
           id: room?.id,
           uid1: {
             dice: Dice,
             turn: false,
-            uid: room?.uid1?.uid
+            uid: room?.uid1?.uid,
           },
           uid2: {
             dice: room?.uid2?.dice,
             turn: true,
-            uid: room?.uid2?.uid
+            uid: room?.uid2?.uid,
           },
-          gameState: "InProgress"
-        }
-        console.log(updatedRoom)
+          gameState: "InProgress",
+        };
+        console.log(updatedRoom);
         await updateDoc(roomRef, updatedRoom);
       } else {
         let updatedRoom = {
@@ -865,32 +883,37 @@ const LudoNew2Player = () => {
           uid1: {
             dice: room?.uid1?.dice,
             turn: true,
-            uid: room?.uid1?.uid
+            uid: room?.uid1?.uid,
           },
           uid2: {
             dice: Dice,
             turn: false,
-            uid: room?.uid2?.uid
+            uid: room?.uid2?.uid,
           },
-          gameState: "InProgress"
-        }
+          gameState: "InProgress",
+        };
         await updateDoc(roomRef, updatedRoom);
-        // setCurrentNumber1(Dice)
-        // currentNumber1 = Dice;
-        console.log("currentNumber1 in Update Dice: ", currentNumber1)
+        setCurrentNumber1(Dice);
       }
-
     } catch (error) {
-      Alert.alert('Error Updating Dice', error.message)
+      Alert.alert("Error Updating Dice", error.message);
     }
-  }
+  };
 
-  const UpdateDice2 = async (dice) => {
-    // setCurrentNumber2(dice)
-    // currentNumber2 = dice;
-    console.log("UpdateDice2" + "  " +
-      turn3 + "  " + isMovedBy1 + "  " + checkIfAnythingOpened(1)
+  const UpdateDice2 = (dice) => {
+    setCurrentNumber2(dice);
+    console.log(
+      "UpdateDice2" +
+        "  " +
+        turn3 +
+        "  " +
+        isMovedBy1 +
+        "  " +
+        checkIfAnythingOpened(1)
     );
+    // if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
+    //   setWhoseTurnToMove(3);
+    //   setIsMovedBy3(false);
     switch (dice) {
       case 1:
         setImage3(require("./assets/dice1.png"));
@@ -927,36 +950,42 @@ const LudoNew2Player = () => {
     try {
       const db = getFirestore();
       let UID = User.uid;
-      const roomRef = doc(db, 'twoPlayerRooms', room?.id);
+      // const roomID = await CurrentRoom();
+      // console.log("roomId      roomId _________", roomId)
+      // console.log('room?.id ???????',room)
+      const roomRef = doc(db, "twoPlayerRooms", room?.id);
+      // console.log('room?.id',room?.id)
+      // useEffect(()=>{
       const unsubscribe = onSnapshot(roomRef, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
+          // console.log("for update 2",data)
+          // console.log('User1',User1)
+          // console.log('data?.uid1?.turn',data?.uid1?.dice)
+          // UpdateDice2(data?.uid1?.dice);
           if (data?.uid1?.uid == UID) {
             if (data?.uid1?.turn == true) {
               UpdateDice2(data?.uid2?.dice);
-              // currentNumber1 = data?.uid1?.dice
-              // currentNumber2 = data?.uid2?.dice
             }
           } else {
             if (data?.uid2?.turn == true) {
               UpdateDice2(data?.uid1?.dice);
-              // currentNumber1 = data?.uid2?.dice
-              // currentNumber2 = data?.uid1?.dice
             }
           }
 
           let room = { ...{ id: roomId }, ...doc.data() };
-          setRoom(room)
+          setRoom(room);
         } else {
-          console.log('No Turn');
+          console.log("No Turn");
         }
       });
+
+      // Clean up the subscription on unmount
       onSnapCreated(true);
       return () => unsubscribe();
-    } catch (error) {
-
-    }
-  }
+      // },[data])
+    } catch (error) {}
+  };
 
   useEffect(() => {
     async function getRoom() {
@@ -964,14 +993,21 @@ const LudoNew2Player = () => {
     }
     if (!room) getRoom();
     if (room && !snapCreated) getDataFromDb();
-  }, [room])
+  }, [room]);
 
   const generateRandomNumber = async () => {
-
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setTurnMessage("");
     setMoveMessage("");
-    console.log("UpdateDice1" + "  " + turn3 + "  " + isMovedBy1 + "  " + checkIfAnythingOpened(1))
+    console.log(
+      "UpdateDice1" +
+        "  " +
+        turn3 +
+        "  " +
+        isMovedBy1 +
+        "  " +
+        checkIfAnythingOpened(1)
+    );
     if (turn1 && (isMovedBy3 || checkIfAnythingOpened(3))) {
       setWhoseTurnToMove(1);
       setIsMovedBy1(false);
@@ -997,21 +1033,19 @@ const LudoNew2Player = () => {
         default:
           break;
       }
-      await updateDice1(randomNumber)
-      setCurrentNumber1(randomNumber)
+      await updateDice1(randomNumber);
+
       if (randomNumber !== 6) {
         setTurn1(false);
         setTurn3(true);
         setIsMovedBy3(false);
-      }
-      else {
+      } else {
         console.log("same conditions must be there");
-        setTurn1(false);
+        setTurn1(true);
       }
     } else {
       setTurnMessage("It's Not Your Turn");
     }
-
   };
 
   const checkPosition = (player, whichOne, position) => {
@@ -1083,8 +1117,8 @@ const LudoNew2Player = () => {
         const fetchData = async () => {
           try {
             const db = getFirestore();
-            let UID = User.uid
-            const roomRef = doc(db, 'twoPlayerRooms', room?.id);
+            let UID = User.uid;
+            const roomRef = doc(db, "twoPlayerRooms", room?.id);
             const unsubscribe = onSnapshot(roomRef, (doc) => {
               if (doc.exists()) {
                 const data = doc.data();
@@ -1098,19 +1132,18 @@ const LudoNew2Player = () => {
                   }
                 }
                 let room = { ...{ id: roomId }, ...doc.data() };
-                setRoom(room)
+                setRoom(room);
               } else {
-                console.log('No Turn');
+                console.log("No Turn");
               }
             });
             onSnapCreated(true);
             return () => unsubscribe();
-
           } catch (error) {
-            console.error('Error fetching player turn:', error);
-            Alert.alert('Error PlayerTurn', error.message);
+            console.error("Error fetching player turn:", error);
+            Alert.alert("Error PlayerTurn", error.message);
           }
-        }
+        };
         switch (whichOne) {
           case 1:
             if (positions[3][0] === position) {
@@ -1120,10 +1153,8 @@ const LudoNew2Player = () => {
                 }
                 if (!room) getRoom();
                 if (room && !snapCreated) fetchData();
-                moveIcon(3, 1, position)
-              }, [position.database])
-
-
+                moveIcon(3, 1, position);
+              }, [position.database]);
 
               return (
                 <FontAwesome
@@ -1185,18 +1216,19 @@ const LudoNew2Player = () => {
   return (
     <SafeAreaView className="flex-1 bg-primary">
       <View className="flex-col w-10 h-10 mx-2">
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => this.Cancel()}
-        >
-          <Image source={icons.back}
-            resizeMode='contain'
+        <TouchableOpacity activeOpacity={0.7} onPress={() => this.Cancel()}>
+          <Image
+            source={icons.back}
+            resizeMode="contain"
             className="w-10 h-10"
           />
         </TouchableOpacity>
       </View>
       <View className="mt-10 items-center">
-        <Text className='text-2xl text-blue-400 font-psemibold'> Welcome to Ludo Master </Text>
+        <Text className="text-2xl text-blue-400 font-psemibold">
+          {" "}
+          Welcome to Ludo Master{" "}
+        </Text>
 
         <View style={styles.wholeSetup}>
           {/* =============================== Upper Part ============================= */}
@@ -1212,7 +1244,10 @@ const LudoNew2Player = () => {
                     if (turn1) {
                       if (room) {
                         console.log(room);
-                        if (room?.uid1?.uid == User1 && room?.uid1?.turn == true) {
+                        if (
+                          room?.uid1?.uid == User1 &&
+                          room?.uid1?.turn == true
+                        ) {
                           generateRandomNumber();
                         } else {
                           if (room?.uid2?.turn == true) {
@@ -1220,7 +1255,6 @@ const LudoNew2Player = () => {
                           }
                         }
                       }
-
                     }
                     // updateTurn();
                   }}
@@ -2767,7 +2801,7 @@ const LudoNew2Player = () => {
               //animation={turn3 || whoseTurnToMove == 3 ? zoomIn : zoomOut}
               animation={turn3 ? zoomIn : zoomOut}
               duration={500}
-            //whoseTurnToMove==
+              //whoseTurnToMove==
             >
               <View>
                 <View style={[Players.styles, { borderLeftWidth: 1 }]}>
@@ -2831,8 +2865,6 @@ const LudoNew2Player = () => {
     </SafeAreaView>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   red: {
