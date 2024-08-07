@@ -141,10 +141,10 @@ const LudoNew2Player = () => {
       });
 
       router.replace("/Home");
-    } catch (error) {}
+    } catch (error) { }
   };
 
-  const updateTurn = () => {};
+  const updateTurn = () => { };
 
   const moveIcon = async (player, whichOne, position) => {
     switch (player) {
@@ -224,13 +224,13 @@ const LudoNew2Player = () => {
                 let updatedRoom = {
                   id: room?.id,
                   uid1: {
-                    position1: positions[1],
+                    position: positions[1],
                     dice: room?.uid1?.dice,
                     turn: room?.uid1?.turn,
                     uid: room?.uid1?.uid
                   },
                   uid2: {
-                    position2: positions[3],
+                    position: positions[3],
                     dice: room?.uid2?.dice,
                     turn: room?.uid2?.turn,
                     uid: room?.uid2?.uid
@@ -872,18 +872,17 @@ const LudoNew2Player = () => {
         let updatedRoom = {
           id: room?.id,
           uid1: {
-            
+            position: room?.uid1?.position,
             dice: Dice,
             turn: false,
             uid: room?.uid1?.uid,
-            position:room?.uid1?.position,
 
           },
           uid2: {
+            position: room?.uid2?.position,
             dice: room?.uid2?.dice,
             turn: true,
             uid: room?.uid2?.uid,
-            position:room?.uid2?.position,
           },
           gameState: "InProgress",
         };
@@ -893,16 +892,16 @@ const LudoNew2Player = () => {
         let updatedRoom = {
           id: room?.id,
           uid1: {
+            position: room?.uid1?.position,
             dice: room?.uid1?.dice,
             turn: true,
             uid: room?.uid1?.uid,
-            position:room?.uid1?.position,
           },
           uid2: {
+            position: room?.uid2?.position,
             dice: Dice,
             turn: false,
             uid: room?.uid2?.uid,
-            position:room?.uid2?.position,
           },
           gameState: "InProgress",
         };
@@ -918,12 +917,12 @@ const LudoNew2Player = () => {
     //setCurrentNumber2(dice);
     console.log(
       "UpdateDice2" +
-        "  " +
-        turn3 +
-        "  " +
-        isMovedBy1 +
-        "  " +
-        checkIfAnythingOpened(1)
+      "  " +
+      turn3 +
+      "  " +
+      isMovedBy1 +
+      "  " +
+      checkIfAnythingOpened(1)
     );
     // if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
     //   setWhoseTurnToMove(3);
@@ -998,7 +997,7 @@ const LudoNew2Player = () => {
       onSnapCreated(true);
       return () => unsubscribe();
       // },[data])
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -1015,12 +1014,12 @@ const LudoNew2Player = () => {
     setMoveMessage("");
     console.log(
       "UpdateDice1" +
-        "  " +
-        turn3 +
-        "  " +
-        isMovedBy1 +
-        "  " +
-        checkIfAnythingOpened(1)
+      "  " +
+      turn3 +
+      "  " +
+      isMovedBy1 +
+      "  " +
+      checkIfAnythingOpened(1)
     );
     if (turn1 && (isMovedBy3 || checkIfAnythingOpened(3))) {
       setWhoseTurnToMove(1);
@@ -1048,7 +1047,7 @@ const LudoNew2Player = () => {
           break;
       }
       await updateDice1(randomNumber);
-        setCurrentNumber1(randomNumber)
+      setCurrentNumber1(randomNumber)
       if (randomNumber !== 6) {
         setTurn1(false);
         setTurn3(true);
@@ -2815,7 +2814,7 @@ const LudoNew2Player = () => {
               //animation={turn3 || whoseTurnToMove == 3 ? zoomIn : zoomOut}
               animation={turn3 ? zoomIn : zoomOut}
               duration={500}
-              //whoseTurnToMove==
+            //whoseTurnToMove==
             >
               <View>
                 <View style={[Players.styles, { borderLeftWidth: 1 }]}>
