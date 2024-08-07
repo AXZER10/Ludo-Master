@@ -872,14 +872,18 @@ const LudoNew2Player = () => {
         let updatedRoom = {
           id: room?.id,
           uid1: {
+            
             dice: Dice,
             turn: false,
             uid: room?.uid1?.uid,
+            position:room?.uid1?.position,
+
           },
           uid2: {
             dice: room?.uid2?.dice,
             turn: true,
             uid: room?.uid2?.uid,
+            position:room?.uid2?.position,
           },
           gameState: "InProgress",
         };
@@ -892,11 +896,13 @@ const LudoNew2Player = () => {
             dice: room?.uid1?.dice,
             turn: true,
             uid: room?.uid1?.uid,
+            position:room?.uid1?.position,
           },
           uid2: {
             dice: Dice,
             turn: false,
             uid: room?.uid2?.uid,
+            position:room?.uid2?.position,
           },
           gameState: "InProgress",
         };
