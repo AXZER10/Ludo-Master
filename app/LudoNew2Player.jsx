@@ -156,41 +156,6 @@ const LudoNew2Player = () => {
                 if (currentNumber1 === 6) {
                   setTurn1(true);
                   updateTurn();
-                  const roomRef = doc(db, "twoPlayerRooms", roomId);
-                  if (room?.uid1?.uid == UID) {
-                    let updatedRoom = {
-                      id: room?.id,
-                      uid1: {
-                        dice: Dice,
-                        turn: false,
-                        uid: room?.uid1?.uid,
-                      },
-                      uid2: {
-                        dice: room?.uid2?.dice,
-                        turn: true,
-                        uid: room?.uid2?.uid,
-                      },
-                      gameState: "InProgress",
-                    };
-                    console.log(updatedRoom);
-                    await updateDoc(roomRef, updatedRoom);
-                  } else {
-                    let updatedRoom = {
-                      id: room?.id,
-                      uid1: {
-                        dice: room?.uid1?.dice,
-                        turn: true,
-                        uid: room?.uid1?.uid,
-                      },
-                      uid2: {
-                        dice: Dice,
-                        turn: false,
-                        uid: room?.uid2?.uid,
-                      },
-                      gameState: "InProgress",
-                    };
-                    await updateDoc(roomRef, updatedRoom);
-                  }
                 }
                 if (positions[1][0] < 0) {
                   if (currentNumber1 === 6) {
@@ -249,6 +214,49 @@ const LudoNew2Player = () => {
                 } else {
                   setIsMovedBy1(true);
                 }
+              }
+              const roomId = room?.id;
+              let UID = User.uid;
+              console.log("UID: ", UID)
+              const db = getFirestore();
+              const roomRef = doc(db, 'twoPlayerRooms', roomId);
+              if (room?.uid1?.uid == UID) {
+                let updatedRoom = {
+                  id: room?.id,
+                  uid1: {
+                    position1: positions[1],
+                    dice: room?.uid1?.dice,
+                    turn: room?.uid1?.turn,
+                    uid: room?.uid1?.uid
+                  },
+                  uid2: {
+                    position2: positions[3],
+                    dice: room?.uid2?.dice,
+                    turn: room?.uid2?.turn,
+                    uid: room?.uid2?.uid
+                  },
+                  gameState: "InProgress"
+                }
+                console.log(updatedRoom)
+                await updateDoc(roomRef, updatedRoom);
+              } else {
+                let updatedRoom = {
+                  id: room?.id,
+                  uid1: {
+                    position: positions[3],
+                    dice: room?.uid1?.dice,
+                    turn: room?.uid1?.turn,
+                    uid: room?.uid1?.uid
+                  },
+                  uid2: {
+                    position: positions[1],
+                    dice: room?.uid2?.dice,
+                    turn: room?.uid2?.turn,
+                    uid: room?.uid2?.uid
+                  },
+                  gameState: "InProgress"
+                }
+                await updateDoc(roomRef, updatedRoom);
               }
               break;
             case 2:
@@ -900,8 +908,8 @@ const LudoNew2Player = () => {
     }
   };
 
-  const UpdateDice2 = (dice) => {
-    setCurrentNumber2(dice);
+  const UpdateDice2 = async (dice) => {
+    //setCurrentNumber2(dice);
     console.log(
       "UpdateDice2" +
         "  " +
@@ -1034,14 +1042,14 @@ const LudoNew2Player = () => {
           break;
       }
       await updateDice1(randomNumber);
-
+        setCurrentNumber1(randomNumber)
       if (randomNumber !== 6) {
         setTurn1(false);
         setTurn3(true);
         setIsMovedBy3(false);
       } else {
         console.log("same conditions must be there");
-        setTurn1(true);
+        setTurn1(false);
       }
     } else {
       setTurnMessage("It's Not Your Turn");
