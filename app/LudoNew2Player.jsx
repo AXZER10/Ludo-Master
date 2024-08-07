@@ -145,6 +145,51 @@ const LudoNew2Player = () => {
   };
 
   const updateTurn = () => { };
+  const updatePositions = async() =>{
+    const roomId = room?.id;
+              let UID = User.uid;
+              console.log("UID: ", UID)
+              const db = getFirestore();
+              const roomRef = doc(db, 'twoPlayerRooms', roomId);
+              if (room?.uid1?.uid == UID) {
+                let updatedRoom = {
+                  id: room?.id,
+                  uid1: {
+                    position: positions[1],
+                    dice: room?.uid1?.dice,
+                    turn: room?.uid1?.turn,
+                    uid: room?.uid1?.uid
+                  },
+                  uid2: {
+                    position: positions[3],
+                    dice: room?.uid2?.dice,
+                    turn: room?.uid2?.turn,
+                    uid: room?.uid2?.uid
+                  },
+                  gameState: "InProgress"
+                }
+                console.log(updatedRoom)
+                await updateDoc(roomRef, updatedRoom);
+              } else {
+                let updatedRoom = {
+                  id: room?.id,
+                  uid1: {
+                    position: positions[3],
+                    dice: room?.uid1?.dice,
+                    turn: room?.uid1?.turn,
+                    uid: room?.uid1?.uid
+                  },
+                  uid2: {
+                    position: positions[1],
+                    dice: room?.uid2?.dice,
+                    turn: room?.uid2?.turn,
+                    uid: room?.uid2?.uid
+                  },
+                  gameState: "InProgress"
+                }
+                await updateDoc(roomRef, updatedRoom);
+              }
+  }
 
   const moveIcon = async (player, whichOne, position) => {
     switch (player) {
@@ -215,49 +260,7 @@ const LudoNew2Player = () => {
                   setIsMovedBy1(true);
                 }
               }
-              const roomId = room?.id;
-              let UID = User.uid;
-              console.log("UID: ", UID)
-              const db = getFirestore();
-              const roomRef = doc(db, 'twoPlayerRooms', roomId);
-              if (room?.uid1?.uid == UID) {
-                let updatedRoom = {
-                  id: room?.id,
-                  uid1: {
-                    position: positions[1],
-                    dice: room?.uid1?.dice,
-                    turn: room?.uid1?.turn,
-                    uid: room?.uid1?.uid
-                  },
-                  uid2: {
-                    position: positions[3],
-                    dice: room?.uid2?.dice,
-                    turn: room?.uid2?.turn,
-                    uid: room?.uid2?.uid
-                  },
-                  gameState: "InProgress"
-                }
-                console.log(updatedRoom)
-                await updateDoc(roomRef, updatedRoom);
-              } else {
-                let updatedRoom = {
-                  id: room?.id,
-                  uid1: {
-                    position: positions[3],
-                    dice: room?.uid1?.dice,
-                    turn: room?.uid1?.turn,
-                    uid: room?.uid1?.uid
-                  },
-                  uid2: {
-                    position: positions[1],
-                    dice: room?.uid2?.dice,
-                    turn: room?.uid2?.turn,
-                    uid: room?.uid2?.uid
-                  },
-                  gameState: "InProgress"
-                }
-                await updateDoc(roomRef, updatedRoom);
-              }
+              await updatePositions();
               break;
             case 2:
               if (positions[1][1] !== "winner") {
@@ -313,6 +316,7 @@ const LudoNew2Player = () => {
                   }
                 }
               }
+              await updatePositions();
               break;
             case 3:
               if (positions[1][2] !== "winner") {
@@ -368,6 +372,7 @@ const LudoNew2Player = () => {
                   }
                 }
               }
+              await updatePositions();
               break;
             case 4:
               if (positions[1][3] !== "winner") {
@@ -431,6 +436,7 @@ const LudoNew2Player = () => {
           setMoveMessage("You cannot move right now");
           setIsMovedBy1(true);
         }
+        await updatePositions();
         break;
       case 3:
         if (whoseTurnToMove === 3 && !isMovedBy3) {
