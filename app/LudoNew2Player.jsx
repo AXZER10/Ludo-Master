@@ -145,50 +145,94 @@ const LudoNew2Player = () => {
   };
 
   const updateTurn = () => { };
-  const updatePositions = async() =>{
+  const updatePositions = async () => {
     const roomId = room?.id;
-              let UID = User.uid;
-              console.log("UID: ", UID)
-              const db = getFirestore();
-              const roomRef = doc(db, 'twoPlayerRooms', roomId);
-              if (room?.uid1?.uid == UID) {
-                let updatedRoom = {
-                  id: room?.id,
-                  uid1: {
-                    position: positions[1],
-                    dice: room?.uid1?.dice,
-                    turn: room?.uid1?.turn,
-                    uid: room?.uid1?.uid
-                  },
-                  uid2: {
-                    position: positions[3],
-                    dice: room?.uid2?.dice,
-                    turn: room?.uid2?.turn,
-                    uid: room?.uid2?.uid
-                  },
-                  gameState: "InProgress"
-                }
-                console.log(updatedRoom)
-                await updateDoc(roomRef, updatedRoom);
-              } else {
-                let updatedRoom = {
-                  id: room?.id,
-                  uid1: {
-                    position: positions[3],
-                    dice: room?.uid1?.dice,
-                    turn: room?.uid1?.turn,
-                    uid: room?.uid1?.uid
-                  },
-                  uid2: {
-                    position: positions[1],
-                    dice: room?.uid2?.dice,
-                    turn: room?.uid2?.turn,
-                    uid: room?.uid2?.uid
-                  },
-                  gameState: "InProgress"
-                }
-                await updateDoc(roomRef, updatedRoom);
-              }
+    let UID = User.uid;
+    console.log("UID: ", UID)
+    const db = getFirestore();
+    const roomRef = doc(db, 'twoPlayerRooms', roomId);
+    if (room?.uid1?.uid == UID) {
+      if (room?.uid1?.dice != 6) {
+        let updatedRoom = {
+          id: room?.id,
+          uid1: {
+            position: positions[1],
+            dice: room?.uid1?.dice,
+            turn: room?.uid1?.turn,
+            uid: room?.uid1?.uid
+          },
+          uid2: {
+            position: room?.uid2?.position,
+            dice: room?.uid2?.dice,
+            turn: room?.uid2?.turn,
+            uid: room?.uid2?.uid
+          },
+          gameState: "InProgress"
+        }
+        console.log(updatedRoom)
+        await updateDoc(roomRef, updatedRoom);
+      } else {
+        let updatedRoom = {
+          id: room?.id,
+          uid1: {
+            position: positions[1],
+            dice: room?.uid1?.dice,
+            turn: true,
+            uid: room?.uid1?.uid
+          },
+          uid2: {
+            position: room?.uid2?.position,
+            dice: room?.uid2?.dice,
+            turn: false,
+            uid: room?.uid2?.uid
+          },
+          gameState: "InProgress"
+        }
+        console.log(updatedRoom)
+        await updateDoc(roomRef, updatedRoom);
+      }
+
+    }
+    else {
+      if (room?.uid2?.dice != 6) {
+        let updatedRoom = {
+          id: room?.id,
+          uid1: {
+            position: room?.uid1?.position,
+            dice: room?.uid1?.dice,
+            turn: room?.uid1?.turn,
+            uid: room?.uid1?.uid
+          },
+          uid2: {
+            position: positions[1],
+            dice: room?.uid2?.dice,
+            turn: room?.uid2?.turn,
+            uid: room?.uid2?.uid
+          },
+          gameState: "InProgress"
+        }
+        await updateDoc(roomRef, updatedRoom);
+      }
+      else {
+        let updatedRoom = {
+          id: room?.id,
+          uid1: {
+            position: room?.uid1?.position,
+            dice: room?.uid1?.dice,
+            turn: false,
+            uid: room?.uid1?.uid
+          },
+          uid2: {
+            position: positions[1],
+            dice: room?.uid2?.dice,
+            turn: true,
+            uid: room?.uid2?.uid
+          },
+          gameState: "InProgress"
+        }
+        await updateDoc(roomRef, updatedRoom);
+      }
+    }
   }
 
   const moveIcon = async (player, whichOne, position) => {
@@ -1015,6 +1059,8 @@ const LudoNew2Player = () => {
   }, [room]);
 
   const generateRandomNumber = async () => {
+    console.log("Turn1", turn1)
+    //console.log("Turn2",turn2)
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setTurnMessage("");
     setMoveMessage("");
@@ -1174,7 +1220,6 @@ const LudoNew2Player = () => {
                 if (room && !snapCreated) fetchData();
                 moveIcon(3, 1, position);
               }, [position.database]);
-
               return (
                 <FontAwesome
                   name="user"
@@ -1341,18 +1386,25 @@ const LudoNew2Player = () => {
             <View style={[row.Style, { marginTop: 82, borderTopWidth: 0 }]}>
               <View style={[styles.first]}>
                 <View style={styles.item}>
+                  {/* Check Position for player 1 */}
                   {checkPosition(1, 1, 11)}
                   {checkPosition(1, 2, 11)}
                   {checkPosition(1, 3, 11)}
                   {checkPosition(1, 4, 11)}
+
+                  {/* Remove */}
                   {checkPosition(2, 1, 11)}
                   {checkPosition(2, 2, 11)}
                   {checkPosition(2, 3, 11)}
                   {checkPosition(2, 4, 11)}
+
+                  {/* check position for playter 3 */}
                   {checkPosition(3, 1, 11)}
                   {checkPosition(3, 2, 11)}
                   {checkPosition(3, 3, 11)}
                   {checkPosition(3, 4, 11)}
+
+                  {/* Remove */}
                   {checkPosition(4, 1, 11)}
                   {checkPosition(4, 2, 11)}
                   {checkPosition(4, 3, 11)}
