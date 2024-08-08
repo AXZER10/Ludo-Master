@@ -161,7 +161,7 @@ const LudoNew2Player = () => {
                     uid: room?.uid1?.uid
                   },
                   uid2: {
-                    position: positions[3],
+                    position: room?.uid1?.position,
                     dice: room?.uid2?.dice,
                     turn: room?.uid2?.turn,
                     uid: room?.uid2?.uid
@@ -174,7 +174,7 @@ const LudoNew2Player = () => {
                 let updatedRoom = {
                   id: room?.id,
                   uid1: {
-                    position: positions[3],
+                    position: room?.uid1?.position,
                     dice: room?.uid1?.dice,
                     turn: room?.uid1?.turn,
                     uid: room?.uid1?.uid
@@ -1143,12 +1143,17 @@ const LudoNew2Player = () => {
                 const data = doc.data();
                 if (data?.uid1?.uid == UID) {
                   if (data?.uid1?.turn == true) {
-                    UpdateDice2(data?.uid1?.dice);
+                   // UpdateDice2(data?.uid2?.dice);
+                    updatePositions(data?.uid2?.position);
+                    UpdateDice2(data?.uid2?.dice);
+                    
                   }
                 } else {
                   if (data?.uid2?.turn == true) {
-                    UpdateDice2(data?.uid1?.dice);
-                  }
+                   
+                    updatePositions(data?.uid1?.position);
+                   // UpdateDice2(data?.uid1?.dice);
+                 }
                 }
                 let room = { ...{ id: roomId }, ...doc.data() };
                 setRoom(room);
@@ -1173,7 +1178,7 @@ const LudoNew2Player = () => {
                 if (!room) getRoom();
                 if (room && !snapCreated) fetchData();
                 moveIcon(3, 1, position);
-              }, [position.database]);
+              }, [turn1]);
 
               return (
                 <FontAwesome
@@ -1188,6 +1193,14 @@ const LudoNew2Player = () => {
             break;
           case 2:
             if (positions[3][1] === position) {
+              useEffect(() => {
+                async function getRoom() {
+                  await CurrentRoom();
+                }
+                if (!room) getRoom();
+                if (room && !snapCreated) fetchData();
+                moveIcon(3, 2, position);
+              }, [position.database]);
               return (
                 <FontAwesome
                   name="user"
@@ -1201,6 +1214,14 @@ const LudoNew2Player = () => {
             break;
           case 3:
             if (positions[3][2] === position) {
+              useEffect(() => {
+                async function getRoom() {
+                  await CurrentRoom();
+                }
+                if (!room) getRoom();
+                if (room && !snapCreated) fetchData();
+                moveIcon(3, 3, position);
+              }, [position.database]);
               return (
                 <FontAwesome
                   name="user"
@@ -1214,6 +1235,14 @@ const LudoNew2Player = () => {
             break;
           case 4:
             if (positions[3][3] === position) {
+              useEffect(() => {
+                async function getRoom() {
+                  await CurrentRoom();
+                }
+                if (!room) getRoom();
+                if (room && !snapCreated) fetchData();
+                moveIcon(3, 4, position);
+              }, [position.database]);
               return (
                 <FontAwesome
                   name="user"
