@@ -1039,7 +1039,6 @@ const LudoNew2Player = () => {
               console.log("Positions :", positions[3])
             }
           }
-
           let room = { ...{ id: roomId }, ...doc.data() };
           setRoom(room);
         } else {
@@ -1061,6 +1060,9 @@ const LudoNew2Player = () => {
     if (!room) getRoom();
     if (room && !snapCreated) getDataFromDb();
   }, [room]);
+  useEffect(() => {
+    setIsMovedBy3(true)
+  }, [positions[3]])
 
   const generateRandomNumber = async () => {
     console.log("Turn1", turn1)
