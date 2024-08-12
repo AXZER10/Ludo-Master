@@ -1029,10 +1029,14 @@ const LudoNew2Player = () => {
           if (data?.uid1?.uid == UID) {
             if (data?.uid1?.turn == true) {
               UpdateDice2(data?.uid2?.dice);
+              positions[3] = data?.uid2?.position
+              console.log("Positions :", positions[3])
             }
           } else {
             if (data?.uid2?.turn == true) {
               UpdateDice2(data?.uid1?.dice);
+              positions[3] = data?.uid1?.position
+              console.log("Positions :", positions[3])
             }
           }
 
@@ -1179,53 +1183,9 @@ const LudoNew2Player = () => {
         break;
       case 3:
         //OnSnapshot
-        const fetchData = async () => {
-          try {
-            const db = getFirestore();
-            let UID = User.uid;
-            const roomRef = doc(db, "twoPlayerRooms", room?.id);
-            const unsubscribe = onSnapshot(roomRef, (doc) => {
-              if (doc.exists()) {
-                const data = doc.data();
-                if (data?.uid1?.uid == UID) {
-                  if (data?.uid1?.turn == true) {
-                   // UpdateDice2(data?.uid2?.dice);
-                    updatePositions(data?.uid2?.position);
-                    UpdateDice2(data?.uid2?.dice);
-                    
-                  }
-                } else {
-                  if (data?.uid2?.turn == true) {
-                   
-                    updatePositions(data?.uid1?.position);
-                   // UpdateDice2(data?.uid1?.dice);
-                 }
-                }
-                let room = { ...{ id: roomId }, ...doc.data() };
-                setRoom(room);
-              } else {
-                console.log("No Turn");
-              }
-            });
-            onSnapCreated(true);
-            return () => unsubscribe();
-          } catch (error) {
-            console.error("Error fetching player turn:", error);
-            Alert.alert("Error PlayerTurn", error.message);
-          }
-        };
         switch (whichOne) {
           case 1:
             if (positions[3][0] === position) {
-              useEffect(() => {
-                async function getRoom() {
-                  await CurrentRoom();
-                }
-                if (!room) getRoom();
-                if (room && !snapCreated) fetchData();
-                moveIcon(3, 1, position);
-              }, [position.database]);
-
               return (
                 <FontAwesome
                   name="user"
@@ -1239,14 +1199,6 @@ const LudoNew2Player = () => {
             break;
           case 2:
             if (positions[3][1] === position) {
-              useEffect(() => {
-                async function getRoom() {
-                  await CurrentRoom();
-                }
-                if (!room) getRoom();
-                if (room && !snapCreated) fetchData();
-                moveIcon(3, 2, position);
-              }, [position.database]);
               return (
                 <FontAwesome
                   name="user"
@@ -1260,14 +1212,6 @@ const LudoNew2Player = () => {
             break;
           case 3:
             if (positions[3][2] === position) {
-              useEffect(() => {
-                async function getRoom() {
-                  await CurrentRoom();
-                }
-                if (!room) getRoom();
-                if (room && !snapCreated) fetchData();
-                moveIcon(3, 3, position);
-              }, [position.database]);
               return (
                 <FontAwesome
                   name="user"
@@ -1281,14 +1225,14 @@ const LudoNew2Player = () => {
             break;
           case 4:
             if (positions[3][3] === position) {
-              useEffect(() => {
-                async function getRoom() {
-                  await CurrentRoom();
-                }
-                if (!room) getRoom();
-                if (room && !snapCreated) fetchData();
-                moveIcon(3, 4, position);
-              }, [position.database]);
+              // useEffect(() => {
+              //   async function getRoom() {
+              //     await CurrentRoom();
+              //   }
+              //   if (!room) getRoom();
+              //   if (room && !snapCreated) fetchData();
+              //   moveIcon(3, 4, position);
+              // }, [position.database]);
               return (
                 <FontAwesome
                   name="user"
