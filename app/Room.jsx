@@ -11,7 +11,7 @@ const Room = () => {
   const [playerUid, setPlayerUid] = useState('');
   const [countdown, setCountdown] = useState(null);
   const [positions, setPositions] = useState({
-    1: [-11, -21, -31, -41],
+    1: [-13, -23, -33, -43],
     3: [-13, -23, -33, -43],
   });
 

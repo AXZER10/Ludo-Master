@@ -60,6 +60,9 @@ const LudoNew2Player = () => {
     1: [-11, -21, -31, -41],
     3: [-13, -23, -33, -43],
   });
+  const [OppPositions, setOppPositions] = useState({
+    1: [-13, -23, -33, -43],
+  });
   if (
     positions[1][0] === "winner" &&
     positions[1][1] === "winner" &&
@@ -144,19 +147,25 @@ const LudoNew2Player = () => {
     } catch (error) { }
   };
 
-  const updateTurn = () => { };
   const updatePositions = async () => {
     const roomId = room?.id;
     let UID = User.uid;
     console.log("UID: ", UID)
     const db = getFirestore();
     const roomRef = doc(db, 'twoPlayerRooms', roomId);
+    let oppArr = positions[1].map((element, index) => {
+      if (room?.uid1?.position[index] > 0) {
+        return element + 26;
+      }
+      return element;
+    })
+    console.log("Opponent Arraay: ", oppArr)
     if (room?.uid1?.uid == UID) {
       if (room?.uid1?.dice != 6) {
         let updatedRoom = {
           id: room?.id,
           uid1: {
-            position: positions[1],
+            position: OppPositions[1],
             dice: room?.uid1?.dice,
             turn: room?.uid1?.turn,
             uid: room?.uid1?.uid
@@ -175,7 +184,7 @@ const LudoNew2Player = () => {
         let updatedRoom = {
           id: room?.id,
           uid1: {
-            position: positions[1],
+            position: OppPositions[1],
             dice: room?.uid1?.dice,
             turn: true,
             uid: room?.uid1?.uid
@@ -204,7 +213,7 @@ const LudoNew2Player = () => {
             uid: room?.uid1?.uid
           },
           uid2: {
-            position: positions[1],
+            position: OppPositions[1],
             dice: room?.uid2?.dice,
             turn: room?.uid2?.turn,
             uid: room?.uid2?.uid
@@ -223,7 +232,7 @@ const LudoNew2Player = () => {
             uid: room?.uid1?.uid
           },
           uid2: {
-            position: positions[1],
+            position: OppPositions[1],
             dice: room?.uid2?.dice,
             turn: true,
             uid: room?.uid2?.uid
@@ -244,13 +253,15 @@ const LudoNew2Player = () => {
               if (positions[1][0] !== "winner") {
                 if (currentNumber1 === 6) {
                   setTurn1(true);
-                  updateTurn();
                 }
                 if (positions[1][0] < 0) {
                   if (currentNumber1 === 6) {
                     let temparr = positions[1];
                     temparr[0] = 1;
+                    let tempopparr = OppPositions[1];
+                    // tempopparr[0] = 27;
                     setPositions(positions);
+                    // setOppPositions(OppPositions)
                     setIsMovedBy1(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
@@ -258,6 +269,8 @@ const LudoNew2Player = () => {
                 } else if (positions[1][0] === 51 && currentNumber1 === 6) {
                   let temparr = positions[1];
                   temparr[0] = "winner";
+                  // let tempopparr = OppPositions[1];
+                  // tempopparr[0] = "winner";
                   setPositions(positions);
                   setIsMovedBy1(true);
                 } else {
@@ -267,6 +280,8 @@ const LudoNew2Player = () => {
                     if (nextPosition === 58) {
                       let temparr = positions[1];
                       temparr[0] = "winner";
+                      // let tempopparr = OppPositions[1];
+                      // tempopparr[0] = "winner";
                       setPositions(positions);
                       setIsMovedBy1(true);
                     } else {
@@ -289,6 +304,8 @@ const LudoNew2Player = () => {
                     checkIfCutPossibleFor3(nextPosition);
                     let temparr = positions[1];
                     temparr[0] = nextPosition;
+                    // let tempopparr = OppPositions[1];
+                    // tempopparr[0] = nextPosition + 26;
                     setPositions(positions);
                     setIsMovedBy1(true);
                   }
@@ -310,12 +327,13 @@ const LudoNew2Player = () => {
               if (positions[1][1] !== "winner") {
                 if (currentNumber1 === 6) {
                   setTurn1(true);
-                  updateTurn();
                 }
                 if (positions[1][1] < 0) {
                   if (currentNumber1 === 6) {
                     let temparr = positions[1];
                     temparr[1] = 1;
+                    // let tempopparr = OppPositions[1];
+                    // tempopparr[1] = 27;
                     setPositions(positions);
                     setIsMovedBy1(true);
                   } else {
@@ -324,6 +342,8 @@ const LudoNew2Player = () => {
                 } else if (positions[1][1] === 51 && currentNumber1 === 6) {
                   let temparr = positions[1];
                   temparr[1] = "winner";
+                  // let tempopparr = OppPositions[1];
+                  // tempopparr[1] = "winner";
                   setPositions(positions);
                   setIsMovedBy1(true);
                 } else {
@@ -333,6 +353,8 @@ const LudoNew2Player = () => {
                     if (nextPosition === 58) {
                       let temparr = positions[1];
                       temparr[1] = "winner";
+                      // let tempopparr = OppPositions[1];
+                      // tempopparr[1] = "winner";
                       setPositions(positions);
                       setIsMovedBy1(true);
                     } else {
@@ -355,6 +377,8 @@ const LudoNew2Player = () => {
                     checkIfCutPossibleFor3(nextPosition);
                     let temparr = positions[1];
                     temparr[1] = nextPosition;
+                    // let tempopparr = OppPositions[1];
+                    // tempopparr[1] = nextPosition + 26;
                     setPositions(positions);
                     setIsMovedBy1(true);
                   }
@@ -366,7 +390,6 @@ const LudoNew2Player = () => {
               if (positions[1][2] !== "winner") {
                 if (currentNumber1 === 6) {
                   setTurn1(true);
-                  updateTurn();
                 }
                 if (positions[1][2] < 0) {
                   if (currentNumber1 === 6) {
@@ -422,7 +445,6 @@ const LudoNew2Player = () => {
               if (positions[1][3] !== "winner") {
                 if (currentNumber1 === 6) {
                   setTurn1(true);
-                  updateTurn();
                 }
                 if (positions[1][3] < 0) {
                   if (currentNumber1 === 6) {
@@ -486,7 +508,6 @@ const LudoNew2Player = () => {
         if (whoseTurnToMove === 3 && !isMovedBy3) {
           if (currentNumber2 === 6) {
             setTurn3(true);
-            updateTurn();
           }
           switch (whichOne) {
             case 1:
@@ -572,7 +593,6 @@ const LudoNew2Player = () => {
               if (positions[3][1] !== "winner") {
                 if (currentNumber2 === 6) {
                   setTurn3(true);
-                  updateTurn();
                 }
                 if (positions[3][1] < 0) {
                   if (currentNumber2 === 6) {
@@ -655,7 +675,6 @@ const LudoNew2Player = () => {
               if (positions[3][2] !== "winner") {
                 if (currentNumber2 === 6) {
                   setTurn3(true);
-                  updateTurn();
                 }
                 if (positions[3][2] < 0) {
                   if (currentNumber2 === 6) {
@@ -738,7 +757,6 @@ const LudoNew2Player = () => {
               if (positions[3][3] !== "winner") {
                 if (currentNumber2 === 6) {
                   setTurn3(true);
-                  updateTurn();
                 }
                 if (positions[3][3] < 0) {
                   if (currentNumber2 === 6) {
@@ -1205,7 +1223,7 @@ const LudoNew2Player = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  onPress={() => moveIcon(3, 2, position)}
+                  // onPress={() => moveIcon(3, 2, position)}
                   color="#ed24ae"
                   size={20}
                 />
@@ -1218,7 +1236,7 @@ const LudoNew2Player = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  onPress={() => moveIcon(3, 3, position)}
+                  // onPress={() => moveIcon(3, 3, position)}
                   color="#ed24ae"
                   size={20}
                 />
@@ -1239,7 +1257,7 @@ const LudoNew2Player = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  onPress={() => moveIcon(3, 4, position)}
+                  // onPress={() => moveIcon(3, 4, position)}
                   color="#ed24ae"
                   size={20}
                 />
@@ -1296,7 +1314,6 @@ const LudoNew2Player = () => {
                         }
                       }
                     }
-                    // updateTurn();
                   }}
                 >
                   <Image
