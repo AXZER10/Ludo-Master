@@ -167,13 +167,13 @@ const LudoNew2Player = () => {
           uid1: {
             position: OppPositions[1],
             dice: room?.uid1?.dice,
-            turn: room?.uid1?.turn,
+            turn: false,
             uid: room?.uid1?.uid
           },
           uid2: {
             position: room?.uid2?.position,
             dice: room?.uid2?.dice,
-            turn: room?.uid2?.turn,
+            turn: true,
             uid: room?.uid2?.uid
           },
           gameState: "InProgress"
@@ -209,13 +209,13 @@ const LudoNew2Player = () => {
           uid1: {
             position: room?.uid1?.position,
             dice: room?.uid1?.dice,
-            turn: room?.uid1?.turn,
+            turn: true,
             uid: room?.uid1?.uid
           },
           uid2: {
             position: OppPositions[1],
             dice: room?.uid2?.dice,
-            turn: room?.uid2?.turn,
+            turn: false,
             uid: room?.uid2?.uid
           },
           gameState: "InProgress"
@@ -532,7 +532,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[0] = extraMoves;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   } else if (OppPositions[1][0] >= 20 && OppPositions[1][0] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
@@ -541,13 +541,13 @@ const LudoNew2Player = () => {
                         let temparr = OppPositions[1];
                         temparr[0] = "winner";
                         setPositions(positions);
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
                         let temparr = OppPositions[1];
                         temparr[0] = newPosition;
                         setPositions(positions);
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       }
                     } else {
                       nextPosition = OppPositions[1][0] + currentNumber1;
@@ -555,7 +555,7 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[0] = nextPosition;
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     }
                   } else if (OppPositions[1][0] >= 63 && OppPositions[1][0] <= 67) {
                     nextPosition = OppPositions[1][0] + currentNumber1;
@@ -563,7 +563,7 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[0] = "winner";
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
                         (OppPositions[1][1] > 0 && OppPositions[1][1] !== "winner") ||
@@ -572,13 +572,13 @@ const LudoNew2Player = () => {
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       }
                     } else {
                       let temparr = OppPositions[1];
                       temparr[0] = nextPosition;
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     }
                   } else {
                     nextPosition = OppPositions[1][0] + currentNumber1;
@@ -586,7 +586,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[0] = nextPosition;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   }
                 }
               }
@@ -614,7 +614,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[1] = extraMoves;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   } else if (OppPositions[1][1] >= 20 && OppPositions[1][1] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
@@ -623,13 +623,13 @@ const LudoNew2Player = () => {
                         let temparr = OppPositions[1];
                         temparr[1] = "winner";
                         setPositions(positions);
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
                         let temparr = OppPositions[1];
                         temparr[1] = newPosition;
                         setPositions(positions);
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       }
                     } else {
                       nextPosition = OppPositions[1][1] + currentNumber1;
@@ -637,7 +637,7 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[1] = nextPosition;
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     }
                   } else if (OppPositions[1][1] >= 63 && OppPositions[1][1] <= 67) {
                     nextPosition = OppPositions[1][1] + currentNumber1;
@@ -645,7 +645,7 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[1] = "winner";
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
                         (OppPositions[1][0] > 0 && OppPositions[1][0] !== "winner") ||
@@ -654,13 +654,13 @@ const LudoNew2Player = () => {
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       }
                     } else {
                       let temparr = OppPositions[1];
                       temparr[1] = nextPosition;
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     }
                   } else {
                     nextPosition = OppPositions[1][1] + currentNumber1;
@@ -668,7 +668,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[1] = nextPosition;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   }
                 }
               }
@@ -683,7 +683,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[2] = 27;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
@@ -696,7 +696,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[2] = extraMoves;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   } else if (OppPositions[1][2] >= 20 && OppPositions[1][2] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
@@ -705,13 +705,13 @@ const LudoNew2Player = () => {
                         let temparr = OppPositions[1];
                         temparr[2] = "winner";
                         setPositions(positions);
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
                         let temparr = OppPositions[1];
                         temparr[2] = newPosition;
                         setPositions(positions);
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       }
                     } else {
                       nextPosition = OppPositions[1][2] + currentNumber1;
@@ -719,7 +719,7 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[2] = nextPosition;
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     }
                   } else if (OppPositions[1][2] >= 63 && OppPositions[1][2] <= 67) {
                     nextPosition = OppPositions[1][2] + currentNumber1;
@@ -727,7 +727,7 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[2] = "winner";
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
                         (OppPositions[1][0] > 0 && OppPositions[1][0] !== "winner") ||
@@ -736,13 +736,13 @@ const LudoNew2Player = () => {
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       }
                     } else {
                       let temparr = OppPositions[1];
                       temparr[2] = nextPosition;
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     }
                   } else {
                     nextPosition = OppPositions[1][2] + currentNumber1;
@@ -750,7 +750,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[2] = nextPosition;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   }
                 }
               }
@@ -765,7 +765,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[3] = 27;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
@@ -778,7 +778,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[3] = extraMoves;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   } else if (OppPositions[1][3] >= 20 && OppPositions[1][3] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
@@ -787,13 +787,13 @@ const LudoNew2Player = () => {
                         let temparr = OppPositions[1];
                         temparr[3] = "winner";
                         setPositions(positions);
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
                         let temparr = OppPositions[1];
                         temparr[3] = newPosition;
                         setPositions(positions);
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       }
                     } else {
                       nextPosition = OppPositions[1][3] + currentNumber1;
@@ -801,7 +801,7 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[3] = nextPosition;
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     }
                   } else if (OppPositions[1][3] >= 63 && OppPositions[1][3] <= 67) {
                     nextPosition = OppPositions[1][3] + currentNumber1;
@@ -809,7 +809,7 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[3] = "winner";
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
                         (OppPositions[1][0] > 0 && OppPositions[1][0] !== "winner") ||
@@ -818,13 +818,13 @@ const LudoNew2Player = () => {
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
-                         // setIsMovedBy3(true);
+                        // setIsMovedBy3(true);
                       }
                     } else {
                       let temparr = OppPositions[1];
                       temparr[3] = nextPosition;
                       setPositions(positions);
-                       // setIsMovedBy3(true);
+                      // setIsMovedBy3(true);
                     }
                   } else {
                     nextPosition = OppPositions[1][3] + currentNumber1;
@@ -832,7 +832,7 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[3] = nextPosition;
                     setPositions(positions);
-                     // setIsMovedBy3(true);
+                    // setIsMovedBy3(true);
                   }
                 }
               }
@@ -842,7 +842,7 @@ const LudoNew2Player = () => {
           }
         } else {
           setMoveMessage("You cannot move right now");
-           // setIsMovedBy3(true);
+          // setIsMovedBy3(true);
         }
         break;
     }
@@ -938,45 +938,89 @@ const LudoNew2Player = () => {
     const db = getFirestore();
     try {
       const roomRef = doc(db, "twoPlayerRooms", roomId);
-      if (room?.uid1?.uid == UID) {
-        let updatedRoom = {
-          id: room?.id,
-          uid1: {
-            position: room?.uid1?.position,
-            dice: Dice,
-            turn: false,
-            uid: room?.uid1?.uid,
+      if (checkIfAnythingOpened(1)) {
+        if (room?.uid1?.uid == UID) {
+          let updatedRoom = {
+            id: room?.id,
+            uid1: {
+              position: room?.uid1?.position,
+              dice: Dice,
+              turn: false,
+              uid: room?.uid1?.uid,
 
-          },
-          uid2: {
-            position: room?.uid2?.position,
-            dice: room?.uid2?.dice,
-            turn: true,
-            uid: room?.uid2?.uid,
-          },
-          gameState: "InProgress",
-        };
-        console.log(updatedRoom);
-        await updateDoc(roomRef, updatedRoom);
-      } else {
-        let updatedRoom = {
-          id: room?.id,
-          uid1: {
-            position: room?.uid1?.position,
-            dice: room?.uid1?.dice,
-            turn: true,
-            uid: room?.uid1?.uid,
-          },
-          uid2: {
-            position: room?.uid2?.position,
-            dice: Dice,
-            turn: false,
-            uid: room?.uid2?.uid,
-          },
-          gameState: "InProgress",
-        };
-        await updateDoc(roomRef, updatedRoom);
-        setCurrentNumber1(Dice);
+            },
+            uid2: {
+              position: room?.uid2?.position,
+              dice: room?.uid2?.dice,
+              turn: true,
+              uid: room?.uid2?.uid,
+            },
+            gameState: "InProgress",
+          };
+          console.log(updatedRoom);
+          await updateDoc(roomRef, updatedRoom);
+        } else {
+          let updatedRoom = {
+            id: room?.id,
+            uid1: {
+              position: room?.uid1?.position,
+              dice: room?.uid1?.dice,
+              turn: true,
+              uid: room?.uid1?.uid,
+            },
+            uid2: {
+              position: room?.uid2?.position,
+              dice: Dice,
+              turn: false,
+              uid: room?.uid2?.uid,
+            },
+            gameState: "InProgress",
+          };
+          await updateDoc(roomRef, updatedRoom);
+          setCurrentNumber1(Dice);
+        }
+      }
+      else{
+        if (room?.uid1?.uid == UID) {
+          let updatedRoom = {
+            id: room?.id,
+            uid1: {
+              position: room?.uid1?.position,
+              dice: Dice,
+              turn: false,
+              uid: room?.uid1?.uid,
+  
+            },
+            uid2: {
+              position: room?.uid2?.position,
+              dice: room?.uid2?.dice,
+              turn: false,
+              uid: room?.uid2?.uid,
+            },
+            gameState: "InProgress",
+          };
+          console.log(updatedRoom);
+          await updateDoc(roomRef, updatedRoom);
+        } else {
+          let updatedRoom = {
+            id: room?.id,
+            uid1: {
+              position: room?.uid1?.position,
+              dice: room?.uid1?.dice,
+              turn: false,
+              uid: room?.uid1?.uid,
+            },
+            uid2: {
+              position: room?.uid2?.position,
+              dice: Dice,
+              turn: false,
+              uid: room?.uid2?.uid,
+            },
+            gameState: "InProgress",
+          };
+          await updateDoc(roomRef, updatedRoom);
+          setCurrentNumber1(Dice);
+        }
       }
     } catch (error) {
       Alert.alert("Error Updating Dice", error.message);
@@ -1138,7 +1182,7 @@ const LudoNew2Player = () => {
       setTurnMessage("It's Not Your Turn");
     }
   };
-  const updatepos = (a,b,position) => {
+  const updatepos = (a, b, position) => {
     moveIcon(a, b, position)
     moveIcon(3, b, position)
   }
