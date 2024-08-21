@@ -54,7 +54,6 @@ const zoomOut = {
 
 const LudoNew2Player = () => {
   const { roomId } = useLocalSearchParams();
-  // console.log("location.state  location.statelocation.state ", roomId)
 
   const [positions, setPositions] = useState({
     1: [-11, -21, -31, -41],
@@ -82,14 +81,12 @@ const LudoNew2Player = () => {
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
   const [currentNumber1, setCurrentNumber1] = useState(0);
-  // const [currentNumber1, setcurrentNumber1] = useState(0);
   const [turnMessage, setTurnMessage] = useState("");
   const [moveMessage, setMoveMessage] = useState("");
   const [whoseTurnToMove, setWhoseTurnToMove] = useState(0);
   const [isMovedBy1, setIsMovedBy1] = useState(false);
   const [isMovedBy3, setIsMovedBy3] = useState(false);
   const [room, setRoom] = useState(undefined);
-  //  const [roomID, setRoomID] = useState(roomId);
   const [User, setUser] = useState(auth.currentUser);
   const [User1, setUser1] = useState({});
   const [User2, setUser2] = useState({});
@@ -105,13 +102,8 @@ const LudoNew2Player = () => {
     try {
       const db = getFirestore();
       const roomRef = collection(db, "twoPlayerRooms");
-
       const q = query(roomRef, where(documentId(), "==", roomId));
-
       const querySnapshot = await getDocs(q);
-
-      // console.log("roomRef roomRef ", querySnapshot?.docs[0].data())
-      // console.log(" documentId().data documentId().data documentId().data ", roomId)
       setUser(user);
       let room = { ...{ id: roomId }, ...querySnapshot?.docs[0].data() };
 
@@ -120,7 +112,7 @@ const LudoNew2Player = () => {
         if (DataUid1 == User?.uid) {
           setUser1(DataUid1);
           setUser2(room?.uid2?.uid);
-        } //if (DataUid2 == uid)
+        }
         else {
           setUser1(room?.uid2?.uid);
           setUser2(DataUid1);
@@ -133,7 +125,6 @@ const LudoNew2Player = () => {
     }
   };
   Cancel = async () => {
-    // const roomId = room?.id;
     const roomID = room?.id;
     console.log("room: ", roomID);
     const db = getFirestore();
@@ -258,10 +249,7 @@ const LudoNew2Player = () => {
                   if (currentNumber1 === 6) {
                     let temparr = positions[1];
                     temparr[0] = 1;
-                    // let tempopparr = OppPositions[1];
-                    // tempopparr[0] = 27;
                     setPositions(positions);
-                    // setOppPositions(OppPositions)
                     setIsMovedBy1(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
@@ -269,8 +257,6 @@ const LudoNew2Player = () => {
                 } else if (positions[1][0] === 51 && currentNumber1 === 6) {
                   let temparr = positions[1];
                   temparr[0] = "winner";
-                  // let tempopparr = OppPositions[1];
-                  // tempopparr[0] = "winner";
                   setPositions(positions);
                   setIsMovedBy1(true);
                 } else {
@@ -280,8 +266,6 @@ const LudoNew2Player = () => {
                     if (nextPosition === 58) {
                       let temparr = positions[1];
                       temparr[0] = "winner";
-                      // let tempopparr = OppPositions[1];
-                      // tempopparr[0] = "winner";
                       setPositions(positions);
                       setIsMovedBy1(true);
                     } else {
@@ -304,8 +288,6 @@ const LudoNew2Player = () => {
                     checkIfCutPossibleFor3(nextPosition);
                     let temparr = positions[1];
                     temparr[0] = nextPosition;
-                    // let tempopparr = OppPositions[1];
-                    // tempopparr[0] = nextPosition + 26;
                     setPositions(positions);
                     setIsMovedBy1(true);
                   }
@@ -332,8 +314,6 @@ const LudoNew2Player = () => {
                   if (currentNumber1 === 6) {
                     let temparr = positions[1];
                     temparr[1] = 1;
-                    // let tempopparr = OppPositions[1];
-                    // tempopparr[1] = 27;
                     setPositions(positions);
                     setIsMovedBy1(true);
                   } else {
@@ -342,8 +322,6 @@ const LudoNew2Player = () => {
                 } else if (positions[1][1] === 51 && currentNumber1 === 6) {
                   let temparr = positions[1];
                   temparr[1] = "winner";
-                  // let tempopparr = OppPositions[1];
-                  // tempopparr[1] = "winner";
                   setPositions(positions);
                   setIsMovedBy1(true);
                 } else {
@@ -353,8 +331,6 @@ const LudoNew2Player = () => {
                     if (nextPosition === 58) {
                       let temparr = positions[1];
                       temparr[1] = "winner";
-                      // let tempopparr = OppPositions[1];
-                      // tempopparr[1] = "winner";
                       setPositions(positions);
                       setIsMovedBy1(true);
                     } else {
@@ -377,8 +353,6 @@ const LudoNew2Player = () => {
                     checkIfCutPossibleFor3(nextPosition);
                     let temparr = positions[1];
                     temparr[1] = nextPosition;
-                    // let tempopparr = OppPositions[1];
-                    // tempopparr[1] = nextPosition + 26;
                     setPositions(positions);
                     setIsMovedBy1(true);
                   }
@@ -519,7 +493,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[0] = 27;
                     setPositions(positions);
-                    // // setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
@@ -532,7 +505,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[0] = extraMoves;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   } else if (OppPositions[1][0] >= 20 && OppPositions[1][0] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
@@ -541,13 +513,11 @@ const LudoNew2Player = () => {
                         let temparr = OppPositions[1];
                         temparr[0] = "winner";
                         setPositions(positions);
-                        // setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
                         let temparr = OppPositions[1];
                         temparr[0] = newPosition;
                         setPositions(positions);
-                        // setIsMovedBy3(true);
                       }
                     } else {
                       nextPosition = OppPositions[1][0] + currentNumber1;
@@ -555,7 +525,6 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[0] = nextPosition;
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     }
                   } else if (OppPositions[1][0] >= 63 && OppPositions[1][0] <= 67) {
                     nextPosition = OppPositions[1][0] + currentNumber1;
@@ -563,7 +532,6 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[0] = "winner";
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
                         (OppPositions[1][1] > 0 && OppPositions[1][1] !== "winner") ||
@@ -572,13 +540,11 @@ const LudoNew2Player = () => {
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
-                        // setIsMovedBy3(true);
                       }
                     } else {
                       let temparr = OppPositions[1];
                       temparr[0] = nextPosition;
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     }
                   } else {
                     nextPosition = OppPositions[1][0] + currentNumber1;
@@ -586,7 +552,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[0] = nextPosition;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   }
                 }
               }
@@ -601,7 +566,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[1] = 27;
                     setPositions(positions);
-                    //  // setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
@@ -614,7 +578,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[1] = extraMoves;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   } else if (OppPositions[1][1] >= 20 && OppPositions[1][1] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
@@ -623,13 +586,11 @@ const LudoNew2Player = () => {
                         let temparr = OppPositions[1];
                         temparr[1] = "winner";
                         setPositions(positions);
-                        // setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
                         let temparr = OppPositions[1];
                         temparr[1] = newPosition;
                         setPositions(positions);
-                        // setIsMovedBy3(true);
                       }
                     } else {
                       nextPosition = OppPositions[1][1] + currentNumber1;
@@ -637,7 +598,6 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[1] = nextPosition;
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     }
                   } else if (OppPositions[1][1] >= 63 && OppPositions[1][1] <= 67) {
                     nextPosition = OppPositions[1][1] + currentNumber1;
@@ -645,7 +605,6 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[1] = "winner";
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
                         (OppPositions[1][0] > 0 && OppPositions[1][0] !== "winner") ||
@@ -654,13 +613,11 @@ const LudoNew2Player = () => {
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
-                        // setIsMovedBy3(true);
                       }
                     } else {
                       let temparr = OppPositions[1];
                       temparr[1] = nextPosition;
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     }
                   } else {
                     nextPosition = OppPositions[1][1] + currentNumber1;
@@ -668,7 +625,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[1] = nextPosition;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   }
                 }
               }
@@ -683,7 +639,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[2] = 27;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
@@ -696,7 +651,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[2] = extraMoves;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   } else if (OppPositions[1][2] >= 20 && OppPositions[1][2] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
@@ -705,13 +659,11 @@ const LudoNew2Player = () => {
                         let temparr = OppPositions[1];
                         temparr[2] = "winner";
                         setPositions(positions);
-                        // setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
                         let temparr = OppPositions[1];
                         temparr[2] = newPosition;
                         setPositions(positions);
-                        // setIsMovedBy3(true);
                       }
                     } else {
                       nextPosition = OppPositions[1][2] + currentNumber1;
@@ -719,7 +671,6 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[2] = nextPosition;
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     }
                   } else if (OppPositions[1][2] >= 63 && OppPositions[1][2] <= 67) {
                     nextPosition = OppPositions[1][2] + currentNumber1;
@@ -727,7 +678,6 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[2] = "winner";
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
                         (OppPositions[1][0] > 0 && OppPositions[1][0] !== "winner") ||
@@ -736,13 +686,11 @@ const LudoNew2Player = () => {
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
-                        // setIsMovedBy3(true);
                       }
                     } else {
                       let temparr = OppPositions[1];
                       temparr[2] = nextPosition;
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     }
                   } else {
                     nextPosition = OppPositions[1][2] + currentNumber1;
@@ -750,7 +698,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[2] = nextPosition;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   }
                 }
               }
@@ -765,7 +712,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[3] = 27;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
@@ -778,7 +724,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[3] = extraMoves;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   } else if (OppPositions[1][3] >= 20 && OppPositions[1][3] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
@@ -787,13 +732,11 @@ const LudoNew2Player = () => {
                         let temparr = OppPositions[1];
                         temparr[3] = "winner";
                         setPositions(positions);
-                        // setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
                         let temparr = OppPositions[1];
                         temparr[3] = newPosition;
                         setPositions(positions);
-                        // setIsMovedBy3(true);
                       }
                     } else {
                       nextPosition = OppPositions[1][3] + currentNumber1;
@@ -801,7 +744,6 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[3] = nextPosition;
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     }
                   } else if (OppPositions[1][3] >= 63 && OppPositions[1][3] <= 67) {
                     nextPosition = OppPositions[1][3] + currentNumber1;
@@ -809,7 +751,6 @@ const LudoNew2Player = () => {
                       let temparr = OppPositions[1];
                       temparr[3] = "winner";
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
                         (OppPositions[1][0] > 0 && OppPositions[1][0] !== "winner") ||
@@ -818,13 +759,11 @@ const LudoNew2Player = () => {
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
-                        // setIsMovedBy3(true);
                       }
                     } else {
                       let temparr = OppPositions[1];
                       temparr[3] = nextPosition;
                       setPositions(positions);
-                      // setIsMovedBy3(true);
                     }
                   } else {
                     nextPosition = OppPositions[1][3] + currentNumber1;
@@ -832,7 +771,6 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[3] = nextPosition;
                     setPositions(positions);
-                    // setIsMovedBy3(true);
                   }
                 }
               }
@@ -842,7 +780,6 @@ const LudoNew2Player = () => {
           }
         } else {
           setMoveMessage("You cannot move right now");
-          // setIsMovedBy3(true);
         }
         break;
     }
@@ -925,11 +862,6 @@ const LudoNew2Player = () => {
         return false;
     }
   };
-
-  // const validateChangeOfChange = (Dice) => {
-  //   if(Dice == 6) return false;
-  //   return true;
-  // }
 
   const updateDice1 = async (Dice) => {
     const roomId = room?.id;
@@ -1028,7 +960,6 @@ const LudoNew2Player = () => {
   };
 
   const UpdateDice2 = async (dice) => {
-    //setcurrentNumber1(dice);
     console.log(
       "UpdateDice2" +
       "  " +
@@ -1038,9 +969,6 @@ const LudoNew2Player = () => {
       "  " +
       checkIfAnythingOpened(1)
     );
-    // if (turn3 && (isMovedBy1 || checkIfAnythingOpened(1))) {
-    //   setWhoseTurnToMove(3);
-    //   setIsMovedBy3(false);
     switch (dice) {
       case 1:
         setImage3(require("./assets/dice1.png"));
@@ -1077,19 +1005,10 @@ const LudoNew2Player = () => {
     try {
       const db = getFirestore();
       let UID = User.uid;
-      // const roomID = await CurrentRoom();
-      // console.log("roomId      roomId _________", roomId)
-      // console.log('room?.id ???????',room)
       const roomRef = doc(db, "twoPlayerRooms", room?.id);
-      // console.log('room?.id',room?.id)
-      // useEffect(()=>{
       const unsubscribe = onSnapshot(roomRef, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
-          // console.log("for update 2",data)
-          // console.log('User1',User1)
-          // console.log('data?.uid1?.turn',data?.uid1?.dice)
-          // UpdateDice2(data?.uid1?.dice);
           if (data?.uid1?.uid == UID) {
             if (data?.uid1?.turn == true) {
               UpdateDice2(data?.uid2?.dice);
@@ -1110,10 +1029,8 @@ const LudoNew2Player = () => {
         }
       });
 
-      // Clean up the subscription on unmount
       onSnapCreated(true);
       return () => unsubscribe();
-      // },[data])
     } catch (error) { }
   };
 
@@ -1130,7 +1047,6 @@ const LudoNew2Player = () => {
 
   const generateRandomNumber = async () => {
     console.log("Turn1", turn1)
-    //console.log("Turn2",turn2)
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setTurnMessage("");
     setMoveMessage("");
@@ -1192,7 +1108,6 @@ const LudoNew2Player = () => {
         switch (whichOne) {
           case 1:
             if (positions[1][0] === position) {
-              //Update Database with position
               return (
                 <FontAwesome
                   name="user"
@@ -1206,7 +1121,6 @@ const LudoNew2Player = () => {
             break;
           case 2:
             if (positions[1][1] === position) {
-              //Update Database with position
               return (
                 <FontAwesome
                   name="user"
@@ -1220,7 +1134,6 @@ const LudoNew2Player = () => {
             break;
           case 3:
             if (positions[1][2] === position) {
-              //Update Database with position
               return (
                 <FontAwesome
                   name="user"
@@ -1234,7 +1147,6 @@ const LudoNew2Player = () => {
             break;
           case 4:
             if (positions[1][3] === position) {
-              //Update Database with position
               return (
                 <FontAwesome
                   name="user"
@@ -1251,7 +1163,6 @@ const LudoNew2Player = () => {
         }
         break;
       case 3:
-        //OnSnapshot
         switch (whichOne) {
           case 1:
             if (positions[3][0] === position) {
@@ -1259,7 +1170,6 @@ const LudoNew2Player = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  //onPress={() => moveIcon(3, 1, position) }
                   color="#ed24ae"
                   size={20}
                 />
@@ -1272,7 +1182,6 @@ const LudoNew2Player = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  // onPress={() => moveIcon(3, 2, position)}
                   color="#ed24ae"
                   size={20}
                 />
@@ -1285,7 +1194,6 @@ const LudoNew2Player = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  // onPress={() => moveIcon(3, 3, position)}
                   color="#ed24ae"
                   size={20}
                 />
@@ -1294,19 +1202,10 @@ const LudoNew2Player = () => {
             break;
           case 4:
             if (positions[3][3] === position) {
-              // useEffect(() => {
-              //   async function getRoom() {
-              //     await CurrentRoom();
-              //   }
-              //   if (!room) getRoom();
-              //   if (room && !snapCreated) fetchData();
-              //   moveIcon(3, 4, position);
-              // }, [position.database]);
               return (
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  // onPress={() => moveIcon(3, 4, position)}
                   color="#ed24ae"
                   size={20}
                 />
