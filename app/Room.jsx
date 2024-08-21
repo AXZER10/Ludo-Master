@@ -10,6 +10,10 @@ const Room = () => {
   const [roomId, setRoomId] = useState('');
   const [playerUid, setPlayerUid] = useState('');
   const [countdown, setCountdown] = useState(null);
+  const [positions, setPositions] = useState({
+    1: [-13, -23, -33, -43],
+    3: [-13, -23, -33, -43],
+  });
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -58,6 +62,7 @@ const Room = () => {
         players: [],
         gameState: 'waiting',
         uid1: {
+          position: positions[1],
           uid,
           dice:0,
           turn:true
@@ -87,6 +92,7 @@ const Room = () => {
       const roomRef = doc(db, 'twoPlayerRooms', roomId);
       await updateDoc(roomRef, {
         uid2: {
+          position: positions[3],
           uid,
           dice:0,
           turn:false
