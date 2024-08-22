@@ -70,7 +70,6 @@ const LudoNew2Player = () => {
     positions[1][3] === "winner"
   ) {
     Alert.alert("Game Over", "Player 1 Wins");
-   
   }
   if (
     positions[3][0] === "winner" &&
@@ -79,7 +78,6 @@ const LudoNew2Player = () => {
     positions[3][3] === "winner"
   ) {
     Alert.alert("Game Over", "Player 2 Wins");
-   
   }
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
@@ -116,8 +114,7 @@ const LudoNew2Player = () => {
         if (DataUid1 == User?.uid) {
           setUser1(DataUid1);
           setUser2(room?.uid2?.uid);
-        }
-        else {
+        } else {
           setUser1(room?.uid2?.uid);
           setUser2(DataUid1);
         }
@@ -139,23 +136,23 @@ const LudoNew2Player = () => {
       });
 
       router.replace("/Home");
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const updatePositions = async () => {
-    setcanMove(false)
+    setcanMove(false);
     const roomId = room?.id;
     let UID = User.uid;
-    console.log("UID: ", UID)
+    console.log("UID: ", UID);
     const db = getFirestore();
-    const roomRef = doc(db, 'twoPlayerRooms', roomId);
+    const roomRef = doc(db, "twoPlayerRooms", roomId);
     let oppArr = positions[1].map((element, index) => {
       if (room?.uid1?.position[index] > 0) {
         return element + 26;
       }
       return element;
-    })
-    console.log("Opponent Arraay: ", oppArr)
+    });
+    console.log("Opponent Arraay: ", oppArr);
     if (room?.uid1?.uid == UID) {
       if (room?.uid1?.dice != 6) {
         let updatedRoom = {
@@ -164,17 +161,17 @@ const LudoNew2Player = () => {
             position: OppPositions[1],
             dice: room?.uid1?.dice,
             turn: false,
-            uid: room?.uid1?.uid
+            uid: room?.uid1?.uid,
           },
           uid2: {
             position: room?.uid2?.position,
             dice: room?.uid2?.dice,
             turn: true,
-            uid: room?.uid2?.uid
+            uid: room?.uid2?.uid,
           },
-          gameState: "InProgress"
-        }
-        console.log(updatedRoom)
+          gameState: "InProgress",
+        };
+        console.log(updatedRoom);
         await updateDoc(roomRef, updatedRoom);
       } else {
         let updatedRoom = {
@@ -183,22 +180,20 @@ const LudoNew2Player = () => {
             position: OppPositions[1],
             dice: room?.uid1?.dice,
             turn: true,
-            uid: room?.uid1?.uid
+            uid: room?.uid1?.uid,
           },
           uid2: {
             position: room?.uid2?.position,
             dice: room?.uid2?.dice,
             turn: false,
-            uid: room?.uid2?.uid
+            uid: room?.uid2?.uid,
           },
-          gameState: "InProgress"
-        }
-        console.log(updatedRoom)
+          gameState: "InProgress",
+        };
+        console.log(updatedRoom);
         await updateDoc(roomRef, updatedRoom);
       }
-
-    }
-    else {
+    } else {
       if (room?.uid2?.dice != 6) {
         let updatedRoom = {
           id: room?.id,
@@ -206,39 +201,38 @@ const LudoNew2Player = () => {
             position: room?.uid1?.position,
             dice: room?.uid1?.dice,
             turn: true,
-            uid: room?.uid1?.uid
+            uid: room?.uid1?.uid,
           },
           uid2: {
             position: OppPositions[1],
             dice: room?.uid2?.dice,
             turn: false,
-            uid: room?.uid2?.uid
+            uid: room?.uid2?.uid,
           },
-          gameState: "InProgress"
-        }
+          gameState: "InProgress",
+        };
         await updateDoc(roomRef, updatedRoom);
-      }
-      else {
+      } else {
         let updatedRoom = {
           id: room?.id,
           uid1: {
             position: room?.uid1?.position,
             dice: room?.uid1?.dice,
             turn: false,
-            uid: room?.uid1?.uid
+            uid: room?.uid1?.uid,
           },
           uid2: {
             position: OppPositions[1],
             dice: room?.uid2?.dice,
             turn: true,
-            uid: room?.uid2?.uid
+            uid: room?.uid2?.uid,
           },
-          gameState: "InProgress"
-        }
+          gameState: "InProgress",
+        };
         await updateDoc(roomRef, updatedRoom);
       }
     }
-  }
+  };
 
   const moveIcon = async (player, whichOne, position) => {
     switch (player) {
@@ -478,16 +472,18 @@ const LudoNew2Player = () => {
           setMoveMessage("You cannot move right now");
           setIsMovedBy1(true);
         }
+
         break;
+
       case 3:
         if (whoseTurnToMove === 1 && !isMovedBy1) {
           if (currentNumber1 === 6) {
             setTurn3(true);
           }
-          console.log("OPPPOSITIONS:????????????????????: ", OppPositions)
+          console.log("OPPPOSITIONS:????????????????????: ", OppPositions);
           switch (whichOne) {
             case 1:
-              console.log("OPPPOSITIONS:????????????????????: ", OppPositions)
+              console.log("OPPPOSITIONS:????????????????????: ", OppPositions);
               if (OppPositions[1][0] !== "winner") {
                 if (OppPositions[1][0] < 0) {
                   if (currentNumber1 === 6) {
@@ -506,7 +502,10 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[0] = extraMoves;
                     setPositions(positions);
-                  } else if (OppPositions[1][0] >= 20 && OppPositions[1][0] <= 25) {
+                  } else if (
+                    OppPositions[1][0] >= 20 &&
+                    OppPositions[1][0] <= 25
+                  ) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
                       let newPosition = 62 + extraMoves;
@@ -527,7 +526,10 @@ const LudoNew2Player = () => {
                       temparr[0] = nextPosition;
                       setPositions(positions);
                     }
-                  } else if (OppPositions[1][0] >= 63 && OppPositions[1][0] <= 67) {
+                  } else if (
+                    OppPositions[1][0] >= 63 &&
+                    OppPositions[1][0] <= 67
+                  ) {
                     nextPosition = OppPositions[1][0] + currentNumber1;
                     if (nextPosition == 68) {
                       let temparr = OppPositions[1];
@@ -535,9 +537,12 @@ const LudoNew2Player = () => {
                       setPositions(positions);
                     } else if (nextPosition > 68) {
                       if (
-                        (OppPositions[1][1] > 0 && OppPositions[1][1] !== "winner") ||
-                        (OppPositions[1][2] > 0 && OppPositions[1][2] !== "winner") ||
-                        (OppPositions[1][3] > 0 && OppPositions[1][3] !== "winner")
+                        (OppPositions[1][1] > 0 &&
+                          OppPositions[1][1] !== "winner") ||
+                        (OppPositions[1][2] > 0 &&
+                          OppPositions[1][2] !== "winner") ||
+                        (OppPositions[1][3] > 0 &&
+                          OppPositions[1][3] !== "winner")
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
@@ -579,7 +584,10 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[1] = extraMoves;
                     setPositions(positions);
-                  } else if (OppPositions[1][1] >= 20 && OppPositions[1][1] <= 25) {
+                  } else if (
+                    OppPositions[1][1] >= 20 &&
+                    OppPositions[1][1] <= 25
+                  ) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
                       let newPosition = 62 + extraMoves;
@@ -600,7 +608,10 @@ const LudoNew2Player = () => {
                       temparr[1] = nextPosition;
                       setPositions(positions);
                     }
-                  } else if (OppPositions[1][1] >= 63 && OppPositions[1][1] <= 67) {
+                  } else if (
+                    OppPositions[1][1] >= 63 &&
+                    OppPositions[1][1] <= 67
+                  ) {
                     nextPosition = OppPositions[1][1] + currentNumber1;
                     if (nextPosition == 68) {
                       let temparr = OppPositions[1];
@@ -608,9 +619,12 @@ const LudoNew2Player = () => {
                       setPositions(positions);
                     } else if (nextPosition > 68) {
                       if (
-                        (OppPositions[1][0] > 0 && OppPositions[1][0] !== "winner") ||
-                        (OppPositions[1][2] > 0 && OppPositions[1][2] !== "winner") ||
-                        (OppPositions[1][3] > 0 && OppPositions[1][3] !== "winner")
+                        (OppPositions[1][0] > 0 &&
+                          OppPositions[1][0] !== "winner") ||
+                        (OppPositions[1][2] > 0 &&
+                          OppPositions[1][2] !== "winner") ||
+                        (OppPositions[1][3] > 0 &&
+                          OppPositions[1][3] !== "winner")
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
@@ -652,7 +666,10 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[2] = extraMoves;
                     setPositions(positions);
-                  } else if (OppPositions[1][2] >= 20 && OppPositions[1][2] <= 25) {
+                  } else if (
+                    OppPositions[1][2] >= 20 &&
+                    OppPositions[1][2] <= 25
+                  ) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
                       let newPosition = 62 + extraMoves;
@@ -673,7 +690,10 @@ const LudoNew2Player = () => {
                       temparr[2] = nextPosition;
                       setPositions(positions);
                     }
-                  } else if (OppPositions[1][2] >= 63 && OppPositions[1][2] <= 67) {
+                  } else if (
+                    OppPositions[1][2] >= 63 &&
+                    OppPositions[1][2] <= 67
+                  ) {
                     nextPosition = OppPositions[1][2] + currentNumber1;
                     if (nextPosition == 68) {
                       let temparr = OppPositions[1];
@@ -681,9 +701,12 @@ const LudoNew2Player = () => {
                       setPositions(positions);
                     } else if (nextPosition > 68) {
                       if (
-                        (OppPositions[1][0] > 0 && OppPositions[1][0] !== "winner") ||
-                        (OppPositions[1][1] > 0 && OppPositions[1][1] !== "winner") ||
-                        (OppPositions[1][3] > 0 && OppPositions[1][3] !== "winner")
+                        (OppPositions[1][0] > 0 &&
+                          OppPositions[1][0] !== "winner") ||
+                        (OppPositions[1][1] > 0 &&
+                          OppPositions[1][1] !== "winner") ||
+                        (OppPositions[1][3] > 0 &&
+                          OppPositions[1][3] !== "winner")
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
@@ -725,7 +748,10 @@ const LudoNew2Player = () => {
                     let temparr = OppPositions[1];
                     temparr[3] = extraMoves;
                     setPositions(positions);
-                  } else if (OppPositions[1][3] >= 20 && OppPositions[1][3] <= 25) {
+                  } else if (
+                    OppPositions[1][3] >= 20 &&
+                    OppPositions[1][3] <= 25
+                  ) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
                       let newPosition = 62 + extraMoves;
@@ -746,7 +772,10 @@ const LudoNew2Player = () => {
                       temparr[3] = nextPosition;
                       setPositions(positions);
                     }
-                  } else if (OppPositions[1][3] >= 63 && OppPositions[1][3] <= 67) {
+                  } else if (
+                    OppPositions[1][3] >= 63 &&
+                    OppPositions[1][3] <= 67
+                  ) {
                     nextPosition = OppPositions[1][3] + currentNumber1;
                     if (nextPosition == 68) {
                       let temparr = OppPositions[1];
@@ -754,9 +783,12 @@ const LudoNew2Player = () => {
                       setPositions(positions);
                     } else if (nextPosition > 68) {
                       if (
-                        (OppPositions[1][0] > 0 && OppPositions[1][0] !== "winner") ||
-                        (OppPositions[1][1] > 0 && OppPositions[1][1] !== "winner") ||
-                        (OppPositions[1][2] > 0 && OppPositions[1][2] !== "winner")
+                        (OppPositions[1][0] > 0 &&
+                          OppPositions[1][0] !== "winner") ||
+                        (OppPositions[1][1] > 0 &&
+                          OppPositions[1][1] !== "winner") ||
+                        (OppPositions[1][2] > 0 &&
+                          OppPositions[1][2] !== "winner")
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
@@ -865,14 +897,16 @@ const LudoNew2Player = () => {
   };
 
   const updateDice1 = async (Dice) => {
-    setcanMove(true)
+    setcanMove(true);
     const roomId = room?.id;
     let UID = User.uid;
     console.log("UID: ", UID);
     const db = getFirestore();
     try {
       const roomRef = doc(db, "twoPlayerRooms", roomId);
-      if (checkIfAnythingOpened(1)) {
+      console.log("checkIfAnythingOpened(1 ) ",checkIfAnythingOpened(1))
+      console.log("canMoveGiti(Dice) ",canMoveGiti(Dice))
+      if (checkIfAnythingOpened(1) || !canMoveGiti(Dice)) {
         if (room?.uid1?.uid == UID) {
           let updatedRoom = {
             id: room?.id,
@@ -881,7 +915,6 @@ const LudoNew2Player = () => {
               dice: Dice,
               turn: false,
               uid: room?.uid1?.uid,
-
             },
             uid2: {
               position: room?.uid2?.position,
@@ -913,8 +946,7 @@ const LudoNew2Player = () => {
           await updateDoc(roomRef, updatedRoom);
           setCurrentNumber1(Dice);
         }
-      }
-      else{
+      } else {
         if (room?.uid1?.uid == UID) {
           let updatedRoom = {
             id: room?.id,
@@ -923,7 +955,6 @@ const LudoNew2Player = () => {
               dice: Dice,
               turn: false,
               uid: room?.uid1?.uid,
-  
             },
             uid2: {
               position: room?.uid2?.position,
@@ -964,12 +995,12 @@ const LudoNew2Player = () => {
   const UpdateDice2 = async (dice) => {
     console.log(
       "UpdateDice2" +
-      "  " +
-      turn3 +
-      "  " +
-      isMovedBy1 +
-      "  " +
-      checkIfAnythingOpened(1)
+        "  " +
+        turn3 +
+        "  " +
+        isMovedBy1 +
+        "  " +
+        checkIfAnythingOpened(1)
     );
     switch (dice) {
       case 1:
@@ -1014,14 +1045,14 @@ const LudoNew2Player = () => {
           if (data?.uid1?.uid == UID) {
             if (data?.uid1?.turn == true) {
               UpdateDice2(data?.uid2?.dice);
-              positions[3] = data?.uid2?.position
-              console.log("Positions :", positions[3])
+              positions[3] = data?.uid2?.position;
+              console.log("Positions :", positions[3]);
             }
           } else {
             if (data?.uid2?.turn == true) {
               UpdateDice2(data?.uid1?.dice);
-              positions[3] = data?.uid1?.position
-              console.log("Positions :", positions[3])
+              positions[3] = data?.uid1?.position;
+              console.log("Positions :", positions[3]);
             }
           }
           let room = { ...{ id: roomId }, ...doc.data() };
@@ -1033,17 +1064,16 @@ const LudoNew2Player = () => {
 
       onSnapCreated(true);
       return () => unsubscribe();
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
-
-    async function callUpdatePosition(){
+    async function callUpdatePosition() {
       await updatePositions();
     }
-    
-    console.log('isMovedBy1  ',isMovedBy1)
-    if(isMovedBy1){
+
+    console.log("isMovedBy1  ", isMovedBy1);
+    if (isMovedBy1 && canMove) {
       callUpdatePosition();
     }
 
@@ -1052,26 +1082,16 @@ const LudoNew2Player = () => {
     }
     if (!room) getRoom();
     if (room && !snapCreated) getDataFromDb();
-  }, [room,isMovedBy1]);
+  }, [room, isMovedBy1]);
 
   useEffect(() => {
-    setIsMovedBy3(true)
-  }, [positions[3]])
+    setIsMovedBy3(true);
+  }, [positions[3]]);
 
   const generateRandomNumber = async () => {
-    console.log("Turn1", turn1)
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setTurnMessage("");
     setMoveMessage("");
-    console.log(
-      "UpdateDice1" +
-      "  " +
-      turn3 +
-      "  " +
-      isMovedBy1 +
-      "  " +
-      checkIfAnythingOpened(1)
-    );
     if (turn1 && (isMovedBy3 || checkIfAnythingOpened(3))) {
       setWhoseTurnToMove(1);
       setIsMovedBy1(false);
@@ -1098,8 +1118,8 @@ const LudoNew2Player = () => {
           break;
       }
       await updateDice1(randomNumber);
-      setCurrentNumber1(randomNumber)
-      if (randomNumber !== 6) {
+      setCurrentNumber1(randomNumber);
+      if (randomNumber !== 6 || !canMoveGiti(randomNumber)) {
         setTurn1(false);
         setTurn3(true);
         setIsMovedBy3(false);
@@ -1111,13 +1131,30 @@ const LudoNew2Player = () => {
       setTurnMessage("It's Not Your Turn");
     }
   };
+
+  const canMoveGiti = (diceValue) => {
+    let movable = [true, true, true, true];
+    positions[1].map((position, index) => {
+      if (position > 0) {
+        const delta = (position + diceValue) - 58;
+        if (delta > 0) {
+          movable[index] = false;
+        }
+      } else {
+        movable[index] = false;
+      }
+    });
+    let filter = movable.filter((value) => value == true);
+    console.log("filter.length  ::::  ",filter.length)
+    return (filter.length > 0);
+  };
+
   const updatepos = (a, b, position) => {
-    if(canMove){
-      moveIcon(a, b, position)
-      moveIcon(3, b, position)
+    if (canMove) {
+      moveIcon(a, b, position);
+      moveIcon(3, b, position);
     }
-   
-  }
+  };
   const checkPosition = (player, whichOne, position) => {
     switch (player) {
       case 1:
@@ -2829,7 +2866,7 @@ const LudoNew2Player = () => {
               //animation={turn3 || whoseTurnToMove == 3 ? zoomIn : zoomOut}
               animation={turn3 ? zoomIn : zoomOut}
               duration={500}
-            //whoseTurnToMove==
+              //whoseTurnToMove==
             >
               <View>
                 <View style={[Players.styles, { borderLeftWidth: 1 }]}>
