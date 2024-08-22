@@ -16,7 +16,7 @@ import * as Animatable from "react-native-animatable";
 import icons from "../constants/icons";
 import { router } from "expo-router";
 import { auth } from "../FirebaseConfig";
-import CustomButton from "../components/CustomButton";
+
 import {
   collection,
   getFirestore,
@@ -70,9 +70,7 @@ const LudoNew2Player = () => {
     positions[1][3] === "winner"
   ) {
     Alert.alert("Game Over", "Player 1 Wins");
-    <CustomButton
-    handlePress={() => router.push("/winner")}
-    />
+   
   }
   if (
     positions[3][0] === "winner" &&
@@ -81,9 +79,7 @@ const LudoNew2Player = () => {
     positions[3][3] === "winner"
   ) {
     Alert.alert("Game Over", "Player 2 Wins");
-    <CustomButton
-    handlePress={() => router.push("/winner")}
-    />
+   
   }
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
