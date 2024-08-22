@@ -16,6 +16,7 @@ import * as Animatable from "react-native-animatable";
 import icons from "../constants/icons";
 import { router } from "expo-router";
 import { auth } from "../FirebaseConfig";
+import CustomButton from "../components/CustomButton";
 import {
   collection,
   getFirestore,
@@ -69,6 +70,9 @@ const LudoNew2Player = () => {
     positions[1][3] === "winner"
   ) {
     Alert.alert("Game Over", "Player 1 Wins");
+    <CustomButton
+    handlePress={() => router.push("/winner")}
+    />
   }
   if (
     positions[3][0] === "winner" &&
@@ -77,6 +81,9 @@ const LudoNew2Player = () => {
     positions[3][3] === "winner"
   ) {
     Alert.alert("Game Over", "Player 2 Wins");
+    <CustomButton
+    handlePress={() => router.push("/winner")}
+    />
   }
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
@@ -90,6 +97,7 @@ const LudoNew2Player = () => {
   const [User, setUser] = useState(auth.currentUser);
   const [User1, setUser1] = useState({});
   const [User2, setUser2] = useState({});
+  const [canMove, setcanMove] = useState(false);
 
   const [snapCreated, onSnapCreated] = useState(false);
 
@@ -139,6 +147,7 @@ const LudoNew2Player = () => {
   };
 
   const updatePositions = async () => {
+    setcanMove(false)
     const roomId = room?.id;
     let UID = User.uid;
     console.log("UID: ", UID)
@@ -303,7 +312,6 @@ const LudoNew2Player = () => {
                   setIsMovedBy1(true);
                 }
               }
-              await updatePositions();
               break;
             case 2:
               if (positions[1][1] !== "winner") {
@@ -358,7 +366,6 @@ const LudoNew2Player = () => {
                   }
                 }
               }
-              await updatePositions();
               break;
             case 3:
               if (positions[1][2] !== "winner") {
@@ -413,7 +420,6 @@ const LudoNew2Player = () => {
                   }
                 }
               }
-              await updatePositions();
               break;
             case 4:
               if (positions[1][3] !== "winner") {
@@ -476,7 +482,6 @@ const LudoNew2Player = () => {
           setMoveMessage("You cannot move right now");
           setIsMovedBy1(true);
         }
-        await updatePositions();
         break;
       case 3:
         if (whoseTurnToMove === 1 && !isMovedBy1) {
@@ -864,6 +869,7 @@ const LudoNew2Player = () => {
   };
 
   const updateDice1 = async (Dice) => {
+    setcanMove(true)
     const roomId = room?.id;
     let UID = User.uid;
     console.log("UID: ", UID);
@@ -1035,12 +1041,23 @@ const LudoNew2Player = () => {
   };
 
   useEffect(() => {
+
+    async function callUpdatePosition(){
+      await updatePositions();
+    }
+    
+    console.log('isMovedBy1  ',isMovedBy1)
+    if(isMovedBy1){
+      callUpdatePosition();
+    }
+
     async function getRoom() {
       await CurrentRoom();
     }
     if (!room) getRoom();
     if (room && !snapCreated) getDataFromDb();
-  }, [room]);
+  }, [room,isMovedBy1]);
+
   useEffect(() => {
     setIsMovedBy3(true)
   }, [positions[3]])
@@ -1099,8 +1116,11 @@ const LudoNew2Player = () => {
     }
   };
   const updatepos = (a, b, position) => {
-    moveIcon(a, b, position)
-    moveIcon(3, b, position)
+    if(canMove){
+      moveIcon(a, b, position)
+      moveIcon(3, b, position)
+    }
+   
   }
   const checkPosition = (player, whichOne, position) => {
     switch (player) {
