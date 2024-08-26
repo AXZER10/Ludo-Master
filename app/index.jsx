@@ -1,15 +1,8 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import TitleScreen from "./TitleScreen";
 import SplashScreen from "./SplashScreen";
 import EmailSignIn from "../app/(auth)/EmailSignIn"
 import { useEffect, useState } from "react";
 
-
-// export default function Index() {
-//   return (
-//     <SplashScreen/>
-//   );
-// }
 
 export default function Index() {
   const [isShowSplashScreen, setIsShowSplashScreen] = useState(true);
