@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, View, Image, Animated, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-//import icon from "../assets/icons/icon_app.png";
 
 export default function SplashScreen() {
     const fadeAnimation = useRef(new Animated.Value(0)).current;
@@ -35,19 +34,8 @@ export default function SplashScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#1e1e1e",
-    },
     imageContainer: {
         borderRadius: 20,
         overflow: "hidden",
-    },
-    image: {
-        width: 100,
-        height: 100,
-        resizeMode: "cover",
     },
 });

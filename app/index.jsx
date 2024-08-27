@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import SplashScreen from "./SplashScreen";
 import EmailSignIn from "../app/(auth)/EmailSignIn"
 import { useEffect, useState } from "react";
@@ -12,14 +12,8 @@ export default function Index() {
     }, 3000);
   });
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
       {isShowSplashScreen ? <SplashScreen /> : <EmailSignIn/>}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
