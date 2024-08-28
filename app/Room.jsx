@@ -124,7 +124,7 @@ const Room = () => {
         if (doc.exists()) {
           const gameState = doc.data().gameState;
           if (gameState === "Started") {
-            router.replace({pathname :'/LudoNew2Player' , params:  {roomId} })
+            router.replace({pathname :'/Ludo2PlayerOnline' , params:  {roomId} })
             initiateCountdown();
           }
         } else {
