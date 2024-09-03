@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
-import { signOut } from 'firebase/auth';
-import { router } from 'expo-router';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, getDocs, query, collection, where } from 'firebase/firestore';
@@ -30,15 +28,15 @@ export const storage = getStorage(app);
 
 //export const auth = getAuth(app);
 
-export const handleLogout = async () => {
-  try {
-    await signOut(auth);
-    console.log('User logged out successfully!');
-    router.replace("/Login")
-  } catch (error) {
-    console.error('Logout error:', error.message);
-  }
-};
+// export const handleLogout = async () => {
+//   try {
+//     await signOut(auth);
+//     console.log('User logged out successfully!');
+//     
+//   } catch (error) {
+//     console.error('Logout error:', error.message);
+//   }
+// };
 
 export const uploadImage = async (uri, path) => {
   try {
