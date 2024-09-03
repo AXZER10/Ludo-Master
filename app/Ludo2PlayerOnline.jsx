@@ -956,8 +956,8 @@ const Ludo2PlayerOnline = () => {
     try {
       const roomRef = doc(db, "twoPlayerRooms", roomId);
       console.log("checkIfAnythingOpened(1 ) ", checkIfAnythingOpened(1))
-      console.log("canMoveGiti(Dice) ", canMoveGiti(Dice))
-      if (checkIfAnythingOpened(1) || !canMoveGiti(Dice)) {
+      console.log("canMovePiece(Dice) ", canMovePiece(Dice))
+      if (checkIfAnythingOpened(1) || !canMovePiece(Dice)) {
         if (room?.uid1?.uid == UID) {
           let updatedRoom = {
             id: room?.id,
@@ -1131,8 +1131,15 @@ const Ludo2PlayerOnline = () => {
     async function getRoom() {
       await CurrentRoom();
     }
-    if (!room) getRoom();
-    if (room && !snapCreated) getDataFromDb();
+    async function getdata() {
+      await getDataFromDb();
+    }
+    if (!room) {
+      getRoom();
+    }
+    if (room && !snapCreated) {
+      getdata();
+    }
   }, [room, isMovedBy1]);
 
   useEffect(() => {
@@ -1170,7 +1177,7 @@ const Ludo2PlayerOnline = () => {
       }
       await updateDice1(randomNumber);
       setCurrentNumber1(randomNumber);
-      if (randomNumber !== 6 || !canMoveGiti(randomNumber)) {
+      if (randomNumber !== 6 || !canMovePiece(randomNumber)) {
         setTurn1(false);
         setTurn3(true);
         setIsMovedBy3(false);
@@ -1183,7 +1190,7 @@ const Ludo2PlayerOnline = () => {
     }
   };
 
-  const canMoveGiti = (diceValue) => {
+  const canMovePiece = (diceValue) => {
     let movable = [true, true, true, true];
     positions[1].map((position, index) => {
       if (position > 0) {
