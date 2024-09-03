@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import SplashScreen from "./SplashScreen";
 import 'react-native-gesture-handler';
 //import EmailSignIn from "../app/(auth)/EmailSignIn"
@@ -28,9 +28,3 @@ export default function Index() {
 
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

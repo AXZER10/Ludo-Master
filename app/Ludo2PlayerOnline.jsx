@@ -53,7 +53,7 @@ const zoomOut = {
   },
 };
 
-const LudoNew2Player = () => {
+const Ludo2PlayerOnline = () => {
   const { roomId } = useLocalSearchParams();
 
   const [positions, setPositions] = useState({
@@ -138,7 +138,7 @@ const LudoNew2Player = () => {
       });
 
       router.replace("/Home");
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const updatePositions = async () => {
@@ -853,7 +853,7 @@ const LudoNew2Player = () => {
       }
     }
   };
-  const checkIfCutPossibleFor3 = (atPosition) => {
+  const checkIfCutPossibleFor3 = async (atPosition) => {
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -884,6 +884,57 @@ const LudoNew2Player = () => {
         temparr[3] = -43;
         setPositions(positions);
       }
+      const roomId = room?.id;
+      let UID = User.uid;
+      console.log("UID: ", UID);
+      const db = getFirestore();
+      const roomRef = doc(db, "twoPlayerRooms", roomId);
+      let oppArr = positions[1].map((element, index) => {
+        if (room?.uid1?.position[index] > 0) {
+          return element + 26;
+        }
+        return element;
+      });
+      console.log("Opponent Arraay: ", oppArr);
+      if (room?.uid1?.uid == UID) {
+        let updatedRoom = {
+          id: room?.id,
+          uid1: {
+            position: room?.uid1?.position,
+            dice: room?.uid1?.dice,
+            turn: room?.uid1?.turn,
+            uid: room?.uid1?.uid,
+          },
+          uid2: {
+            position: positions[3],
+            dice: room?.uid2?.dice,
+            turn: room?.uid2?.turn,
+            uid: room?.uid2?.uid,
+          },
+          gameState: "InProgress",
+        };
+        console.log(updatedRoom);
+        await updateDoc(roomRef, updatedRoom);
+      } else {
+        let updatedRoom = {
+          id: room?.id,
+          uid1: {
+            position: positions[3],
+            dice: room?.uid1?.dice,
+            turn: room?.uid1?.turn,
+            uid: room?.uid1?.uid,
+          },
+          uid2: {
+            position: room?.uid2?.position,
+            dice: room?.uid2?.dice,
+            turn: room?.uid2?.turn,
+            uid: room?.uid2?.uid,
+          },
+          gameState: "InProgress",
+        };
+        console.log(updatedRoom);
+        await updateDoc(roomRef, updatedRoom);
+      }
     }
   };
 
@@ -906,9 +957,9 @@ const LudoNew2Player = () => {
     const db = getFirestore();
     try {
       const roomRef = doc(db, "twoPlayerRooms", roomId);
-      console.log("checkIfAnythingOpened(1 ) ",checkIfAnythingOpened(1))
-      console.log("canMoveGiti(Dice) ",canMoveGiti(Dice))
-      if (checkIfAnythingOpened(1) || !canMoveGiti(Dice)) {
+      console.log("checkIfAnythingOpened(1 ) ", checkIfAnythingOpened(1))
+      console.log("canMovePiece(Dice) ", canMovePiece(Dice))
+      if (checkIfAnythingOpened(1) || !canMovePiece(Dice)) {
         if (room?.uid1?.uid == UID) {
           let updatedRoom = {
             id: room?.id,
@@ -997,12 +1048,12 @@ const LudoNew2Player = () => {
   const UpdateDice2 = async (dice) => {
     console.log(
       "UpdateDice2" +
-        "  " +
-        turn3 +
-        "  " +
-        isMovedBy1 +
-        "  " +
-        checkIfAnythingOpened(1)
+      "  " +
+      turn3 +
+      "  " +
+      isMovedBy1 +
+      "  " +
+      checkIfAnythingOpened(1)
     );
     switch (dice) {
       case 1:
@@ -1066,7 +1117,7 @@ const LudoNew2Player = () => {
 
       onSnapCreated(true);
       return () => unsubscribe();
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -1082,8 +1133,15 @@ const LudoNew2Player = () => {
     async function getRoom() {
       await CurrentRoom();
     }
-    if (!room) getRoom();
-    if (room && !snapCreated) getDataFromDb();
+    async function getdata() {
+      await getDataFromDb();
+    }
+    if (!room) {
+      getRoom();
+    }
+    if (room && !snapCreated) {
+      getdata();
+    }
   }, [room, isMovedBy1]);
 
   useEffect(() => {
@@ -1121,7 +1179,7 @@ const LudoNew2Player = () => {
       }
       await updateDice1(randomNumber);
       setCurrentNumber1(randomNumber);
-      if (randomNumber !== 6 || !canMoveGiti(randomNumber)) {
+      if (randomNumber !== 6 || !canMovePiece(randomNumber)) {
         setTurn1(false);
         setTurn3(true);
         setIsMovedBy3(false);
@@ -1135,7 +1193,7 @@ const LudoNew2Player = () => {
     }
   };
 
-  const canMoveGiti = (diceValue) => {
+  const canMovePiece = (diceValue) => {
     let movable = [true, true, true, true];
     positions[1].map((position, index) => {
       if (position > 0) {
@@ -1148,7 +1206,7 @@ const LudoNew2Player = () => {
       }
     });
     let filter = movable.filter((value) => value == true);
-    console.log("filter.length  ::::  ",filter.length)
+    console.log("filter.length  ::::  ", filter.length)
     return (filter.length > 0);
   };
 
@@ -2869,7 +2927,7 @@ const LudoNew2Player = () => {
               //animation={turn3 || whoseTurnToMove == 3 ? zoomIn : zoomOut}
               animation={turn3 ? zoomIn : zoomOut}
               duration={500}
-              //whoseTurnToMove==
+            //whoseTurnToMove==
             >
               <View>
                 <View style={[Players.styles, { borderLeftWidth: 1 }]}>
@@ -2985,4 +3043,4 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 });
-export default LudoNew2Player;
+export default Ludo2PlayerOnline;
