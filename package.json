@@ -17,6 +17,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-community/datetimepicker": "^8.2.0",
     "@react-native-firebase/app": "^20.4.0",
     "@react-native-firebase/auth": "^20.1.0",
     "@react-native-firebase/firestore": "^20.1.0",
@@ -50,6 +51,7 @@
     "react-native": "0.74.3",
     "react-native-android-widget": "^0.14.1",
     "react-native-animatable": "^1.4.0",
+    "react-native-calendars": "^1.1306.0",
     "react-native-dropdown-country-picker": "^1.0.11",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-image-picker": "^7.1.2",
