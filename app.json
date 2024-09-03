@@ -7,11 +7,6 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.NotionMindz.LudoMaster",
@@ -60,6 +55,6 @@
         "projectId": "e139ba41-99fd-4909-8b29-cdff110358dc"
       }
     },
-    "owner": "axzer0"
+    "owner": "ludomaster"
   }
 }
