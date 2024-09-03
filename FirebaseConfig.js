@@ -34,7 +34,7 @@ export const handleLogout = async () => {
   try {
     await signOut(auth);
     console.log('User logged out successfully!');
-    router.replace("/EmailSignIn")
+    router.replace("/Login")
   } catch (error) {
     console.error('Logout error:', error.message);
   }

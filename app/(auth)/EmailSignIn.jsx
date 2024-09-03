@@ -56,6 +56,13 @@ const EmailSignIn = ({ username, setUsername, email, setEmail, password, setPass
             </Text>
           </Link>
         </View>
+        <View style={styles.bottomContainer}>
+          <Link href={"phoneSign"}>
+            <Text style={styles.toggleText}>
+              Login with Phone Number
+            </Text>
+          </Link>
+        </View>
       </View>
     </SafeAreaView>
   );
