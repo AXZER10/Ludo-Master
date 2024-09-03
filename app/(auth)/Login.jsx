@@ -11,7 +11,7 @@ export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [code, setCode] = useState("");
   const [confirm, setConfirm] = useState(null);
-  const navigation = useNavigation();
+ 
   const router = useRouter();
 
   useEffect(() => {

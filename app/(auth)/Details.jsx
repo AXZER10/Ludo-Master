@@ -3,21 +3,21 @@ import {View, Text, TextInput, TouchableOpacity} from "react-native";
 import firestore from "@react-native-firebase/firestore"
 import auth from '@react-native-firebase/auth';
 import { useRouter } from "expo-router";
-import { DateTimePicker } from "@react-native-community/datetimepicker";
+import { Picker } from "@react-native-picker/picker";
 
 export default function Details({route, navigation}){
+    
   const uid = auth().currentUser.uid;
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [gender,setGender] = useState("");
-  const [show, setShow]= useState("")
-  const [,mode, setMode] = useState("date")
   const router = useRouter();
+  const [age,setAge] = useState("");
   const saveDetails = async () =>  {
     try{
         await firestore().collection("users").doc(uid).set({
             name,
-            dob: dob.toDateString(),
+            age,
             gender,
         });
         //After saving details, navigate to Dashboard
@@ -27,16 +27,7 @@ export default function Details({route, navigation}){
     }
   };
 
-  const onChange = (e, selectedDate) =>{
-    const currentDate = selectedDate || dob;
-    setDob(selectedDate)
-    setDob(currentDate);
-  }
-  const showMode =(modeToshow) =>
-  {
-    setShow(true);
-    setMode(modeToshow)
-  }
+  
   return (
     <View style={{flex:1, padding:10, backgroundColor:"BEBDB8"}}>
     <Text 
@@ -61,34 +52,7 @@ export default function Details({route, navigation}){
         value={name}
         onChangeText={setName}
         />
-         <TouchableOpacity 
-         onPress={()=> showMode('date')}
-         style={{
-            height:50,
-            width: "100%",
-            borderColor:"black",
-            borderWidth:1,
-            marginBottom:30,
-            paddingHorizontal:10,
-        }}
-         >
-         <Text style={{ fontSize: 18 }}>
-          {dob.toDateString() === new Date().toDateString() ? "Date of Birth" : dob.toDateString()}
-        </Text>
-      </TouchableOpacity>
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={dob}
-          mode={mode}
-          display="default"
-          onChange={onChange}
-        />
-      )}
-        {/* placeholder="Date of Brith"
-        value={dob}
-        onChangeText={setDob}
-         */}
+       
          <TextInput
         style={{
             height:50,
@@ -98,10 +62,27 @@ export default function Details({route, navigation}){
             marginBottom:30,
             paddingHorizontal:10,
         }}
-        placeholder="Gender"
-        value={gender}
-        onChangeText={setGender}
+        placeholder="age"
+        keyboardType="numeric"
+        value={age}
+        onChangeText={setAge}
         />
+         <Picker
+        selectedValue={gender}
+        style={{
+          height: 50,
+          width: "100%",
+          borderColor: "black",
+          borderWidth: 1,
+          marginBottom: 30,
+        }}
+        onValueChange={(itemValue) => setGender(itemValue)}
+      >
+        <Picker.Item label="Select Gender" value="" />
+        <Picker.Item label="Male" value="male" />
+        <Picker.Item label="Female" value="female" />
+        <Picker.Item label="Other" value="other" />
+      </Picker>
          <TouchableOpacity
             onPress={saveDetails}
             style={{

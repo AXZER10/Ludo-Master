@@ -9,18 +9,6 @@ const AuthLayout = () => {
   return (
     <>
       <Stack>
-        {/* <Stack.Screen
-          name='EmailSignIn'
-          options={{
-            headerShown:false
-          }}
-        />
-        <Stack.Screen
-          name='AuthScreen'
-          options={{
-            headerShown:false
-          }}
-        /> */}
         <Stack>
           <Stack.Screen
             name="Login"
