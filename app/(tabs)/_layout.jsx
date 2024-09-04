@@ -35,6 +35,22 @@ const TabsLayout = () => {
       height:90,
     }
    }}>
+
+<Tabs.Screen
+          name="Home"
+          options={{
+            title: "Home",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.home}
+                color={color}
+                name="Home"
+                focused={focused}             
+                 />
+            ),
+          }}
+        />
     <Tabs.Screen
           name="Menu"
           options={{
@@ -51,32 +67,18 @@ const TabsLayout = () => {
           }}
         />
          <Tabs.Screen
-          name="friend"
+          name="deposit"
           options={{
-            title: "Friends",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.friends}
-                color={color}
-                name="friends"
-                focused={focused}              
-                />
-            ),
-          }}
-        />
-   <Tabs.Screen
-          name="Home"
-          options={{
-            title: "Home",
+            title: "Deposit",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.home}
                 color={color}
-                name="Home"
-                focused={focused}             
-                 />
+                name="deposit"
+                focused={focused}          
+                   />
+                   
             ),
           }}
         />
@@ -92,6 +94,22 @@ const TabsLayout = () => {
                 name="Profile"
                 focused={focused}          
                    />
+                   
+            ),
+          }}
+        />
+         <Tabs.Screen
+          name="wallet"
+          options={{
+            title: "wallet",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.home}
+                color={color}
+                name="wallet"
+                focused={focused}              
+                />
             ),
           }}
         />
