@@ -51,7 +51,6 @@
     "react-native": "0.74.3",
     "react-native-android-widget": "^0.14.1",
     "react-native-animatable": "^1.4.0",
-    "react-native-dropdown-country-picker": "^1.0.11",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-image-picker": "^7.1.2",
     "react-native-phone-number-input": "^2.1.0",

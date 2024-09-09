@@ -115,6 +115,14 @@ const Home = () => {
                 textStyles={'text-lg font-pbold text-blue-400'}
               />
             </View>
+            <View className="my-2 w-full items-center justify-center flex-row">
+              <CustomButton 
+                title={'RoomList'} 
+                ContainerStyles={'w-40 bg-black'}
+                handlePress={() => router.replace("/RoomList")}
+                textStyles={'text-lg font-pbold text-blue-400'}
+              />
+            </View>
             <CustomButton 
                 title={'kyc verifications'} 
                 ContainerStyles={'w-40 bg-black'}

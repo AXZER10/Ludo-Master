@@ -26,14 +26,14 @@ const WalletScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <View className="px-6 items-center">
+      <View className="px-2 items-center mr-40">
         <Text className="text-white font-psemibold text-xl">
           Total Balance
         </Text>
         <Text className="text-white font-psemibold text-xl">
           ₹{totalBalance}
-        </Text>
-      </View>
+         </Text>
+          </View>
 
       <View className="flex-row justify-between p-8">
         <TouchableOpacity className="flex-1 bg-blue-500 rounded-3xl p-2"
@@ -44,7 +44,7 @@ const WalletScreen = () => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity className="flex-row bg-blue-500 rounded-3xl p-2"
-        >
+        onPress={() => router.push('transaction')}>
           <Text className="text-white text-center font-psemibold text-xl">
             Transactions
           </Text>
