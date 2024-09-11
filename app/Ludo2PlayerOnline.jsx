@@ -69,7 +69,8 @@ const Ludo2PlayerOnline = () => {
     positions[1][2] === "winner" &&
     positions[1][3] === "winner"
   ) {
-    Alert.alert("Game Over", "Player 1 Wins");
+    // Alert.alert("Game Over", "Player 1 Wins");
+    router.replace('/winner')
   }
   if (
     positions[3][0] === "winner" &&
@@ -77,7 +78,8 @@ const Ludo2PlayerOnline = () => {
     positions[3][2] === "winner" &&
     positions[3][3] === "winner"
   ) {
-    Alert.alert("Game Over", "Player 2 Wins");
+    //Alert.alert("Game Over", "Player 2 Wins");
+    router.replace('/winner')
   }
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
@@ -1185,10 +1187,11 @@ const Ludo2PlayerOnline = () => {
         setTurn1(false);
         setTurn3(true);
         setIsMovedBy3(false);
-      } else {
+      } else { 
         console.log("same conditions must be there");
         setTurn1(false);
-      }
+       
+    }
     } else {
       setTurnMessage("It's Not Your Turn");
     }

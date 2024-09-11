@@ -1,18 +1,29 @@
 import React from 'react';
 import { View, Text, Image, Button, FlatList, RefreshControl, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { handleLogout } from '../../FirebaseConfig';
-import { auth, UserBalances } from '../../FirebaseConfig';
+import { router } from 'expo-router';
+import {  UserBalances } from '../../FirebaseConfig';
 import { useState, useEffect } from 'react';
 import icons from '../../constants/icons';
+import auth from '@react-native-firebase/auth';
 
 const Profile = () => {
 
   const {bonusBalance, mainBalance, winBalance, totalBalance, refetch} = UserBalances();
   const [currentUser, setCurrentUser] = useState(null);
-  const user = auth.currentUser;
+  const user = auth().currentUser;
   
   const [Username, setUserName] = useState("")
+
+  const handleLogout = () => {
+    auth()
+    .signOut()
+    .then(() => {
+      router.replace("/Login")
+      console.log('User signed out!')
+    });
+  }
+
   useEffect(() => {
     if (user) {
       setUserName(user.displayName);
