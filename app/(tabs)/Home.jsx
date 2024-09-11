@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView, Button, FlatList } from 'react-native'
+import { View, Text, Image,ImageBackground, ScrollView, Button, FlatList } from 'react-native'
 import React from 'react'
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
@@ -9,7 +9,12 @@ import TopBar from '../../components/TopBar';
 
 const Home = () => {
   return (
-    <SafeAreaView className="bg-primary h-full justify-center px-2" >
+    
+    <SafeAreaView className="h-full w-full justify-center items-center" >
+       <ImageBackground source={require("../assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full "
+                  >
       <FlatList 
       ListHeaderComponent={() => (
         <TopBar/>
@@ -17,7 +22,8 @@ const Home = () => {
       renderItem={null}
       ListFooterComponent={() => (
         <>
-          <View className="my-2 w-full flex-row">
+        
+          <View className="my-2 w-full flex-row flex-1 justify-center">
               <View className="items-start">
                 <TouchableOpacity onPress={() => router.push("../Referral")}
                 activeOpacity={0.7}>
@@ -53,12 +59,12 @@ const Home = () => {
           </View>  
 
           <View className='items-center justify-center'>
-            <Image source={require('../assets/Title.png')} 
+            {/* <Image source={require('../assets/Title.png')} 
             className='h-[50px] justify-center'
             resizeMode="contain"
-            />
-            <Image source={require('../assets/Logo.jpeg')} 
-            className=' grow justify-center mt-2'
+            /> */}
+            <Image source={require('../assets/logo.png')} 
+            className=' flex-1 justify-center w-full h-40'
             resizeMode="contain"
             />
           </View>
@@ -69,7 +75,7 @@ const Home = () => {
                     title={'Single Player'} 
                     ContainerStyles={'w-full bg-black'}
                     handlePress={() => router.push("/Ludo")}
-                    textStyles={'text-lg font-pbold text-blue-400'}
+                    textStyles={'text-lg font-pbold text-white'}
                     />
                 </View>
                 <View className="flex-col  w-40 mx-2">
@@ -77,7 +83,7 @@ const Home = () => {
                     title={'2 Players'} 
                     ContainerStyles={'w-full bg-black'}
                     handlePress={() => router.push("/Ludo2PlayerOffline")}
-                    textStyles={'text-lg font-pbold text-blue-400'}
+                    textStyles={'text-lg font-pbold text-white'}
                     />
                 </View>
               </View>
@@ -87,7 +93,7 @@ const Home = () => {
                     title={'3 Players'} 
                     ContainerStyles={'w-full bg-black'}
                     handlePress={() => router.push("/LudoNew")}
-                    textStyles={'text-lg font-pbold text-blue-400'}
+                    textStyles={'text-lg font-pbold text-white'}
                     />
                 </View>
                 <View className="flex-col w-40 mx-2">
@@ -95,44 +101,52 @@ const Home = () => {
                     title={'4 Players'} 
                     ContainerStyles={'w-full bg-black'}
                     handlePress={() => router.push("/LudoNew")}
-                    textStyles={'text-lg font-pbold text-blue-400'}
+                    textStyles={'text-lg font-pbold text-white'}
                     />
                 </View>
               </View>
-            <View className="my-2 w-full items-center justify-center flex-row">
+              <View className="flex-row items-center justify-center my-2">
+              <View className="flex-col w-40 mx-2">
               <CustomButton 
                 title={'Online play'} 
                 ContainerStyles={'w-40 bg-black'}
                 handlePress={() => router.replace("/Room")}
-                textStyles={'text-lg font-pbold text-blue-400'}
+                textStyles={'text-lg font-pbold text-white'}
               />
             </View>
-            <View className="my-2 w-full items-center justify-center flex-row">
+            <View className="flex-col  w-40 mx-2">
               <CustomButton 
                 title={'Winner'} 
                 ContainerStyles={'w-40 bg-black'}
                 handlePress={() => router.replace("/winner")}
-                textStyles={'text-lg font-pbold text-blue-400'}
+                textStyles={'text-lg font-pbold text-white'}
               />
             </View>
-            <View className="my-2 w-full items-center justify-center flex-row">
+            </View>
+            <View className="flex-row items-center justify-center my-2 px-4">
+            <View className="flex-col w-40 mx-2">
               <CustomButton 
                 title={'RoomList'} 
                 ContainerStyles={'w-40 bg-black'}
                 handlePress={() => router.replace("/RoomList")}
-                textStyles={'text-lg font-pbold text-blue-400'}
+                textStyles={'text-lg font-pbold text-white'}
               />
             </View>
+            <View className="flex-col w-40 mx-2">
             <CustomButton 
                 title={'kyc verifications'} 
                 ContainerStyles={'w-40 bg-black'}
                 handlePress={() => router.replace("/KYCStatus")}
-                textStyles={'text-lg font-pbold text-blue-400'}
+                textStyles={'text-lg font-pbold text-white'}
               />
+              </View>
+              </View>
           </View>
+          
           </>
       )}
       />
+      </ImageBackground>
     </SafeAreaView>
   )
 }

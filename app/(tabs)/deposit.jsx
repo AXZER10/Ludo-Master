@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet,ImageBackground } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AddCashComponent = () => {
   const [amount, setAmount] = useState('');
@@ -35,7 +36,11 @@ const AddCashComponent = () => {
   };
 
   return (
-    <View className="flex-1 bg-primary items-center justify-center">
+    <SafeAreaView className="h-full w-full justify-center items-center">
+       <ImageBackground source={require("../assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full "
+                  >
       <Text className="text-white text-xl font-psemibold">Add Cash</Text>
       <Text className="text-white text-sm">Total Balance: ₹{13.5}</Text>
 
@@ -85,10 +90,11 @@ const AddCashComponent = () => {
         </View>
       </View>
 
-      <TouchableOpacity className="bg-slate-900 rounded-sm p-5 mt-16 w-4/5" onPress={handleAddAmount}>
+      <TouchableOpacity className="bg-black rounded-sm p-5 mt-16 w-4/5" onPress={handleAddAmount}>
         <Text className="text-white tetx-xl font-psemibold">Add Cash</Text>
       </TouchableOpacity>
-    </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

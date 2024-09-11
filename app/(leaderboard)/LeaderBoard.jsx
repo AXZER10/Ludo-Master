@@ -1,6 +1,6 @@
 // LeaderboardScreen.js
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, RefreshControl } from 'react-native';
+import { View, Text, FlatList, StyleSheet, RefreshControl,ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import TopBar from '../../components/TopBar';
@@ -37,7 +37,11 @@ const LeaderboardScreen = ({ route }) => {
   );
 
   return (
-    <SafeAreaView className="bg-primary w-full h-full px-4 justify-center">
+    <SafeAreaView className=" w-full h-full  justify-center">
+      <ImageBackground source={require("../assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full flex-1 justify-center"
+                  >
       <TopBar/>
       <FlatList
       ListHeaderComponent={() => (
@@ -58,6 +62,7 @@ const LeaderboardScreen = ({ route }) => {
         tintColor="lightblue"
         />}
       />
+      </ImageBackground>
     </SafeAreaView>
   );
 };

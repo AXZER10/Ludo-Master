@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import { getFirestore, collection, query, where,addDoc, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { auth } from '../FirebaseConfig';
 import { useRouter } from 'expo-router';
@@ -106,8 +106,11 @@ const RoomList = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, padding: 20 }}>
-      {/* Button to Create Room */}
+    <SafeAreaView className="justify-center   items-center h-full w-ful">
+      <ImageBackground source={require("./assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full "
+                  >
       <TouchableOpacity
         onPress={createRoom}
         style={{
@@ -126,6 +129,7 @@ const RoomList = () => {
         renderItem={renderRoom}
         ListEmptyComponent={<Text></Text>}
       />
+      </ImageBackground>
     </SafeAreaView>
   );
 };

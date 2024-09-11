@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView,Switch, StyleSheet, Linking, TouchableOpacity, ScrollView, Alert } from 'react-native'
+import { View, Text, SafeAreaView,Switch, StyleSheet,ImageBackground, Linking, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { router } from 'expo-router';
@@ -20,7 +20,11 @@ const Menu = () => {
     Linking.openURL(url).catch(err => console.error("Failed to open URL:", err));
   };
   return (
-    <SafeAreaView className ="justify-center  bg-primary items-center h-full w-full">
+    <SafeAreaView className ="justify-center   items-center h-full w-full">
+       <ImageBackground source={require("../assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full "
+                  >
       <ScrollView className="mt-5 w-full h-full px-4">
         <View className="px-4 jsutify-center items-center">
           <Text className=" text-blue-400 text-2xl font-psemibold">Menu</Text>
@@ -106,6 +110,7 @@ const Menu = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      </ImageBackground>
     </SafeAreaView>
   );
 };

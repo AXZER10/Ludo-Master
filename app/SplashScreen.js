@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, View, Image, Animated, Text } from "react-native";
+import { StyleSheet, View, Image, Animated, Text, ImageBackground } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SplashScreen() {
@@ -13,7 +13,11 @@ export default function SplashScreen() {
         }).start();
     }, [fadeAnimation]);
     return (
-        <SafeAreaView className='h-full bg-primary items-center justify-center'>
+        <SafeAreaView className='h-full items-center justify-center'>
+             <ImageBackground source={require("./assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full justify-center"
+                  >
             <View>
                 <Animated.View
                     style={[styles.imageContainer, { opacity: fadeAnimation }]}
@@ -29,6 +33,7 @@ export default function SplashScreen() {
                     </View>
                 </Animated.View>
             </View>
+            </ImageBackground>
         </SafeAreaView>
     );
 }

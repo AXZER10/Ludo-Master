@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet,Image } from 'react-native';
+import { View, Text, Button, StyleSheet,Image,ImageBackground } from 'react-native';
 import { router } from 'expo-router';
 
 const WinningScreen = () => {
   return (
     <View className="bg-primary h-full" style={styles.container}>
+       <ImageBackground source={require("./assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full "
+                  >
       <Text  className="text-5xl font-pbold text-slate-400" style={styles.congratulations}>Congratulations!</Text>
       <View className="flex-column justify-center space-y-2 items-center">
         <Image className="w-100 h-100 mb-5" source={require("../app/assets/winner.jpg")} 
@@ -13,6 +17,7 @@ const WinningScreen = () => {
         </View>
       <Text  className="text-5xl font-pbold text-slate-400" style={styles.winnerText}>{} Wins!</Text>
       <Button title="Play Again" onPress={() => router.push('../Room')}/>
+      </ImageBackground>
     </View>
   );
 };

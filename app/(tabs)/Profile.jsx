@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Button, FlatList, RefreshControl, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Button, FlatList, RefreshControl, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import {  UserBalances } from '../../FirebaseConfig';
@@ -41,7 +41,11 @@ const Profile = () => {
   }
 
   return (
-    <SafeAreaView className="h-full w-full justify-center items-center bg-primary">
+    <SafeAreaView className="h-full w-full justify-center items-center ">
+      <ImageBackground source={require("../assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full "
+                  >
       <FlatList 
         ListHeaderComponent={() => (
           <>
@@ -73,6 +77,7 @@ const Profile = () => {
         tintColor="lightblue"
         />}
       />
+      </ImageBackground>
     </SafeAreaView>
   );
 }

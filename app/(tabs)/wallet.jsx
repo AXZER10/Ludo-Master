@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const WalletScreen = () => {
   const [totalBalance] = useState(13.5);
@@ -9,7 +10,11 @@ const WalletScreen = () => {
   const router= useRouter();
 
   return (
-    <View  className="flex:1 bg-primary px-5 mt-5">
+    <SafeAreaView className="h-full w-full justify-center items-center ">
+      <ImageBackground source={require("../assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full "
+                  >
       <View className="flex-row justify-between ml-15">
         <Text className="text-white font-psemibold text-xl">
           Wallet
@@ -36,14 +41,14 @@ const WalletScreen = () => {
           </View>
 
       <View className="flex-row justify-between p-8">
-        <TouchableOpacity className="flex-1 bg-blue-500 rounded-3xl p-2"
+        <TouchableOpacity className="flex-1 bg-black rounded-3xl p-2"
         onPress={ () => router.push('deposit')}
         >
           <Text className="text-white text-center font-psemibold text-xl">
             Deposit
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity className="flex-row bg-blue-500 rounded-3xl p-2"
+        <TouchableOpacity className="flex-row bg-black rounded-3xl p-2"
         onPress={() => router.push('transaction')}>
           <Text className="text-white text-center font-psemibold text-xl">
             Transactions
@@ -61,7 +66,7 @@ const WalletScreen = () => {
       </View>
 
       <View className="flex-row justify-between mt-8">
-        <TouchableOpacity className="flex-1 bg-blue-600 rounded-3xl p-3">
+        <TouchableOpacity className="flex-1 bg-black rounded-3xl p-3">
           <Text className="text-white text-center font-psemibold text-xl">
             Withdraw
           </Text>
@@ -71,7 +76,8 @@ const WalletScreen = () => {
       <View className=" p-2 items-center">
         <Text className="text-white text-sm">100% Money Safety</Text>
       </View>
-    </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

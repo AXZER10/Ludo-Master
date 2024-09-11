@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet,ImageBackground } from 'react-native';
 
 const transactions = [
   { date: '22 Jul, 12:03 PM', type: 'win', amount: '₹15' },
@@ -11,6 +11,10 @@ const transactions = [
 const TransactionList = () => {
   return (
     <View style={styles.container}>
+      <ImageBackground source={require("./assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full flex-1 justify-center"
+                  >
       {transactions.map((transaction, index) => (
         <View key={index} style={styles.transactionItem}>
           <Text style={styles.date}>{transaction.date}</Text>
@@ -20,6 +24,7 @@ const TransactionList = () => {
           </Text>
         </View>
       ))}
+      </ImageBackground>
     </View>
   );
 };
@@ -27,16 +32,17 @@ const TransactionList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    
   },
   transactionItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 20,
+    
   },
   date: {
     fontSize: 14,
-    color: 'gray',
+    color: 'black',
   },
   type: {
     fontSize: 16,
