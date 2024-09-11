@@ -100,9 +100,9 @@ const Ludo2PlayerOnline = () => {
   const [image1, setImage1] = useState(require("./assets/dice1.png"));
   const [image3, setImage3] = useState(require("./assets/dice1.png"));
 
+  //Funtion to get Current room
   const CurrentRoom = async () => {
     let user = auth.currentUser;
-    console.log("roomId roomId ", roomId);
     try {
       const db = getFirestore();
       const roomRef = collection(db, "twoPlayerRooms");
@@ -120,16 +120,17 @@ const Ludo2PlayerOnline = () => {
           setUser1(room?.uid2?.uid);
           setUser2(DataUid1);
         }
-        console.log("set Room", room);
         setRoom(room);
       }
     } catch (error) {
       Alert.alert("Error checking rooms:", error.message);
     }
   };
+
+  //Function to cancel the game and exit the room
   Cancel = async () => {
     const roomID = room?.id;
-    console.log("room: ", roomID);
+    console.log("Exiting room: ", roomID);
     const db = getFirestore();
     try {
       const roomRef = doc(db, "twoPlayerRooms", roomID);
@@ -141,6 +142,7 @@ const Ludo2PlayerOnline = () => {
     } catch (error) { }
   };
 
+  //Function to update Local Positions to database
   const updatePositions = async () => {
     setcanMove(false);
     const roomId = room?.id;
@@ -148,14 +150,11 @@ const Ludo2PlayerOnline = () => {
     console.log("UID: ", UID);
     const db = getFirestore();
     const roomRef = doc(db, "twoPlayerRooms", roomId);
-    let oppArr = positions[1].map((element, index) => {
-      if (room?.uid1?.position[index] > 0) {
-        return element + 26;
-      }
-      return element;
-    });
-    console.log("Opponent Arraay: ", oppArr);
-    if (room?.uid1?.uid == UID) {
+    
+    if (room?.uid1?.uid == UID) 
+      //If user is User1
+      {
+      //Checking if dice is not 6 for User1
       if (room?.uid1?.dice != 6) {
         let updatedRoom = {
           id: room?.id,
@@ -195,7 +194,10 @@ const Ludo2PlayerOnline = () => {
         console.log(updatedRoom);
         await updateDoc(roomRef, updatedRoom);
       }
-    } else {
+    } 
+    //if user is User2
+    else {
+      //Checking if dice is not 6 for User2
       if (room?.uid2?.dice != 6) {
         let updatedRoom = {
           id: room?.id,
@@ -238,6 +240,7 @@ const Ludo2PlayerOnline = () => {
 
   const moveIcon = async (player, whichOne, position) => {
     switch (player) {
+      //Player1
       case 1:
         if (whoseTurnToMove === 1 && !isMovedBy1) {
           switch (whichOne) {
@@ -477,6 +480,7 @@ const Ludo2PlayerOnline = () => {
 
         break;
 
+      //Player3  
       case 3:
         if (whoseTurnToMove === 1 && !isMovedBy1) {
           if (currentNumber1 === 6) {
