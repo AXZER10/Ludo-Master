@@ -52,6 +52,8 @@ export default function RootLayout() {
         <Stack.Screen name="Menu/TDS" options={{headerShown:false }} />
         <Stack.Screen name="Menu/Feedback" options={{headerShown:false }} />
         <Stack.Screen name="Menu/Help" options={{headerShown:false }} />
+        <Stack.Screen name="RoomList" options={{headerShown:false }} />
+        <Stack.Screen name="winner" options={{headerShown:false }} />
     </Stack>
     </>
   );

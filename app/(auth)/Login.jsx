@@ -11,6 +11,7 @@ export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [code, setCode] = useState("");
   const [confirm, setConfirm] = useState(null);
+  const [user, setUser] = useState(null);
  
   const router = useRouter();
 
@@ -58,8 +59,11 @@ export default function Login() {
     } catch (error) {
       console.log("Invaild code", error);
     }
+     
+
   };
 
+ 
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: "BEBDB8" }}>
       <Text

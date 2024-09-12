@@ -9,6 +9,7 @@ import logout from "../app/assets/icons/logout.png"
 import back from "../app/assets/icons/back.png"
 
 
+
 export default{
     home,
     menu,
@@ -18,5 +19,6 @@ export default{
     eye,
     eyehide,
     logout,
-    back
+    back,
+   
 }
