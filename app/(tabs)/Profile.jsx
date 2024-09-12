@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import {  UserBalances } from '../../FirebaseConfig';
 import { useState, useEffect } from 'react';
 import icons from '../../constants/icons';
+import CustomButton from "../../components/CustomButton";
 import auth from '@react-native-firebase/auth';
 
 const Profile = () => {
@@ -71,6 +72,16 @@ const Profile = () => {
         <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Total Available Balance: {totalBalance} </Text>
         <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Total Winnings: {winBalance} </Text>
       </View>
+      <View className="flex-row items-center justify-center my-2">
+      <View className=" w-40 mx-2">
+            <CustomButton 
+                title={' Update Kyc'} 
+                ContainerStyles={'w-40 bg-black'}
+                handlePress={() => router.replace("/KYCStatus")}
+                textStyles={'text-lg font-pbold text-white'}
+              />
+              </View>
+              </View>
           </>
         )}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}

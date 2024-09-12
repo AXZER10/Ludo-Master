@@ -23,21 +23,22 @@ const Home = () => {
       ListFooterComponent={() => (
         <>
         
-          <View className="my-2 w-full flex-row flex-1 justify-center">
+          {/* <View className="my-2 w-full flex-row flex-1 justify-center">
               <View className="items-start">
                 <TouchableOpacity onPress={() => router.push("../Referral")}
                 activeOpacity={0.7}>
                   <Text className="text-blue-400 px-3 "> Referral </Text>
                 </TouchableOpacity>
-              </View>
-              <View className="items-end min-w-[78%] px-3">
+              </View> */}
+              {/* <View className="items-end min-w-[78%] px-3">
                 <TouchableOpacity onPress={() => router.replace("../Ads")}
                 activeOpacity={0.7}>
                   <Text className="text-blue-400"> Ads</Text>
                 </TouchableOpacity>
-              </View>          
-          </View>    
-          <View className="flex-row-reverse my-1">
+              </View>           */}
+         {/* </View>     */}
+         <View className="flex-row items-center justify-center my-2">
+          <View className="flex-1 my-1">
             <TouchableOpacity className="w-10 h-10 items-center justify-center"
             onPress={() => router.push("../(leaderboard)/LeaderBoard")}
             activeOpacity={0.7}>
@@ -57,12 +58,10 @@ const Home = () => {
                   />
             </TouchableOpacity>
           </View>  
+          </View>
 
           <View className='items-center justify-center'>
-            {/* <Image source={require('../assets/Title.png')} 
-            className='h-[50px] justify-center'
-            resizeMode="contain"
-            /> */}
+           
             <Image source={require('../assets/logo.png')} 
             className=' flex-1 justify-center w-full h-40'
             resizeMode="contain"
@@ -70,29 +69,11 @@ const Home = () => {
           </View>
           <View className="items-center justify-center min-h-[30vh]">
             <View className="flex-row items-center justify-center my-2">
-                <View className="flex-col w-40 mx-2">
-                    <CustomButton 
-                    title={'Single Player'} 
-                    ContainerStyles={'w-full bg-black'}
-                    handlePress={() => router.push("/Ludo")}
-                    textStyles={'text-lg font-pbold text-white'}
-                    />
-                </View>
                 <View className="flex-col  w-40 mx-2">
                     <CustomButton 
                     title={'2 Players'} 
                     ContainerStyles={'w-full bg-black'}
                     handlePress={() => router.push("/Ludo2PlayerOffline")}
-                    textStyles={'text-lg font-pbold text-white'}
-                    />
-                </View>
-              </View>
-              <View className="flex-row items-center justify-center my-2 px-4">
-                <View className="flex-col w-40 mx-2">
-                    <CustomButton 
-                    title={'3 Players'} 
-                    ContainerStyles={'w-full bg-black'}
-                    handlePress={() => router.push("/LudoNew")}
                     textStyles={'text-lg font-pbold text-white'}
                     />
                 </View>
@@ -114,16 +95,17 @@ const Home = () => {
                 textStyles={'text-lg font-pbold text-white'}
               />
             </View>
-            <View className="flex-col  w-40 mx-2">
+            </View>
+            {/* <View className="flex-col  w-40 mx-2">
               <CustomButton 
                 title={'Winner'} 
                 ContainerStyles={'w-40 bg-black'}
                 handlePress={() => router.replace("/winner")}
                 textStyles={'text-lg font-pbold text-white'}
               />
-            </View>
-            </View>
-            <View className="flex-row items-center justify-center my-2 px-4">
+            </View> */}
+            
+            {/* <View className="flex-row items-center justify-center my-2 px-4">
             <View className="flex-col w-40 mx-2">
               <CustomButton 
                 title={'RoomList'} 
@@ -140,7 +122,7 @@ const Home = () => {
                 textStyles={'text-lg font-pbold text-white'}
               />
               </View>
-              </View>
+              </View> */}
           </View>
           
           </>

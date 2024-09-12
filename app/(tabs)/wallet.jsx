@@ -66,7 +66,8 @@ const WalletScreen = () => {
       </View>
 
       <View className="flex-row justify-between mt-8">
-        <TouchableOpacity className="flex-1 bg-black rounded-3xl p-3">
+        <TouchableOpacity className="flex-1 bg-black rounded-3xl p-3"
+        onPress={() => router.push('withdraw')}>
           <Text className="text-white text-center font-psemibold text-xl">
             Withdraw
           </Text>
