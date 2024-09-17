@@ -53,7 +53,7 @@ const zoomOut = {
   },
 };
 
-const Ludo2PlayerOnline = () => {
+const OnlineNew = () => {
   const { roomId } = useLocalSearchParams();
 
   const [positions, setPositions] = useState({
@@ -157,7 +157,7 @@ const Ludo2PlayerOnline = () => {
         let updatedRoom = {
           id: room?.id,
           uid1: {
-            position: OppPositions[1],
+            position: positions[1],
             dice: room?.uid1?.dice,
             turn: false,
             uid: room?.uid1?.uid,
@@ -1057,35 +1057,68 @@ const Ludo2PlayerOnline = () => {
       "  " +
       checkIfAnythingOpened(1)
     );
-    switch (dice) {
-      case 1:
-        setImage3(require("./assets/dice1.png"));
-        break;
-      case 2:
-        setImage3(require("./assets/dice2.png"));
-        break;
-      case 3:
-        setImage3(require("./assets/dice3.png"));
-        break;
-      case 4:
-        setImage3(require("./assets/dice4.png"));
-        break;
-      case 5:
-        setImage3(require("./assets/dice5.png"));
-        break;
-      case 6:
-        setImage3(require("./assets/dice6.png"));
-        break;
-      default:
-        break;
-    }
-    if (dice !== 6) {
-      setTurn3(false);
-      setTurn1(true);
-      setIsMovedBy1(false);
+    if (room?.uid1.uid == User2) {
+      switch (dice) {
+        case 1:
+          setImage1(require("./assets/dice1.png"));
+          break;
+        case 2:
+          setImage1(require("./assets/dice2.png"));
+          break;
+        case 3:
+          setImage1(require("./assets/dice3.png"));
+          break;
+        case 4:
+          setImage1(require("./assets/dice4.png"));
+          break;
+        case 5:
+          setImage1(require("./assets/dice5.png"));
+          break;
+        case 6:
+          setImage1(require("./assets/dice6.png"));
+          break;
+        default:
+          break;
+      }
+      if (dice !== 6) {
+        setTurn3(false);
+        setTurn1(true);
+        setIsMovedBy1(false);
+      } else {
+        console.log("same conditions must be there");
+        setTurn3(false);
+      }
     } else {
-      console.log("same conditions must be there");
-      setTurn3(false);
+      switch (dice) {
+        case 1:
+          setImage3(require("./assets/dice1.png"));
+          break;
+        case 2:
+          setImage3(require("./assets/dice2.png"));
+          break;
+        case 3:
+          setImage3(require("./assets/dice3.png"));
+          break;
+        case 4:
+          setImage3(require("./assets/dice4.png"));
+          break;
+        case 5:
+          setImage3(require("./assets/dice5.png"));
+          break;
+        case 6:
+          setImage3(require("./assets/dice6.png"));
+          break;
+        default:
+          break;
+      }
+      if (dice !== 6) {
+        setTurn3(false);
+        setTurn1(true);
+        setIsMovedBy1(false);
+      } else {
+        console.log("same conditions must be there");
+        setTurn3(false);
+      }
     }
   };
 
@@ -1154,30 +1187,61 @@ const Ludo2PlayerOnline = () => {
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setTurnMessage("");
     setMoveMessage("");
+    console.log("User1", User1)
+    console.log("User2", User2)
+    console.log("User2", image1)
+    console.log("User2", image3)
+
     if (turn1 && (isMovedBy3 || checkIfAnythingOpened(3))) {
       setWhoseTurnToMove(1);
       setIsMovedBy1(false);
-      switch (randomNumber) {
-        case 1:
-          setImage1(require("./assets/dice1.png"));
-          break;
-        case 2:
-          setImage1(require("./assets/dice2.png"));
-          break;
-        case 3:
-          setImage1(require("./assets/dice3.png"));
-          break;
-        case 4:
-          setImage1(require("./assets/dice4.png"));
-          break;
-        case 5:
-          setImage1(require("./assets/dice5.png"));
-          break;
-        case 6:
-          setImage1(require("./assets/dice6.png"));
-          break;
-        default:
-          break;
+      if (room?.uid1.uid == User1) {
+        switch (randomNumber) {
+          case 1:
+            setImage1(require("./assets/dice1.png"));
+            break;
+          case 2:
+            setImage1(require("./assets/dice2.png"));
+            break;
+          case 3:
+            setImage1(require("./assets/dice3.png"));
+            break;
+          case 4:
+            setImage1(require("./assets/dice4.png"));
+            break;
+          case 5:
+            setImage1(require("./assets/dice5.png"));
+            break;
+          case 6:
+            setImage1(require("./assets/dice6.png"));
+            break;
+          default:
+            break;
+        }
+      }
+      else {
+        switch (randomNumber) {
+          case 1:
+            setImage3(require("./assets/dice1.png"));
+            break;
+          case 2:
+            setImage3(require("./assets/dice2.png"));
+            break;
+          case 3:
+            setImage3(require("./assets/dice3.png"));
+            break;
+          case 4:
+            setImage3(require("./assets/dice4.png"));
+            break;
+          case 5:
+            setImage3(require("./assets/dice5.png"));
+            break;
+          case 6:
+            setImage3(require("./assets/dice6.png"));
+            break;
+          default:
+            break;
+        }
       }
       await updateDice1(randomNumber);
       setCurrentNumber1(randomNumber);
@@ -1357,7 +1421,7 @@ const Ludo2PlayerOnline = () => {
           <View style={row.Style}>
             <View>
               <Animatable.View
-                animation={turn1 ? zoomIn : zoomOut}
+                animation={room?.uid1?.turn ? zoomIn : zoomOut}
                 duration={500}
               >
                 <TouchableOpacity
@@ -2924,11 +2988,8 @@ const Ludo2PlayerOnline = () => {
               </View>
             </View>
             <Animatable.View
-              //animation={turn3 ? zoomIn : (c?zoomIn:zoomOut)}
-              //animation={turn3 || whoseTurnToMove == 3 ? zoomIn : zoomOut}
-              animation={turn3 ? zoomIn : zoomOut}
+              animation={room?.uid2?.turn ? zoomIn : zoomOut}
               duration={500}
-            //whoseTurnToMove==
             >
               <View>
                 <View style={[Players.styles, { borderLeftWidth: 1 }]}>
@@ -2969,15 +3030,35 @@ const Ludo2PlayerOnline = () => {
                     </View>
                   </ImageBackground>
                 </View>
-                <Image
-                  style={{
-                    width: 90,
-                    height: 70,
-                    marginLeft: 30,
-                    marginTop: 10,
+                <TouchableOpacity
+                  onPress={() => {
+                    if (turn1) {
+                      if (room) {
+                        console.log(room);
+                        if (
+                          room?.uid2?.uid == User1 &&
+                          room?.uid1?.turn == true
+                        ) {
+                          generateRandomNumber();
+                        } else {
+                          if (room?.uid2?.turn == true) {
+                            generateRandomNumber();
+                          }
+                        }
+                      }
+                    }
                   }}
-                  source={image3}
-                />
+                >
+                  <Image
+                    style={{
+                      width: 90,
+                      height: 70,
+                      marginLeft: 30,
+                      marginTop: 10,
+                    }}
+                    source={image3}
+                  />
+                </TouchableOpacity>
               </View>
             </Animatable.View>
           </View>
@@ -3044,4 +3125,4 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 });
-export default Ludo2PlayerOnline;
+export default OnlineNew;

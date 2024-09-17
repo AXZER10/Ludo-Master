@@ -53,15 +53,11 @@ const zoomOut = {
   },
 };
 
-const Ludo2PlayerOnline = () => {
+const twoPlayerOnline = (props) => {
   const { roomId } = useLocalSearchParams();
-
   const [positions, setPositions] = useState({
     1: [-11, -21, -31, -41],
     3: [-13, -23, -33, -43],
-  });
-  const [OppPositions, setOppPositions] = useState({
-    1: [-13, -23, -33, -43],
   });
   if (
     positions[1][0] === "winner" &&
@@ -79,6 +75,7 @@ const Ludo2PlayerOnline = () => {
   ) {
     Alert.alert("Game Over", "Player 2 Wins");
   }
+
   const [turn1, setTurn1] = useState(true);
   const [turn3, setTurn3] = useState(false);
   const [currentNumber1, setCurrentNumber1] = useState(0);
@@ -98,7 +95,10 @@ const Ludo2PlayerOnline = () => {
   const [image1, setImage1] = useState(require("./assets/dice1.png"));
   const [image3, setImage3] = useState(require("./assets/dice1.png"));
 
-  //Funtion to get Current room
+  console.log(positions[1])
+  console.log(positions[3]);
+  console.log()
+
   const CurrentRoom = async () => {
     let user = auth.currentUser;
     try {
@@ -124,8 +124,11 @@ const Ludo2PlayerOnline = () => {
       Alert.alert("Error checking rooms:", error.message);
     }
   };
+  useEffect(() => {
+  CurrentRoom();
+  }, [])
+  
 
-  //Function to cancel the game and exit the room
   Cancel = async () => {
     const roomID = roomId;
     console.log("Exiting room: ", roomID);
@@ -140,115 +143,18 @@ const Ludo2PlayerOnline = () => {
     } catch (error) { }
   };
 
-  //Function to update Local Positions to database
-  const updatePositions = async () => {
-    setcanMove(false);
-    const roomId = room?.id;
-    let UID = User.uid;
-    console.log("UID: ", UID);
-    const db = getFirestore();
-    const roomRef = doc(db, "twoPlayerRooms", roomId);
-
-    if (room?.uid1?.uid == UID)
-    //If user is User1
-    {
-      //Checking if dice is not 6 for User1
-      if (room?.uid1?.dice != 6) {
-        let updatedRoom = {
-          id: room?.id,
-          uid1: {
-            position: OppPositions[1],
-            dice: room?.uid1?.dice,
-            turn: false,
-            uid: room?.uid1?.uid,
-          },
-          uid2: {
-            position: room?.uid2?.position,
-            dice: room?.uid2?.dice,
-            turn: true,
-            uid: room?.uid2?.uid,
-          },
-          gameState: "InProgress",
-        };
-        console.log(updatedRoom);
-        await updateDoc(roomRef, updatedRoom);
-      } else {
-        let updatedRoom = {
-          id: room?.id,
-          uid1: {
-            position: OppPositions[1],
-            dice: room?.uid1?.dice,
-            turn: true,
-            uid: room?.uid1?.uid,
-          },
-          uid2: {
-            position: room?.uid2?.position,
-            dice: room?.uid2?.dice,
-            turn: false,
-            uid: room?.uid2?.uid,
-          },
-          gameState: "InProgress",
-        };
-        console.log(updatedRoom);
-        await updateDoc(roomRef, updatedRoom);
-      }
-    }
-    //if user is User2
-    else {
-      //Checking if dice is not 6 for User2
-      if (room?.uid2?.dice != 6) {
-        let updatedRoom = {
-          id: room?.id,
-          uid1: {
-            position: room?.uid1?.position,
-            dice: room?.uid1?.dice,
-            turn: true,
-            uid: room?.uid1?.uid,
-          },
-          uid2: {
-            position: OppPositions[1],
-            dice: room?.uid2?.dice,
-            turn: false,
-            uid: room?.uid2?.uid,
-          },
-          gameState: "InProgress",
-        };
-        await updateDoc(roomRef, updatedRoom);
-      } else {
-        let updatedRoom = {
-          id: room?.id,
-          uid1: {
-            position: room?.uid1?.position,
-            dice: room?.uid1?.dice,
-            turn: false,
-            uid: room?.uid1?.uid,
-          },
-          uid2: {
-            position: OppPositions[1],
-            dice: room?.uid2?.dice,
-            turn: true,
-            uid: room?.uid2?.uid,
-          },
-          gameState: "InProgress",
-        };
-        await updateDoc(roomRef, updatedRoom);
-      }
-    }
-  };
-
-  const moveIcon = async (player, whichOne, position) => {
+  const moveIcon = (player, whichOne, position) => {
     switch (player) {
-      //Player1
       case 1:
         if (whoseTurnToMove === 1 && !isMovedBy1) {
           switch (whichOne) {
             case 1:
               if (positions[1][0] !== "winner") {
-                if (currentNumber1 === 6) {
-                  setTurn1(true);
+                if (currentNumber === 6) {
+                  setTurn1(true)
                 }
                 if (positions[1][0] < 0) {
-                  if (currentNumber1 === 6) {
+                  if (currentNumber === 6) {
                     let temparr = positions[1];
                     temparr[0] = 1;
                     setPositions(positions);
@@ -256,14 +162,14 @@ const Ludo2PlayerOnline = () => {
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
-                } else if (positions[1][0] === 51 && currentNumber1 === 6) {
+                } else if (positions[1][0] === 51 && currentNumber === 6) {
                   let temparr = positions[1];
                   temparr[0] = "winner";
                   setPositions(positions);
                   setIsMovedBy1(true);
                 } else {
                   let currentPosition = positions[1][0];
-                  let nextPosition = currentNumber1 + currentPosition;
+                  let nextPosition = currentNumber + currentPosition;
                   if (nextPosition > 57) {
                     if (nextPosition === 58) {
                       let temparr = positions[1];
@@ -294,7 +200,8 @@ const Ludo2PlayerOnline = () => {
                     setIsMovedBy1(true);
                   }
                 }
-              } else {
+              }
+              else {
                 if (
                   (positions[1][1] > 0 && positions[1][1] !== "winner") ||
                   (positions[1][2] > 0 && positions[1][2] !== "winner") ||
@@ -308,11 +215,11 @@ const Ludo2PlayerOnline = () => {
               break;
             case 2:
               if (positions[1][1] !== "winner") {
-                if (currentNumber1 === 6) {
-                  setTurn1(true);
+                if (currentNumber === 6) {
+                  setTurn1(true)
                 }
                 if (positions[1][1] < 0) {
-                  if (currentNumber1 === 6) {
+                  if (currentNumber === 6) {
                     let temparr = positions[1];
                     temparr[1] = 1;
                     setPositions(positions);
@@ -320,20 +227,20 @@ const Ludo2PlayerOnline = () => {
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
-                } else if (positions[1][1] === 51 && currentNumber1 === 6) {
+                } else if (positions[1][1] === 51 && currentNumber === 6) {
                   let temparr = positions[1];
                   temparr[1] = "winner";
                   setPositions(positions);
                   setIsMovedBy1(true);
                 } else {
                   let currentPosition = positions[1][1];
-                  let nextPosition = currentNumber1 + currentPosition;
+                  let nextPosition = currentNumber + currentPosition;
                   if (nextPosition > 57) {
                     if (nextPosition === 58) {
                       let temparr = positions[1];
                       temparr[1] = "winner";
                       setPositions(positions);
-                      setIsMovedBy1(true);
+                      setIsMovedBy1(true)
                     } else {
                       if (
                         (positions[1][0] > 0 && positions[1][0] !== "winner") ||
@@ -362,11 +269,11 @@ const Ludo2PlayerOnline = () => {
               break;
             case 3:
               if (positions[1][2] !== "winner") {
-                if (currentNumber1 === 6) {
-                  setTurn1(true);
+                if (currentNumber === 6) {
+                  setTurn1(true)
                 }
                 if (positions[1][2] < 0) {
-                  if (currentNumber1 === 6) {
+                  if (currentNumber === 6) {
                     let temparr = positions[1];
                     temparr[2] = 1;
                     setPositions(positions);
@@ -374,20 +281,20 @@ const Ludo2PlayerOnline = () => {
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
-                } else if (positions[1][2] === 51 && currentNumber1 === 6) {
+                } else if (positions[1][2] === 51 && currentNumber === 6) {
                   let temparr = positions[1];
                   temparr[2] = "winner";
                   setPositions(positions);
                   setIsMovedBy1(true);
                 } else {
                   let currentPosition = positions[1][2];
-                  let nextPosition = currentNumber1 + currentPosition;
+                  let nextPosition = currentNumber + currentPosition;
                   if (nextPosition > 57) {
                     if (nextPosition === 58) {
                       let temparr = positions[1];
                       temparr[2] = "winner";
                       setPositions(positions);
-                      setIsMovedBy1(true);
+                      setIsMovedBy1(true)
                     } else {
                       if (
                         (positions[1][0] > 0 && positions[1][0] !== "winner") ||
@@ -416,11 +323,11 @@ const Ludo2PlayerOnline = () => {
               break;
             case 4:
               if (positions[1][3] !== "winner") {
-                if (currentNumber1 === 6) {
-                  setTurn1(true);
+                if (currentNumber === 6) {
+                  setTurn1(true)
                 }
                 if (positions[1][3] < 0) {
-                  if (currentNumber1 === 6) {
+                  if (currentNumber === 6) {
                     let temparr = positions[1];
                     temparr[3] = 1;
                     setPositions(positions);
@@ -428,14 +335,14 @@ const Ludo2PlayerOnline = () => {
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
-                } else if (positions[1][3] === 51 && currentNumber1 === 6) {
+                } else if (positions[1][3] === 51 && currentNumber === 6) {
                   let temparr = positions[1];
                   temparr[3] = "winner";
                   setPositions(positions);
                   setIsMovedBy1(true);
                 } else {
                   let currentPosition = positions[1][3];
-                  let nextPosition = currentNumber1 + currentPosition;
+                  let nextPosition = currentNumber + currentPosition;
                   if (nextPosition > 57) {
                     if (nextPosition === 58) {
                       let temparr = positions[1];
@@ -475,339 +382,334 @@ const Ludo2PlayerOnline = () => {
           setMoveMessage("You cannot move right now");
           setIsMovedBy1(true);
         }
-
         break;
-
-      //Player3  
       case 3:
-        if (whoseTurnToMove === 1 && !isMovedBy1) {
-          if (currentNumber1 === 6) {
-            setTurn3(true);
+        if (whoseTurnToMove === 3 && !isMovedBy3) {
+          if (currentNumber === 6) {
+            setTurn3(true)
           }
-          console.log("OPPPOSITIONS:????????????????????: ", OppPositions);
           switch (whichOne) {
             case 1:
-              console.log("OPPPOSITIONS:????????????????????: ", OppPositions);
-              if (OppPositions[1][0] !== "winner") {
-                if (OppPositions[1][0] < 0) {
-                  if (currentNumber1 === 6) {
-                    let temparr = OppPositions[1];
+              if (positions[3][0] !== "winner") {
+                if (positions[3][0] < 0) {
+                  if (currentNumber === 6) {
+                    let temparr = positions[3];
                     temparr[0] = 27;
                     setPositions(positions);
+                    setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
                 } else {
-                  let currentPosition = OppPositions[1][0];
-                  let nextPosition = currentNumber1 + currentPosition;
+                  let currentPosition = positions[3][0];
+                  let nextPosition = currentNumber + currentPosition;
                   if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
-                    let temparr = OppPositions[1];
+                    let temparr = positions[3];
                     temparr[0] = extraMoves;
                     setPositions(positions);
-                  } else if (
-                    OppPositions[1][0] >= 20 &&
-                    OppPositions[1][0] <= 25
-                  ) {
+                    setIsMovedBy3(true);
+                  } else if (positions[3][0] >= 20 && positions[3][0] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
                       let newPosition = 62 + extraMoves;
-                      if (OppPositions[1][0] === 25 && currentNumber1 === 6) {
-                        let temparr = OppPositions[1];
+                      if (positions[3][0] === 25 && currentNumber === 6) {
+                        let temparr = positions[3];
                         temparr[0] = "winner";
                         setPositions(positions);
+                        setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
-                        let temparr = OppPositions[1];
+                        let temparr = positions[3];
                         temparr[0] = newPosition;
                         setPositions(positions);
+                        setIsMovedBy3(true);
                       }
                     } else {
-                      nextPosition = OppPositions[1][0] + currentNumber1;
+                      nextPosition = positions[3][0] + currentNumber;
                       checkIfCutPossibleFor1(nextPosition);
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[0] = nextPosition;
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     }
-                  } else if (
-                    OppPositions[1][0] >= 63 &&
-                    OppPositions[1][0] <= 67
-                  ) {
-                    nextPosition = OppPositions[1][0] + currentNumber1;
+                  } else if (positions[3][0] >= 63 && positions[3][0] <= 67) {
+                    nextPosition = positions[3][0] + currentNumber;
                     if (nextPosition == 68) {
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[0] = "winner";
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
-                        (OppPositions[1][1] > 0 &&
-                          OppPositions[1][1] !== "winner") ||
-                        (OppPositions[1][2] > 0 &&
-                          OppPositions[1][2] !== "winner") ||
-                        (OppPositions[1][3] > 0 &&
-                          OppPositions[1][3] !== "winner")
+                        (positions[3][1] > 0 && positions[3][1] !== "winner") ||
+                        (positions[3][2] > 0 && positions[3][2] !== "winner") ||
+                        (positions[3][3] > 0 && positions[3][3] !== "winner")
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
+                        setIsMovedBy3(true);
                       }
                     } else {
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[0] = nextPosition;
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     }
                   } else {
-                    nextPosition = OppPositions[1][0] + currentNumber1;
+                    nextPosition = positions[3][0] + currentNumber;
                     checkIfCutPossibleFor1(nextPosition);
-                    let temparr = OppPositions[1];
+                    let temparr = positions[3];
                     temparr[0] = nextPosition;
                     setPositions(positions);
+                    setIsMovedBy3(true);
                   }
                 }
               }
               break;
             case 2:
-              if (OppPositions[1][1] !== "winner") {
-                if (currentNumber1 === 6) {
-                  setTurn3(true);
+              if (positions[3][1] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn3(true)
                 }
-                if (OppPositions[1][1] < 0) {
-                  if (currentNumber1 === 6) {
-                    let temparr = OppPositions[1];
+                if (positions[3][1] < 0) {
+                  if (currentNumber === 6) {
+                    let temparr = positions[3];
                     temparr[1] = 27;
                     setPositions(positions);
+                    setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
                 } else {
-                  let currentPosition = OppPositions[1][1];
-                  let nextPosition = currentNumber1 + currentPosition;
+                  let currentPosition = positions[3][1];
+                  let nextPosition = currentNumber + currentPosition;
                   if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
-                    let temparr = OppPositions[1];
+                    let temparr = positions[3];
                     temparr[1] = extraMoves;
                     setPositions(positions);
-                  } else if (
-                    OppPositions[1][1] >= 20 &&
-                    OppPositions[1][1] <= 25
-                  ) {
+                    setIsMovedBy3(true);
+                  } else if (positions[3][1] >= 20 && positions[3][1] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
                       let newPosition = 62 + extraMoves;
-                      if (OppPositions[1][1] === 25 && currentNumber1 === 6) {
-                        let temparr = OppPositions[1];
+                      if (positions[3][1] === 25 && currentNumber === 6) {
+                        let temparr = positions[3];
                         temparr[1] = "winner";
                         setPositions(positions);
+                        setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
-                        let temparr = OppPositions[1];
+                        let temparr = positions[3];
                         temparr[1] = newPosition;
                         setPositions(positions);
+                        setIsMovedBy3(true);
                       }
                     } else {
-                      nextPosition = OppPositions[1][1] + currentNumber1;
+                      nextPosition = positions[3][1] + currentNumber;
                       checkIfCutPossibleFor1(nextPosition);
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[1] = nextPosition;
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     }
-                  } else if (
-                    OppPositions[1][1] >= 63 &&
-                    OppPositions[1][1] <= 67
-                  ) {
-                    nextPosition = OppPositions[1][1] + currentNumber1;
+                  } else if (positions[3][1] >= 63 && positions[3][1] <= 67) {
+                    nextPosition = positions[3][1] + currentNumber;
                     if (nextPosition == 68) {
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[1] = "winner";
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
-                        (OppPositions[1][0] > 0 &&
-                          OppPositions[1][0] !== "winner") ||
-                        (OppPositions[1][2] > 0 &&
-                          OppPositions[1][2] !== "winner") ||
-                        (OppPositions[1][3] > 0 &&
-                          OppPositions[1][3] !== "winner")
+                        (positions[3][0] > 0 && positions[3][0] !== "winner") ||
+                        (positions[3][2] > 0 && positions[3][2] !== "winner") ||
+                        (positions[3][3] > 0 && positions[3][3] !== "winner")
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
+                        setIsMovedBy3(true);
                       }
                     } else {
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[1] = nextPosition;
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     }
                   } else {
-                    nextPosition = OppPositions[1][1] + currentNumber1;
+                    nextPosition = positions[3][1] + currentNumber;
                     checkIfCutPossibleFor1(nextPosition);
-                    let temparr = OppPositions[1];
+                    let temparr = positions[3];
                     temparr[1] = nextPosition;
                     setPositions(positions);
+                    setIsMovedBy3(true);
                   }
                 }
               }
               break;
             case 3:
-              if (OppPositions[1][2] !== "winner") {
-                if (currentNumber1 === 6) {
-                  setTurn3(true);
+              if (positions[3][2] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn3(true)
                 }
-                if (OppPositions[1][2] < 0) {
-                  if (currentNumber1 === 6) {
-                    let temparr = OppPositions[1];
+                if (positions[3][2] < 0) {
+                  if (currentNumber === 6) {
+                    let temparr = positions[3];
                     temparr[2] = 27;
                     setPositions(positions);
+                    setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
                 } else {
-                  let currentPosition = OppPositions[1][2];
-                  let nextPosition = currentNumber1 + currentPosition;
+                  let currentPosition = positions[3][2];
+                  let nextPosition = currentNumber + currentPosition;
                   if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
-                    let temparr = OppPositions[1];
+                    let temparr = positions[3];
                     temparr[2] = extraMoves;
                     setPositions(positions);
-                  } else if (
-                    OppPositions[1][2] >= 20 &&
-                    OppPositions[1][2] <= 25
-                  ) {
+                    setIsMovedBy3(true);
+                  } else if (positions[3][2] >= 20 && positions[3][2] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
                       let newPosition = 62 + extraMoves;
-                      if (OppPositions[1][2] === 25 && currentNumber1 === 6) {
-                        let temparr = OppPositions[1];
+                      if (positions[3][2] === 25 && currentNumber === 6) {
+                        let temparr = positions[3];
                         temparr[2] = "winner";
                         setPositions(positions);
+                        setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
-                        let temparr = OppPositions[1];
+                        let temparr = positions[3];
                         temparr[2] = newPosition;
                         setPositions(positions);
+                        setIsMovedBy3(true);
                       }
                     } else {
-                      nextPosition = OppPositions[1][2] + currentNumber1;
+                      nextPosition = positions[3][2] + currentNumber;
                       checkIfCutPossibleFor1(nextPosition);
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[2] = nextPosition;
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     }
-                  } else if (
-                    OppPositions[1][2] >= 63 &&
-                    OppPositions[1][2] <= 67
-                  ) {
-                    nextPosition = OppPositions[1][2] + currentNumber1;
+                  } else if (positions[3][2] >= 63 && positions[3][2] <= 67) {
+                    nextPosition = positions[3][2] + currentNumber;
                     if (nextPosition == 68) {
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[2] = "winner";
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
-                        (OppPositions[1][0] > 0 &&
-                          OppPositions[1][0] !== "winner") ||
-                        (OppPositions[1][1] > 0 &&
-                          OppPositions[1][1] !== "winner") ||
-                        (OppPositions[1][3] > 0 &&
-                          OppPositions[1][3] !== "winner")
+                        (positions[3][0] > 0 && positions[3][0] !== "winner") ||
+                        (positions[3][1] > 0 && positions[3][1] !== "winner") ||
+                        (positions[3][3] > 0 && positions[3][3] !== "winner")
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
+                        setIsMovedBy3(true);
                       }
                     } else {
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[2] = nextPosition;
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     }
                   } else {
-                    nextPosition = OppPositions[1][2] + currentNumber1;
+                    nextPosition = positions[3][2] + currentNumber;
                     checkIfCutPossibleFor1(nextPosition);
-                    let temparr = OppPositions[1];
+                    let temparr = positions[3];
                     temparr[2] = nextPosition;
                     setPositions(positions);
+                    setIsMovedBy3(true);
                   }
                 }
               }
               break;
             case 4:
-              if (OppPositions[1][3] !== "winner") {
-                if (currentNumber1 === 6) {
-                  setTurn3(true);
+              if (positions[3][3] !== "winner") {
+                if (currentNumber === 6) {
+                  setTurn3(true)
                 }
-                if (OppPositions[1][3] < 0) {
-                  if (currentNumber1 === 6) {
-                    let temparr = OppPositions[1];
+                if (positions[3][3] < 0) {
+                  if (currentNumber === 6) {
+                    let temparr = positions[3];
                     temparr[3] = 27;
                     setPositions(positions);
+                    setIsMovedBy3(true);
                   } else {
                     setMoveMessage("You Cannot Move It");
                   }
                 } else {
-                  let currentPosition = OppPositions[1][3];
-                  let nextPosition = currentNumber1 + currentPosition;
+                  let currentPosition = positions[3][3];
+                  let nextPosition = currentNumber + currentPosition;
                   if (nextPosition > 52 && nextPosition <= 58) {
                     let extraMoves = nextPosition - 52;
                     checkIfCutPossibleFor1(extraMoves);
-                    let temparr = OppPositions[1];
+                    let temparr = positions[3];
                     temparr[3] = extraMoves;
                     setPositions(positions);
-                  } else if (
-                    OppPositions[1][3] >= 20 &&
-                    OppPositions[1][3] <= 25
-                  ) {
+                    setIsMovedBy3(true);
+                  } else if (positions[3][3] >= 20 && positions[3][3] <= 25) {
                     if (nextPosition > 25) {
                       let extraMoves = nextPosition - 25;
                       let newPosition = 62 + extraMoves;
-                      if (OppPositions[1][3] === 25 && currentNumber1 === 6) {
-                        let temparr = OppPositions[1];
+                      if (positions[3][3] === 25 && currentNumber === 6) {
+                        let temparr = positions[3];
                         temparr[3] = "winner";
                         setPositions(positions);
+                        setIsMovedBy3(true);
                       } else {
                         checkIfCutPossibleFor1(newPosition);
-                        let temparr = OppPositions[1];
+                        let temparr = positions[3];
                         temparr[3] = newPosition;
                         setPositions(positions);
+                        setIsMovedBy3(true);
                       }
                     } else {
-                      nextPosition = OppPositions[1][3] + currentNumber1;
+                      nextPosition = positions[3][3] + currentNumber;
                       checkIfCutPossibleFor1(nextPosition);
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[3] = nextPosition;
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     }
-                  } else if (
-                    OppPositions[1][3] >= 63 &&
-                    OppPositions[1][3] <= 67
-                  ) {
-                    nextPosition = OppPositions[1][3] + currentNumber1;
+                  } else if (positions[3][3] >= 63 && positions[3][3] <= 67) {
+                    nextPosition = positions[3][3] + currentNumber;
                     if (nextPosition == 68) {
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[3] = "winner";
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     } else if (nextPosition > 68) {
                       if (
-                        (OppPositions[1][0] > 0 &&
-                          OppPositions[1][0] !== "winner") ||
-                        (OppPositions[1][1] > 0 &&
-                          OppPositions[1][1] !== "winner") ||
-                        (OppPositions[1][2] > 0 &&
-                          OppPositions[1][2] !== "winner")
+                        (positions[3][0] > 0 && positions[3][0] !== "winner") ||
+                        (positions[3][1] > 0 && positions[3][1] !== "winner") ||
+                        (positions[3][2] > 0 && positions[3][2] !== "winner")
                       ) {
                         setMoveMessage("Cannot Move This One");
                       } else {
+                        setIsMovedBy3(true);
                       }
                     } else {
-                      let temparr = OppPositions[1];
+                      let temparr = positions[3];
                       temparr[3] = nextPosition;
                       setPositions(positions);
+                      setIsMovedBy3(true);
                     }
                   } else {
-                    nextPosition = OppPositions[1][3] + currentNumber1;
+                    nextPosition = positions[3][3] + currentNumber;
                     checkIfCutPossibleFor1(nextPosition);
-                    let temparr = OppPositions[1];
+                    let temparr = positions[3];
                     temparr[3] = nextPosition;
                     setPositions(positions);
+                    setIsMovedBy3(true);
                   }
                 }
               }
@@ -817,6 +719,7 @@ const Ludo2PlayerOnline = () => {
           }
         } else {
           setMoveMessage("You cannot move right now");
+          setIsMovedBy3(true);
         }
         break;
     }
@@ -855,7 +758,7 @@ const Ludo2PlayerOnline = () => {
       }
     }
   };
-  const checkIfCutPossibleFor3 = async (atPosition) => {
+  const checkIfCutPossibleFor3 = (atPosition) => {
     if (
       atPosition !== 1 &&
       atPosition !== 9 &&
@@ -867,75 +770,24 @@ const Ludo2PlayerOnline = () => {
       atPosition !== 48
     ) {
       if (positions[3][0] === atPosition) {
-        let temparr = OppPositions[1];
+        let temparr = positions[3];
         temparr[0] = -13;
         setPositions(positions);
       }
       if (positions[3][1] === atPosition) {
-        let temparr = OppPositions[1];
+        let temparr = positions[3];
         temparr[1] = -23;
         setPositions(positions);
       }
       if (positions[3][2] === atPosition) {
-        let temparr = OppPositions[1];
+        let temparr = positions[3];
         temparr[2] = -33;
         setPositions(positions);
       }
       if (positions[3][3] === atPosition) {
-        let temparr = OppPositions[1];
+        let temparr = positions[3];
         temparr[3] = -43;
         setPositions(positions);
-      }
-      const roomId = room?.id;
-      let UID = User.uid;
-      console.log("UID: ", UID);
-      const db = getFirestore();
-      const roomRef = doc(db, "twoPlayerRooms", roomId);
-      let oppArr = positions[1].map((element, index) => {
-        if (room?.uid1?.position[index] > 0) {
-          return element + 26;
-        }
-        return element;
-      });
-      console.log("Opponent Arraay: ", oppArr);
-      if (room?.uid1?.uid == UID) {
-        let updatedRoom = {
-          id: room?.id,
-          uid1: {
-            position: room?.uid1?.position,
-            dice: room?.uid1?.dice,
-            turn: room?.uid1?.turn,
-            uid: room?.uid1?.uid,
-          },
-          uid2: {
-            position: positions[3],
-            dice: room?.uid2?.dice,
-            turn: room?.uid2?.turn,
-            uid: room?.uid2?.uid,
-          },
-          gameState: "InProgress",
-        };
-        console.log(updatedRoom);
-        await updateDoc(roomRef, updatedRoom);
-      } else {
-        let updatedRoom = {
-          id: room?.id,
-          uid1: {
-            position: positions[3],
-            dice: room?.uid1?.dice,
-            turn: room?.uid1?.turn,
-            uid: room?.uid1?.uid,
-          },
-          uid2: {
-            position: room?.uid2?.position,
-            dice: room?.uid2?.dice,
-            turn: room?.uid2?.turn,
-            uid: room?.uid2?.uid,
-          },
-          gameState: "InProgress",
-        };
-        console.log(updatedRoom);
-        await updateDoc(roomRef, updatedRoom);
       }
     }
   };
@@ -1047,109 +899,8 @@ const Ludo2PlayerOnline = () => {
     }
   };
 
-  const UpdateDice2 = async (dice) => {
-    console.log(
-      "UpdateDice2" +
-      "  " +
-      turn3 +
-      "  " +
-      isMovedBy1 +
-      "  " +
-      checkIfAnythingOpened(1)
-    );
-    switch (dice) {
-      case 1:
-        setImage3(require("./assets/dice1.png"));
-        break;
-      case 2:
-        setImage3(require("./assets/dice2.png"));
-        break;
-      case 3:
-        setImage3(require("./assets/dice3.png"));
-        break;
-      case 4:
-        setImage3(require("./assets/dice4.png"));
-        break;
-      case 5:
-        setImage3(require("./assets/dice5.png"));
-        break;
-      case 6:
-        setImage3(require("./assets/dice6.png"));
-        break;
-      default:
-        break;
-    }
-    if (dice !== 6) {
-      setTurn3(false);
-      setTurn1(true);
-      setIsMovedBy1(false);
-    } else {
-      console.log("same conditions must be there");
-      setTurn3(false);
-    }
-  };
 
-  const getDataFromDb = async () => {
-    try {
-      const db = getFirestore();
-      let UID = User.uid;
-      const roomRef = doc(db, "twoPlayerRooms", room?.id);
-      const unsubscribe = onSnapshot(roomRef, (doc) => {
-        if (doc.exists()) {
-          const data = doc.data();
-          if (data?.uid1?.uid == UID) {
-            if (data?.uid1?.turn == true) {
-              UpdateDice2(data?.uid2?.dice);
-              positions[3] = data?.uid2?.position;
-              console.log("Positions :", positions[3]);
-            }
-          } else {
-            if (data?.uid2?.turn == true) {
-              UpdateDice2(data?.uid1?.dice);
-              positions[3] = data?.uid1?.position;
-              console.log("Positions :", positions[3]);
-            }
-          }
-          let room = { ...{ id: roomId }, ...doc.data() };
-          setRoom(room);
-        } else {
-          console.log("No Turn");
-        }
-      });
-
-      onSnapCreated(true);
-      return () => unsubscribe();
-    } catch (error) { }
-  };
-
-  useEffect(() => {
-    async function callUpdatePosition() {
-      await updatePositions();
-    }
-
-    console.log("isMovedBy1  ", isMovedBy1);
-    if (isMovedBy1 && canMove) {
-      callUpdatePosition();
-    }
-
-    async function getRoom() {
-      await CurrentRoom();
-    }
-    async function getdata() {
-      await getDataFromDb();
-    }
-    if (!room) {
-      getRoom();
-    }
-    if (room && !snapCreated) {
-      getdata();
-    }
-  }, [room, isMovedBy1]);
-
-  useEffect(() => {
-    setIsMovedBy3(true);
-  }, [positions[3]]);
-
+  
   const generateRandomNumber = async () => {
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setTurnMessage("");
@@ -1194,29 +945,6 @@ const Ludo2PlayerOnline = () => {
     }
   };
 
-  const canMovePiece = (diceValue) => {
-    let movable = [true, true, true, true];
-    positions[1].map((position, index) => {
-      if (position > 0) {
-        const delta = (position + diceValue) - 58;
-        if (delta > 0) {
-          movable[index] = false;
-        }
-      } else {
-        movable[index] = false;
-      }
-    });
-    let filter = movable.filter((value) => value == true);
-    console.log("filter.length  ::::  ", filter.length)
-    return (filter.length > 0);
-  };
-
-  const updatepos = (a, b, position) => {
-    if (canMove) {
-      moveIcon(a, b, position);
-      moveIcon(3, b, position);
-    }
-  };
   const checkPosition = (player, whichOne, position) => {
     switch (player) {
       case 1:
@@ -1227,7 +955,7 @@ const Ludo2PlayerOnline = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  onPress={() => updatepos(1, 1, position)}
+                  onPress={() => moveIcon(1, 1, position)}
                   color="red"
                   size={20}
                 />
@@ -1240,7 +968,7 @@ const Ludo2PlayerOnline = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  onPress={() => updatepos(1, 2, position)}
+                  onPress={() => moveIcon(1, 2, position)}
                   color="red"
                   size={20}
                 />
@@ -1253,7 +981,7 @@ const Ludo2PlayerOnline = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  onPress={() => updatepos(1, 3, position)}
+                  onPress={() => moveIcon(1, 3, position)}
                   color="red"
                   size={20}
                 />
@@ -1266,7 +994,7 @@ const Ludo2PlayerOnline = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
-                  onPress={() => updatepos(1, 4, position)}
+                  onPress={() => moveIcon(1, 4, position)}
                   color="red"
                   size={20}
                 />
@@ -1285,6 +1013,7 @@ const Ludo2PlayerOnline = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
+                  onPress={() => moveIcon(3, 1, position)}
                   color="#ed24ae"
                   size={20}
                 />
@@ -1297,6 +1026,7 @@ const Ludo2PlayerOnline = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
+                  onPress={() => moveIcon(3, 2, position)}
                   color="#ed24ae"
                   size={20}
                 />
@@ -1309,6 +1039,7 @@ const Ludo2PlayerOnline = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
+                  onPress={() => moveIcon(3, 3, position)}
                   color="#ed24ae"
                   size={20}
                 />
@@ -1321,6 +1052,7 @@ const Ludo2PlayerOnline = () => {
                 <FontAwesome
                   name="user"
                   style={styles.icons}
+                  onPress={() => moveIcon(3, 4, position)}
                   color="#ed24ae"
                   size={20}
                 />
@@ -3044,4 +2776,4 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 });
-export default Ludo2PlayerOnline;
+export default twoPlayerOnline;

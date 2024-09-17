@@ -34,6 +34,8 @@ export default function RootLayout() {
       <Stack.Screen name="LudoTwoPlayer" options={{headerShown:false}}/>
       <Stack.Screen name="LudoNew" options={{headerShown:false}}/>
       <Stack.Screen name="Ludo2PlayerOnline" options={{headerShown:false}}/>
+      <Stack.Screen name="OnlineNew" options={{headerShown:false}}/>
+      <Stack.Screen name="2PlayerOnline" options={{headerShown:false}}/>
       <Stack.Screen name="Ludo2PlayerOffline" options={{headerShown:false}}/>
       <Stack.Screen name="(tabs)" options={{headerShown:false}}/>
       <Stack.Screen name="(auth)" options={{headerShown:false}}/>
@@ -41,6 +43,7 @@ export default function RootLayout() {
       
         <Stack.Screen name="Ads" options={{headerShown:false }} />
         <Stack.Screen name="Room" options={{headerShown:false }} />
+        <Stack.Screen name="RoomNew" options={{headerShown:false }} />
         <Stack.Screen name="Menu/About" options={{headerShown:false }} />
         <Stack.Screen name="Menu/privacy" options={{headerShown:false }} />
         <Stack.Screen name="Menu/Refund" options={{headerShown:false }} />
