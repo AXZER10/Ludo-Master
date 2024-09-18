@@ -52,12 +52,11 @@ export default function Login() {
         createdAt: new Date(),
         
       })
-        
-
+      
       if (userDocument.exists) {
-        router.replace("Home");
+        router.replace({pathname :'/Home' , params:  {id : userDocument.id} })
       } else {
-        router.replace("Details");
+        router.replace({pathname :'/Details' , params:  {id : userDocument.id} })
       }
     } catch (error) {
       console.log("Invaild code", error);
