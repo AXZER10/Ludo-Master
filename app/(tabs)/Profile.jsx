@@ -2,19 +2,40 @@ import React from 'react';
 import { View, Text, Image, Button, FlatList, RefreshControl, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import {  UserBalances } from '../../FirebaseConfig';
+import {UserBalances } from '../../FirebaseConfig';
 import { useState, useEffect } from 'react';
 import icons from '../../constants/icons';
 import CustomButton from "../../components/CustomButton";
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const Profile = () => {
 
-  const {bonusBalance, mainBalance, winBalance, totalBalance, refetch} = UserBalances();
+  const {totalBalance, refetch} = UserBalances();
   const [currentUser, setCurrentUser] = useState(null);
   const user = auth().currentUser;
   
   const [Username, setUserName] = useState("")
+  const [phoneNumber,setPhoneNumber]= useState("")
+
+  useEffect(()=>{
+    const fetchUserDetails = async () =>{
+      if(user){
+        const uid = user.uid
+        try{
+          const userDoc = await firestore().collection('users').doc(uid).get()
+          if(userDoc.exists){
+            const userData = userDoc.data();
+            setUserName(userData.name || "Guest")
+          }
+        }catch(error){
+
+          console.log("Error fetching user details:", error);
+        }
+      }
+    }
+    fetchUserDetails();
+  },[ user])
 
   const handleLogout = () => {
     auth()
@@ -28,6 +49,7 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       setUserName(user.displayName);
+      setPhoneNumber(user.phoneNumber)
     }
     else{
       setUserName("Guest")
@@ -64,13 +86,13 @@ const Profile = () => {
         resizeMode='contain'
         />
         <View className="flex-row">
-          <Text className="items-center font-psemibold justify-center text-2xl text-blue-400 mx-2"> {Username}</Text>
-          <Image className="w-[50] h-[30]" source={require("../assets/india.png")} />
+          <Text className="items-center font-psemibold justify-center text-2xl text-white mx-2"> {Username}</Text>
+          {/* <Image className="w-[50] h-[30]" source={require("../assets/india.png")} /> */}
         </View>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400">Main Balance: {mainBalance} </Text>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Bonus Balance: {bonusBalance} </Text>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Total Available Balance: {totalBalance} </Text>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Total Winnings: {winBalance} </Text>
+        <View className="flex-row">
+        <Text className="items-center font-psemibold justify-center text-2xl text-white mx-2"> {phoneNumber}</Text>
+        </View>
+        <Text className="items-center font-psemibold justify-center text-2xl text-white"> Total Balance: {totalBalance} </Text>
       </View>
       <View className="flex-row items-center justify-center my-2">
       <View className=" w-40 mx-2">
