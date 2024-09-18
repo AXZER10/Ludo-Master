@@ -1,14 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Image, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getFirestore } from "firebase/firestore";
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const WalletScreen = () => {
-  const [totalBalance] = useState(13.5);
-  const [winnings] = useState(13.5);
-  const [rushRewards] = useState(0);
+  const [totalBalance] = useState();
+  const [winnings] = useState();
   const router= useRouter();
+  const user = auth().currentUser;
 
+  const db = getFirestore
+  useEffect(() => {
+    const fetchWalletData = async () => {
+      try {
+        const uid = user.uid; // Replace with dynamic user ID
+        const walletDoc = await firestore().collection('wallet').doc(uid).get();
+        
+        if (walletDoc.exists) {
+          const data = walletDoc.data();
+          setTotalBalance(data.totalBalance);
+          setWinnings(data.winnings);
+        } else {
+          console.log("No wallet data found");
+        }
+      } catch (error) {
+        console.error("Error fetching wallet data: ", error);
+      }
+    };
+
+    fetchWalletData();
+  }, []);
   return (
     <SafeAreaView className="h-full w-full justify-center items-center ">
       <ImageBackground source={require("../assets/bg.png")}

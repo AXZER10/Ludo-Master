@@ -42,12 +42,15 @@ export default function Login() {
       const userCredential = await confirm.confirm(code);
       
       console.log('userCredential',userCredential)
-      const uid = userCredential?.user?.uid;
+      //const uid = userCredential?.user?.uid;
       const db = getFirestore()
       // check if the user is new and existing
       const userRef = collection(db, 'users')
       const userDocument =await addDoc(userRef,{
-        uid: uid,
+        uid: userCredential.user.uid,
+        phoneNumber:phoneNumber ,
+        createdAt: new Date(),
+        
       })
         
 

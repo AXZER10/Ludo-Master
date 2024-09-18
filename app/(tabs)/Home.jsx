@@ -72,7 +72,7 @@ const Home = () => {
                 <View className="flex-col  w-40 mx-2">
                     <CustomButton 
                     title={'2 Players'} 
-                    ContainerStyles={'w-full bg-black'}
+                    ContainerStyles={'w-full bg-fuchsia-900'}
                     handlePress={() => router.push("/Ludo2PlayerOffline")}
                     textStyles={'text-lg font-pbold text-white'}
                     />
@@ -80,7 +80,7 @@ const Home = () => {
                 <View className="flex-col w-40 mx-2">
                     <CustomButton 
                     title={'4 Players'} 
-                    ContainerStyles={'w-full bg-black'}
+                    ContainerStyles={'w-full bg-fuchsia-900'}
                     handlePress={() => router.push("/LudoNew")}
                     textStyles={'text-lg font-pbold text-white'}
                     />
@@ -90,7 +90,7 @@ const Home = () => {
               <View className="flex-col w-40 mx-2">
               <CustomButton 
                 title={'Online play'} 
-                ContainerStyles={'w-40 bg-black'}
+                ContainerStyles={'w-40 bg-fuchsia-900'}
                 handlePress={() => router.replace("/Room")}
                 textStyles={'text-lg font-pbold text-white'}
               />
