@@ -15,7 +15,7 @@ const Profile = () => {
   const {totalBalance, refetch} = UserBalances();
   const [currentUser, setCurrentUser] = useState(null);
   const user = auth().currentUser;
-  
+ 
   const [Username, setUserName] = useState("")
   const [phoneNumber,setPhoneNumber]= useState("")
 
