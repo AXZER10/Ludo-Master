@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import { useFonts } from 'expo-font';
 import { SplashScreen} from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { UserContext, UserProvider } from './UserContext';
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -28,6 +29,9 @@ export default function RootLayout() {
     <StatusBar
       style='light'
       />
+      <UserProvider>
+
+      
     <Stack>
       <Stack.Screen name="index" options={{headerShown:false}}/>
       <Stack.Screen name="Ludo" options={{headerShown:false}}/>
@@ -55,6 +59,7 @@ export default function RootLayout() {
         <Stack.Screen name="RoomList" options={{headerShown:false }} />
         <Stack.Screen name="winner" options={{headerShown:false }} />
     </Stack>
+    </UserProvider>
     </>
   );
 }

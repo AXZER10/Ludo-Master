@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { View, Text, Image, Button, FlatList, RefreshControl, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -9,13 +9,14 @@ import CustomButton from "../../components/CustomButton";
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import TopBar from '../../components/TopBar';
+import { UserContext } from '../UserContext';
 
 const Profile = () => {
 
   const {totalBalance, refetch} = UserBalances();
   const [currentUser, setCurrentUser] = useState(null);
   const user = auth().currentUser;
- 
+  const myContext = useContext(UserContext);
   const [Username, setUserName] = useState("")
   const [phoneNumber,setPhoneNumber]= useState("")
 
@@ -47,15 +48,15 @@ const Profile = () => {
     });
   }
 
-  useEffect(() => {
-    if (user) {
-      setUserName(user.displayName);
-      setPhoneNumber(user.phoneNumber)
-    }
-    else{
-      setUserName("Guest")
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     setUserName(user.name);
+  //     setPhoneNumber(user.phoneNumber)
+  //   }
+  //   else{
+  //     setUserName("Guest")
+  //   }
+  // }, [user]);
   
   const[refreshing, setRefreshing] = useState(false)
   const onRefresh = async () => {
@@ -91,11 +92,11 @@ const Profile = () => {
         resizeMode='contain'
         />
         <View className="flex-row">
-          <Text className="items-center font-psemibold justify-center text-2xl text-white mx-2"> {Username}</Text>
+          <Text className="items-center font-psemibold justify-center text-2xl text-white mx-2"> {myContext.userDetails.name}</Text>
           {/* <Image className="w-[50] h-[30]" source={require("../assets/india.png")} /> */}
         </View>
         <View className="flex-row">
-        <Text className="items-center font-psemibold justify-center text-2xl text-white mx-2"> {phoneNumber}</Text>
+        <Text className="items-center font-psemibold justify-center text-2xl text-white mx-2"> {myContext.userDetails.phoneNumber}</Text>
         </View>
         <Text className="items-center font-psemibold justify-center text-2xl text-white"> Total Balance: {totalBalance} </Text>
       </View>

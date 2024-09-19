@@ -1,37 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
 import { useNavigation } from "@react-navigation/native";
 import { addDoc, getFirestore, collection } from "firebase/firestore";
-import auth from '@react-native-firebase/auth';
+import firestore from "@react-native-firebase/firestore";
+import auth from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
-
+import { UserContext } from "../UserContext";
 
 export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [code, setCode] = useState("");
   const [confirm, setConfirm] = useState(null);
-  const [user, setUser] = useState(null);
- 
+  const myContext = useContext(UserContext);
   const router = useRouter();
 
   useEffect(() => {
-    console.log(auth().currentUser)
-    if(auth().currentUser?.age){
-      sentToHome(auth().currentUser)
-    }else {
-      router.replace({pathname :'/Details' , params:  {id : userDocument.id} })
+    // console.log(auth().currentUser);
+
+    async function fetchMyAPI() {
+      if(auth().currentUser){
+        let userData = await firestore().collection("users").doc(auth().currentUser?.phoneNumber).get();
+        //console.log(userData?._data?.age)
+        if (userData?._data?.age) {
+          sentToHome(userData?._data);
+        } else {
+          router.replace("/Details");
+        }
+      }
     }
-  },[])
+
+    fetchMyAPI();
+  }, []);
 
   const sentToHome = (userDetails) => {
     // add userDetails in context
+    console.log("userDetails   ::: ",userDetails)
+    myContext.updateUserDetails(userDetails);
     router.replace("Home");
-  }
+  };
 
   const _signInWithPhoneNumber = async () => {
-    console.log(phoneNumber)
-    console.log(auth)
     try {
       const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
       setConfirm(confirmation);
@@ -47,28 +56,23 @@ export default function Login() {
     }
     try {
       const userCredential = await confirm.confirm(code);
-      
-      console.log('userCredential',userCredential)
-      //const uid = userCredential?.user?.uid;
-      const db = getFirestore()
-      // check if the user is new and existing
-      const userRef = collection(db, 'users')
-      const userDocument =await addDoc(userRef,{
+
+      await firestore().collection("users").doc(phoneNumber).set({
         uid: userCredential.user.uid,
-        phoneNumber:phoneNumber ,
+        phoneNumber: phoneNumber,
         createdAt: new Date(),
-        
-      })
-      
-      router.replace({pathname :'/Details' , params:  {id : userDocument.id} })
+      });
+
+      router.replace("/Details");
     } catch (error) {
       console.log("Invaild code", error);
     }
-     
-
   };
 
- 
+  if(auth().currentUser){
+    return <></>
+  }
+
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: "BEBDB8" }}>
       <Text
@@ -92,31 +96,26 @@ export default function Login() {
             Enter Your phone Number
           </Text>
 
-           <PhoneInput
+          <PhoneInput
             style={{
-                height:50,
-                width: "100%",
-                borderColor:"black",
-                borderWidth:1,
-                marginBottom:30,
-                paddingHorizontal:10,
+              height: 50,
+              width: "100%",
+              borderColor: "black",
+              borderWidth: 1,
+              marginBottom: 30,
+              paddingHorizontal: 10,
             }}
             defaultValue={phoneNumber}
             defaultCode="IN"
             layout="first"
             withShadow
             autoFocus
-           // maxLength={}
-            onChangeFormattedText={text =>{
-              
-                setPhoneNumber(text);
-              
-                
+            // maxLength={}
+            onChangeFormattedText={(text) => {
+              setPhoneNumber(text);
             }}
-           
-            /> 
-       
-         
+          />
+
           <TouchableOpacity
             onPress={_signInWithPhoneNumber}
             style={{
@@ -177,5 +176,3 @@ export default function Login() {
     </View>
   );
 }
-
-
