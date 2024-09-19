@@ -35,6 +35,7 @@ export default function Details({ route, navigation }) {
         name,
         age,
         gender,
+        wallet:100
       });
       
       // add userDetails in context
@@ -44,6 +45,7 @@ export default function Details({ route, navigation }) {
         name,
         age,
         gender,
+        wallet:100
       })
       router.replace("Home");
     } catch (error) {

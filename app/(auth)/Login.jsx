@@ -11,9 +11,7 @@ import { UserContext } from "../UserContext";
 export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [code, setCode] = useState("");
-  const [Wallet, setWallet] = useState("25")
   const [confirm, setConfirm] = useState(null);
-  const [user, setUser] = useState(null);
   const myContext = useContext(UserContext);
   const router = useRouter();
 
@@ -25,7 +23,7 @@ export default function Login() {
         let userData = await firestore().collection("users").doc(auth().currentUser?.phoneNumber).get();
         //console.log(userData?._data?.age)
         if (userData?._data?.age) {
-          sentToHome(auth().currentUser);
+          sentToHome(userData?._data);
         } else {
           router.replace("/Details");
         }
@@ -37,13 +35,12 @@ export default function Login() {
 
   const sentToHome = (userDetails) => {
     // add userDetails in context
+    console.log("userDetails   ::: ",userDetails)
     myContext.updateUserDetails(userDetails);
     router.replace("Home");
   };
 
   const _signInWithPhoneNumber = async () => {
-    console.log(phoneNumber);
-    console.log(auth);
     try {
       const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
       setConfirm(confirmation);
@@ -60,21 +57,9 @@ export default function Login() {
     try {
       const userCredential = await confirm.confirm(code);
 
-      // console.log("userCredential", userCredential);
-      // //const uid = userCredential?.user?.uid;
-      // const db = getFirestore();
-      // // check if the user is new and existing
-      // const userRef = collection(db, "users");
-      // const userDocument = await addDoc(userRef, {
-      //   uid: userCredential.user.uid,
-      //   phoneNumber: phoneNumber,
-      //   createdAt: new Date(),
-      // });
-
       await firestore().collection("users").doc(phoneNumber).set({
         uid: userCredential.user.uid,
         phoneNumber: phoneNumber,
-        Wallet: Wallet,
         createdAt: new Date(),
       });
 
@@ -83,6 +68,10 @@ export default function Login() {
       console.log("Invaild code", error);
     }
   };
+
+  if(auth().currentUser){
+    return <></>
+  }
 
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: "BEBDB8" }}>
