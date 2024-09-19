@@ -49,7 +49,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (user) {
-      setUserName(user.displayName);
+      setUserName(user.name);
       setPhoneNumber(user.phoneNumber)
     }
     else{

@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useLocalSearchParams } from "expo-router";
+import { UserContext } from "../UserContext";
+
 
 export default function Details({ route, navigation }) {
-  const  {id} = useLocalSearchParams();
-  const uid = auth().currentUser.uid;
+  const uid = auth()?.currentUser?.uid;
+  const phoneNumber = auth()?.currentUser?.phoneNumber;
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const router = useRouter();
   const [age, setAge] = useState("");
+  const myContext = useContext(UserContext);
   const handleSubmit = async () => {
     console.log(uid);
     if (!name.trim()) {
@@ -28,13 +31,20 @@ export default function Details({ route, navigation }) {
       return;
     }
     try {
-      await firestore().collection("users").doc(id).update({
+      await firestore().collection("users").doc(phoneNumber).update({
         name,
         age,
         gender,
       });
       
       // add userDetails in context
+      myContext.updateUserDetails({
+        uid:uid,
+        phoneNumber:phoneNumber,
+        name,
+        age,
+        gender,
+      })
       router.replace("Home");
     } catch (error) {
       console.log("Error saving details:", error);

@@ -1,15 +1,19 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import React, { useEffect,useState } from 'react'
+import React, { useEffect,useState,useContext } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { UserBalances } from '../FirebaseConfig';
 import { router } from 'expo-router';
 import auth from '@react-native-firebase/auth';
+import { UserContext } from '../app/UserContext';
 import firestore from '@react-native-firebase/firestore';
 
 export const TopBar = () => {
   const {bonusBalance, mainBalance, totalBalance, refetch} = UserBalances();
   const [Username, setUserName] = useState("")
   const user = auth().currentUser;
+  const myContext = useContext(UserContext);
+  console.log('myContext   ',myContext.userDetails)
+  console.log('myContext name   ',myContext.userDetails.name)
   useEffect(() => {
     if (user) {
       setUserName(user.displayName);
@@ -22,7 +26,7 @@ export const TopBar = () => {
   
   return (
     <View className=" flex-row items-center bg-purple-700 h-12 px-2 space-x-2">
-      <Text className="text-white font-psemibold text- mr-2">Welcome Nikki</Text>
+      <Text className="text-white font-psemibold text- mr-2">Welcome {myContext.userDetails.name}</Text>
       
       <TouchableOpacity onPress={() => router.replace("./wallet")}
             activeOpacity={0.7}

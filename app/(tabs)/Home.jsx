@@ -1,13 +1,16 @@
 import { View, Text, Image,ImageBackground, ScrollView, Button, FlatList } from 'react-native'
-import React from 'react'
+import React, {useContext} from 'react'
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TopBar from '../../components/TopBar';
+import { UserContext } from "../UserContext";
 
 
 const Home = () => {
+  const myContext = useContext(UserContext);
+  console.log('myContext   ',myContext.userDetails)
   return (
     
     <SafeAreaView className="h-full w-full justify-center items-center" >
