@@ -22,21 +22,6 @@ const Home = () => {
       renderItem={null}
       ListFooterComponent={() => (
         <>
-        
-          {/* <View className="my-2 w-full flex-row flex-1 justify-center">
-              <View className="items-start">
-                <TouchableOpacity onPress={() => router.push("../Referral")}
-                activeOpacity={0.7}>
-                  <Text className="text-blue-400 px-3 "> Referral </Text>
-                </TouchableOpacity>
-              </View> */}
-              {/* <View className="items-end min-w-[78%] px-3">
-                <TouchableOpacity onPress={() => router.replace("../Ads")}
-                activeOpacity={0.7}>
-                  <Text className="text-blue-400"> Ads</Text>
-                </TouchableOpacity>
-              </View>           */}
-         {/* </View>     */}
          <View className="flex-row items-center justify-center my-2">
           <View className="flex-1 my-1">
             <TouchableOpacity className="w-10 h-10 items-center justify-center"

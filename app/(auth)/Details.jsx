@@ -34,6 +34,7 @@ export default function Details({ route, navigation }) {
         gender,
       });
       
+      // add userDetails in context
       router.replace("Home");
     } catch (error) {
       console.log("Error saving details:", error);

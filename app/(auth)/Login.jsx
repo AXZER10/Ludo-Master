@@ -17,10 +17,17 @@ export default function Login() {
 
   useEffect(() => {
     console.log(auth().currentUser)
-    if(auth().currentUser){
-      router.replace("Home");
+    if(auth().currentUser?.age){
+      sentToHome(auth().currentUser)
+    }else {
+      router.replace({pathname :'/Details' , params:  {id : userDocument.id} })
     }
   },[])
+
+  const sentToHome = (userDetails) => {
+    // add userDetails in context
+    router.replace("Home");
+  }
 
   const _signInWithPhoneNumber = async () => {
     console.log(phoneNumber)
@@ -53,11 +60,7 @@ export default function Login() {
         
       })
       
-      if (userDocument.exists) {
-        router.replace({pathname :'/Home' , params:  {id : userDocument.id} })
-      } else {
-        router.replace({pathname :'/Details' , params:  {id : userDocument.id} })
-      }
+      router.replace({pathname :'/Details' , params:  {id : userDocument.id} })
     } catch (error) {
       console.log("Invaild code", error);
     }
