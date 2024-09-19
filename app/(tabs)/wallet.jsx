@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image, ImageBackground } from "react-native";
+import { View, Text, TouchableOpacity, Image, ImageBackground,FlatList } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getFirestore } from "firebase/firestore";
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import TopBar from "../../components/TopBar";
 
 const WalletScreen = () => {
   const [totalBalance] = useState();
@@ -39,11 +40,18 @@ const WalletScreen = () => {
                   resizeMode='cover'
                   className="h-full w-full "
                   >
+                    <FlatList 
+ListHeaderComponent={() => (
+  <TopBar/>
+)}
+renderItem={null}
+ListFooterComponent={() => (
+  <>
       <View className="flex-row justify-between ml-15">
         <Text className="text-white font-psemibold text-xl">
           Wallet
         </Text>
-        <TouchableOpacity className="px-8 ml-32" >
+        {/* <TouchableOpacity className="px-8 ml-32" >
           <Image className="w-10 h-10"
             source={require("../assets/headphone.png")}
           />
@@ -52,7 +60,7 @@ const WalletScreen = () => {
           <Image className="w-10 h-10"
             source={require("../assets/Settings-L-icon.png")}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <View className="px-2 items-center mr-40">
@@ -101,6 +109,9 @@ const WalletScreen = () => {
       <View className=" p-2 items-center">
         <Text className="text-white text-sm">100% Money Safety</Text>
       </View>
+      </>
+)}
+/>
       </ImageBackground>
     </SafeAreaView>
   );

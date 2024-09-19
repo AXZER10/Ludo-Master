@@ -9,14 +9,24 @@ import { useLocalSearchParams } from "expo-router";
 export default function Details({ route, navigation }) {
   const  {id} = useLocalSearchParams();
   const uid = auth().currentUser.uid;
-  const [user, setUser] = useState();
   const [name, setName] = useState("");
-  const [dob, setDob] = useState("");
   const [gender, setGender] = useState("");
   const router = useRouter();
   const [age, setAge] = useState("");
-  const saveDetails = async () => {
+  const handleSubmit = async () => {
     console.log(uid);
+    if (!name.trim()) {
+      alert('Please Enter Name');
+      return;
+    }
+    if (!age.trim()) {
+      alert('Please Enter Age');
+      return;
+    }
+    if (!gender.trim()) {
+      alert('Please select Gender');
+      return;
+    }
     try {
       await firestore().collection("users").doc(id).update({
         name,
@@ -29,7 +39,6 @@ export default function Details({ route, navigation }) {
       console.log("Error saving details:", error);
     }
   };
-
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: "BEBDB8" }}>
       <Text
@@ -52,8 +61,9 @@ export default function Details({ route, navigation }) {
           paddingHorizontal: 10,
         }}
         placeholder="Name"
-        value={name}
-        onChangeText={setName}
+        onChangeText={
+          (value) => setName(value)
+        }
       />
 
       <TextInput
@@ -87,7 +97,7 @@ export default function Details({ route, navigation }) {
         <Picker.Item label="Other" value="other" />
       </Picker>
       <TouchableOpacity
-        onPress={saveDetails}
+        onPress={handleSubmit}
         style={{
           backgroundColor: "#841584",
           padding: 10,

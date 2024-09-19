@@ -8,13 +8,14 @@ import icons from '../../constants/icons';
 import CustomButton from "../../components/CustomButton";
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import TopBar from '../../components/TopBar';
 
 const Profile = () => {
 
   const {totalBalance, refetch} = UserBalances();
   const [currentUser, setCurrentUser] = useState(null);
   const user = auth().currentUser;
-  
+ 
   const [Username, setUserName] = useState("")
   const [phoneNumber,setPhoneNumber]= useState("")
 
@@ -70,7 +71,11 @@ const Profile = () => {
                   className="h-full w-full "
                   >
       <FlatList 
-        ListHeaderComponent={() => (
+      ListHeaderComponent={() => (
+        <TopBar/>
+      )}
+        ListFooterComponent={() => (
+          
           <>
           <View className="w-full items-end">
           <TouchableOpacity className="items-end"

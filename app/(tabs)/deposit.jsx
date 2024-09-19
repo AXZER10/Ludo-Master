@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,ImageBackground } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet,ImageBackground,FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import TopBar from '../../components/TopBar';
 
 const AddCashComponent = () => {
   const [amount, setAmount] = useState('');
@@ -41,6 +42,13 @@ const AddCashComponent = () => {
                   resizeMode='cover'
                   className="h-full w-full "
                   >
+                    <FlatList 
+      ListHeaderComponent={() => (
+        <TopBar/>
+      )}
+      renderItem={null}
+      ListFooterComponent={() => (
+        <>
       <Text className="text-white text-xl font-psemibold">Add Cash</Text>
       <Text className="text-white text-sm">Total Balance: ₹{13.5}</Text>
 
@@ -93,6 +101,9 @@ const AddCashComponent = () => {
       <TouchableOpacity className="bg-black rounded-sm p-5 mt-16 w-4/5" onPress={handleAddAmount}>
         <Text className="text-white tetx-xl font-psemibold">Add Cash</Text>
       </TouchableOpacity>
+       </>
+        )}
+      />
       </ImageBackground>
     </SafeAreaView>
   );
