@@ -75,7 +75,7 @@ const Home = () => {
               />
             </View>
           </View>
-
+        
         </View>
       </ImageBackground>
     </SafeAreaView>
