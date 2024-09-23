@@ -14,6 +14,7 @@ export default function Login() {
   const [confirm, setConfirm] = useState(null);
   const myContext = useContext(UserContext);
   const router = useRouter();
+  const [loading,setLoading] = useState(true);
 
   useEffect(() => {
     // console.log(auth().currentUser);
@@ -21,10 +22,12 @@ export default function Login() {
     async function fetchMyAPI() {
       if(auth().currentUser){
         let userData = await firestore().collection("users").doc(auth().currentUser?.phoneNumber).get();
-        //console.log(userData?._data?.age)
+        setLoading(false)
+        console.log(userData)
         if (userData?._data?.age) {
           sentToHome(userData?._data);
-        } else {
+        } else if(userData?._data) {
+          console.log("213 case")
           router.replace("/Details");
         }
       }
@@ -32,6 +35,7 @@ export default function Login() {
 
     fetchMyAPI();
   }, []);
+
 
   const sentToHome = (userDetails) => {
     // add userDetails in context
@@ -57,19 +61,32 @@ export default function Login() {
     try {
       const userCredential = await confirm.confirm(code);
 
-      await firestore().collection("users").doc(phoneNumber).set({
-        uid: userCredential.user.uid,
-        phoneNumber: phoneNumber,
-        createdAt: new Date(),
-      });
+      let userData = await firestore().collection("users").doc(phoneNumber).get();
+      console.log("userData",userData)
+      if(userData && userData?._data && userData?._data?.age){
+        console.log("first case")
+        sentToHome(userData?._data);
+      } else if(userData && userData?._data){
+        console.log("2 case")
+        router.replace("/Details");
+      } else {
+        console.log("211 case")
+        await firestore().collection("users").doc(phoneNumber).set({
+          uid: userCredential.user.uid,
+          phoneNumber: phoneNumber,
+          createdAt: new Date(),
+        });
+  
+        router.replace("/Details");
+      }
 
-      router.replace("/Details");
     } catch (error) {
       console.log("Invaild code", error);
     }
   };
 
-  if(auth().currentUser){
+  if(loading){
+    // add loader here
     return <></>
   }
 
