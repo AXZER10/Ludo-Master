@@ -75,7 +75,14 @@ const Home = () => {
               />
             </View>
           </View>
-        
+          <View className="flex-col w-40 mx-2">
+              <CustomButton
+                title={"Room List"}
+                ContainerStyles={"w-40 bg-fuchsia-900"}
+                handlePress={() => router.push("/RoomList")}
+                textStyles={"text-lg font-pbold text-white"}
+              />
+            </View>
         </View>
       </ImageBackground>
     </SafeAreaView>

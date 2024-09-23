@@ -48,7 +48,7 @@ const Profile = () => {
     });
   }
 
-  // useEffect(() => {
+  // useEffect(() => {+
   //   if (user) {
   //     setUserName(user.name);
   //     setPhoneNumber(user.phoneNumber)
