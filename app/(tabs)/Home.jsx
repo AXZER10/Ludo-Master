@@ -1,32 +1,19 @@
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  ScrollView,
-  Button,
-  FlatList,
-} from "react-native";
-import React, { useContext } from "react";
+import { View, Image, ImageBackground } from "react-native";
+import React from "react";
 import CustomButton from "../../components/CustomButton";
 import { router } from "expo-router";
-import { TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TopBar from "../../components/TopBar";
-import { UserContext } from "../UserContext";
 
 const Home = () => {
-  const myContext = useContext(UserContext);
-  console.log("myContext   ", myContext);
   return (
-    <SafeAreaView className="h-full w-full justify-center items-center">
-      <ImageBackground
-        source={require("../assets/bg.png")}
-        resizeMode="cover"
-        className="h-full w-full "
-      >
+    <ImageBackground
+      source={require("../assets/bg.png")}
+      resizeMode="cover"
+      className="h-full w-full"
+    >
+      <SafeAreaView>
         <TopBar />
-
         <View className="flex-col items-center justify-center my-2">
           <View className="flex-row items-center justify-center my-10">
             <View className="flex-1 items-center">
@@ -75,10 +62,9 @@ const Home = () => {
               />
             </View>
           </View>
-        
         </View>
-      </ImageBackground>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 
