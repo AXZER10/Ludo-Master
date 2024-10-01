@@ -24,7 +24,7 @@ export const TopBar = () => {
   }, [user]);
 
   return (
-    <View className=" flex-row items-center justify-around bg-purple-700 h-12 px-2 space-x-2">
+    <View style={{borderRadius:10}} className=" flex-row items-center justify-around bg-purple-700 h-12 px-2 space-x-2 mx-5">
       <Text className="text-white font-psemibold text- mr-2">
         Welcome {myContext.userDetails.name}
       </Text>
