@@ -12,13 +12,14 @@ const RoomList = () => {
   const [players, setPlayers] = useState(2);
   const [bet, setBet] = useState('');
   const router = useRouter();
+  const [name, setName ]= useState('')
   const uid = auth()?.currentUser?.uid
   const myContext = useContext(UserContext);
 
   useEffect(() => {
     // Fetching the list of rooms from Firestore
     const fetchRooms = async () => {
-      const roomsCollection = await firestore().collection('twoPlayerRooms').get();
+      const roomsCollection = await firestore().collection('twoPlayerRooms',).get();
       const roomsData = roomsCollection.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setRooms(roomsData);
     };
@@ -35,6 +36,7 @@ const RoomList = () => {
     const roomData = {
       uid:uid,
       bet: parseFloat(bet),
+      name: uid.name,
       createdAt: new Date(),
     };
 

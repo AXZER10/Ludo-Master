@@ -85,10 +85,10 @@ export default function Login() {
     }
   };
 
-  if(loading){
-    // add loader here
-    return <></>
-  }
+  // if(loading){
+  //   // add loader here
+  //   return <></>
+  // }
 
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: "BEBDB8" }}>
