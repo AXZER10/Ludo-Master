@@ -1,9 +1,14 @@
+const { DEFAULT_EXTENSIONS } = require('@babel/core');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {colors: {
       primary: "#161622",
+      darkblue: '#4c669f',
+      darkblue2:'#3b5998',
+      darkblue3:'#192f6a',
       secondary: {
         DEFAULT: "#FF9C01",
         100: "#FF9001",

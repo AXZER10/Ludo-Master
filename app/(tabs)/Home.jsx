@@ -5,6 +5,8 @@ import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TopBar from "../../components/TopBar";
 
+
+
 const Home = () => {
   return (
     <ImageBackground
@@ -19,7 +21,7 @@ const Home = () => {
             <View className="flex-1 items-center">
               <CustomButton
                 title={"Leader Board"}
-                ContainerStyles={"w-44 h-8 bg-fuchsia-900"}
+                ContainerStyles={"w-44 h-8 border-yellow-600 border-4"}
                 handlePress={() => router.push("../(leaderboard)/LeaderBoard")}
                 textStyles={"text-sm font-pbold text-white"}
               />
@@ -48,7 +50,7 @@ const Home = () => {
               <CustomButton
                 title={"Play Offline"}
                 ContainerStyles={"w-full bg-fuchsia-900"}
-                handlePress={() => router.push("/Ludo2PlayerOffline")}
+                handlePress={() => router.push("../src/screens/LudoBoardScreen")}
                 textStyles={"text-lg font-pbold text-white"}
               />
             </View>
