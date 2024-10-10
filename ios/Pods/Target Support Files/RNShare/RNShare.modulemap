@@ -1,0 +1,6 @@
+framework module RNShare {
+  umbrella header "RNShare-umbrella.h"
+
+  export *
+  module * { export * }
+}

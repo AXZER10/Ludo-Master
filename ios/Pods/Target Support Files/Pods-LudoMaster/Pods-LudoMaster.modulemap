@@ -1,0 +1,6 @@
+framework module Pods_LudoMaster {
+  umbrella header "Pods-LudoMaster-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module EXDevMenu {
+  umbrella header "expo-dev-menu-umbrella.h"
+
+  export *
+  module * { export * }
+}
