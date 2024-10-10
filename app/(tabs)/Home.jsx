@@ -59,7 +59,7 @@ const Home = () => {
               <CustomButton
                 title={"Online play"}
                 ContainerStyles={"w-40 bg-fuchsia-900"}
-                handlePress={() => router.replace("/Room")}
+                handlePress={() => router.replace("../src/screens/LudoBoard")}
                 textStyles={"text-lg font-pbold text-white"}
               />
             </View>

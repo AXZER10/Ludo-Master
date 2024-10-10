@@ -5,7 +5,7 @@ import {
   Image,
   Animated,
   Easing,
-} from 'react-native'
+} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -25,6 +25,7 @@ import {
   selectDiceNo,
   selectDiceRolled,
 } from '../redux/reducers/gameSelectors';
+import { doc, getFirestore } from 'firebase/firestore';
 
 const Dice = React.memo(({color, rotate, player, data}) => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const Dice = React.memo(({color, rotate, player, data}) => {
   const pileIcon = BackgroundImage.GetImage(color);
   const diceIcon = BackgroundImage.GetImage(diceNo);
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
+  const [playerUid,setPlayerUid] = useState('');
   // Create animated values
   const arrowAnim = useRef(new Animated.Value(0)).current;
 
@@ -64,13 +65,80 @@ const Dice = React.memo(({color, rotate, player, data}) => {
     };
     animateArrow();
   }, [currentPlayerChance, isDiceRolled]);
+
+  const GetRoomId = async ()=>{
+    const db = getFirestore();
+    const roomRef = doc(db, 'twoPlayerRooms',)
+    try{
+      const q = query(roomRef, where('uid2', '==', ''), where('uid1', '!=', playerUid));
+      const querySnapshot = await getDocs(q);
+      const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1 !== playerUid && doc.data().uid1 !== '');
+      if(filteredRooms.length>0){
+        const roomDoc = filteredRooms[0];
+        const roomId = roomDoc.id;
+      }else{
+        console.log('Room does not exist ')
+      }
+    }catch(error){
+      console.log(error)
+    }
+  }
+  const updateDice = async (diceNo) =>{
+    const roomId = room?.id;
+    let UID = playerUid;
+    console.log("UID: ", UID);
+    const db = getFirestore();
+    try {
+      const roomRef = doc(db, "twoPlayerRooms", roomId);
+        if (room?.uid1?.playerUid == player) {
+          let updatedRoom = {
+            id: room?.id,
+            turn : chancePlayer,
+            uid1: {
+              position: room?.uid1?.position,
+              dice: diceNo,
+              uid: room?.uid1?.playerUid,
+            },
+            uid2: {
+              position: room?.uid2?.position,
+              dice: room?.uid2?.dice,
+              uid: room?.uid2?.uid,
+            },
+            gameState: "InProgress",
+          };
+          await updateDoc(roomRef, updatedRoom);
+        }
+          if (room?.uid2?.playerUid == player) {
+            let updatedRoom = {
+              id: room?.id,
+              turn : chancePlayer,
+              uid1: {
+                position: room?.uid1?.position,
+                dice: room?.uid1?.dice,
+                uid: room?.uid1?.playerUid,
+              },
+              uid2: {
+                position: room?.uid2?.position,
+                dice: diceNo,
+                uid: room?.uid2?.uid,
+              },
+              gameState: "InProgress",
+            };
+            await updateDoc(roomRef, updatedRoom);
+          }
+        }
+        catch(error){
+        console.log(error);
+        }
+  }
   const handleDicePress = async () => {
-    const newDiceNo = Math.floor(Math.random() * 6) + 1;
-    // const newDiceNo = 5;
+    updateDice(diceNo);
+    //const newDiceNo = Math.floor(Math.random() * 6) + 1;
+     const newDiceNo = 2;
     playSound('dice_roll');
     setDiceRolling(true);
     await delay(800);
-   dispatch(updateDiceNo({diceNo: newDiceNo}));
+    dispatch(updateDiceNo({diceNo: newDiceNo}));
     setDiceRolling(false);
 
     const isAnyPieceAlive = data?.findIndex(i => i.pos != 0 && i.pos != 57);
@@ -82,7 +150,10 @@ const Dice = React.memo(({color, rotate, player, data}) => {
       } else {
         // chanage here for two playerGame dice roll
         let chancePlayer = player + 1;
-        if (chancePlayer > 4) {
+        if (chancePlayer == 2) {
+          chancePlayer = 3;
+        }
+        if (chancePlayer == 4) {
           chancePlayer = 1;
         }
         await delay(600);
@@ -98,7 +169,10 @@ const Dice = React.memo(({color, rotate, player, data}) => {
         (!canMove && newDiceNo != 6 && isAnyPieceLocked == -1)
       ) {
         let chancePlayer = player + 1;
-        if (chancePlayer > 4) {
+        if (chancePlayer == 2) {
+          chancePlayer = 3;
+        }
+        if (chancePlayer == 4) {
           chancePlayer = 1;
         }
         await delay(600);

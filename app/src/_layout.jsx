@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LudoBoardScreen from "./screens/LudoBoardScreen";
-// import LudoBoard from './screens/LudoBoard'
+ import LudoBoard from './screens/LudoBoard'
 import { navigationRef } from "./helpers/NavigationUtil";
 // import HomeScreen from '../../HomeScreen';
 import { Provider } from "react-redux";
@@ -29,13 +29,14 @@ function Navigation() {
               component={LudoBoardScreen}
             />
             {/* <Stack.Screen name="SplashScreen" component={SplashScreen} /> */}
-            {/* <Stack.Screen
+            
+            <Stack.Screen
           name="LudoBoard"
           options={{
             animation: 'fade',
           }}
           component={LudoBoard}
-        /> */}
+        />
             {/* <Stack.Screen
           name="HomeScreen"
           options={{
