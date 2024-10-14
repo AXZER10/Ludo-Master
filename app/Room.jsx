@@ -141,7 +141,7 @@ const Room = () => {
           gameState: "Cancelled"
         });
   
-        router.replace('/HomeScreen')
+        router.replace('/Home')
       } catch (error) {
         Alert.alert('Error exiting room:', error.message);
       }

@@ -41,7 +41,7 @@ const Dice = React.memo(({color, rotate, player, data}) => {
   const [playerUid,setPlayerUid] = useState('');
   // Create animated values
   const arrowAnim = useRef(new Animated.Value(0)).current;
-
+  const [room, setRoom] = useState(undefined);
   const [diceRolling, setDiceRolling] = useState(false);
 
   useEffect(() => {
