@@ -31,7 +31,7 @@ const WinModal = ({winner}) => {
   const handleHome = () => {
     dispatch(resetGame());
     dispatch(announceWinner(null));
-    resetAndNavigate('HomeScreen');
+    resetAndNavigate('Home');
   };
 
   return (

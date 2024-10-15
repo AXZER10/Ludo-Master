@@ -31,7 +31,7 @@ import {
   selectPlayerOption
 } from '../../src/redux/reducers/gameSelectors';
 
-const LudoBoardScreen = () => {
+const LudoBoard = () => {
   const player1 = useSelector(selectPlayer1);
   const player2 = useSelector(selectPlayer2);
   const player3 = useSelector(selectPlayer3);
@@ -194,4 +194,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LudoBoardScreen;
+export default LudoBoard;
