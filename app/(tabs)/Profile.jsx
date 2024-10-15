@@ -1,26 +1,62 @@
-import React from 'react';
-import { View, Text, Image, Button, FlatList, RefreshControl, TouchableOpacity } from 'react-native';
+import React,{useContext} from 'react';
+import { View, Text, Image, Button, FlatList, RefreshControl, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { handleLogout } from '../../FirebaseConfig';
-import { auth, UserBalances } from '../../FirebaseConfig';
+import { router } from 'expo-router';
+import {UserBalances } from '../../FirebaseConfig';
 import { useState, useEffect } from 'react';
 import icons from '../../constants/icons';
+import CustomButton from "../../components/CustomButton";
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import TopBar from '../../components/TopBar';
+import { UserContext } from '../UserContext';
 
 const Profile = () => {
 
-  const {bonusBalance, mainBalance, winBalance, totalBalance, refetch} = UserBalances();
+  const {totalBalance, refetch} = UserBalances();
   const [currentUser, setCurrentUser] = useState(null);
-  const user = auth.currentUser;
-  
+  const user = auth().currentUser;
+  const myContext = useContext(UserContext);
   const [Username, setUserName] = useState("")
-  useEffect(() => {
-    if (user) {
-      setUserName(user.displayName);
+  const [phoneNumber,setPhoneNumber]= useState("")
+
+  useEffect(()=>{
+    const fetchUserDetails = async () =>{
+      if(user){
+        const uid = user.uid
+        try{
+          const userDoc = await firestore().collection('users').doc(uid).get()
+          if(userDoc.exists){
+            const userData = userDoc.data();
+            setUserName(userData.name || "Guest")
+          }
+        }catch(error){
+
+          console.log("Error fetching user details:", error);
+        }
+      }
     }
-    else{
-      setUserName("Guest")
-    }
-  }, [user]);
+    fetchUserDetails();
+  },[ user])
+
+  const handleLogout = () => {
+    auth()
+    .signOut()
+    .then(() => {
+      router.replace("/Login")
+      console.log('User signed out!')
+    });
+  }
+
+  // useEffect(() => {+
+  //   if (user) {
+  //     setUserName(user.name);
+  //     setPhoneNumber(user.phoneNumber)
+  //   }
+  //   else{
+  //     setUserName("Guest")
+  //   }
+  // }, [user]);
   
   const[refreshing, setRefreshing] = useState(false)
   const onRefresh = async () => {
@@ -30,9 +66,17 @@ const Profile = () => {
   }
 
   return (
-    <SafeAreaView className="h-full w-full justify-center items-center bg-primary">
+    <SafeAreaView className="h-full w-full justify-center items-center ">
+      <ImageBackground source={require("../assets/bg.png")}
+                  resizeMode='cover'
+                  className="h-full w-full "
+                  >
       <FlatList 
-        ListHeaderComponent={() => (
+      ListHeaderComponent={() => (
+        <TopBar/>
+      )}
+        ListFooterComponent={() => (
+          
           <>
           <View className="w-full items-end">
           <TouchableOpacity className="items-end"
@@ -48,20 +92,31 @@ const Profile = () => {
         resizeMode='contain'
         />
         <View className="flex-row">
-          <Text className="items-center font-psemibold justify-center text-2xl text-blue-400 mx-2"> {Username}</Text>
-          <Image className="w-[50] h-[30]" source={require("../assets/india.png")} />
+          <Text className="items-center font-psemibold justify-center text-2xl text-white mx-2"> {myContext.userDetails.name}</Text>
+          {/* <Image className="w-[50] h-[30]" source={require("../assets/india.png")} /> */}
         </View>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400">Main Balance: {mainBalance} </Text>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Bonus Balance: {bonusBalance} </Text>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Total Available Balance: {totalBalance} </Text>
-        <Text className="items-center font-psemibold justify-center text-2xl text-blue-400"> Total Winnings: {winBalance} </Text>
+        <View className="flex-row">
+        <Text className="items-center font-psemibold justify-center text-2xl text-white mx-2"> {myContext.userDetails.phoneNumber}</Text>
+        </View>
+        <Text className="items-center font-psemibold justify-center text-2xl text-white"> Total Balance: {totalBalance} </Text>
       </View>
+      <View className="flex-row items-center justify-center my-2">
+      <View className=" w-40 mx-2">
+            <CustomButton 
+                title={' Update Kyc'} 
+                ContainerStyles={'w-40 bg-black'}
+                handlePress={() => router.replace("/KYCStatus")}
+                textStyles={'text-lg font-pbold text-white'}
+              />
+              </View>
+              </View>
           </>
         )}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}
         tintColor="lightblue"
         />}
       />
+      </ImageBackground>
     </SafeAreaView>
   );
 }

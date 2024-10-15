@@ -1,0 +1,6 @@
+framework module EXAV {
+  umbrella header "EXAV-umbrella.h"
+
+  export *
+  module * { export * }
+}
