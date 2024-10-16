@@ -1,6 +1,6 @@
 {
   "name": "expo-dev-launcher",
-  "version": "4.0.27",
+  "version": "4.0.28",
   "summary": "Pre-release version of the Expo development launcher package for testing.",
   "description": "Pre-release version of the Expo development launcher package for testing.",
   "license": "MIT",
@@ -12,7 +12,7 @@
   "swift_versions": "5.2",
   "source": {
     "git": "https://github.com/github_account/expo-development-client.git",
-    "tag": "4.0.27"
+    "tag": "4.0.28"
   },
   "static_framework": true,
   "source_files": "ios/**/*.{h,m,mm,swift,cpp}",
@@ -31,7 +31,7 @@
     ]
   },
   "xcconfig": {
-    "GCC_PREPROCESSOR_DEFINITIONS": "EX_DEV_LAUNCHER_VERSION=4.0.27",
+    "GCC_PREPROCESSOR_DEFINITIONS": "EX_DEV_LAUNCHER_VERSION=4.0.28",
     "OTHER_CFLAGS": "$(inherited) -DREACT_NATIVE_TARGET_VERSION=74 -DUSE_HERMES"
   },
   "pod_target_xcconfig": {

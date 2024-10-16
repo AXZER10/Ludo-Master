@@ -47,4 +47,4 @@ with_node \
   generate-modules-provider  \
   --target "/Users/ankitpurohit/Desktop/Ludo-Master/Ludo-Master/ios/Pods/Target Support Files/Pods-LudoMaster/ExpoModulesProvider.swift" \
   --platform "apple" \
-  --packages "expo-asset" "expo-av" "expo-calendar" "expo-clipboard" "expo-constants" "expo-dev-launcher" "expo-dev-menu" "expo-file-system" "expo-font" "expo-image-picker" "expo-keep-awake" "expo-router" "expo-system-ui" "expo-web-browser"
+  --packages "expo-asset" "expo-av" "expo-calendar" "expo-clipboard" "expo-constants" "expo-dev-launcher" "expo-dev-menu" "expo-file-system" "expo-font" "expo-image-picker" "expo-keep-awake" "expo-linear-gradient" "expo-router" "expo-system-ui" "expo-web-browser"

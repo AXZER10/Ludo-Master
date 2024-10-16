@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React,{useEffect,useState} from 'react'
-import { router } from 'expo-router';
+import { StyleSheet, Text, View,SafeAreaView,TouchableOpacity,Image,Alert } from 'react-native'
+import React,{useEffect,useState,} from 'react'
+import { useRouter } from 'expo-router';
 //import db from './FirebaseConfig'
 //import icons from '../../constants/icons';
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, onSnapshot } from 'firebase/firestore'
@@ -8,7 +8,8 @@ import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc
 const Room = () => {
     const [roomId, setRoomId] = useState('');
     const [playerUid, setPlayerUid] = useState('');
- 
+    const [countdown, setCountdown] = useState(null);
+    const router = useRouter();
     useEffect(() => {
       
         
@@ -66,7 +67,7 @@ const Room = () => {
           } else {
             setRoomId(createRef.id); // Store the created room ID
           }
-          
+          console.log('roomId____', roomId)
           Alert.alert('Room Created', `Room ID: ${createRef.id}`);
           
           setTimeout(() => {
@@ -84,7 +85,7 @@ const Room = () => {
           const roomRef = doc(db, 'twoPlayerRooms', roomId);
           await updateDoc(roomRef, {
             uid2: {
-              position: positions[3],
+              position: 3,
               playerUid,
               dice:0,
               turn:false

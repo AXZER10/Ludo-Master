@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, View, TouchableOpacity, Image, Text } from 'react-native';
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, onSnapshot } from 'firebase/firestore';
-import { auth } from '../FirebaseConfig';
+import auth from '@react-native-firebase/auth';
 import { router } from 'expo-router';
 import icons from '../constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const Room = () => {
   const [roomId, setRoomId] = useState('');
   const [playerUid, setPlayerUid] = useState('');
   const [countdown, setCountdown] = useState(null);
+  const user = auth().currentUser;
   const [positions, setPositions] = useState({
     1: [-11, -21, -31, -41],
     3: [-13, -23, -33, -43],
   });
 
   useEffect(() => {
-    const user = auth.currentUser;
+    console.log(user);
+    
+    
+    console.log(user)
     if (user
     ) {
       if(playerUid == ''){
