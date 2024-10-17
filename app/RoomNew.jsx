@@ -130,7 +130,7 @@ const Room = () => {
           const gameState = doc.data().gameState;
           if (gameState === "Started") {
             router.setParams({roomId : roomId});
-            router.replace({pathname :'/2PlayerOnline' , params:  {roomId} })
+            router.replace({pathname :'src/screens/LudoBoard' , params:  {roomId} })
             initiateCountdown();
           }
         } else {

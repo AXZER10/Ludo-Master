@@ -9,6 +9,7 @@ import {
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
+import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, onSnapshot } from 'firebase/firestore';
 import {BackgroundImage} from '../helpers/GetIcons';
 import {
   enableCellSelection,
@@ -25,7 +26,7 @@ import {
   selectDiceNo,
   selectDiceRolled,
 } from '../redux/reducers/gameSelectors';
-import { doc, getFirestore } from 'firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const Dice = React.memo(({color, rotate, player, data}) => {
   const dispatch = useDispatch();
@@ -43,8 +44,13 @@ const Dice = React.memo(({color, rotate, player, data}) => {
   const arrowAnim = useRef(new Animated.Value(0)).current;
   const [room, setRoom] = useState(undefined);
   const [diceRolling, setDiceRolling] = useState(false);
-
+  const user = auth().currentUser
+  
+useEffect(() =>{
+  GetRoomId();
+},[user]);
   useEffect(() => {
+  
     const animateArrow = () => {
       Animated.loop(
         Animated.sequence([
@@ -70,12 +76,12 @@ const Dice = React.memo(({color, rotate, player, data}) => {
     const db = getFirestore();
     const roomRef = doc(db, 'twoPlayerRooms',)
     try{
-      const q = query(roomRef, where('uid2', '==', ''), where('uid1', '!=', playerUid));
+      const q = query(roomRef, where('uid2', '==', ''), where('uid1', '!=', user.uid));
       const querySnapshot = await getDocs(q);
-      const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1 !== playerUid && doc.data().uid1 !== '');
+      const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1 !== user.uid && doc.data().uid1 !== '');
       if(filteredRooms.length>0){
         const roomDoc = filteredRooms[0];
-        const roomId = roomDoc.id;
+        setRoom (roomDoc.id);
       }else{
         console.log('Room does not exist ')
       }
@@ -84,20 +90,19 @@ const Dice = React.memo(({color, rotate, player, data}) => {
     }
   }
   const updateDice = async (diceNo) =>{
-    const roomId = room?.id;
-    let UID = playerUid;
+    let UID = user.uid;
     console.log("UID: ", UID);
     const db = getFirestore();
     try {
-      const roomRef = doc(db, "twoPlayerRooms", roomId);
-        if (room?.uid1?.playerUid == player) {
+      const roomRef = doc(db, "twoPlayerRooms", room);
+        if (room?.uid1?.UID == player) {
           let updatedRoom = {
             id: room?.id,
             turn : chancePlayer,
             uid1: {
               position: room?.uid1?.position,
               dice: diceNo,
-              uid: room?.uid1?.playerUid,
+              uid: room?.uid1?.UID,
             },
             uid2: {
               position: room?.uid2?.position,
@@ -108,14 +113,14 @@ const Dice = React.memo(({color, rotate, player, data}) => {
           };
           await updateDoc(roomRef, updatedRoom);
         }
-          if (room?.uid2?.playerUid == player) {
+          if (room?.uid2?.UID == player) {
             let updatedRoom = {
               id: room?.id,
               turn : chancePlayer,
               uid1: {
                 position: room?.uid1?.position,
                 dice: room?.uid1?.dice,
-                uid: room?.uid1?.playerUid,
+                uid: room?.uid1?.UID,
               },
               uid2: {
                 position: room?.uid2?.position,
@@ -307,3 +312,4 @@ const styles = StyleSheet.create({
 });
 
 export default Dice;
+ 
