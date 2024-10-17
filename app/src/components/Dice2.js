@@ -6,11 +6,11 @@ import {
   Animated,
   Easing,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, onSnapshot } from 'firebase/firestore';
-import {BackgroundImage} from '../helpers/GetIcons';
+import { BackgroundImage } from '../helpers/GetIcons';
 import {
   enableCellSelection,
   enablePileSelection,
@@ -20,7 +20,7 @@ import {
 import Arrow from '../assets/images/arrow.png';
 import LottieView from 'lottie-react-native';
 import DiceRoll from '../assets/animation/diceroll.json';
-import {playSound} from '../helpers/SoundUtility';
+import { playSound } from '../helpers/SoundUtility';
 import {
   selectCurrentPlayerChance,
   selectDiceNo,
@@ -28,7 +28,7 @@ import {
 } from '../redux/reducers/gameSelectors';
 import auth from '@react-native-firebase/auth';
 
-const Dice = React.memo(({color, rotate, player, data}) => {
+const Dice = React.memo(({ color, rotate, player, data }) => {
   const dispatch = useDispatch();
   const currentPlayerChance = useSelector(selectCurrentPlayerChance);
   const isDiceRolled = useSelector(selectDiceRolled);
@@ -39,18 +39,19 @@ const Dice = React.memo(({color, rotate, player, data}) => {
   const pileIcon = BackgroundImage.GetImage(color);
   const diceIcon = BackgroundImage.GetImage(diceNo);
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-  const [playerUid,setPlayerUid] = useState('');
+  const [playerUid, setPlayerUid] = useState('');
   // Create animated values
   const arrowAnim = useRef(new Animated.Value(0)).current;
   const [room, setRoom] = useState(undefined);
   const [diceRolling, setDiceRolling] = useState(false);
   const user = auth().currentUser
-  
-useEffect(() =>{
-  GetRoomId();
-},[user]);
+
   useEffect(() => {
-  
+    GetRoomId();
+    console.log(room)
+  }, [user]);
+  useEffect(() => {
+
     const animateArrow = () => {
       Animated.loop(
         Animated.sequence([
@@ -72,20 +73,24 @@ useEffect(() =>{
     animateArrow();
   }, [currentPlayerChance, isDiceRolled]);
 
-  const GetRoomId = async ()=>{
+  const GetRoomId = async () => {
     const db = getFirestore();
-    const roomRef = doc(db, 'twoPlayerRooms',)
-    try{
-      const q = query(roomRef, where('uid2', '==', ''), where('uid1', '!=', user.uid));
+    const roomRef = collection(db, 'twoPlayerRooms');
+    console.log("roomref",roomRef)
+    try {
+      const q = query(roomRef, where('gameState', "==", 'Started'));
       const querySnapshot = await getDocs(q);
-      const filteredRooms = querySnapshot.docs.filter(doc => doc.data().uid1 !== user.uid && doc.data().uid1 !== '');
-      if(filteredRooms.length>0){
+      console.log(querySnapshot.docs.filter(doc => doc.data().uid1.uid))
+      const filteredRooms = querySnapshot.docs.filter(doc => doc.data().gameState == "Started" && doc.data().uid1.uid == user.uid || doc.data().uid2.uid == user.uid);
+      console.log(filteredRooms.length)
+      if (filteredRooms.length > 0) {
         const roomDoc = filteredRooms[0];
-        setRoom (roomDoc.id);
-      }else{
+        setRoom(roomDoc.id);
+        console.log("RoomID:::::",roomDoc.id)
+      } else {
         console.log('Room does not exist ')
       }
-    }catch(error){
+    } catch (error) {
       console.log(error)
     }
   }
@@ -142,7 +147,7 @@ useEffect(() =>{
     playSound('dice_roll');
     setDiceRolling(true);
     await delay(800);
-    dispatch(updateDiceNo({diceNo: newDiceNo}));
+    dispatch(updateDiceNo({ diceNo: newDiceNo }));
     setDiceRolling(false);
 
     const isAnyPieceAlive = data?.findIndex(i => i.pos != 0 && i.pos != 57);
@@ -150,7 +155,7 @@ useEffect(() =>{
 
     if (isAnyPieceAlive == -1) {
       if (newDiceNo == 6) {
-        dispatch(enablePileSelection({playerNo: player}));
+        dispatch(enablePileSelection({ playerNo: player }));
       } else {
         // chanage here for two playerGame dice roll
         let chancePlayer = player + 1;
@@ -160,90 +165,99 @@ useEffect(() =>{
         if (chancePlayer == 4) {
           chancePlayer = 1;
         }
-        await delay(600);
-        dispatch(updatePlayerChance({chancePlayer: chancePlayer}));
-      }
+        const db = getFirestore();
+        try {
+          const roomRef = doc(db, 'twoPlayerRooms', room);
+          await updateDoc(roomRef, {
+            turn: chancePlayer
+          });
+        }catch(error){
+          console.log("Error Updating Chance")
+        }
+          await delay(600);
+          dispatch(updatePlayerChance({ chancePlayer: chancePlayer }));
+        }
     } else {
-      const canMove = playerPieces.some(
-        pile => pile.travelCount + newDiceNo <= 57 && pile.pos != 0,
-      );
-      if (
-        (!canMove && newDiceNo == 6 && isAnyPieceLocked == -1) ||
-        (!canMove && newDiceNo != 6 && isAnyPieceLocked != -1) ||
-        (!canMove && newDiceNo != 6 && isAnyPieceLocked == -1)
-      ) {
-        let chancePlayer = player + 1;
-        if (chancePlayer == 2) {
-          chancePlayer = 3;
+        const canMove = playerPieces.some(
+          pile => pile.travelCount + newDiceNo <= 57 && pile.pos != 0,
+        );
+        if (
+          (!canMove && newDiceNo == 6 && isAnyPieceLocked == -1) ||
+          (!canMove && newDiceNo != 6 && isAnyPieceLocked != -1) ||
+          (!canMove && newDiceNo != 6 && isAnyPieceLocked == -1)
+        ) {
+          let chancePlayer = player + 1;
+          if (chancePlayer == 2) {
+            chancePlayer = 3;
+          }
+          if (chancePlayer == 4) {
+            chancePlayer = 1;
+          }
+          await delay(600);
+          dispatch(updatePlayerChance({ chancePlayer: chancePlayer }));
+          return;
         }
-        if (chancePlayer == 4) {
-          chancePlayer = 1;
+
+        if (newDiceNo == 6) {
+          dispatch(enablePileSelection({ playerNo: player }));
         }
-        await delay(600);
-        dispatch(updatePlayerChance({chancePlayer: chancePlayer}));
-        return;
+        dispatch(enableCellSelection({ playerNo: player }));
       }
+    };
 
-      if (newDiceNo == 6) {
-        dispatch(enablePileSelection({playerNo: player}));
-      }
-      dispatch(enableCellSelection({playerNo: player}));
-    }
-  };
-
-  return (
-    <View style={[styles.flexRow, {transform: [{scaleX: rotate ? -1 : 1}]}]}>
-      <View style={styles.border1}>
-        <LinearGradient
-          style={styles.linearGradient}
-          colors={['#0052be', '#5f9fcb', '#97c6c9']}
-          start={{x: 0, y: 0.5}}
-          end={{x: 1, y: 0.5}}>
-          <View style={styles.pileContainer}>
-            <Image source={pileIcon} style={styles.pileIcon} />
-          </View>
-        </LinearGradient>
+    return (
+      <View style={[styles.flexRow, { transform: [{ scaleX: rotate ? -1 : 1 }] }]}>
+        <View style={styles.border1}>
+          <LinearGradient
+            style={styles.linearGradient}
+            colors={['#0052be', '#5f9fcb', '#97c6c9']}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}>
+            <View style={styles.pileContainer}>
+              <Image source={pileIcon} style={styles.pileIcon} />
+            </View>
+          </LinearGradient>
+        </View>
+        <View style={styles.border2}>
+          <LinearGradient
+            style={styles.diceGradient}
+            colors={['#aac8ab', '#aac8ab', '#aac8ab']}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}>
+            <View style={styles.diceContainer}>
+              {currentPlayerChance == player ? (
+                <>
+                  {diceRolling ? null : (
+                    <TouchableOpacity
+                      disabled={isDiceRolled}
+                      activeOpacity={0.4}
+                      onPress={handleDicePress}>
+                      <Image source={diceIcon} style={styles.dice} />
+                    </TouchableOpacity>
+                  )}
+                </>
+              ) : null}
+            </View>
+          </LinearGradient>
+        </View>
+        {currentPlayerChance === player && !isDiceRolled ? (
+          <Animated.View style={{ transform: [{ translateX: arrowAnim }] }}>
+            <Image source={Arrow} style={{ width: 50, height: 30 }} />
+          </Animated.View>
+        ) : null}
+        {currentPlayerChance === player && diceRolling ? (
+          <LottieView
+            source={DiceRoll}
+            style={styles.rollingDice}
+            loop={false}
+            autoPlay
+            cacheComposition={true}
+            hardwareAccelerationAndroid
+          />
+        ) : null}
       </View>
-      <View style={styles.border2}>
-        <LinearGradient
-          style={styles.diceGradient}
-          colors={['#aac8ab', '#aac8ab', '#aac8ab']}
-          start={{x: 0, y: 0.5}}
-          end={{x: 1, y: 0.5}}>
-          <View style={styles.diceContainer}>
-            {currentPlayerChance == player ? (
-              <>
-                {diceRolling ? null : (
-                  <TouchableOpacity
-                    disabled={isDiceRolled}
-                    activeOpacity={0.4}
-                    onPress={handleDicePress}>
-                    <Image source={diceIcon} style={styles.dice} />
-                  </TouchableOpacity>
-                )}
-              </>
-            ) : null}
-          </View>
-        </LinearGradient>
-      </View>
-      {currentPlayerChance === player && !isDiceRolled ? (
-        <Animated.View style={{transform: [{translateX: arrowAnim}]}}>
-          <Image source={Arrow} style={{width: 50, height: 30}} />
-        </Animated.View>
-      ) : null}
-      {currentPlayerChance === player && diceRolling ? (
-        <LottieView
-          source={DiceRoll}
-          style={styles.rollingDice}
-          loop={false}
-          autoPlay
-          cacheComposition={true}
-          hardwareAccelerationAndroid
-        />
-      ) : null}
-    </View>
-  );
-});
+    );
+  });
 
 const styles = StyleSheet.create({
   flexRow: {
@@ -311,4 +325,3 @@ const styles = StyleSheet.create({
 });
 
 export default Dice;
- 

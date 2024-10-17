@@ -197,5 +197,4 @@ const Room = () => {
     </SafeAreaView>
   );
 };
-
 export default Room;

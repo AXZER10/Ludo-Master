@@ -55,11 +55,10 @@ export default function Login() {
 
   const sentToHome = (userDetails) => {
     // add userDetails in context
-    console.log("userDetails   ::: ", userDetails);
+    // console.log("userDetails   ::: ", userDetails);
     myContext.updateUserDetails(userDetails);
     router.replace("Home");
   };
-
   const _signInWithPhoneNumber = async () => {
     try {
       console.log("I am here");
