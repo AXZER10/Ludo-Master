@@ -129,7 +129,7 @@ const Ludo2PlayerOnline = () => {
 
   //Function to cancel the game and exit the room
   Cancel = async () => {
-    const roomID = room?.id;
+    const roomID = roomId;
     console.log("Exiting room: ", roomID);
     const db = getFirestore();
     try {
@@ -150,10 +150,10 @@ const Ludo2PlayerOnline = () => {
     console.log("UID: ", UID);
     const db = getFirestore();
     const roomRef = doc(db, "twoPlayerRooms", roomId);
-    
-    if (room?.uid1?.uid == UID) 
-      //If user is User1
-      {
+
+    if (room?.uid1?.uid == UID)
+    //If user is User1
+    {
       //Checking if dice is not 6 for User1
       if (room?.uid1?.dice != 6) {
         let updatedRoom = {
@@ -194,7 +194,7 @@ const Ludo2PlayerOnline = () => {
         console.log(updatedRoom);
         await updateDoc(roomRef, updatedRoom);
       }
-    } 
+    }
     //if user is User2
     else {
       //Checking if dice is not 6 for User2

@@ -13,7 +13,7 @@ import PhoneInput from "react-native-phone-number-input";
 import { SafeAreaView } from "react-native-safe-area-context";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import { useRouter } from "expo-router";
+import { useRouter,usePathname } from "expo-router";
 import { UserContext } from "../UserContext";
 
 export default function Login() {
@@ -24,6 +24,11 @@ export default function Login() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [buttonLoader, setButtonLoader] = useState(false);
+
+  const pathname = usePathname();
+  useEffect(() => {
+    if (pathname == "/firebaseauth/link") router.back();
+  }, [pathname]);
 
   useEffect(() => {
     // console.log(auth().currentUser);

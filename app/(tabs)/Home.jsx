@@ -20,7 +20,7 @@ const Home = () => {
           <View className="flex-row items-center justify-center my-10">
             <View className="flex-1 items-center">
               <CustomButton
-                title={"Leader Board"}
+                title={"Leaderboard"}
                 ContainerStyles={"w-44 h-8 border-yellow-600 border-4"}
                 handlePress={() => router.push("../(leaderboard)/LeaderBoard")}
                 textStyles={"text-sm font-pbold text-white"}
