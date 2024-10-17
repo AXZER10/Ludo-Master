@@ -1,13 +1,24 @@
 import { View, Image, ImageBackground } from "react-native";
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import CustomButton from "../../components/CustomButton";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TopBar from "../../components/TopBar";
-
+import {resetGame} from '../src/redux/reducers/gameSlice';
+import {useDispatch} from 'react-redux';
+import {playSound} from '../src/helpers/SoundUtility';
 
 
 const Home = () => {
+  // useEffect(() => {
+  // resetGame()
+  // }, [])
+  const dispatch = useDispatch();
+  const handleNewGame = useCallback(() => {
+    dispatch(resetGame());
+    playSound('game_start');
+    router.push("../src/screens/LudoBoardScreen")
+  }, [dispatch]);
   return (
     <ImageBackground
       source={require("../assets/bg.png")}
@@ -50,7 +61,7 @@ const Home = () => {
               <CustomButton
                 title={"Play Offline"}
                 ContainerStyles={"w-full bg-fuchsia-900"}
-                handlePress={() => router.push("../src/screens/LudoBoardScreen")}
+                handlePress={handleNewGame}
                 textStyles={"text-lg font-pbold text-white"}
               />
             </View>

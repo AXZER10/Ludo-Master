@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Alert, View, TouchableOpacity, Image, Text } from 'react-native';
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, onSnapshot } from 'firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { router } from 'expo-router';
 import icons from '../constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {resetGame} from '../app/src/redux/reducers/gameSlice';
+import {useDispatch} from 'react-redux';
+import {playSound} from '../app/src/helpers/SoundUtility';
+import {initialState} from './src/redux/reducers/initialState';
+
 
 
 const Room = () => {
@@ -12,33 +17,34 @@ const Room = () => {
   const [playerUid, setPlayerUid] = useState('');
   const [countdown, setCountdown] = useState(null);
   const user = auth().currentUser;
-  const [positions, setPositions] = useState({
-    1: [-11, -21, -31, -41],
-    3: [-13, -23, -33, -43],
-  });
 
+  const dispatch = useDispatch();
+  const handleNewGame = useCallback(() => {
+    dispatch(resetGame());
+    playSound('game_start');
+    router.replace({ pathname: 'src/screens/LudoBoard', params: { roomId } })
+  }, [dispatch]);
   useEffect(() => {
     console.log(user);
-    
-    
+
     console.log(user)
     if (user
     ) {
-      if(playerUid == ''){
+      if (playerUid == '') {
         setPlayerUid(user.uid);
         checkRoomsAndJoin(user.uid);
       }
-      if(countdown == 0){
+      if (countdown == 0) {
         // router.setParams({roomId : roomId})
         // console.log("roomId roomIdroomIdroomIdroomId ", roomId)
-        
-      } 
+
+      }
     } else {
       Alert.alert("User Not Found");
     }
 
   }, [countdown]);
-  
+
   const checkRoomsAndJoin = async (uid) => {
     const db = getFirestore();
     const roomRef = collection(db, 'twoPlayerRooms');
@@ -64,24 +70,23 @@ const Room = () => {
       const roomRef = collection(db, 'twoPlayerRooms');
       const createRef = await addDoc(roomRef, {
         createdAt: new Date(),
-        players: [],
         gameState: 'waiting',
+        turn: initialState.chancePlayer,
         uid1: {
-          position: positions[1],
+          position: initialState.player1,
+          dice: initialState.diceNo,
           uid,
-          dice:0,
-          turn:true
         },
         uid2: '',
-        
+
       });
-      if(roomId && roomId != ""){
+      if (roomId && roomId != "") {
       } else {
         setRoomId(createRef.id); // Store the created room ID
       }
-      
+
       Alert.alert('Room Created', `Room ID: ${createRef.id}`);
-      
+
       setTimeout(() => {
         startGame(createRef.id);
       }, 1000);
@@ -97,10 +102,9 @@ const Room = () => {
       const roomRef = doc(db, 'twoPlayerRooms', roomId);
       await updateDoc(roomRef, {
         uid2: {
-          position: positions[3],
+          position: initialState.player3,
+          dice: initialState.diceNo,
           uid,
-          dice:0,
-          turn:false
         },
         gameState: "Started"
       });
@@ -111,41 +115,41 @@ const Room = () => {
     }
   };
 
-    const startGame = async(roomId) => {
-      const db = getFirestore();
-      const roomRef = doc(db, 'twoPlayerRooms', roomId);
-      const initiateCountdown = () => {
-        setCountdown(5);
-        const interval = setInterval(() => {
-          setCountdown(prev => {
-            if (prev === 1) {
-              clearInterval(interval);
-            }
-            return prev - 1;
-          });
-        }, 1000);
-      }
-      const unsubscribe = onSnapshot(roomRef, (doc) => {
-        if (doc.exists()) {
-          const gameState = doc.data().gameState;
-          if (gameState === "Started") {
-            router.setParams({roomId : roomId});
-            router.replace({pathname :'src/screens/LudoBoard' , params:  {roomId} })
-            initiateCountdown();
+  const startGame = async (roomId) => {
+    const db = getFirestore();
+    const roomRef = doc(db, 'twoPlayerRooms', roomId);
+    const initiateCountdown = () => {
+      setCountdown(5);
+      const interval = setInterval(() => {
+        setCountdown(prev => {
+          if (prev === 1) {
+            clearInterval(interval);
           }
-        } else {
-          Alert.alert('Document not found');
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    const unsubscribe = onSnapshot(roomRef, (doc) => {
+      if (doc.exists()) {
+        const gameState = doc.data().gameState;
+        if (gameState === "Started") {
+          router.setParams({ roomId: roomId });
+          handleNewGame();
+          initiateCountdown();
         }
-      }, (error) => {
-        Alert.alert("Error starting game", error.message);
-      });
-      
+      } else {
+        Alert.alert('Document not found');
+      }
+    }, (error) => {
+      Alert.alert("Error starting game", error.message);
+    });
+
     // Cleanup subscription on unmount
     return () => unsubscribe();
-    
+
   };
 
-  const Cancel = async() => {
+  const Cancel = async () => {
     const db = getFirestore();
     try {
       const roomRef = doc(db, 'twoPlayerRooms', roomId);
@@ -163,26 +167,26 @@ const Room = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
-      
+
       {countdown === null && (
         <>
-        <View className="flex-col w-10 h-10 mx-2">
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => Cancel()}
-        >
-         <Image source={icons.back}
-           resizeMode='contain'
-           className="w-10 h-10"
-         />
-        </TouchableOpacity>
-       </View>
+          <View className="flex-col w-10 h-10 mx-2">
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => Cancel()}
+            >
+              <Image source={icons.back}
+                resizeMode='contain'
+                className="w-10 h-10"
+              />
+            </TouchableOpacity>
+          </View>
 
-        <View className="flex-col w-full h-full justify-center items-center">
-          <Text className="text-5xl font-pbold text-slate-400">
-            Waiting For Players to Join
-          </Text>
-        </View>
+          <View className="flex-col w-full h-full justify-center items-center">
+            <Text className="text-5xl font-pbold text-slate-400">
+              Waiting For Players to Join
+            </Text>
+          </View>
         </>
       )}
       {countdown !== null && (

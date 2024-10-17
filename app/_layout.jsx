@@ -56,6 +56,7 @@ export default function RootLayout() {
 
               <Stack.Screen name="Ads" options={{ headerShown: false }} />
               <Stack.Screen name="Room" options={{ headerShown: false }} />
+              <Stack.Screen name="RoomNew" options={{ headerShown: false }} />
               <Stack.Screen
                 name="Menu/About"
                 options={{ headerShown: false }}

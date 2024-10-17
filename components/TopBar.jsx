@@ -12,11 +12,12 @@ export const TopBar = () => {
   const [Username, setUserName] = useState("");
   const user = auth().currentUser;
   const myContext = useContext(UserContext);
-  console.log("myContext   ", myContext.userDetails);
-  console.log("myContext name   ", myContext.userDetails.name);
+
   useEffect(() => {
     if (user) {
       setUserName(user.displayName);
+      // console.log("myContext ::: ", myContext.userDetails.uid);
+      // console.log("myContextname ::: ", myContext.userDetails.name);
     } else {
       setUserName("Guest");
     }
@@ -26,12 +27,12 @@ export const TopBar = () => {
   return (
     <View className="rounded-xl flex-row items-center justify-around bg-purple-700 h-12 px-2 space-x-2 mx-3 shadow-xl shadow-black">
       <View className="flex-row">
-      <Text className="text-white font-psemibold">
-        Welcome,{" "}
-      </Text>
-      <Text className="text-yellow-600 font-pblack mr-2">
-        {myContext.userDetails.name}
-      </Text>
+        <Text className="text-white font-psemibold">
+          Welcome,{" "}
+        </Text>
+        <Text className="text-yellow-600 font-pblack mr-2">
+          {myContext.userDetails.name}
+        </Text>
       </View>
 
       <TouchableOpacity

@@ -89,57 +89,56 @@ useEffect(() =>{
       console.log(error)
     }
   }
-  const updateDice = async (diceNo) =>{
-    let UID = user.uid;
-    console.log("UID: ", UID);
-    const db = getFirestore();
-    try {
-      const roomRef = doc(db, "twoPlayerRooms", room);
-        if (room?.uid1?.UID == player) {
-          let updatedRoom = {
-            id: room?.id,
-            turn : chancePlayer,
-            uid1: {
-              position: room?.uid1?.position,
-              dice: diceNo,
-              uid: room?.uid1?.UID,
-            },
-            uid2: {
-              position: room?.uid2?.position,
-              dice: room?.uid2?.dice,
-              uid: room?.uid2?.uid,
-            },
-            gameState: "InProgress",
-          };
-          await updateDoc(roomRef, updatedRoom);
-        }
-          if (room?.uid2?.UID == player) {
-            let updatedRoom = {
-              id: room?.id,
-              turn : chancePlayer,
-              uid1: {
-                position: room?.uid1?.position,
-                dice: room?.uid1?.dice,
-                uid: room?.uid1?.UID,
-              },
-              uid2: {
-                position: room?.uid2?.position,
-                dice: diceNo,
-                uid: room?.uid2?.uid,
-              },
-              gameState: "InProgress",
-            };
-            await updateDoc(roomRef, updatedRoom);
-          }
-        }
-        catch(error){
-        console.log(error);
-        }
-  }
+  // const updateDice = async (diceNo) =>{
+  //   let UID = user.uid;
+  //   console.log("UID: ", UID);
+  //   const db = getFirestore();
+  //   try {
+  //     const roomRef = doc(db, "twoPlayerRooms", room);
+  //       if (room?.uid1?.UID == player) {
+  //         let updatedRoom = {
+  //           id: room?.id,
+  //           turn : chancePlayer,
+  //           uid1: {
+  //             position: room?.uid1?.position,
+  //             dice: diceNo,
+  //             uid: room?.uid1?.UID,
+  //           },
+  //           uid2: {
+  //             position: room?.uid2?.position,
+  //             dice: room?.uid2?.dice,
+  //             uid: room?.uid2?.uid,
+  //           },
+  //           gameState: "InProgress",
+  //         };
+  //         await updateDoc(roomRef, updatedRoom);
+  //       }
+  //         if (room?.uid2?.UID == player) {
+  //           let updatedRoom = {
+  //             id: room?.id,
+  //             turn : chancePlayer,
+  //             uid1: {
+  //               position: room?.uid1?.position,
+  //               dice: room?.uid1?.dice,
+  //               uid: room?.uid1?.UID,
+  //             },
+  //             uid2: {
+  //               position: room?.uid2?.position,
+  //               dice: diceNo,
+  //               uid: room?.uid2?.uid,
+  //             },
+  //             gameState: "InProgress",
+  //           };
+  //           await updateDoc(roomRef, updatedRoom);
+  //         }
+  //       }
+  //       catch(error){
+  //       console.log(error);
+  //       }
+  // }
   const handleDicePress = async () => {
-    updateDice(diceNo);
-    //const newDiceNo = Math.floor(Math.random() * 6) + 1;
-     const newDiceNo = 2;
+    // updateDice(diceNo);
+    const newDiceNo = Math.floor(Math.random() * 6) + 1;
     playSound('dice_roll');
     setDiceRolling(true);
     await delay(800);
